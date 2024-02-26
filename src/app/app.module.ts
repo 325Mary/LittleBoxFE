@@ -13,6 +13,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
+import { AddEditSolicitudComponent } from './Components/add-edit-solicitud/add-edit-solicitud.component';
+//import { environment } from './environments/environment.prod'; // Para producción
 
 @NgModule({
   declarations: [
@@ -21,16 +24,17 @@ import { AppComponent } from './app.component';
     SidebarComponent,
     FooterComponent,
     NavbarComponent,
-    IndexComponent
+    IndexComponent,
+    AddEditSolicitudComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbCarouselModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [{ provide: environment, useValue: environment }],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
