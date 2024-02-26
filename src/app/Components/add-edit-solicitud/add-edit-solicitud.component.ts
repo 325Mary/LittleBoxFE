@@ -49,24 +49,65 @@ export class AddEditSolicitudComponent {
     this.id = this.aRouter.snapshot.paramMap.get('id');
   }
 
-  getCategorias() {
-    this.categoriasService
-      .getListaCategorias(this.formulario.tenantId)
-      .subscribe((data) => {
-        this.categorias = data;
-      });
-  }
+  // getCategorias() {
+  //   this.categoriasService
+  //     .getListaCategorias(this.formulario.tenantId)
+  //     .subscribe((data) => {
+  //       this.categorias = data;
+  //     });
+  // }
   ngOnInit() {
     //this.tenantService.setTenant('123456789')
     this.getCategorias();
     this.getTerceros();
     if (this.id !== null) {
       this.operacion = 'Editar ';
-      this.getEgreso(this.id);
+      this.getSolicitud(this.id);
     } else {
       // Inicializa los controles ngModel
       this.selectedCategoriaId = '';
       this.selectedTerceroId = '';
     }
   }
+  getCategorias(): void {
+    this.categoriasService.getListaCategorias().subscribe((Data: any) => {
+      this.categorias = [...Data.data];
+    });
+  }
+
+  getTerceros(): void {
+    this.terceroService.getListaTerceros().subscribe((Data: any) => {
+      this.terceros = [...Data.data];
+    });
+  }
+
+  getEgreso(id: any) {
+    this.loading = true;
+    this._egresoService.getEgreso(id).subscribe((response: any) => {
+      this.loading = false;
+      const data = response.data; // Extraer la propiedad 'data' de la respuesta
+      console.log('Datos obtenidos:', data);
+
+      // Asignar 'data' al formulario
+      this.formulario = {
+        egresoId: data.egresoId,
+        tenantId: data.tenantId,
+        fecha: new Date(data.fecha),
+        detalle: data.detalle,
+        valor: data.valor,
+        categoria: data.categoria?.nombre,
+        tercero: data.tercero?.nombreTercero
+      };
+      console.log("esta es la categoria", this.formulario.categoria, this.formulario.tercero);
+      
+      // Asignar valores por defecto a los controles ngModel
+      this.selectedCategoriaId = data.categoria?._id || ''; // Asignar el ID de la categoría
+      this.selectedTerceroId = data.tercero?._id || ''; // Asignar el ID del tercero
+      console.log('Formulario después de la asignación:', this.formulario);
+      console.log(this.selectedCategoriaId, this.selectedTerceroId);
+      
+    });
+  }
+
 }
+
