@@ -1,9 +1,13 @@
 <div class="sidebar">
     <ul>
-      <li><a routerLink="/home/">Inicio</a></li>
-      <li><a routerLink="/employees/">Empleados</a></li>
+      <li ><a routerLink="/home/">Inicio</a></li>
+      <li *ngIf="isLoggedIn && isGerente"><a routerLink="/employees/">Empleados</a></li>
       <li><a routerLink="/personalization/">Personalizacion</a></li>
-      
+      <li *ngIf="isLoggedIn && isSuperUsuario"><a routerLink= "/listDeSoliDeEmpresas/">Solicitudes de empresas</a></li>
+      <li *ngIf="isLoggedIn && isGerente"><a routerLink="/crearUserAdmin/">Crear Administrador</a></li>
+      <li *ngIf="isLoggedIn && isSuperUsuario"><a routerLink="/listCompaniesAproved/" >Lista de empresas</a>  </li>
+      <li *ngIf="isLoggedIn && isAdministrador"><a routerLink="/SoliColaboradores/">Solicitudes de Colaboradores</a></li>
+
     </ul>
   </div>
   

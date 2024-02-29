@@ -1,0 +1,44 @@
+/* Estilos para el contenedor principal */
+.container {
+    background-color: transparent; 
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px;
+    border: transparent;
+    backdrop-filter: blur(55px)
+  }
+  
+  
+  /* Estilos para las pestañas */
+  .nav-tabs .nav-item .nav-link {
+    color: #333; /* Color del texto */
+    border: none; /* Sin borde */
+    margin-left: 40px;
+  }
+  
+  .nav-tabs .nav-item .nav-link.active {
+    font-weight: bold;
+  }
+  
+  /* Estilos para el formulario de inicio de sesión */
+  .card {
+    background-color:transparent;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(22, 22, 22, 0.8); /* Sombra */
+    margin: 20px auto;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  /* Estilos para los botones de registro */
+  .btn-primary {
+    border: none; /* Sin borde */
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el mouse */
+  }
+  
+  
+
