@@ -1,0 +1,37 @@
+<div *ngIf="!loading" class="container">
+    <div class="title">
+        <h4>Listado de Solicitudes</h4>
+        <button type="button" class="btn btn-success" routerLink="/add">Agregar Solictud</button>
+    </div>
+
+    <table *ngIf="listSolicitudes.length > 0" class="table table-hover">
+        <thead>
+          <tr class="table-primary">
+            <th scope="col">Solicitud #</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Proveedor</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Detalle</th>
+            <th scope="col">Valor</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listSolicitudes" class="table-active">
+            <td>{{ item.solicitudId }}</td>
+            <td>{{ item.fecha }}</td>
+            <!-- <td>{{ (item.tercero || {}).nombreTercero || 'Sin proveedor' }}</td>
+            <td>{{ (item.categoria || {}).nombre || 'Sin categoría' }}</td> -->
+            <td>{{ item.tercero?.nombreTercero }}</td>
+            <td>{{ item.categoria?.nombre }}</td>
+            <td>{{ item.detalle }}</td>
+            <td>{{ item.valor | currency }}</td>
+            <td>
+                <button [routerLink]="['/edit', item._id]" type="button" class="btn btn-info btn-sm">Edit</button>
+                <button (click)="deleteSolicitud(item._id!)" type="button" class="btn btn-danger btn-sm ms-2">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h5 *ngIf="listSolicitudes.length == 0">No hay Solicitudes para mostrar</h5>
+</div>

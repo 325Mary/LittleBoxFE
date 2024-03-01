@@ -69,4 +69,14 @@ export class SolicitudesService {
       { params: { tenantId, nuevoEstadoId } },
     );
   }
+
+  uploadFactura(file: File): Observable<{ url: string }> {
+    const formData: FormData = new FormData();
+    formData.append('factura', file, file.name);
+
+    return this.http.post<{ url: string }>(
+      `${this.myAppUrl}/uploadFactura`, // Cambia esta URL por la ruta de tu servidor donde manejas la carga de archivos
+      formData,
+    );
+  }
 }
