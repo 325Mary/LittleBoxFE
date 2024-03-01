@@ -1,0 +1,29 @@
+<div class="table-container">
+<div class="scrollbar" *ngIf="companies && companies.length > 0; else noCompanies">
+  <!-- Tabla de empresas -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Nombre de la Empresa</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let company of companies">
+        <td>{{ company.nameCompany }}</td>
+        <button  (click)="openPdf(company.pdfRunt, company.nameCompany)">Ver PDF</button>      
+        <td>
+          <button (click)="approveCompany(company._id)" class="btn btn-primary">Aprobar</button>
+          <button (click)="denyCompany(company._id)" class="btn btn-danger">Denegar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noCompanies>
+  <!-- Mensaje cuando no hay solicitudes de empresas -->
+  <p>No hay solicitudes de empresas.</p>
+</ng-template>
+</div>
+
