@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
+
 @Injectable({
   providedIn: 'root',
+
+
+@Injectable({
+  providedIn: 'root'
+
 })
 export class TokenValidationService {
   constructor(private jwtHelper: JwtHelperService) {}
@@ -22,6 +28,7 @@ export class TokenValidationService {
     }
     return null;
   }
+
 
   // Método para verificar si el usuario tiene el rol especificado
   public hasRole(token: string, rol: string): boolean {
@@ -48,5 +55,18 @@ export class TokenValidationService {
       console.error('No se encontró ningún token en el almacenamiento local');
       return undefined;
     }
+
+
+   // Método para verificar si el usuario tiene el rol especificado
+   public hasRole(token: string, rol: string): boolean {
+    const userData = this.getUserData(token);
+    return userData && userData.rol === rol;
   }
+ 
+  public hasTenantId(token: string, tenantId: string): boolean{
+  const userTenant = this.getUserData(token);
+  return userTenant && userTenant.tenantId ===tenantId
+
+  }
+
 }

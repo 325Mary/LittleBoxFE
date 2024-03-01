@@ -1,0 +1,48 @@
+.table-container {
+    width: 50%; /* Ancho de la tabla */
+    margin: 50px  auto; /* Centrar la tabla */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #000; /* Línea divisoria */
+  }
+  
+  th {
+    background-color: #000; /* Color de fondo del encabezado */
+    color: #fff; /* Color del texto del encabezado */
+  }
+  
+  tr:nth-child(even) {
+    background-color: #1e90ff; /* Color de fondo de las filas pares */
+  }
+  
+  tr:hover {
+    background-color: #4682b4; /* Color de fondo al pasar el cursor por encima */
+  }
+  
+  .approve-button, .deny-button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    color: #fff; /* Color del texto de los botones */
+  }
+  
+  .approve-button {
+    background-color: #000; /* Color de fondo del botón de aprobar */
+  }
+  
+  .deny-button {
+    background-color: #1e90ff; /* Color de fondo del botón de denegar */
+  }
+  
+  .scrollbar {
+    overflow-x: auto; /* Barra de desplazamiento horizontal */
+  }
+  

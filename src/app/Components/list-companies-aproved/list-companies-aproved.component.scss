@@ -1,0 +1,54 @@
+.container {
+    width: 50%;
+    margin: 50px auto;
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  .scrollbar {
+    /* Ajustar el tamaño de la barra de desplazamiento según sea necesario */
+    overflow-y: auto;
+    max-height: 300px; /* Establecer una altura máxima para la barra de desplazamiento */
+  }
+  
+  .table {
+    width: 100%; /* Hacer que la tabla ocupe todo el ancho disponible */
+    text-align: left; /* Alinear el texto a la izquierda dentro de la tabla */
+    border-collapse: collapse; /* Colapsar los bordes de la tabla */
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px; /* Ajustar el espacio interno de las celdas */
+    border-bottom: 1px solid #ddd; /* Agregar bordes inferiores a las filas */
+  }
+  
+  .table th {
+    background-color: #f2f2f2; /* Color de fondo para las celdas del encabezado */
+  }
+  
+  .btn {
+    /* Estilos de los botones */
+    padding: 8px 16px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: #007bff; /* Color de fondo para el botón primario */
+    color: white;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545; /* Color de fondo para el botón de peligro */
+    color: white;
+  }
+  
+  .btn:hover {
+    opacity: 0.8; /* Reducir la opacidad al pasar el cursor sobre los botones */
+  }
+  
