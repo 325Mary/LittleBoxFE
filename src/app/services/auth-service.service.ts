@@ -20,19 +20,19 @@ export class AuthServiceService {
     return this.authToken$;
   }
 
-  decodeToken(): any {
-    const token = this.authTokenSubject.getValue();
-    if (token) {
-      return jwt_decode(token);
-    }
-    return null;
-  }
+  // decodeToken(): any {
+  //   const token = this.authTokenSubject.getValue();
+  //   if (token) {
+  //     return jwt_decode(token);
+  //   }
+  //   return null;
+  // }
 
-  getTenantId(): string | null {
-    const decodedToken = this.decodeToken();
-    if (decodedToken) {
-      return decodedToken.tenantId;
-    }
-    return null;
-  }
+  // getTenantId(): string | null {
+  //   const decodedToken = this.decodeToken();
+  //   if (decodedToken) {
+  //     return decodedToken.tenantId;
+  //   }
+  //   return null;
+  // }
 }
