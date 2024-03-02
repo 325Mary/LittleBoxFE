@@ -1,0 +1,21 @@
+<div class="container">
+   
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre de la Empresa</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let company of companies">
+            <td>{{ company.nameCompany }}</td>
+            <td>
+              <button (click)="activeCompany(company._id)" class="btn btn-primary">Activar</button>
+              <button (click)="disbaledCompany(company._id)" class="btn btn-danger">Inhabilitar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+    </div>

@@ -1,0 +1,21 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nombre de usuario</th>
+      <th>Rol</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usuario of usuarios">
+      <td>{{ usuario.username }}</td>
+      <td>{{ usuario.rol }}</td>
+      <td [ngStyle]="{ color: usuario.status === 'activo' ? 'green' : 'red' }">{{ usuario.status }}</td>
+      <td>
+        <button (click)="activarUsuario(usuario._id)">Activar</button>
+  <button (click)="inactivarUsuario(usuario._id)">Inactivar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

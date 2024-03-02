@@ -1,0 +1,60 @@
+
+/* Estilos para los títulos del formulario */
+h2 {
+  text-align: center; /* Centrar texto */
+  color: #ebe6e6; /* Color del texto */
+  background-color: #4a4949;
+  margin: 0;
+  margin-bottom: 0; /* Establecer el margen inferior a 0 */
+  padding: 20px; /* Ajustar el padding */
+  border: 0;
+  z-index: 0; /* Índice z */
+}
+
+
+/* Estilos generales del formulario */
+.form-content {
+    background-image: url('../../../assets/fondoRegistCol.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Estilos para el contenedor del formulario */
+.form-content form {
+  background-color: rgba(242, 242, 242, 0.2); /* Color de fondo semi-transparente */
+  padding: 40px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+  position: relative; /* Posición relativa */
+
+}
+
+
+
+
+label{
+  font-size: 17px;
+  color: #111111;
+  margin-bottom: 10px;
+}
+
+input {
+  padding: 8px;
+  background-color: #709dea;
+  font-size: 16px;
+  color: #1854cd;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  width: 400px;
+}
+
+
+
+.btn{
+  cursor: pointer;
+}
+
+.btn:hover{
+  background-color: #1e2db5;
+}

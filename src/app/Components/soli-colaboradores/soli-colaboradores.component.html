@@ -1,0 +1,25 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th>Nombre de usuario</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let usuario of usuarios">
+        <!-- Filtrar los usuarios con rol 'Administrador' -->
+        <tr *ngIf="usuario.rol !== 'Administrador'">
+        <td>{{ usuario.username }}</td>
+        <td>{{ usuario.rol }}</td>
+        <td [ngStyle]="{ color: usuario.status === 'activo' ? 'green' : 'red' }">{{ usuario.status }}</td>
+        <td>
+          <button (click)="activarUsuario(usuario._id)">Aprobar</button>
+          <button (click)="deniedUsuario(usuario._id)">Denegar</button>
+        </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+  
