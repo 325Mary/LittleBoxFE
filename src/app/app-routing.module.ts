@@ -24,7 +24,8 @@ import { DataUserComponent } from "../app/Components/data-user/data-user.compone
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
-  { path: 'home', component: HomeComponent },
+  // { path: 'home', component: HomeComponent },
+  { path: 'home', component: ListEdictSolicitudComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'sidebar', component: SidebarComponent },
   {
     path: 'obtenerTodasLasSolicitudes',
@@ -32,9 +33,10 @@ const routes: Routes = [
   },
   { path: 'add', component: AddEditSolicitudComponent },
   { path: 'edit/:id', component: AddEditSolicitudComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  // { path: '**', redirectTo: '', pathMatch: 'full' },
   { path: 'sidebar', component: SidebarComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'SignIn/Up', component: PreRegistroComponent },
+  // { path: 'SignIn/Up', component: ListEdictSolicitudComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'registroEmpresa', component: RegistroEmpresaComponent },
   { path: 'registroEmpleado', component: RegistroEmpleadoComponent },
   { path: 'employees', component: EmployeesComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },

@@ -28,6 +28,9 @@ export class ListEdictSolicitudComponent {
       const tenantId = this.tokenValidationService.getTenantIdFromToken();
       if (tenantId) {
         this.tenantId = tenantId;
+        console.log("este es el tenantid: ", this.tenantId);
+        console.log("este es el token: ", token);
+        
       } else {
         console.error('No se pudo obtener el tenant ID del token');
       }
@@ -42,10 +45,10 @@ export class ListEdictSolicitudComponent {
     this.solicitudesService
       .getListaSolicitudes(this.tenantId)
       .subscribe((data: any) => {
-        console.log(data);
+        console.log("estas son las solicitudes: ",data);
         this.listSolicitudes = [...data.data];
         // this.loading = false;
-        console.log(this.listSolicitudes);
+        console.log("Datos de las solicitudes: ",this.listSolicitudes);
       });
   }
   deleteSolicitud(id: any) {

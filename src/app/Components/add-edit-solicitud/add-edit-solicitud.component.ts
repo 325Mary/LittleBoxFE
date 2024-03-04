@@ -73,7 +73,8 @@ export class AddEditSolicitudComponent {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
-      this.solicitudesService.uploadFactura(file).subscribe(
+      const solicId = this.id ?? ''; // Si this.id es null, asigna un valor predeterminado de cadena vacía
+      this.solicitudesService.uploadFactura(file,solicId).subscribe(
         (response: any) => {
           this.formulario.facturaUrl = response.url;
         },
