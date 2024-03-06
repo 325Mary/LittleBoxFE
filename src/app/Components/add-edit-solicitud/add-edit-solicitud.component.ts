@@ -14,7 +14,7 @@ import { TokenValidationService } from '../../services/token-validation-service.
 @Component({
   selector: 'app-add-edit-solicitud',
   templateUrl: './add-edit-solicitud.component.html',
-  styleUrl: './add-edit-solicitud.component.scss',
+  styleUrls: ['./add-edit-solicitud.component.scss'],
 })
 export class AddEditSolicitudComponent {
   loading: boolean = false;
@@ -31,6 +31,7 @@ export class AddEditSolicitudComponent {
 
   selectedCategoriaId: string = '';
   selectedTerceroId: string = '';
+  facturaSeleccionada: File | null = null;
 
   formulario: Solicitud = {
     solicitudId: 0,
@@ -40,7 +41,7 @@ export class AddEditSolicitudComponent {
     detalle: '',
     categoria: null,
     valor: 0,
-    estado: { _id: '65d6a34bc04706dd1cdafd6c',nombre:"pendiente" }, // Valor por defecto para el estado
+    estado: { _id: '65d6a34bc04706dd1cdafd6c', nombre: 'pendiente' }, // Valor por defecto para el estado
     facturaUrl: '',
   };
 
@@ -52,7 +53,7 @@ export class AddEditSolicitudComponent {
     private router: Router,
     private aRouter: ActivatedRoute,
     private tokenValidationService: TokenValidationService,
-    private sweetAlertService: SweetAlertService,
+    private sweetAlertService: SweetAlertService
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
     const token = localStorage.getItem('token');
@@ -69,22 +70,26 @@ export class AddEditSolicitudComponent {
     console.log(this.tenantId);
   }
 
+  // onFileSelected(event: any) {
+  //   this.facturaSeleccionada = event.target.files[0];
+  //   if (this.facturaSeleccionada) {
+  //     const solicId = this.id ?? ''; // Si this.id es null, asigna un valor predeterminado de cadena vacía
+  //     this.solicitudesService.uploadFactura(this.facturaSeleccionada, solicId).subscribe(
+  //       (response: any) => {
+  //         this.formulario.facturaUrl = response.url;
+  //         // Llama a la función para realizar la actualización después de cargar la URL de la factura
+  //         this.realizarActualizacion();
+  //       },
+  //       (error) => {
+  //         console.error('Error al subir el archivo:', error);
+  //         // Manejar el error apropiadamente, por ejemplo, mostrar un mensaje al usuario
+  //       }
+  //     );
+  //   }
+  // }
+
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
-      const solicId = this.id ?? ''; // Si this.id es null, asigna un valor predeterminado de cadena vacía
-      this.solicitudesService.uploadFactura(file,solicId).subscribe(
-        (response: any) => {
-          this.formulario.facturaUrl = response.url;
-          // Llama a la función para realizar la actualización después de cargar la URL de la factura
-        this.realizarActualizacion();
-        },
-        (error) => {
-          console.error('Error al subir el archivo:', error);
-          // Manejar el error apropiadamente, por ejemplo, mostrar un mensaje al usuario
-        },
-      );
-    }
+    this.facturaSeleccionada = event.target.files[0];
   }
 
   openFacturaModal() {
@@ -108,13 +113,7 @@ export class AddEditSolicitudComponent {
   closeFacturaModal() {
     this.showModal = false;
   }
-  // getCategorias() {
-  //   this.categoriasService
-  //     .getListaCategorias(this.formulario.tenantId)
-  //     .subscribe((data) => {
-  //       this.categorias = data;
-  //     });
-  // }
+
   ngOnInit() {
     //this.tenantService.setTenant('123456789')
     this.getCategorias();
@@ -128,55 +127,46 @@ export class AddEditSolicitudComponent {
       this.selectedTerceroId = '';
     }
   }
+
   getCategorias(): void {
-    this.categoriasService
-      .getListaCategorias(this.tenantId)
-      .subscribe((Data: any) => {
-        this.categorias = [...Data.data];
-      });
+    this.categoriasService.getListaCategorias(this.tenantId).subscribe((Data: any) => {
+      this.categorias = [...Data.data];
+    });
   }
 
   getTerceros(): void {
-    this.tercerosService
-      .getListaTerceros(this.tenantId)
-      .subscribe((Data: any) => {
-        this.terceros = [...Data.data];
-      });
+    this.tercerosService.getListaTerceros(this.tenantId).subscribe((Data: any) => {
+      this.terceros = [...Data.data];
+    });
   }
 
   getSolicitud(id: any) {
     this.loading = true;
-    this.solicitudesService
-      .getSolicitud(id, this.tenantId)
-      .subscribe((response: any) => {
-        this.loading = false;
-        const data = response.data; // Extraer la propiedad 'data' de la respuesta
-        console.log('Datos obtenidos:', data);
+    this.solicitudesService.getSolicitud(id, this.tenantId).subscribe((response: any) => {
+      this.loading = false;
+      const data = response.data; // Extraer la propiedad 'data' de la respuesta
+      console.log('Datos obtenidos:', data);
 
-        this.formulario = {
-          solicitudId: data.solicitudId,
-          tenantId: data.tenantId,
-          fecha: new Date(data.fecha),
-          detalle: data.detalle,
-          valor: data.valor,
-          categoria: data.categoria?.nombre,
-          tercero: data.tercero?.nombreTercero,
-          // Verificar si 'estado' es null antes de asignarlo al formulario
-          estado: data.estado || { _id: '65d6a34bc04706dd1cdafd6c' }, // Asignar el valor por defecto si 'estado' es null
-          facturaUrl: data.facturaUrl,
-        };
-        console.log(
-          'esta es la categoria',
-          this.formulario.categoria,
-          this.formulario.tercero,
-        );
+      this.formulario = {
+        solicitudId: data.solicitudId,
+        tenantId: data.tenantId,
+        fecha: new Date(data.fecha),
+        detalle: data.detalle,
+        valor: data.valor,
+        categoria: data.categoria?.nombre,
+        tercero: data.tercero?.nombreTercero,
+        // Verificar si 'estado' es null antes de asignarlo al formulario
+        estado: data.estado || { _id: '65d6a34bc04706dd1cdafd6c' }, // Asignar el valor por defecto si 'estado' es null
+        facturaUrl: data.facturaUrl,
+      };
+      console.log('esta es la categoria', this.formulario.categoria, this.formulario.tercero);
 
-        // Asignar valores por defecto a los controles ngModel
-        this.selectedCategoriaId = data.categoria?._id || ''; // Asignar el ID de la categoría
-        this.selectedTerceroId = data.tercero?._id || ''; // Asignar el ID del tercero
-        console.log('Formulario después de la asignación:', this.formulario);
-        console.log(this.selectedCategoriaId, this.selectedTerceroId);
-      });
+      // Asignar valores por defecto a los controles ngModel
+      this.selectedCategoriaId = data.categoria?._id || ''; // Asignar el ID de la categoría
+      this.selectedTerceroId = data.tercero?._id || ''; // Asignar el ID del tercero
+      console.log('Formulario después de la asignación:', this.formulario);
+      console.log(this.selectedCategoriaId, this.selectedTerceroId);
+    });
   }
 
   updateTercero(value: string): void {
@@ -193,12 +183,8 @@ export class AddEditSolicitudComponent {
 
   addSolicitud() {
     // this.loading = true;
-    this.formulario.categoria = this.categorias.find(
-      (c) => c._id === this.selectedCategoriaId,
-    );
-    this.formulario.tercero = this.terceros.find(
-      (t) => t._id === this.selectedTerceroId,
-    );
+    this.formulario.categoria = this.categorias.find((c) => c._id === this.selectedCategoriaId);
+    this.formulario.tercero = this.terceros.find((t) => t._id === this.selectedTerceroId);
     if (this.id !== null) {
       this.sweetAlertService.showConfirmationDialog().then((result) => {
         if (result.isConfirmed) {
@@ -216,51 +202,100 @@ export class AddEditSolicitudComponent {
     }
   }
 
+  // realizarActualizacion() {
+  //   // Verifica si la URL de la factura está definida
+  //   console.log('url de fac definida: ', this.formulario.facturaUrl);
+
+  //   if (this.formulario.facturaUrl) {
+  //     // Realiza la actualización
+  //     this.solicitudesService
+  //       .updateSolicitud(
+  //         this.id,
+  //         this.formulario,
+  //         this.tenantId,
+  //         this.formulario.facturaUrl
+  //       )
+  //       .subscribe(() => {
+  //         // Muestra una alerta de éxito
+  //         const categoriaNombre = this.formulario.categoria?.nombre;
+  //         this.sweetAlertService.showSuccessAlert(
+  //           `La solicitud ${categoriaNombre} fue actualizada con éxito`
+  //         );
+  //         // Redirige a la lista de solicitudes
+  //         this.router.navigate(['/obtenerTodasLasSolicitudes']);
+  //       });
+  //   } else {
+  //     // Muestra un error si la URL de la factura no está definida
+  //     console.error(
+  //       'La URL de la factura está indefinida. No se puede realizar la actualización.'
+  //     );
+  //   }
+  // }
+
   realizarActualizacion() {
-    // Verifica si la URL de la factura está definida
-    console.log("url de fac definida: ",this.formulario.facturaUrl);
-    
-    if (this.formulario.facturaUrl) {
-      // Realiza la actualización
-      this.solicitudesService
-        .updateSolicitud(
-          this.id,
-          this.formulario,
-          this.tenantId,
-          this.formulario.facturaUrl,
-        )
-        .subscribe(() => {
-          // Muestra una alerta de éxito
-          const categoriaNombre = this.formulario.categoria?.nombre;
-          this.sweetAlertService.showSuccessAlert(
-            `La solicitud ${categoriaNombre} fue actualizada con éxito`,
-          );
-          // Redirige a la lista de solicitudes
-          this.router.navigate(['/obtenerTodasLasSolicitudes']);
-        });
+    // Verifica si hay un archivo de factura seleccionado
+    if (this.facturaSeleccionada) {
+      // const formData = new FormData();
+      // formData.append('facturaUrl', this.facturaSeleccionada);
+
+      // Verifica si this.id no es null antes de llamar a la función updateSolicitud
+      if (this.id !== null) {
+        this.solicitudesService
+          .updateSolicitud(
+            this.id,
+            this.formulario,
+            this.tenantId,
+            this.facturaSeleccionada
+          )
+          .subscribe(() => {
+            // Muestra una alerta de éxito
+            const categoriaNombre = this.formulario.categoria?.nombre;
+            this.sweetAlertService.showSuccessAlert(
+              `La solicitud ${categoriaNombre} fue actualizada con éxito`
+            );
+            // Redirige a la lista de solicitudes
+            this.router.navigate(['/obtenerTodasLasSolicitudes']);
+          });
+      } else {
+        console.error('El ID de la solicitud es null.');
+      }
     } else {
-      // Muestra un error si la URL de la factura no está definida
-      console.error(
-        'La URL de la factura está indefinida. No se puede realizar la actualización.',
-      );
+      // Si no hay archivo de factura seleccionado, realiza la actualización sin la factura
+      if (this.id !== null) {
+        this.solicitudesService
+          .updateSolicitud(
+            this.id,
+            this.formulario,
+            this.tenantId,
+            null // Pasar null como archivo de factura
+          )
+          .subscribe(() => {
+            // Muestra una alerta de éxito
+            const categoriaNombre = this.formulario.categoria?.nombre;
+            this.sweetAlertService.showSuccessAlert(
+              `La solicitud ${categoriaNombre} fue actualizada con éxito`
+            );
+            // Redirige a la lista de solicitudes
+            this.router.navigate(['/obtenerTodasLasSolicitudes']);
+          });
+      } else {
+        console.error('El ID de la solicitud es null.');
+      }
     }
   }
-  
-  realizarInsercion() {
-    console.log("este es el formulario con los datos en saveSolicitud= ",this.formulario);
-    this.solicitudesService
-      .savesolicitud(this.formulario, this.tenantId)      
-      .subscribe(() => {
-        // Muestra la alerta de éxito con SweetAlert2
-        this.sweetAlertService.showSuccessToast(
-          'Solicitud guardada exitosamente',
-        );
 
-        // Espera 1500 milisegundos (1.5 segundos) antes de navegar a la lista de egresos
-        setTimeout(() => {
-          this.loading = false;
-          this.router.navigate(['/obtenerTodasLasSolicitudes']);
-        }, 1500);
-      });
+
+  realizarInsercion() {
+    console.log('este es el formulario con los datos en saveSolicitud= ', this.formulario);
+    this.solicitudesService.savesolicitud(this.formulario, this.tenantId).subscribe(() => {
+      // Muestra la alerta de éxito con SweetAlert2
+      this.sweetAlertService.showSuccessToast('Solicitud guardada exitosamente');
+
+      // Espera 1500 milisegundos (1.5 segundos) antes de navegar a la lista de egresos
+      setTimeout(() => {
+        this.loading = false;
+        this.router.navigate(['/obtenerTodasLasSolicitudes']);
+      }, 1500);
+    });
   }
 }
