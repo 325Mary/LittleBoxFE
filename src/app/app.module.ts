@@ -38,6 +38,7 @@ import { ListCompaniesAprovedComponent } from './Components/list-companies-aprov
 import { SoliColaboradoresComponent } from './Components/soli-colaboradores/soli-colaboradores.component';
 import { DataUserComponent } from './Components/data-user/data-user.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,8 +80,7 @@ import { DataUserComponent } from './Components/data-user/data-user.component';
           return localStorage.getItem('token');
         }
       }
-    })
-    
+    }),
   ],
   providers: [SignInUpService,{ provide: environment, useValue: environment }],
   bootstrap: [AppComponent]

@@ -49,6 +49,7 @@ export class SolicitudesService {
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
     return this.http.post<void>(`${this.myAppUrl}${this.urlPost}`, solicitud, {
       params: { tenantId },
+      headers:headers
     });
   }
 
@@ -114,15 +115,16 @@ export class SolicitudesService {
 
   uploadFactura(file: File, solicitudId: string): Observable<{ url: string }> {
     const formData: FormData = new FormData();
-    formData.append('factura', file, file.name);
-  
+    formData.append('facturaUrl', file, file.name);
+
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
   
-    return this.http.post<{ url: string }>(
+    return this.http.put<{ url: string }>(
       `${this.myAppUrl}${this.urlPut}/${solicitudId}`, // Usando la solicitudId para actualizar la solicitud con la factura
       formData,
-      { headers: headers }
+      {headers: headers}
     );
   }
+  
 }

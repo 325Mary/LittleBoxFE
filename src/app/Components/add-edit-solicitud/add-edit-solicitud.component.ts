@@ -33,7 +33,6 @@ export class AddEditSolicitudComponent {
   selectedTerceroId: string = '';
 
   formulario: Solicitud = {
-    _id: '',
     solicitudId: 0,
     tenantId: '',
     tercero: null,
@@ -41,7 +40,7 @@ export class AddEditSolicitudComponent {
     detalle: '',
     categoria: null,
     valor: 0,
-    estado: null,
+    estado: { _id: '65d6a34bc04706dd1cdafd6c',nombre:"pendiente" }, // Valor por defecto para el estado
     facturaUrl: '',
   };
 
@@ -77,6 +76,8 @@ export class AddEditSolicitudComponent {
       this.solicitudesService.uploadFactura(file,solicId).subscribe(
         (response: any) => {
           this.formulario.facturaUrl = response.url;
+          // Llama a la función para realizar la actualización después de cargar la URL de la factura
+        this.realizarActualizacion();
         },
         (error) => {
           console.error('Error al subir el archivo:', error);
@@ -152,9 +153,7 @@ export class AddEditSolicitudComponent {
         const data = response.data; // Extraer la propiedad 'data' de la respuesta
         console.log('Datos obtenidos:', data);
 
-        // Asignar 'data' al formulario
         this.formulario = {
-          _id: data._id,
           solicitudId: data.solicitudId,
           tenantId: data.tenantId,
           fecha: new Date(data.fecha),
@@ -162,7 +161,8 @@ export class AddEditSolicitudComponent {
           valor: data.valor,
           categoria: data.categoria?.nombre,
           tercero: data.tercero?.nombreTercero,
-          estado: data.estado,
+          // Verificar si 'estado' es null antes de asignarlo al formulario
+          estado: data.estado || { _id: '65d6a34bc04706dd1cdafd6c' }, // Asignar el valor por defecto si 'estado' es null
           facturaUrl: data.facturaUrl,
         };
         console.log(
@@ -208,15 +208,18 @@ export class AddEditSolicitudComponent {
           this.loading = false;
         } else {
           // Si hace clic en "Cancelar", redirige a la lista de solicitudes
-          this.router.navigate(['/']);
+          this.router.navigate(['/obtenerTodasLasSolicitudes']);
         }
       });
     } else {
       this.realizarInsercion();
     }
   }
+
   realizarActualizacion() {
     // Verifica si la URL de la factura está definida
+    console.log("url de fac definida: ",this.formulario.facturaUrl);
+    
     if (this.formulario.facturaUrl) {
       // Realiza la actualización
       this.solicitudesService
@@ -230,10 +233,10 @@ export class AddEditSolicitudComponent {
           // Muestra una alerta de éxito
           const categoriaNombre = this.formulario.categoria?.nombre;
           this.sweetAlertService.showSuccessAlert(
-            `El Egreso ${categoriaNombre} fue actualizado con éxito`,
+            `La solicitud ${categoriaNombre} fue actualizada con éxito`,
           );
           // Redirige a la lista de solicitudes
-          this.router.navigate(['/']);
+          this.router.navigate(['/obtenerTodasLasSolicitudes']);
         });
     } else {
       // Muestra un error si la URL de la factura no está definida
@@ -242,9 +245,11 @@ export class AddEditSolicitudComponent {
       );
     }
   }
+  
   realizarInsercion() {
+    console.log("este es el formulario con los datos en saveSolicitud= ",this.formulario);
     this.solicitudesService
-      .savesolicitud(this.formulario, this.tenantId)
+      .savesolicitud(this.formulario, this.tenantId)      
       .subscribe(() => {
         // Muestra la alerta de éxito con SweetAlert2
         this.sweetAlertService.showSuccessToast(
@@ -254,7 +259,7 @@ export class AddEditSolicitudComponent {
         // Espera 1500 milisegundos (1.5 segundos) antes de navegar a la lista de egresos
         setTimeout(() => {
           this.loading = false;
-          this.router.navigate(['/']);
+          this.router.navigate(['/obtenerTodasLasSolicitudes']);
         }, 1500);
       });
   }

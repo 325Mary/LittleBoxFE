@@ -3,7 +3,7 @@ import { Tercero } from '../interfaces/tercero';
 import { EstadoSolicitud } from '../interfaces/estadoSolicitud';
 
 export interface Solicitud {
-  _id: any; // Puedes mantenerlo como string o usar cualquier otro tipo que prefieras
+  _id?: any; // Puedes mantenerlo como string o usar cualquier otro tipo que prefieras
   solicitudId: number;
   tenantId: string;
   tercero?: Tercero | null; // Cambiar por el tipo correspondiente si tercero es un ObjectId
