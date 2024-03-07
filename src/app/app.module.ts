@@ -13,6 +13,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ListaIngresosComponent } from './Components/ingresos/lista-ingresos/lista-ingresos.component';
+import { DetalleIngresoComponent } from './Components/ingresos/detalle-ingreso/detalle-ingreso.component';
+import { FormularioIngresoComponent } from './Components/ingresos/formulario-ingreso/formulario-ingreso.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { AppComponent } from './app.component';
     SidebarComponent,
     FooterComponent,
     NavbarComponent,
-    IndexComponent
+    IndexComponent,
+    ListaIngresosComponent,
+    DetalleIngresoComponent,
+    FormularioIngresoComponent
   ],
   imports: [
     BrowserModule,
