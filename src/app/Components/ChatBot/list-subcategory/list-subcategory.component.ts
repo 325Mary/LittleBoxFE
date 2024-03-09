@@ -28,7 +28,7 @@ export class ListSubcategoryComponent {
     this.SService.deleteSubcategories(id).subscribe(
       (data) => {
         this.toastr.error('La subclase fue eliminada con exito.', 'Subclase eliminada: ');
-        this.filtrarSubcategory(); // Actualiza la lista después de eliminar
+        this.filtrarSubcategory(); 
       },
       (error) => {
         console.log(error);

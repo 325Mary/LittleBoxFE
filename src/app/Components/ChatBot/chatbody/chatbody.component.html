@@ -1,8 +1,8 @@
-<div *ngIf="showModal" class="modal">
+
     <div class="container mt-3 float-end">
         <div class="row">
           <div class="image-container">
-            <img [routerLink]="['/menu']" class="float-end" src="assets/configuraciones.png" >
+            <img class="float-end" (click)="openModal()" src="assets/configuraciones.png" >
           </div>
           
         <div class="col-lg-10 offset-lg-1">
@@ -31,8 +31,6 @@
       </div>
     </div>
   </div>
-</div>    
-  
   
     
    

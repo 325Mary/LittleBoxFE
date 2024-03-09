@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { QueriesService } from '../../../services/chatbot/queries.service';
 import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MenuComponent } from '../menu/menu.component';
 
 
 interface Message {
@@ -25,16 +27,20 @@ interface Category {
 
 export class ChatbodyComponent {
 
-  //Modal:
-  @Input() showModal: boolean = false;
 
   userInput: string = '';
   chatHistory: Message[] = [];
   categories: Category[] = [];
 
   constructor(private QService: QueriesService, 
-    private SService: SubcategoryService,) 
+    private SService: SubcategoryService,
+    private modalService: NgbModal) 
   {}
+
+  //Configuracion:
+  openModal() {
+    const modalRef = this.modalService.open( MenuComponent, { size: 'lg' });
+  }
 
   ngOnInit(): void {
     this.mostrarMensajeBienvenida();
@@ -61,73 +67,6 @@ export class ChatbodyComponent {
 
     this.userInput = '';
   }
-
-  // mostrarCategorias() {
-  //   this.QService.showQueries().subscribe(
-  //     (categorias) => {
-  //       this.categories = categories;
-  //       const categoriesMsg = categories.map(
-  //         (category: Category) => `Nombre: ${category.name}`
-  //       );
-
-  //       this.chatHistory.push({
-  //         pregunta: 'Categorías disponibles:\n' + categoriesMsg.join('\n'),
-  //         respuesta: '',
-  //         fotoPerfil: 'assets/bot.png',
-  //         origen: 'bot'
-  //       });
-  //     },
-  //     (error) => {
-  //       console.error(error);
-  //       this.chatHistory.push({
-  //         pregunta: 'Ocurrió un error al obtener las categorías. Por favor, inténtalo de nuevo.',
-  //         respuesta: '',
-  //         fotoPerfil: 'assets/bot.png',
-  //         origen: 'bot'
-  //       });
-  //     }
-  //   );
-  // }
-
-  // mostrarSubclasesPorCategoria(referenciaCategoria: string) {
-  //   const categoriaSeleccionada = this.ca.find(c => c.referencia === referenciaCategoria);
-
-  //   if (categoriaSeleccionada) {
-  //     this.subclaseService.obtenerSubclasesPorCategoria(referenciaCategoria).subscribe(
-  //       (subclases) => {
-  //         if (subclases && subclases.length > 0) {
-  //           const subclasesMsg = subclases
-  //             .map((subclase: any) => `Subclase: Referencia: ${subclase.referencia}, Nombre: ${subclase.nombre}`)
-  //             .join('\n');
-  //           this.chatHistory.push({
-  //             pregunta: `Subclases asociadas a la categoría ${referenciaCategoria} (${categoriaSeleccionada.nombre}):\n` + subclasesMsg,
-  //             respuesta: '',
-  //             fotoPerfil: 'assets/bot.png',
-  //             origen: 'bot'
-  //           });
-  //         } else {
-  //           this.chatHistory.push({
-  //             pregunta: `No se encontraron subclases para la categoría ${referenciaCategoria}.`,
-  //             respuesta: '',
-  //             fotoPerfil: 'assets/bot.png',
-  //             origen: 'bot'
-  //           });
-  //         }
-  //       },
-  //       (error) => {
-  //         console.error(error);
-  //         this.chatHistory.push({
-  //           pregunta: `Ocurrió un error al obtener subclases para la categoría ${referenciaCategoria}. Por favor, inténtalo de nuevo.`,
-  //           respuesta: '',
-  //           fotoPerfil: 'assets/bot.png',
-  //           origen: 'bot'
-  //         });
-  //       }
-  //     );
-  //   } else {
-  //     this.mostrarMensajeNoEntendido(); 
-  //   }
-  // }
 
   consultarPorReferencia(indentifier: string) {
     const indentifierQ = indentifier;

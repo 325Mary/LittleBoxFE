@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ChatbodyComponent } from '../ChatBot/chatbody/chatbody.component';
 
 @Component({
   selector: 'app-index',
@@ -6,11 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './index.component.scss'
 })
 export class IndexComponent {
-  showModal: boolean = false;
 
-  onShowModalChange(event: boolean) {
-    console.log('Valor de showModal:', event);
-    this.showModal = event; 
+  constructor(private modalService: NgbModal) { }
+
+  openModal() {
+    const modalRef = this.modalService.open(ChatbodyComponent, { size: 'lg' });
   }
 }
 

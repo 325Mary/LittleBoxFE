@@ -24,3 +24,17 @@ body, html {
   z-index: 1;
 }
 
+
+.imagen-inferior {
+  position: fixed;
+  bottom: 20px; 
+  right: 20px; 
+  width: 100px; 
+  height: auto; 
+  border-radius: 50%; 
+  border: 2px solid #ccc; 
+  background-color: white; 
+  padding: 5px; 
+  cursor: pointer;
+  z-index: 999; 
+}

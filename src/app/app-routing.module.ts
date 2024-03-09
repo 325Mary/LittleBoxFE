@@ -21,16 +21,12 @@ const routes: Routes = [
   //Chatbot
 
   {path: 'formQuery', component: FormQueriesComponent },
-  {path: 'listQuery', component: ListQueriesComponent },
-
   {path: 'formCategory', component: FormCategoryComponent },
-  {path: 'listCategory', component: ListCategoryComponent },
-
   {path: 'formSubcategory', component: FormSubcategoryComponent },
-  {path: 'listSubcategory', component: ListSubcategoryComponent },
+
 
   {path: 'chatbot', component: ChatbodyComponent},
-  {path: 'menu', component: MenuComponent}
+  { path: 'menu', component: MenuComponent },
 
 
 ];

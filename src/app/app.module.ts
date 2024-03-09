@@ -23,7 +23,6 @@ import { ListSubcategoryComponent } from './Components/ChatBot/list-subcategory/
 import { FormSubcategoryComponent } from './Components/ChatBot/form-subcategory/form-subcategory.component';
 import { FormCategoryComponent } from './Components/ChatBot/form-category/form-category.component';
 import { FormQueriesComponent } from './Components/ChatBot/form-queries/form-queries.component';
-import { MovableImageComponent } from './Components/ChatBot/movable-image/movable-image.component';
 import { MenuComponent } from './Components/ChatBot/menu/menu.component';
 
 
@@ -43,7 +42,6 @@ import { MenuComponent } from './Components/ChatBot/menu/menu.component';
     FormSubcategoryComponent,
     FormCategoryComponent,
     FormQueriesComponent,
-    MovableImageComponent,
     MenuComponent
   ],
   imports: [
