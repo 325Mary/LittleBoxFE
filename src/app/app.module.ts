@@ -10,9 +10,21 @@ import { IndexComponent } from '../app/Components/index/index.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ChatbodyComponent } from './Components/ChatBot/chatbody/chatbody.component';
+import { ListCategoryComponent } from './Components/ChatBot/list-category/list-category.component';
+import { ListQueriesComponent } from './Components/ChatBot/list-queries/list-queries.component';
+import { ListSubcategoryComponent } from './Components/ChatBot/list-subcategory/list-subcategory.component';
+import { FormSubcategoryComponent } from './Components/ChatBot/form-subcategory/form-subcategory.component';
+import { FormCategoryComponent } from './Components/ChatBot/form-category/form-category.component';
+import { FormQueriesComponent } from './Components/ChatBot/form-queries/form-queries.component';
+import { MovableImageComponent } from './Components/ChatBot/movable-image/movable-image.component';
+
 
 @NgModule({
   declarations: [
@@ -21,14 +33,26 @@ import { AppComponent } from './app.component';
     SidebarComponent,
     FooterComponent,
     NavbarComponent,
-    IndexComponent
+    IndexComponent,
+    ChatbodyComponent,
+    ListCategoryComponent,
+    ListQueriesComponent,
+    ListSubcategoryComponent,
+    FormSubcategoryComponent,
+    FormCategoryComponent,
+    FormQueriesComponent,
+    MovableImageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbCarouselModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
