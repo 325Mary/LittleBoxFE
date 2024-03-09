@@ -1,1 +1,57 @@
-<p>list-category works!</p>
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="card border-dark mb-3" style="background-color: rgba(220, 216, 216, 0.362);">
+          <div class="card-body text-center">
+            <span class = "titulo"> CONFIGURACIONES</span>
+            <div class="boton">
+                <div class="input-group-prepend">
+                    <button class="btn btn-secondary border-info float-start" routerLink="/lista-consulta">CONSULTAS</button>
+                    <button class="btn btn-secondary border-info float-end" routerLink="/lista-subclase">SUBCLASE</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="card border-dark mb-3" style="background-color: rgba(220, 216, 216, 0.362);">
+          <div class="card-body text-center">
+            <div class="subtitulo1">
+                <span class="titulo">LISTA DE CATEGORIA</span>
+                <button class="btn btn-success border-dark float-end" routerLink="/formCategory">NUEVO</button>
+                <button routerLink="/" class="btn btn-secondary  border-dark float-start">VOLVER</button>
+            </div>
+            
+            
+            <br>
+
+            <div class="input-group mb-3 ">
+              <input type="text" class="form-control custom-input" placeholder="Buscar por nombre" [(ngModel)]="searchTerm" (ngModelChange)="filtrarCategory()" />
+            </div>
+
+            
+  
+            <table *ngIf="filteredCategory.length > 0" class="table table-bordered table-light table-hover border-dark mt-3">
+              <tbody>
+                <tr *ngFor="let category of filteredCategory">
+                  <td>{{ category.name }}</td>
+                  <td>{{ category.description }}</td>
+                  <td>
+                    <i [routerLink]="['/formCategory', category._id]" class="fas fa-edit text-primary"></i>
+                    <i [routerLink]="['/']" (click)="deleteCategory(category._id)"  class="fas fa-trash text-danger"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+  
+            <h5 style="text-align: start; margin-top: 10px" *ngIf="filteredCategory.length === 0">No hay productos para mostrar.</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+

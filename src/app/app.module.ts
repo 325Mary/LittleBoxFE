@@ -24,6 +24,8 @@ import { FormSubcategoryComponent } from './Components/ChatBot/form-subcategory/
 import { FormCategoryComponent } from './Components/ChatBot/form-category/form-category.component';
 import { FormQueriesComponent } from './Components/ChatBot/form-queries/form-queries.component';
 import { MovableImageComponent } from './Components/ChatBot/movable-image/movable-image.component';
+import { MenuComponent } from './Components/ChatBot/menu/menu.component';
+
 
 
 @NgModule({
@@ -41,7 +43,8 @@ import { MovableImageComponent } from './Components/ChatBot/movable-image/movabl
     FormSubcategoryComponent,
     FormCategoryComponent,
     FormQueriesComponent,
-    MovableImageComponent
+    MovableImageComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

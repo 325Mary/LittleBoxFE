@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { QueriesService } from '../../../services/chatbot/queries.service';
 import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
+
 
 interface Message {
   pregunta: string;
@@ -14,7 +15,7 @@ interface Category {
   nombre: string;
   descripcion: string;
 }
-
+ 
 @Component({
   selector: 'app-chatbody',
   templateUrl: './chatbody.component.html',
@@ -24,11 +25,16 @@ interface Category {
 
 export class ChatbodyComponent {
 
+  //Modal:
+  @Input() showModal: boolean = false;
+
   userInput: string = '';
   chatHistory: Message[] = [];
   categories: Category[] = [];
 
-  constructor(private QService: QueriesService, private SService: SubcategoryService) {}
+  constructor(private QService: QueriesService, 
+    private SService: SubcategoryService,) 
+  {}
 
   ngOnInit(): void {
     this.mostrarMensajeBienvenida();

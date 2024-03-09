@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CategoryService } from '../../../services/chatbot/category.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-category',
@@ -6,5 +8,44 @@ import { Component } from '@angular/core';
   styleUrl: './list-category.component.scss'
 })
 export class ListCategoryComponent {
+  constructor (private CaService: CategoryService,
+    private toastr: ToastrService,
+    ){
+      
+    }
+    
+  public searchTerm: string = '';
+  public listCategory: any [] = []
+  public filteredCategory: any[] = [];
 
+
+  ngOnInit() {
+    this.CaService.showCategories().subscribe(lista => {
+      this.listCategory = lista;
+      this.filteredCategory = lista;
+      this.ordenarLista();
+    });
+  }
+  
+
+  deleteCategory(id:any){
+    this.CaService.deleteCategory(id).subscribe(data =>{
+      this.toastr.error('La categoria fue eliminada con exito.', 'Categoria eliminada: ')
+      
+    }, error => {
+      console.log(error);
+    })
+  }
+
+  ordenarLista() {
+    this.listCategory.sort((a, b) => a.referencia - b.referencia);
+  }
+
+  filtrarCategory() {
+    this.filteredCategory = this.listCategory.filter(
+      (categoria: any) =>
+        categoria.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+  
 }

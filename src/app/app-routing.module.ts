@@ -7,6 +7,10 @@ import { FormQueriesComponent } from './Components/ChatBot/form-queries/form-que
 import { FormCategoryComponent } from './Components/ChatBot/form-category/form-category.component';
 import { FormSubcategoryComponent } from './Components/ChatBot/form-subcategory/form-subcategory.component';
 import { ChatbodyComponent } from './Components/ChatBot/chatbody/chatbody.component';
+import { ListQueriesComponent } from './Components/ChatBot/list-queries/list-queries.component';
+import { ListCategoryComponent } from './Components/ChatBot/list-category/list-category.component';
+import { ListSubcategoryComponent } from './Components/ChatBot/list-subcategory/list-subcategory.component';
+import { MenuComponent } from './Components/ChatBot/menu/menu.component';
 
 
 const routes: Routes = [
@@ -17,9 +21,16 @@ const routes: Routes = [
   //Chatbot
 
   {path: 'formQuery', component: FormQueriesComponent },
+  {path: 'listQuery', component: ListQueriesComponent },
+
   {path: 'formCategory', component: FormCategoryComponent },
+  {path: 'listCategory', component: ListCategoryComponent },
+
   {path: 'formSubcategory', component: FormSubcategoryComponent },
-  {path: 'chatbot', component: ChatbodyComponent}
+  {path: 'listSubcategory', component: ListSubcategoryComponent },
+
+  {path: 'chatbot', component: ChatbodyComponent},
+  {path: 'menu', component: MenuComponent}
 
 
 ];

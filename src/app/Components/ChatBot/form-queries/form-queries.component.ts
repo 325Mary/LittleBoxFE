@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
-import { QueriesService } from '../../../services/chatbot/queries.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { CategoryService } from '../../../services/chatbot/category.service';
+import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
+import { Query } from '../../../Models/queries';
+import { QueriesService } from '../../../services/chatbot/queries.service';
+
 
 @Component({
   selector: 'app-form-queries',
@@ -9,47 +14,92 @@ import { Router } from '@angular/router';
   styleUrl: './form-queries.component.scss'
 })
 export class FormQueriesComponent {
-  public listQuery: any[] = [];
-  public filteredQuery: any[] = [];
-  public searchTermReferencia: string = '';
+  queryForm: FormGroup;
+  titulo = "CREAR CONSULTA";
+  id: string | null;
+  errorReferenciaEnUso: string = '';
+  subcategories: any[] = [];
 
-  constructor(private QService: QueriesService, 
-              private toastr: ToastrService,
-              private router: Router) { }
+  constructor(
+    private buil: FormBuilder,
+    private router: Router,
+    private toastr: ToastrService,
+    private QService: QueriesService,
+    private aRouter: ActivatedRoute,
+    private SService: SubcategoryService,
+  ) {
+    this.queryForm = this.buil.group({
+      identifier: ['', Validators.required],
+      question: ['', Validators.required],
+      answer: ['', Validators.required],
+      subcategory: ['', Validators.required]
+    });
+    this.id = this.aRouter.snapshot.paramMap.get('id');
+  }
 
-  ngOnInit() {
-    this.QService.showQueries().subscribe((lista) => {
-        this.listQuery = lista;
-        this.ordenarLista();
-        this.filtrarQuery();
-      });
-}
-
-  deleteAQuery(id: any) {
-    this.QService.deleteQuery(id).subscribe(
-      (data) => {
-        this.toastr.error('La consulta fue eliminada con éxito.', 'Consulta eliminada: ');
-        this.filtrarQuery(); 
-        this.router.navigate(['/'])
+  
+  ngOnInit(): void {
+    this.XEditar()
+    this.SService.showSubcategories().subscribe(
+      (data: any[]) => {
+        this.subcategories = data;
       },
-      (error) => {
+      error => {
         console.log(error);
       }
     );
   }
-
-  ordenarLista() {
-    this.listQuery.sort((a, b) => a.referencia - b.referencia);
+    
+  onlyNumber(event: any) {
+    const pattern = /^[0-9]*$/;
+    if (event.key.length === 1 && !pattern.test(event.key)) {
+      event.preventDefault();
+    }
+  }
+  
+  esTeclaBorrado(event: any): boolean {
+    return event.key === 'Backspace' || event.key === 'Delete';
   }
 
-  filtrarQuery() {
-    if (this.searchTermReferencia) {
-      this.filteredQuery = this.listQuery.filter(query =>
-        query.referencia.toString().includes(this.searchTermReferencia)
-      );
+  addQuery() {
+    const QUERY: Query = {
+      identifier: this.queryForm.get('identifier')?.value,
+      question: this.queryForm.get('question')?.value,
+      answer: this.queryForm.get('answer')?.value,
+      subcategory: this.queryForm.get('subcategory')?.value,
+    };
+
+    if (this.id !== null) {
+      this.QService.editQuery(this.id, QUERY).subscribe(data => {
+        this.toastr.info('La consulta se ha actualizado con éxito.', 'Se ha actualizado con éxito:');
+        this.router.navigate(['/listCategory']);
+      }, error => {
+        console.log(error);
+        this.queryForm.reset();
+      });
+
     } else {
-      this.filteredQuery = [...this.listQuery]; 
+      this.QService.saveQuery(QUERY).subscribe(data => {
+        this.toastr.success('La consulta fue registrada con éxito.', 'Consulta registrada:');
+        this.router.navigate(['/listCategory']);
+      }, error => {
+        console.log(error);
+        this.queryForm.reset();
+      });
     }
   }
 
+  XEditar() {
+    if (this.id !== null) {
+      this.titulo = 'Editar consulta';
+      this.QService.getAQuery(this.id).subscribe(data => {
+        this.queryForm.setValue({
+          identifier: data.identifier,
+          question: data.question,
+          answer: data.answer,
+          subcategory: data.subcategory,
+        });
+      });
+    }
+  }
 }
