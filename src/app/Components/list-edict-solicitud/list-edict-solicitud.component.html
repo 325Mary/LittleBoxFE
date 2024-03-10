@@ -1,37 +1,48 @@
-<div *ngIf="!loading" class="container">
-    <div class="title">
-        <h4>Listado de Solicitudes</h4>
-        <button type="button" class="btn btn-success" routerLink="/add">Agregar Solictud</button>
+<div class="container">
+  <div class="title">
+    <h4>Listado de Solicitudes</h4>
+    <div class="estado-solicitudes-container">
+      <label for="estado-select">Estado:</label>
+      <select id="estado-select" [(ngModel)]="estadoSeleccionado"name="estado" class="form-control" required #terceroInput="ngModel">
+        <option *ngFor="let estado of estadoDeSolicitud" [value]="estado._id">
+          {{ estado.nombre }}
+        </option>
+      </select>
+      <button (click)="guardarCambiosEstado()" type="button" class="btn btn-danger btn-sm ms-2">Guardar</button>
     </div>
+    <button type="button" class="btn btn-success" routerLink="/add">Agregar Solicitud</button>
+  </div>
 
-    <table *ngIf="listSolicitudes.length > 0" class="table table-hover">
-        <thead>
-          <tr class="table-primary">
-            <th scope="col">Solicitud #</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Proveedor</th>
-            <th scope="col">Categoria</th>
-            <th scope="col">Detalle</th>
-            <th scope="col">Valor</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of listSolicitudes" class="table-active">
-            <td>{{ item.solicitudId }}</td>
-            <td>{{ item.fecha }}</td>
-            <!-- <td>{{ (item.tercero || {}).nombreTercero || 'Sin proveedor' }}</td>
-            <td>{{ (item.categoria || {}).nombre || 'Sin categoría' }}</td> -->
-            <td>{{ item.tercero?.nombreTercero }}</td>
-            <td>{{ item.categoria?.nombre }}</td>
-            <td>{{ item.detalle }}</td>
-            <td>{{ item.valor | currency }}</td>
-            <td>
-                <button [routerLink]="['/edit', item._id]" type="button" class="btn btn-info btn-sm">Edit</button>
-                <button (click)="deleteSolicitud(item._id!)" type="button" class="btn btn-danger btn-sm ms-2">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <h5 *ngIf="listSolicitudes.length == 0">No hay Solicitudes para mostrar</h5>
+  <table *ngIf="listSolicitudes.length > 0" class="table table-hover">
+    <thead>
+      <tr class="table-primary">
+        <th scope="col">Solicitud #</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Proveedor</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Detalle</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Seleccionar</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let solicitud of listSolicitudes" class="table-active">
+        <td>{{ solicitud.solicitudId }}</td>
+        <td>{{ solicitud.fecha }}</td>
+        <td>{{ solicitud.tercero?.nombreTercero }}</td>
+        <td>{{ solicitud.estado?.nombre }}</td>
+        <td>{{ solicitud.detalle }}</td>
+        <td>{{ solicitud.valor | currency }}</td>
+        <td>
+          <input type="checkbox" (change)="seleccionarSolicitud(solicitud?._id)">
+        </td>
+        <td>
+          <button [routerLink]="['/edit', solicitud._id]" type="button" class="btn btn-info btn-sm">Editar</button>
+          <button (click)="deleteSolicitud(solicitud._id)" type="button" class="btn btn-danger btn-sm ms-2">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 *ngIf="listSolicitudes.length == 0">No hay Solicitudes para mostrar</h5>
 </div>

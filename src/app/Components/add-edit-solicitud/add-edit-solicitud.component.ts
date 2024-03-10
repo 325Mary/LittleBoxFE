@@ -10,6 +10,7 @@ import { EstadoSolicitudService } from '../../services/estado-solicitud.service'
 import { ActivatedRoute, Router } from '@angular/router';
 import { SweetAlertService } from '../../services/sweet-alert.service';
 import { TokenValidationService } from '../../services/token-validation-service.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-add-edit-solicitud',
@@ -33,6 +34,8 @@ export class AddEditSolicitudComponent {
   selectedTerceroId: string = '';
   facturaSeleccionada: File | null = null;
 
+  extension: string = '';
+
   formulario: Solicitud = {
     solicitudId: 0,
     tenantId: '',
@@ -53,7 +56,8 @@ export class AddEditSolicitudComponent {
     private router: Router,
     private aRouter: ActivatedRoute,
     private tokenValidationService: TokenValidationService,
-    private sweetAlertService: SweetAlertService
+    private sweetAlertService: SweetAlertService,
+    private modalService:ModalService,
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
     const token = localStorage.getItem('token');
@@ -88,27 +92,123 @@ export class AddEditSolicitudComponent {
   //   }
   // }
 
+  // onFileSelected(event: any) {
+  //   this.facturaSeleccionada = event.target.files[0];
+  // }
+
+  // onFileSelected(event: any) {
+  //   console.log("Evento de cambio:", event);
+  //   this.facturaSeleccionada = event.target.files[0];
+  //   // Verificar si facturaSeleccionada no es nulo
+  //   console.log("Esta es la factura seleccionada: ", this.facturaSeleccionada);
+
+  //   if (this.facturaSeleccionada) {
+  //     // Obtener la extensión del archivo
+  //     const extension = this.facturaSeleccionada.name.split('.').pop()?.toLowerCase();
+  //     // Asignar la URL del archivo seleccionado a formulario.facturaUrl
+  //     this.formulario.facturaUrl = URL.createObjectURL(this.facturaSeleccionada);
+  //     console.log("onfileselected url ", this.formulario.facturaUrl);
+  //     console.log("Extension:", extension);
+
+  //     // Abrir el modal de factura
+  //     this.openFacturaModal();
+  //   }
+  // }
+
+  // openFacturaModal() {
+  //   console.log("Abriendo modal de factura");
+  //   this.showModal = true;
+
+  //   // Verificar si la facturaUrl está definida y no es nula
+  //   if (this.formulario.facturaUrl) {
+  //     console.log("URL de la factura:", this.formulario.facturaUrl);
+  //     if (this.facturaSeleccionada) {
+  //       // Verificar si la factura es una imagen o PDF
+  //       const fileType = this.facturaSeleccionada.type;
+  //       this.isImage = fileType.startsWith('image/');
+  //       this.isPdf = fileType === 'application/pdf';
+
+  //       console.log("Es una imagen:", this.isImage);
+  //       console.log("Es un PDF:", this.isPdf);
+  //     } else {
+  //       // Factura seleccionada es nula
+  //       console.log("No se ha seleccionado ninguna factura.");
+  //     }
+  //   } else {
+  //     // Si la facturaUrl no está definida, establecer isImage y isPdf como false
+  //     this.isImage = false;
+  //     this.isPdf = false;
+  //     console.log("No se ha adjuntado ninguna factura");
+  //   }
+  // }
+
   onFileSelected(event: any) {
+    console.log("Evento de cambio:", event);
     this.facturaSeleccionada = event.target.files[0];
+    // Verificar si facturaSeleccionada no es nulo
+    console.log("Esta es la factura seleccionada: ", this.facturaSeleccionada);
+
+    if (this.facturaSeleccionada) {
+      // Obtener la extensión del archivo
+      const extension = this.facturaSeleccionada.name.split('.').pop()?.toLowerCase();
+      // Asignar la URL del archivo seleccionado a formulario.facturaUrl
+      const facturaUrl = URL.createObjectURL(this.facturaSeleccionada);
+      console.log("onfileselected url ", facturaUrl);
+      console.log("Extension:", extension);
+
+      // Emitir la factura seleccionada al servicio modal
+      this.modalService.enviarFacturaSeleccionada(this.facturaSeleccionada);
+    }
   }
 
+  // onFileSelected(event: any) {
+  //   this.facturaSeleccionada = event.target.files[0];
+  //   // Verificar si facturaSeleccionada no es nulo
+  //   console.log("Esta es la factura seleccionada: ", this.facturaSeleccionada);
+  
+  //   if (this.facturaSeleccionada) {
+  //     // Obtener la extensión del archivo
+  //     const extension = this.facturaSeleccionada.name.split('.').pop()?.toLowerCase();
+  //     // Asignar la URL del archivo seleccionado a formulario.facturaUrl
+  //     this.formulario.facturaUrl = URL.createObjectURL(this.facturaSeleccionada);
+  //     // Asignar la URL del archivo a la propiedad facturaUrl del formulario
+  //     this.formulario.facturaUrl = this.formulario.facturaUrl;
+  //     console.log("onfileselected url ", this.formulario.facturaUrl);
+  //     console.log("Extension:", extension);
+  
+  //     // Abrir el modal de factura
+  //     this.openFacturaModal();
+  //   }
+  // }
+  
+
   openFacturaModal() {
+    console.log("Abriendo modal de factura");
     this.showModal = true;
 
     // Verificar si la facturaUrl está definida y no es nula
     if (this.formulario.facturaUrl) {
-      // Verificar si la factura es una imagen o PDF
-      this.isImage =
-        this.formulario.facturaUrl.endsWith('.jpg') ||
-        this.formulario.facturaUrl.endsWith('.jpeg') ||
-        this.formulario.facturaUrl.endsWith('.png');
-      this.isPdf = this.formulario.facturaUrl.endsWith('.pdf');
+      console.log("URL de la factura:", this.formulario.facturaUrl);
+      if (this.facturaSeleccionada) {
+        // Verificar si la factura es una imagen o PDF
+        const fileType = this.facturaSeleccionada.type;
+        this.isImage = fileType.startsWith('image/');
+        this.isPdf = fileType === 'application/pdf';
+
+        console.log("Es una imagen:", this.isImage);
+        console.log("Es un PDF:", this.isPdf);
+      } else {
+        // Factura seleccionada es nula
+        console.log("No se ha seleccionado ninguna factura.");
+      }
     } else {
       // Si la facturaUrl no está definida, establecer isImage y isPdf como false
       this.isImage = false;
       this.isPdf = false;
+      console.log("No se ha adjuntado ninguna factura");
     }
   }
+
 
   closeFacturaModal() {
     this.showModal = false;
@@ -286,8 +386,10 @@ export class AddEditSolicitudComponent {
 
 
   realizarInsercion() {
-    console.log('este es el formulario con los datos en saveSolicitud= ', this.formulario);
-    this.solicitudesService.savesolicitud(this.formulario, this.tenantId).subscribe(() => {
+    console.log('este es el formulario con los datos en saveSolicitud= ', this.formulario, " esta es la url de la factura guardada: ", this.facturaSeleccionada);
+    this.solicitudesService.savesolicitud(this.formulario, this.tenantId,this.facturaSeleccionada).subscribe(() => {
+      console.log("estos son los datos al intentar guardar el formulario: ",this.formulario, " esta es la url de la factura guardada: ", this.facturaSeleccionada);
+      
       // Muestra la alerta de éxito con SweetAlert2
       this.sweetAlertService.showSuccessToast('Solicitud guardada exitosamente');
 

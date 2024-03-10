@@ -174,7 +174,7 @@
                             <input [(ngModel)]="formulario.solicitudId" name="solicitudId" type="text" class="form-control" id="solicitudIdInput" readonly>
                         </div>
                     </div>
-                    <div *ngIf="id">
+                    <div >
                         <!-- Resto de campos de edición -->
                         <div class="form-group">
                             <label for="terceroInput">Tercero:</label>
@@ -219,8 +219,9 @@
 
                     <!-- Enlace o botón para visualizar la factura -->
                     <div *ngIf="formulario.facturaUrl" class="mt-3">
-                        <a href="#" (click)="openFacturaModal()" class="btn btn-primary">Ver factura</a>
-                    </div>
+                      <a href="javascript:void(0)" (click)="openFacturaModal()" class="btn btn-primary">Ver factura</a>
+                      <!-- <a (click)="openFacturaModal()" class="btn btn-primary" style="cursor: pointer;">Ver factura</a> -->
+                  </div>
 
                     <!-- Modal para mostrar la factura -->
                     <div class="modal" [class.show]="showModal">
@@ -234,7 +235,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <img *ngIf="isImage" [src]="formulario.facturaUrl" class="img-fluid" alt="Factura">
-                                    <iframe *ngIf="isPdf && formulario.facturaUrl" [src]="formulario.facturaUrl | safe: 'resource'" class="pdf-viewer"></iframe>
+                                    <iframe *ngIf="isPdf && formulario.facturaUrl" [src]="formulario.facturaUrl | safe:'resource'" class="pdf-viewer"></iframe>
                                 </div>
                             </div>
                         </div>

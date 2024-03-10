@@ -36,7 +36,7 @@ export class SweetAlertService {
 
   showConfirmationDelete(): Promise<SweetAlertResult> {
     return Swal.fire({
-      title: 'Estas seguro de eliminar el egreso?',
+      title: 'Estas seguro de eliminar el registro?',
       text: 'Este proceso no se podra revertir!',
       icon: 'warning',
       showCancelButton: true,

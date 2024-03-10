@@ -44,14 +44,37 @@ export class SolicitudesService {
     );
   }
 
-  savesolicitud(solicitud: Solicitud, tenantId: string): Observable<void> {
+  // savesolicitud(solicitud: Solicitud, tenantId: string): Observable<void> {
+  //   const token = this.tokenValidationService.getToken();
+  //   const headers = new HttpHeaders({ 'Authorization': `${token}` });
+  //   return this.http.post<void>(`${this.myAppUrl}${this.urlPost}`, solicitud, {
+  //     params: { tenantId },
+  //     headers:headers
+  //   });
+  // }
+
+  savesolicitud(
+    solicitud: Solicitud,
+    tenantId: string,
+    file: File | null
+  ): Observable<void> {
+    const formData: FormData = new FormData();
+    formData.append('solicitud', JSON.stringify(solicitud));
+    formData.append('tenantId', tenantId);
+    if (file) { // Verifica si file no es nulo antes de agregarlo al FormData
+      formData.append('facturaUrl', file, file.name);
+    }
+  
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
-    return this.http.post<void>(`${this.myAppUrl}${this.urlPost}`, solicitud, {
-      params: { tenantId },
-      headers:headers
-    });
+  
+    return this.http.post<void>(
+      `${this.myAppUrl}${this.urlPost}`,
+      formData,
+      { headers: headers }
+    );
   }
+  
 
   getSolicitud(solicitudId: string, tenantId: string): Observable<Solicitud> {
     const token = this.tokenValidationService.getToken();
@@ -64,20 +87,6 @@ export class SolicitudesService {
     );
   }
 
-  // updateSolicitud(
-  //   solicitudId: any,
-  //   nuevosDatos: Solicitud,
-  //   tenantId: string,
-  //   facturaUrl: string,
-  // ): Observable<void> {
-  //   const token = this.tokenValidationService.getToken();
-  //   const headers = new HttpHeaders({ 'Authorization': `${token}` });
-  //   return this.http.put<void>(
-  //     `${this.myAppUrl}${this.urlPut}/${solicitudId}`,
-  //     nuevosDatos,
-  //     { params: { tenantId, facturaUrl }, headers: headers },
-  //   );
-  // }
 
   updateSolicitud(
     solicitudId: string,
@@ -105,14 +114,16 @@ export class SolicitudesService {
   
 
   updateEstadoSolicitud(
-    solicitudId: any,
-    nuevoEstadoId: string,
+    solicitudesId: any,
+    nuevoEstadoId: any,
     tenantId: string,
   ): Observable<void> {
+    console.log("este es el nuevo estado del servico:..",nuevoEstadoId);
+    
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
     return this.http.put<void>(
-      `${this.myAppUrl}${this.urlPutEstado}/${solicitudId}`,
+      `${this.myAppUrl}${this.urlPutEstado}/${solicitudesId}`,
       null,
       { params: { tenantId, nuevoEstadoId },headers: headers },
     );
