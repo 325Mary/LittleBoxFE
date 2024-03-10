@@ -7,8 +7,8 @@
                   <div class="card-body text-center">
                     <div>
                         <span class = "titulo">LISTA DE SUBCATEGORIAS</span>
-                        <button class="btn btn-success border-dark float-end" routerLink="/formSubcategory">NUEVO</button>
-                        <button routerLink="/" class="btn btn-secondary border-dark float-start">VOLVER</button>
+                        <button class="btn btn-success border-dark float-end" (click)="openModal()" >NUEVO</button>
+                        <button (click)="cerrarModal()" class="btn btn-secondary border-dark float-start">VOLVER</button>
                       </div>
                       
                       <br>
@@ -34,7 +34,7 @@
                               <td>{{ subcategory.category.name }}</td>
                               <td> 
                                   <i [routerLink]="['/', subcategory._id]" class="fas fa-edit text-primary"></i>
-                                  <i (click)="eliminarSubclase(subcategory._id)" class="fas fa-trash text-danger"></i>
+                                  <i (click)="eliminarSubclase(subcategory._id)"  class="fas fa-trash text-danger"></i>
                               </td>
                           </tr>
                           </tbody>

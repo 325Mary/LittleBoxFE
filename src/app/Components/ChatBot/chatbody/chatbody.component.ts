@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { QueriesService } from '../../../services/chatbot/queries.service';
 import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuComponent } from '../menu/menu.component';
 
 
@@ -33,8 +33,8 @@ export class ChatbodyComponent {
   categories: Category[] = [];
 
   constructor(private QService: QueriesService, 
-    private SService: SubcategoryService,
-    private modalService: NgbModal) 
+    private modalService: NgbModal,
+    public activeModal: NgbActiveModal) 
   {}
 
   //Configuracion:
@@ -42,6 +42,11 @@ export class ChatbodyComponent {
     const modalRef = this.modalService.open( MenuComponent, { size: 'lg' });
   }
 
+  cerrarModal() {
+    this.activeModal.close('Modal cerrada');
+  }
+
+  //Componente:
   ngOnInit(): void {
     this.mostrarMensajeBienvenida();
   }

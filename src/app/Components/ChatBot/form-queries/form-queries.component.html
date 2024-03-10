@@ -63,9 +63,9 @@
                           
                           
                         <div class="mb-3">
-                            <button routerLink="/listQuery" class="btn btn-secondary float-start btn-lg">VOLVER</button>
+                            <button  (click)="cerrarModal()" class="btn btn-secondary float-start btn-lg">VOLVER</button>
                             <button type="submit" [disabled]="queryForm.invalid" (click)="addQuery()"
-                              class="btn btn-success float-end btn-lg">ACEPTAR</button>
+                              class="btn btn-success float-end btn-lg"  (click)="cerrarModal()">ACEPTAR</button>
                           </div>
                         </form>
                       </div>

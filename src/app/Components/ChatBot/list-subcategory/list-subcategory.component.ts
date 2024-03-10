@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormSubcategoryComponent } from '../form-subcategory/form-subcategory.component';
 
 
 @Component({
@@ -9,12 +11,27 @@ import { SubcategoryService } from '../../../services/chatbot/subcategory.servic
   styleUrl: './list-subcategory.component.scss'
 })
 export class ListSubcategoryComponent {
+
+  //Modal: 
+  cerrarModal() {
+    this.activeModal.close('Modal cerrada');
+  }
+
+  openModal() {
+    const modalRef = this.modalService.open( FormSubcategoryComponent, { size: 'lg' });
+  }
+
+  
+
+
   public listSubcategory: any[] = [];
   public filteredSubcategory: any[] = [];
   public searchTermReferencia: string = '';
 
   constructor(private SService: SubcategoryService, 
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              public activeModal: NgbActiveModal,
+              public modalService: NgbModal) { }
 
   ngOnInit() {
     this.SService.showSubcategories().subscribe((lista) => {

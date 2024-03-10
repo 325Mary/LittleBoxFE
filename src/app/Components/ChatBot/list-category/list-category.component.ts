@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CategoryService } from '../../../services/chatbot/category.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormCategoryComponent } from '../form-category/form-category.component';
 
 @Component({
   selector: 'app-list-category',
@@ -10,9 +12,21 @@ import { ToastrService } from 'ngx-toastr';
 export class ListCategoryComponent {
   constructor (private CaService: CategoryService,
     private toastr: ToastrService,
-    ){
+    public activeModal: NgbActiveModal,
+    public modalService: NgbModal){
       
     }
+
+
+  //Modal:
+  cerrarModal() {
+    this.activeModal.close('Modal cerrada');
+  }
+
+  openModal() {
+    const modalRef = this.modalService.open( FormCategoryComponent, { size: 'lg' });
+  }
+
     
   public searchTerm: string = '';
   public listCategory: any [] = []

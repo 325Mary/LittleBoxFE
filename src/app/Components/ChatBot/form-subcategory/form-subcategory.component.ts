@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
 import { CategoryService } from '../../../services/chatbot/category.service';
 import { Subcategory } from '../../../Models/subcategory';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-form-subcategory',
@@ -12,6 +13,13 @@ import { Subcategory } from '../../../Models/subcategory';
   styleUrl: './form-subcategory.component.scss'
 })
 export class FormSubcategoryComponent {
+  //Modal:
+  cerrarModal() {
+    this.activeModal.close('Modal cerrada');
+  }
+
+
+  //Componente:
   subcategoryForm: FormGroup
   titulo = "CREAR SUBCATEGORIA";
   id: string | null
@@ -23,6 +31,7 @@ export class FormSubcategoryComponent {
               private SService: SubcategoryService,
               private CaService : CategoryService,
               private aRouter: ActivatedRoute,
+              public activeModal: NgbActiveModal
               ){
 
     this.subcategoryForm = this.buil.group({

@@ -6,6 +6,7 @@ import { CategoryService } from '../../../services/chatbot/category.service';
 import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
 import { Query } from '../../../Models/queries';
 import { QueriesService } from '../../../services/chatbot/queries.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -14,6 +15,13 @@ import { QueriesService } from '../../../services/chatbot/queries.service';
   styleUrl: './form-queries.component.scss'
 })
 export class FormQueriesComponent {
+   //Modal:
+   cerrarModal() {
+    this.activeModal.close('Modal cerrada');
+  }
+
+
+  //Component: 
   queryForm: FormGroup;
   titulo = "CREAR CONSULTA";
   id: string | null;
@@ -27,6 +35,7 @@ export class FormQueriesComponent {
     private QService: QueriesService,
     private aRouter: ActivatedRoute,
     private SService: SubcategoryService,
+    public activeModal: NgbActiveModal
   ) {
     this.queryForm = this.buil.group({
       identifier: ['', Validators.required],

@@ -48,10 +48,10 @@
                     
                     </form>
                     <div class="mb-3">
-                        <button routerLink="/listSubcategory" class="btn btn-secondary
+                        <button  (click)="cerrarModal()" class="btn btn-secondary
                         float-start btn-lg">VOLVER</button>
                         <button type="submit" [disabled]="subcategoryForm.invalid" (click)="addSubcategory()"
-                         class="btn btn-success float-end btn-lg">ACEPTAR</button>
+                         class="btn btn-success float-end btn-lg"  (click)="cerrarModal()">ACEPTAR</button>
                     </div>
                 </div>
             </div>

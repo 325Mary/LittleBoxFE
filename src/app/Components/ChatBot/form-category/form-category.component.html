@@ -35,10 +35,10 @@
                         </div>
                     </form>
                     <div class="mb-3">
-                        <button routerLink="/listCategory" class="btn btn-secondary
+                        <button (click)="cerrarModal()" class="btn btn-secondary
                         float-start btn-lg">VOLVER</button>
                         <button type="submit" [disabled]="categoryForm.invalid" (click)="addCategory()"
-                         class="btn btn-success float-end btn-lg">ACEPTAR</button>
+                         class="btn btn-success float-end btn-lg" (click)="cerrarModal()">ACEPTAR</button>
                     </div>
                 </div>
             </div>

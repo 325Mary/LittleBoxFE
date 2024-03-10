@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../../../services/chatbot/category.service';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-form-category',
@@ -11,15 +12,25 @@ import { CategoryService } from '../../../services/chatbot/category.service';
   styleUrl: './form-category.component.scss'
 })
 export class FormCategoryComponent {
+
+   //Modal:
+   cerrarModal() {
+    this.activeModal.close('Modal cerrada');
+  }
+
+
+  //Component: 
   categoryForm: FormGroup
   titulo = "CREAR CATEGORIA";
   id: string | null
 
   constructor (private buil : FormBuilder,
-              private router: Router,
               private toastr: ToastrService,
               private CaService: CategoryService,
-              private aRouter: ActivatedRoute){
+              private aRouter: ActivatedRoute,
+              public activeModal: NgbActiveModal){
+
+
 
     this.categoryForm = this.buil.group({
       name: ['', Validators.required],
@@ -42,7 +53,6 @@ export class FormCategoryComponent {
       
       this.CaService.editCategory(this.id, CATEGORY).subscribe(data => {
         this.toastr.info('La categoria se ha actualizado con exito.', 'Se ha actualizado con exito:')
-        this.router.navigate(['/lista-categoria'])
 
       }, error =>{
         console.log(error)
@@ -53,7 +63,6 @@ export class FormCategoryComponent {
 
       this.CaService.saveCategory(CATEGORY).subscribe(data =>{
         this.toastr.success('La categoria fue registrada con exito.', 'Categoria registrada:')
-        this.router.navigate(['/lista-categoria'])
       }, error =>{
         console.log(error)
         this.categoryForm.reset()

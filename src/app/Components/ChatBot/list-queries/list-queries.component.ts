@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { QueriesService } from '../../../services/chatbot/queries.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormQueriesComponent } from '../form-queries/form-queries.component';
 
 @Component({
   selector: 'app-list-queries',
@@ -9,13 +11,27 @@ import { Router } from '@angular/router';
   styleUrl: './list-queries.component.scss'
 })
 export class ListQueriesComponent {
+
+
+  //Modal: 
+  cerrarModal() {
+    this.activeModal.close('Modal cerrada');
+  }
+  
+  openModal() {
+    const modalRef = this.modalService.open( FormQueriesComponent, { size: 'lg' });
+  }
+
+
   public listQuery: any[] = [];
   public filteredQuery: any[] = [];
   public searchTermReferencia: string = '';
 
   constructor(private QService: QueriesService, 
               private toastr: ToastrService,
-              private router: Router) { }
+              private router: Router,
+              public activeModal: NgbActiveModal,
+              public modalService: NgbModal) { }
 
   ngOnInit() {
     this.QService.showQueries().subscribe((lista) => {
