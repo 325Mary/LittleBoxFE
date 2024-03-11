@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 // import { ObjectId } from 'mongoose';
 import { Solicitud } from '../interfaces/solicitud';
 import { TokenValidationService } from '../services/token-validation-service.service';
@@ -87,29 +88,41 @@ export class SolicitudesService {
     );
   }
 
+    
 
   updateSolicitud(
-    solicitudId: string,
+    Id: any,
     nuevosDatos: Solicitud,
     tenantId: string,
-    file: File | null 
-  ): Observable<void> {
-    const formData: FormData = new FormData();
-    formData.append('nuevosDatos', JSON.stringify(nuevosDatos));
+    archivo: File | null // Se cambió "file" a "archivo" para claridad en español
+  ): Observable<Solicitud> {
+    const formData = new FormData();
+  
+    formData.append('solicitudId', nuevosDatos.solicitudId.toString()); 
+    formData.append('tercero', nuevosDatos.tercero?._id);
+    formData.append('fecha', nuevosDatos.fecha.toISOString());
+    formData.append('detalle', nuevosDatos.detalle);
+    formData.append('valor', nuevosDatos.valor.toString()); // Convertir valor a cadena
+    formData.append('categoria', nuevosDatos.categoria?._id);
+    formData.append('estado', nuevosDatos.estado?._id);
     formData.append('tenantId', tenantId);
-    if (file) { // Verifica si file no es nulo antes de agregarlo al FormData
-      formData.append('facturaUrl', file, file.name);
+    if (archivo) {
+      formData.append('facturaUrl', archivo, archivo.name); // Incluir nombre del archivo
+    } else {
+      // Opcional: Incluir lógica para mantener la 'facturaUrl' existente si no se proporciona un archivo
+      // formData.append('facturaUrl', ''); // Ejemplo para enviar una cadena vacía
     }
   
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
   
-    return this.http.put<void>(
-      `${this.myAppUrl}${this.urlPut}/${solicitudId}`,
+    return this.http.put<Solicitud>(
+      `${this.myAppUrl}${this.urlPut}/${Id}`,
       formData,
-      { headers: headers }
+      { headers:headers }
     );
   }
+  
   
   
 
@@ -129,18 +142,5 @@ export class SolicitudesService {
     );
   }
 
-  // uploadFactura(file: File, solicitudId: string): Observable<{ url: string }> {
-  //   const formData: FormData = new FormData();
-  //   formData.append('facturaUrl', file, file.name);
-
-  //   const token = this.tokenValidationService.getToken();
-  //   const headers = new HttpHeaders({ 'Authorization': `${token}` });
-  
-  //   return this.http.put<{ url: string }>(
-  //     `${this.myAppUrl}${this.urlPut}/${solicitudId}`, // Usando la solicitudId para actualizar la solicitud con la factura
-  //     formData,
-  //     {headers: headers}
-  //   );
-  // }
   
 }

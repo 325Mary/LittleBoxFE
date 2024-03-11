@@ -340,6 +340,8 @@ export class AddEditSolicitudComponent {
 
       // Verifica si this.id no es null antes de llamar a la función updateSolicitud
       if (this.id !== null) {
+        console.log("datos nuevos del formulario: ", this.formulario);
+        
         this.solicitudesService
           .updateSolicitud(
             this.id,
