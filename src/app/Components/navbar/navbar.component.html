@@ -1,15 +1,37 @@
 
 <div class="navbar">
-  
+
+  <div  *ngIf="!isLoggedIn" class="logo">
+      <img src="../../assets/logo_little_box.png" >
+  </div>
+
   <div class="menu-container" [ngClass]="{'menu-open': isMenuOpen}">
     <app-sidebar></app-sidebar>
   </div>
-  <div class="contenedor-img">
+  <div *ngIf="isLoggedIn" class="contenedor-img">
     <a (click)="toggleMenu()">
-      <img src="../../assets/logo_little_box.png" alt="">
+      <img src="../../../assets/bx-home.svg" alt="">
     </a>
   </div>
- 
   
+  <!-- Mostrar elementos específicos si el usuario está autenticado -->
+  <div *ngIf="isLoggedIn && userData">
+      <img src="../../../assets/bx-user-circle (1).svg" alt="Icono" class="user-info "> 
+      <span>{{ userData.username }}</span>
+  </div>
   
+  <div *ngIf="isLoggedIn" class="logout-section">
+    <button class="btn" (click)="logout()">Cerrar sesión</button>
+  </div>
+
+  <!-- Mostrar botón de SignIn/Up si el usuario no está autenticado -->
+  <a href="#" *ngIf="!isLoggedIn" (click)="openModal()" class="right">SignIn/Up</a>
+
+  <!-- Mostrar el modal de registro si se abre -->
+  <div class="modal" [class.active]="modalOpen">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <app-pre-registro></app-pre-registro>
+    </div>
+  </div>
 </div>
