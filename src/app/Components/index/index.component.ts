@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ChatbodyComponent } from '../ChatBot/chatbody/chatbody.component';
 
 @Component({
   selector: 'app-index',
@@ -9,10 +7,6 @@ import { ChatbodyComponent } from '../ChatBot/chatbody/chatbody.component';
 })
 export class IndexComponent {
 
-  constructor(private modalService: NgbModal) { }
-
-  openModal() {
-    const modalRef = this.modalService.open(ChatbodyComponent, { size: 'lg' });
-  }
+  
 }
 
