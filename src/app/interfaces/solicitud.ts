@@ -12,5 +12,5 @@ export interface Solicitud {
   categoria?: Categoria | null; // Cambiar por el tipo correspondiente si categoria es un ObjectId
   valor: number;
   estado?: EstadoSolicitud | null; // Cambiar por el tipo correspondiente si estado es un ObjectId
-  facturaUrl?: string; // El signo de interrogación indica que este campo es opcional
+  facturaUrl?: string | null | undefined; // El signo de interrogación indica que este campo es opcional
 }

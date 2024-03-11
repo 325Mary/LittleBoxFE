@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Solicitud } from '../../interfaces/solicitud';
 import { Categoria } from '../../interfaces/categoria';
 import { Tercero } from '../../interfaces/tercero';
@@ -18,6 +18,12 @@ import { ModalService } from '../../services/modal.service';
   styleUrls: ['./add-edit-solicitud.component.scss'],
 })
 export class AddEditSolicitudComponent {
+
+  @ViewChild('modalContent') modalContent: ElementRef<any> | null = null;
+  pdfSrc: string = '';
+
+  facturaFile: File | null = null;
+
   loading: boolean = false;
   id: string | null;
   operacion: string = 'Agregar ';
@@ -74,146 +80,183 @@ export class AddEditSolicitudComponent {
     console.log(this.tenantId);
   }
 
-  // onFileSelected(event: any) {
-  //   this.facturaSeleccionada = event.target.files[0];
-  //   if (this.facturaSeleccionada) {
-  //     const solicId = this.id ?? ''; // Si this.id es null, asigna un valor predeterminado de cadena vacía
-  //     this.solicitudesService.uploadFactura(this.facturaSeleccionada, solicId).subscribe(
-  //       (response: any) => {
-  //         this.formulario.facturaUrl = response.url;
-  //         // Llama a la función para realizar la actualización después de cargar la URL de la factura
-  //         this.realizarActualizacion();
-  //       },
-  //       (error) => {
-  //         console.error('Error al subir el archivo:', error);
-  //         // Manejar el error apropiadamente, por ejemplo, mostrar un mensaje al usuario
-  //       }
-  //     );
+  
+
+  onFileSelected(event: any) {
+    console.log("Evento de cambio:", event);
+  
+    if (event.target.files.length === 0) {
+      return;
+    }
+  
+    const file = event.target.files[0];
+  
+    // Validar tipo de archivo
+    const allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
+    const extension = file.name.split('.').pop()?.toLowerCase();
+    if (!allowedExtensions.includes(extension)) {
+      console.error('El archivo seleccionado no es compatible.');
+      this.sweetAlertService.showErrorAlert('El archivo seleccionado no es compatible. Solo se admiten archivos JPG, JPEG, PNG y PDF.');
+      return;
+    }
+  
+    this.facturaSeleccionada = file;
+  
+    // Obtener la URL del archivo
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.formulario.facturaUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  if (this.facturaSeleccionada) {
+     // Emitir la factura seleccionada al servicio modal
+     this.modalService.enviarFacturaSeleccionada(this.facturaSeleccionada);
+  }else{
+    console.error('No se ha seleccionado ningun archivo.');
+  }
+   
+  }
+  
+  
+
+  // openFacturaModal() {
+  //   console.log("Abriendo modal de factura");
+  //   this.showModal = true;
+  
+  //   // Verificar si la facturaUrl está definida y no es nula
+  //   if (!this.formulario.facturaUrl) {
+  //     console.log("No se ha adjuntado ninguna factura");
+  //     return;
   //   }
+  
+  //   // Descargar el archivo
+  //   this.solicitudesService.descargarFactura(this.formulario.facturaUrl).subscribe((data: any) => {
+  //     // Mostrar el archivo
+  //     if (this.isImage) {
+  //       const img = new Image();
+  //       img.src = data;
+  //       this.modalContent?.nativeElement.appendChild(img);
+  //     } else if (this.isPdf) {
+  //       // Convertir la respuesta a una URL de archivo
+  //       const fileURL = URL.createObjectURL(new Blob([data], { type: 'application/pdf' }));
+  //       this.pdfSrc = fileURL;
+  //     }
+  //   });
   // }
 
-  // onFileSelected(event: any) {
-  //   this.facturaSeleccionada = event.target.files[0];
-  // }
+  openFacturaModal() {
+    console.log("Abriendo modal de factura");
+    this.showModal = true;
+  
+    // Verificar si la facturaUrl está definida y no es nula
+    if (!this.formulario.facturaUrl) {
+      console.log("No se ha adjuntado ninguna factura");
+      return;
+    }
+  
+    // Se verifica si el archivo es una imagen
+    const extension = this.formulario.facturaUrl?.split('.').pop()?.toLowerCase() || "";
 
-  // onFileSelected(event: any) {
-  //   console.log("Evento de cambio:", event);
-  //   this.facturaSeleccionada = event.target.files[0];
-  //   // Verificar si facturaSeleccionada no es nulo
-  //   console.log("Esta es la factura seleccionada: ", this.facturaSeleccionada);
+    if (['jpg', 'jpeg', 'png'].includes(extension)) {
+      this.isImage = true;
+      this.isPdf = false;
+  
+      // Mostrar la imagen directamente desde la URL
+      this.pdfSrc = this.formulario.facturaUrl;
+    } else if (extension === 'pdf') {
+      this.isImage = false;
+      this.isPdf = true;
+  
+      // Mostrar el PDF directamente desde la URL
+      this.pdfSrc = this.formulario.facturaUrl;
+    } else {
+      console.error('El tipo de archivo de la factura no es compatible.');
+      this.sweetAlertService.showErrorAlert('El tipo de archivo de la factura no es compatible. Solo se admiten imágenes JPG, JPEG, PNG y archivos PDF.');
+      return;
+    }
+  }
 
-  //   if (this.facturaSeleccionada) {
-  //     // Obtener la extensión del archivo
-  //     const extension = this.facturaSeleccionada.name.split('.').pop()?.toLowerCase();
-  //     // Asignar la URL del archivo seleccionado a formulario.facturaUrl
-  //     this.formulario.facturaUrl = URL.createObjectURL(this.facturaSeleccionada);
-  //     console.log("onfileselected url ", this.formulario.facturaUrl);
-  //     console.log("Extension:", extension);
+  // fileTypeMap: {
+  //   [key: string]: string;
+  // } = {
+  //   '504b0304': 'application/pdf',
+  //   'ffd8ffe0': 'image/jpeg',
+  //   '89504e47': 'image/png',
+  // };
 
-  //     // Abrir el modal de factura
-  //     this.openFacturaModal();
-  //   }
+  // getFileType(arrayBuffer: ArrayBuffer): string {
+  //   const uint8Array = new Uint8Array(arrayBuffer);
+  //   const bytes = uint8Array.slice(0, 4);
+  //   const hex: string = bytes.reduce((acc, byte) => acc + byte.toString(16), '');
+  //   return this.fileTypeMap[hex] || 'unknown';
   // }
 
   // openFacturaModal() {
   //   console.log("Abriendo modal de factura");
   //   this.showModal = true;
-
+  
   //   // Verificar si la facturaUrl está definida y no es nula
-  //   if (this.formulario.facturaUrl) {
-  //     console.log("URL de la factura:", this.formulario.facturaUrl);
-  //     if (this.facturaSeleccionada) {
-  //       // Verificar si la factura es una imagen o PDF
-  //       const fileType = this.facturaSeleccionada.type;
-  //       this.isImage = fileType.startsWith('image/');
-  //       this.isPdf = fileType === 'application/pdf';
-
-  //       console.log("Es una imagen:", this.isImage);
-  //       console.log("Es un PDF:", this.isPdf);
-  //     } else {
-  //       // Factura seleccionada es nula
-  //       console.log("No se ha seleccionado ninguna factura.");
-  //     }
-  //   } else {
-  //     // Si la facturaUrl no está definida, establecer isImage y isPdf como false
-  //     this.isImage = false;
-  //     this.isPdf = false;
+  //   if (!this.formulario.facturaUrl) {
   //     console.log("No se ha adjuntado ninguna factura");
+  //     return;
+  //   }
+  
+  //   // Obtener la extensión del archivo
+  //   const extension = this.formulario.facturaUrl?.split('.').pop()?.toLowerCase() || "";
+  
+  //   // Validar la extensión del archivo
+  //   if (!['jpg', 'jpeg', 'png', 'pdf'].includes(extension)) {
+  //     console.error('El tipo de archivo de la factura no es compatible.');
+  //     this.sweetAlertService.showErrorAlert('El tipo de archivo de la factura no es compatible. Solo se admiten imágenes JPG, JPEG, PNG y archivos PDF.');
+  //     return;
+  //   }
+  
+  //   // Mostrar el archivo según su tipo
+  //   if (['jpg', 'jpeg', 'png'].includes(extension)) {
+  //     this.isImage = true;
+  //     this.isPdf = false;
+  //     this.pdfSrc = this.formulario.facturaUrl;
+  //   } else if (extension === 'pdf') {
+  //     this.isImage = false;
+  //     this.isPdf = true;
+  
+  //     // Usar FileReader para obtener el archivo y verificar su tipo
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       const arrayBuffer = reader.result as ArrayBuffer;
+  //       const fileType = this.getFileType(arrayBuffer);
+  
+  //       if (fileType === 'application/pdf') {
+  //         // Mostrar el PDF en el modal
+  //         this.pdfSrc = URL.createObjectURL(new Blob([arrayBuffer], { type: fileType }));
+  //       } else {
+  //         console.error('El tipo de archivo no es compatible.');
+  //         this.sweetAlertService.showErrorAlert('El tipo de archivo de la factura no es compatible. Solo se admiten archivos PDF.');
+  //       }
+  //     };
+  //     if (this.facturaSeleccionada) {
+  //       reader.readAsArrayBuffer(this.facturaSeleccionada);
+  //     }
+      
   //   }
   // }
-
-  onFileSelected(event: any) {
-    console.log("Evento de cambio:", event);
-    this.facturaSeleccionada = event.target.files[0];
-    // Verificar si facturaSeleccionada no es nulo
-    console.log("Esta es la factura seleccionada: ", this.facturaSeleccionada);
-
-    if (this.facturaSeleccionada) {
-      // Obtener la extensión del archivo
-      const extension = this.facturaSeleccionada.name.split('.').pop()?.toLowerCase();
-      // Asignar la URL del archivo seleccionado a formulario.facturaUrl
-      const facturaUrl = URL.createObjectURL(this.facturaSeleccionada);
-      console.log("onfileselected url ", facturaUrl);
-      console.log("Extension:", extension);
-
-      // Emitir la factura seleccionada al servicio modal
-      this.modalService.enviarFacturaSeleccionada(this.facturaSeleccionada);
-    }
-  }
-
-  // onFileSelected(event: any) {
-  //   this.facturaSeleccionada = event.target.files[0];
-  //   // Verificar si facturaSeleccionada no es nulo
-  //   console.log("Esta es la factura seleccionada: ", this.facturaSeleccionada);
   
-  //   if (this.facturaSeleccionada) {
-  //     // Obtener la extensión del archivo
-  //     const extension = this.facturaSeleccionada.name.split('.').pop()?.toLowerCase();
-  //     // Asignar la URL del archivo seleccionado a formulario.facturaUrl
-  //     this.formulario.facturaUrl = URL.createObjectURL(this.facturaSeleccionada);
-  //     // Asignar la URL del archivo a la propiedad facturaUrl del formulario
-  //     this.formulario.facturaUrl = this.formulario.facturaUrl;
-  //     console.log("onfileselected url ", this.formulario.facturaUrl);
-  //     console.log("Extension:", extension);
   
-  //     // Abrir el modal de factura
-  //     this.openFacturaModal();
-  //   }
-  // }
-  
-
-  openFacturaModal() {
-    console.log("Abriendo modal de factura");
-    this.showModal = true;
-
-    // Verificar si la facturaUrl está definida y no es nula
-    if (this.formulario.facturaUrl) {
-      console.log("URL de la factura:", this.formulario.facturaUrl);
-      if (this.facturaSeleccionada) {
-        // Verificar si la factura es una imagen o PDF
-        const fileType = this.facturaSeleccionada.type;
-        this.isImage = fileType.startsWith('image/');
-        this.isPdf = fileType === 'application/pdf';
-
-        console.log("Es una imagen:", this.isImage);
-        console.log("Es un PDF:", this.isPdf);
-      } else {
-        // Factura seleccionada es nula
-        console.log("No se ha seleccionado ninguna factura.");
-      }
-    } else {
-      // Si la facturaUrl no está definida, establecer isImage y isPdf como false
-      this.isImage = false;
-      this.isPdf = false;
-      console.log("No se ha adjuntado ninguna factura");
-    }
-  }
-
-
   closeFacturaModal() {
     this.showModal = false;
   }
 
+  removeFactura(): void {
+    // Limpiar el campo que guarda la referencia al archivo
+    this.formulario.facturaUrl = null;
+    this.facturaFile = null;
+  
+    // Opcional: mostrar un mensaje de éxito al usuario
+    this.sweetAlertService.showSuccessAlert('La factura se ha eliminado correctamente.');
+  }
+
+
+  
   ngOnInit() {
     //this.tenantService.setTenant('123456789')
     this.getCategorias();
@@ -302,36 +345,7 @@ export class AddEditSolicitudComponent {
     }
   }
 
-  // realizarActualizacion() {
-  //   // Verifica si la URL de la factura está definida
-  //   console.log('url de fac definida: ', this.formulario.facturaUrl);
-
-  //   if (this.formulario.facturaUrl) {
-  //     // Realiza la actualización
-  //     this.solicitudesService
-  //       .updateSolicitud(
-  //         this.id,
-  //         this.formulario,
-  //         this.tenantId,
-  //         this.formulario.facturaUrl
-  //       )
-  //       .subscribe(() => {
-  //         // Muestra una alerta de éxito
-  //         const categoriaNombre = this.formulario.categoria?.nombre;
-  //         this.sweetAlertService.showSuccessAlert(
-  //           `La solicitud ${categoriaNombre} fue actualizada con éxito`
-  //         );
-  //         // Redirige a la lista de solicitudes
-  //         this.router.navigate(['/obtenerTodasLasSolicitudes']);
-  //       });
-  //   } else {
-  //     // Muestra un error si la URL de la factura no está definida
-  //     console.error(
-  //       'La URL de la factura está indefinida. No se puede realizar la actualización.'
-  //     );
-  //   }
-  // }
-
+  
   realizarActualizacion() {
     // Verifica si hay un archivo de factura seleccionado
     if (this.facturaSeleccionada) {

@@ -38,7 +38,7 @@ import { ListCompaniesAprovedComponent } from './Components/list-companies-aprov
 import { SoliColaboradoresComponent } from './Components/soli-colaboradores/soli-colaboradores.component';
 import { DataUserComponent } from './Components/data-user/data-user.component';
 
-
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +74,7 @@ import { DataUserComponent } from './Components/data-user/data-user.component';
     HttpClientModule,
     NgbModule,
     FormsModule,
+    NgxExtendedPdfViewerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

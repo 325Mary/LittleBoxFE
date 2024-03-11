@@ -59,8 +59,17 @@ export class SolicitudesService {
     tenantId: string,
     file: File | null
   ): Observable<void> {
+
+    const fechaDate = new Date(solicitud.fecha);
+
     const formData: FormData = new FormData();
-    formData.append('solicitud', JSON.stringify(solicitud));
+    formData.append('solicitudId', solicitud.solicitudId.toString()); 
+    formData.append('tercero', solicitud.tercero?._id);
+    formData.append('fecha', fechaDate.toISOString());
+    formData.append('detalle', solicitud.detalle);
+    formData.append('valor', solicitud.valor.toString()); // Convertir valor a cadena
+    formData.append('categoria', solicitud.categoria?._id);
+    formData.append('estado', solicitud.estado?._id);
     formData.append('tenantId', tenantId);
     if (file) { // Verifica si file no es nulo antes de agregarlo al FormData
       formData.append('facturaUrl', file, file.name);
@@ -140,6 +149,18 @@ export class SolicitudesService {
       null,
       { params: { tenantId, nuevoEstadoId },headers: headers },
     );
+  }
+
+  descargarFactura(facturaUrl: string): Observable<any> {
+    const token = this.tokenValidationService.getToken();
+    const headers = new HttpHeaders({ 'Authorization': `${token}` });
+    // Agregar headers de autenticación si es necesario
+    // headers.append('Authorization', 'Bearer ' + token);
+
+    return this.http.get(facturaUrl, {
+      headers,
+      responseType: 'arraybuffer' // Indica que queremos la respuesta como un buffer de bytes
+    });
   }
 
   
