@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { HomeComponent } from '../app/Components/home/home.component';
 import { SidebarComponent } from '../app/Components/sidebar/sidebar.component';
 import { FooterComponent } from '../app/Components/footer/footer.component';
@@ -32,6 +31,9 @@ import { CreateUserAdminComponent } from './Components/create-user-admin/create-
 import { ListCompaniesAprovedComponent } from './Components/list-companies-aproved/list-companies-aproved.component';
 import { SoliColaboradoresComponent } from './Components/soli-colaboradores/soli-colaboradores.component';
 import { DataUserComponent } from './Components/data-user/data-user.component';
+import { FormularioIngresoComponent } from "../app/Components/ingresos/formulario-ingreso/formulario-ingreso.component"; // Importa tu componente aquí
+
+
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { DataUserComponent } from './Components/data-user/data-user.component';
     CreateUserAdminComponent,
     ListCompaniesAprovedComponent,
     SoliColaboradoresComponent,
-    DataUserComponent
+    DataUserComponent,
+    FormularioIngresoComponent
   ],
   imports: [
     BrowserModule,

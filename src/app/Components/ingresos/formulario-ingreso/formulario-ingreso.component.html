@@ -1,1 +1,56 @@
-<p>formulario-ingreso works!</p>
+<!-- <h1>Formulario de ingreso</h1>
+
+<form [formGroup]="formularioIngreso">
+    <div class="form-group">
+        <label for="fecha">Fecha:</label>
+        <input type="date" class="form-control" id="fecha" formControlName="fecha">
+    </div>
+    <div class="form-group">
+        <label for="detalle">Detalle:</label>
+        <input type="text" class="form-control" id="detalle" formControlName="detalle">
+    </div>
+    <div class="form-group">
+        <label for="valor">Valor:</label>
+        <input type="number" class="form-control" id="valor" formControlName="valor">
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="guardarIngreso()">Guardar</button>
+</form>
+ -->
+
+<!-- 
+<h1>Formulario de ingreso</h1>
+
+<form>
+    <div class="form-group">
+        <label for="fecha">Fecha:</label>
+        <input type="date" class="form-control" id="fecha" [(ngModel)]="fecha" name="fecha" required>
+    </div>
+    <div class="form-group">
+        <label for="detalle">Detalle:</label>
+        <input type="text" class="form-control" id="detalle" [(ngModel)]="detalle" name="detalle" required>
+    </div>
+    <div class="form-group">
+        <label for="valor">Valor:</label>
+        <input type="number" class="form-control" id="valor" [(ngModel)]="valor" name="valor" required>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="guardarIngreso()">Guardar</button>
+</form> -->
+
+<h1>Formulario de ingreso</h1>
+
+<form (ngSubmit)="guardarIngreso()">
+    <div class="form-group">
+        <label for="fecha">Fecha:</label>
+        <input type="date" class="form-control" id="fecha" name="fecha" [(ngModel)]="fecha" required>
+    </div>
+    <div class="form-group">
+        <label for="detalle">Detalle:</label>
+        <input type="text" class="form-control" id="detalle" name="detalle" [(ngModel)]="detalle" required>
+    </div>
+    <div class="form-group">
+        <label for="valor">Valor:</label>
+        <input type="number" class="form-control" id="valor" name="valor" [(ngModel)]="valor" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

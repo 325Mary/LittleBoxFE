@@ -1,1 +1,18 @@
-<p>detalle-ingreso works!</p>
+<!-- import { DatePipe, CurrencyPipe } from '@angular/common'; -->
+
+
+<h1>Detalle del ingreso</h1>
+
+<div class="card">
+    <div class="card-header">
+        Información del ingreso
+    </div>
+    <div class="card-body">
+        <p>ID: {{ ingreso?.ingresoId }}</p>
+        <p>Fecha: {{ ingreso?.fecha }}</p>
+        <p>Detalle: {{ ingreso?.detalle }}</p>
+        <p>Valor: {{ ingreso?.valor }}</p>
+    </div>
+</div>
+
+<!-- <button class="btn btn-sm btn-primary" (click)="regresar()">Regresar</button> -->

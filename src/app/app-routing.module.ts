@@ -37,7 +37,10 @@ const routes: Routes = [
   { path: 'listCompaniesAproved', component:ListCompaniesAprovedComponent },
   { path: 'SoliColaboradores', component: SoliColaboradoresComponent},
   { path: 'userData/:userId', component: DataUserComponent},
-  { path: '**', component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent },
+  {path: '',component: HomeComponent},
+  {path: 'ingresos', loadChildren: () => import('./modules/ingresos.module').then(m => m.IngresosModule)},
+  {path: '**', redirectTo: ''}
 ];
 
 @NgModule({
