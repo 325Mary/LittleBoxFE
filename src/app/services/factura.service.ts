@@ -12,6 +12,7 @@ export class FacturaService {
   private urlPost = 'guardarFactura';
   private urlGet = 'obtenerFactura';
   private urlDownload = 'descargarFactura';
+  private urlRemove = 'eliminarFactura'; // Agrega la URL para eliminar factura
 
   constructor(private http: HttpClient, private tokenValidationService: TokenValidationService) {
     this.myAppUrl = environment.apiUrl;
@@ -55,6 +56,20 @@ export class FacturaService {
         params: { facturaUrl, tenantId },
         headers: headers,
         responseType: 'blob' 
+      }
+    );
+  }
+
+  // Método para eliminar factura
+  removeFactura(facturaId: string, tenantId: string): Observable<void> {
+    const token = this.tokenValidationService.getToken();
+    const headers = new HttpHeaders({ 'Authorization': `${token}` });
+
+    return this.http.delete<void>(
+      `${this.myAppUrl}${this.urlRemove}/${facturaId}`,
+      { 
+        params: { tenantId },
+        headers: headers
       }
     );
   }

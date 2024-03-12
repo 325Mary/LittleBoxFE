@@ -67,7 +67,7 @@ import { ListDeleteIngresosComponent } from './Components/ingresos/list-delete-i
     ListCompaniesAprovedComponent,
     SoliColaboradoresComponent,
     DataUserComponent,
-    ListDeleteIngresosComponent
+    ListDeleteIngresosComponent,
   ],
   imports: [
     BrowserModule,

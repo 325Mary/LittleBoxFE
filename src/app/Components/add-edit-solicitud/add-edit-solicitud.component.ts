@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SweetAlertService } from '../../services/sweet-alert.service';
 import { TokenValidationService } from '../../services/token-validation-service.service';
 import { ModalService } from '../../services/modal.service';
+import { FacturaService } from '../../services/factura.service';
 
 @Component({
   selector: 'app-add-edit-solicitud',
@@ -64,6 +65,7 @@ export class AddEditSolicitudComponent {
     private tokenValidationService: TokenValidationService,
     private sweetAlertService: SweetAlertService,
     private modalService:ModalService,
+    private facturaService:FacturaService,
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
     const token = localStorage.getItem('token');
@@ -117,32 +119,6 @@ export class AddEditSolicitudComponent {
    
   }
   
-  
-
-  // openFacturaModal() {
-  //   console.log("Abriendo modal de factura");
-  //   this.showModal = true;
-  
-  //   // Verificar si la facturaUrl está definida y no es nula
-  //   if (!this.formulario.facturaUrl) {
-  //     console.log("No se ha adjuntado ninguna factura");
-  //     return;
-  //   }
-  
-  //   // Descargar el archivo
-  //   this.solicitudesService.descargarFactura(this.formulario.facturaUrl).subscribe((data: any) => {
-  //     // Mostrar el archivo
-  //     if (this.isImage) {
-  //       const img = new Image();
-  //       img.src = data;
-  //       this.modalContent?.nativeElement.appendChild(img);
-  //     } else if (this.isPdf) {
-  //       // Convertir la respuesta a una URL de archivo
-  //       const fileURL = URL.createObjectURL(new Blob([data], { type: 'application/pdf' }));
-  //       this.pdfSrc = fileURL;
-  //     }
-  //   });
-  // }
 
   openFacturaModal() {
     console.log("Abriendo modal de factura");
@@ -154,106 +130,79 @@ export class AddEditSolicitudComponent {
       return;
     }
   
-    // Se verifica si el archivo es una imagen
-    const extension = this.formulario.facturaUrl?.split('.').pop()?.toLowerCase() || "";
-
+    // Verificar si se está creando una nueva solicitud o modificando una existente
+    if (!this.id) {
+      // Si no hay ID, significa que se está creando una nueva solicitud
+      console.log("Ver factura adjunta al formulario");
+      // Verificar si el archivo es una imagen o un PDF
+      this.verificarTipoArchivo(this.formulario.facturaUrl);
+    } else {
+      // Si hay un ID, significa que se está modificando una solicitud existente
+      console.log("Ver factura desde el servicio de factura");
+      // Llamar al servicio de factura para obtener la factura desde la base de datos
+      this.facturaService.obtenerFactura(this.id, this.tenantId).subscribe((response: Blob) => {
+        // Convertir la respuesta en una URL válida para el visor
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.pdfSrc = reader.result as string;
+        };
+        reader.readAsDataURL(response);
+      });
+    }
+  }
+  
+  verificarTipoArchivo(url: string | undefined) {
+    console.log("estaes la url completa...",url);
+    
+    if (!url) {
+      console.error('La URL de la factura es indefinida.');
+      // Tratar el caso en el que la URL es indefinida
+      return;
+    }
+  
+    const extension = url.split('.').pop()?.toLowerCase()!; // <- Añadimos el operador de aserción !
+  
     if (['jpg', 'jpeg', 'png'].includes(extension)) {
       this.isImage = true;
       this.isPdf = false;
-  
-      // Mostrar la imagen directamente desde la URL
-      this.pdfSrc = this.formulario.facturaUrl;
+      this.pdfSrc = url;
     } else if (extension === 'pdf') {
       this.isImage = false;
       this.isPdf = true;
-  
-      // Mostrar el PDF directamente desde la URL
-      this.pdfSrc = this.formulario.facturaUrl;
+      this.pdfSrc = url;
     } else {
       console.error('El tipo de archivo de la factura no es compatible.');
       this.sweetAlertService.showErrorAlert('El tipo de archivo de la factura no es compatible. Solo se admiten imágenes JPG, JPEG, PNG y archivos PDF.');
-      return;
     }
   }
+  
 
-  // fileTypeMap: {
-  //   [key: string]: string;
-  // } = {
-  //   '504b0304': 'application/pdf',
-  //   'ffd8ffe0': 'image/jpeg',
-  //   '89504e47': 'image/png',
-  // };
-
-  // getFileType(arrayBuffer: ArrayBuffer): string {
-  //   const uint8Array = new Uint8Array(arrayBuffer);
-  //   const bytes = uint8Array.slice(0, 4);
-  //   const hex: string = bytes.reduce((acc, byte) => acc + byte.toString(16), '');
-  //   return this.fileTypeMap[hex] || 'unknown';
-  // }
-
-  // openFacturaModal() {
-  //   console.log("Abriendo modal de factura");
-  //   this.showModal = true;
-  
-  //   // Verificar si la facturaUrl está definida y no es nula
-  //   if (!this.formulario.facturaUrl) {
-  //     console.log("No se ha adjuntado ninguna factura");
-  //     return;
-  //   }
-  
-  //   // Obtener la extensión del archivo
-  //   const extension = this.formulario.facturaUrl?.split('.').pop()?.toLowerCase() || "";
-  
-  //   // Validar la extensión del archivo
-  //   if (!['jpg', 'jpeg', 'png', 'pdf'].includes(extension)) {
-  //     console.error('El tipo de archivo de la factura no es compatible.');
-  //     this.sweetAlertService.showErrorAlert('El tipo de archivo de la factura no es compatible. Solo se admiten imágenes JPG, JPEG, PNG y archivos PDF.');
-  //     return;
-  //   }
-  
-  //   // Mostrar el archivo según su tipo
-  //   if (['jpg', 'jpeg', 'png'].includes(extension)) {
-  //     this.isImage = true;
-  //     this.isPdf = false;
-  //     this.pdfSrc = this.formulario.facturaUrl;
-  //   } else if (extension === 'pdf') {
-  //     this.isImage = false;
-  //     this.isPdf = true;
-  
-  //     // Usar FileReader para obtener el archivo y verificar su tipo
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       const arrayBuffer = reader.result as ArrayBuffer;
-  //       const fileType = this.getFileType(arrayBuffer);
-  
-  //       if (fileType === 'application/pdf') {
-  //         // Mostrar el PDF en el modal
-  //         this.pdfSrc = URL.createObjectURL(new Blob([arrayBuffer], { type: fileType }));
-  //       } else {
-  //         console.error('El tipo de archivo no es compatible.');
-  //         this.sweetAlertService.showErrorAlert('El tipo de archivo de la factura no es compatible. Solo se admiten archivos PDF.');
-  //       }
-  //     };
-  //     if (this.facturaSeleccionada) {
-  //       reader.readAsArrayBuffer(this.facturaSeleccionada);
-  //     }
-      
-  //   }
-  // }
-  
   
   closeFacturaModal() {
     this.showModal = false;
   }
 
   removeFactura(): void {
-    // Limpiar el campo que guarda la referencia al archivo
-    this.formulario.facturaUrl = null;
+    // Verificar si se está creando una nueva solicitud o modificando una existente
+    if (!this.id) {
+    // Si no hay ID, significa que se está creando una nueva solicitud
+    // Limpiar la URL de la factura adjunta
+    this.formulario.facturaUrl = '';
     this.facturaFile = null;
-  
     // Opcional: mostrar un mensaje de éxito al usuario
     this.sweetAlertService.showSuccessAlert('La factura se ha eliminado correctamente.');
-  }
+    } else {
+    // Si hay un ID, significa que se está modificando una solicitud existente
+    // Llamar al servicio de factura para eliminar la factura de la base de datos
+    this.facturaService.removeFactura(this.id, this.tenantId).subscribe(() => {
+    // Limpiar la URL de la factura adjunta
+    this.formulario.facturaUrl = '';
+    this.facturaFile = null;
+    // Mostrar un mensaje de éxito al usuario
+    this.sweetAlertService.showSuccessAlert('La factura se ha eliminado correctamente.');
+    });
+    }
+    }
 
 
   
@@ -347,11 +296,10 @@ export class AddEditSolicitudComponent {
 
   
   realizarActualizacion() {
-    // Verifica si hay un archivo de factura seleccionado
+    if (this.formulario.estado?.nombre !== "finalizado") {
+          // Verifica si hay un archivo de factura seleccionado
     if (this.facturaSeleccionada) {
-      // const formData = new FormData();
-      // formData.append('facturaUrl', this.facturaSeleccionada);
-
+      
       // Verifica si this.id no es null antes de llamar a la función updateSolicitud
       if (this.id !== null) {
         console.log("datos nuevos del formulario: ", this.formulario);
@@ -397,6 +345,10 @@ export class AddEditSolicitudComponent {
       } else {
         console.error('El ID de la solicitud es null.');
       }
+    }    
+    } else {
+      const alerta =  `El estado de la solicitud es ${this.formulario.estado.nombre}, no puede ser modificada`;
+      this.sweetAlertService.showErrorAlert(alerta)
     }
   }
 
