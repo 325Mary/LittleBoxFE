@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="title">
+      <h4>Listado de Solicitudes</h4>
+      <div class="estado-ingresos-container">
+      <button type="button" class="btn btn-success" routerLink="/add">Agregar Ingreso</button>
+    </div>
+  
+    <table *ngIf="listIngresos.length > 0" class="table table-hover">
+      <thead>
+        <tr class="table-primary">
+          <th scope="col">Ingreso #</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Detalle</th>
+          <th scope="col">Valor</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ingreso of listIngresos" class="table-active">
+          <td>{{ ingreso.ingresoId }}</td>
+          <td>{{ ingreso.fecha }}</td>
+          <td>{{ ingreso.detalle }}</td>
+          <td>{{ ingreso.valor | currency }}</td>
+          <td>
+            <button [routerLink]="['/edit', ingreso._id]" type="button" class="btn btn-info btn-sm">Editar</button>
+            <button (click)="deleteIngreso(ingreso._id)" type="button" class="btn btn-danger btn-sm ms-2">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 *ngIf="listIngresos.length == 0">No hay Ingresos para mostrar</h5>
+  </div>

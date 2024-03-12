@@ -45,14 +45,6 @@ export class SolicitudesService {
     );
   }
 
-  // savesolicitud(solicitud: Solicitud, tenantId: string): Observable<void> {
-  //   const token = this.tokenValidationService.getToken();
-  //   const headers = new HttpHeaders({ 'Authorization': `${token}` });
-  //   return this.http.post<void>(`${this.myAppUrl}${this.urlPost}`, solicitud, {
-  //     params: { tenantId },
-  //     headers:headers
-  //   });
-  // }
 
   savesolicitud(
     solicitud: Solicitud,
@@ -151,17 +143,17 @@ export class SolicitudesService {
     );
   }
 
-  descargarFactura(facturaUrl: string): Observable<any> {
-    const token = this.tokenValidationService.getToken();
-    const headers = new HttpHeaders({ 'Authorization': `${token}` });
-    // Agregar headers de autenticación si es necesario
-    // headers.append('Authorization', 'Bearer ' + token);
+  // descargarFactura(facturaUrl: string): Observable<any> {
+  //   const token = this.tokenValidationService.getToken();
+  //   const headers = new HttpHeaders({ 'Authorization': `${token}` });
+  //   // Agregar headers de autenticación si es necesario
+  //   // headers.append('Authorization', 'Bearer ' + token);
 
-    return this.http.get(facturaUrl, {
-      headers,
-      responseType: 'arraybuffer' // Indica que queremos la respuesta como un buffer de bytes
-    });
-  }
+  //   return this.http.get(facturaUrl, {
+  //     headers,
+  //     responseType: 'arraybuffer' // Indica que queremos la respuesta como un buffer de bytes
+  //   });
+  // }
 
   
 }

@@ -39,6 +39,7 @@ import { SoliColaboradoresComponent } from './Components/soli-colaboradores/soli
 import { DataUserComponent } from './Components/data-user/data-user.component';
 
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { ListDeleteIngresosComponent } from './Components/ingresos/list-delete-ingresos/list-delete-ingresos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +66,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     CreateUserAdminComponent,
     ListCompaniesAprovedComponent,
     SoliColaboradoresComponent,
-    DataUserComponent
+    DataUserComponent,
+    ListDeleteIngresosComponent
   ],
   imports: [
     BrowserModule,

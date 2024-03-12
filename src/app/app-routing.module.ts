@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddEditSolicitudComponent } from '../app/Components/add-edit-solicitud/add-edit-solicitud.component';
 import { ListEdictSolicitudComponent } from '../app/Components/list-edict-solicitud/list-edict-solicitud.component';
+import { ListDeleteIngresosComponent } from '../app/Components/ingresos/list-delete-ingresos/list-delete-ingresos.component';
 import { RoleGuard } from "../app/Guards/role.guard";
 
 import { HomeComponent } from "../app/Components/home/home.component";
@@ -22,10 +23,12 @@ import { ListCompaniesAprovedComponent } from "../app/Components/list-companies-
 import {SoliColaboradoresComponent  } from "../app/Components/soli-colaboradores/soli-colaboradores.component";
 import { DataUserComponent } from "../app/Components/data-user/data-user.component";
 
+
 const routes: Routes = [
   { path: '', component: IndexComponent },
   // { path: 'home', component: HomeComponent },
   { path: 'home', component: ListEdictSolicitudComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  // { path: 'home', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'sidebar', component: SidebarComponent },
   {
     path: 'obtenerTodasLasSolicitudes',
