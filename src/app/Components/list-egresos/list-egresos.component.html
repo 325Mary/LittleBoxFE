@@ -1,0 +1,56 @@
+<div class="additional-background">
+  <div class="container">
+    <h2>Listado de Egresos</h2>
+
+    <!-- Filtros -->
+    <div class="filters">
+      <label for="fechaInicio">Fecha de inicio:</label>
+      <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio">
+      
+      <label for="fechaFin">Fecha de fin:</label>
+      <input type="date" id="fechaFin" [(ngModel)]="fechaFin">
+
+      <label for="categoria">Categoría:</label>
+      <select id="categoria" [(ngModel)]="categoriaSeleccionada">
+        <option value="">-- sin seleccionar --</option>
+        <option *ngFor="let cat of categoria" [value]="cat._id">{{ cat.nombre }}</option>
+      </select>
+
+      <label for="tercero">Tercero:</label>
+      <select id="tercero" [(ngModel)]="terceroSeleccionado">
+        <option value="">-- sin seleccionar --</option>
+        <option *ngFor="let ter of tercero" [value]="ter._id">{{ ter.nombreTercero }}</option>
+      </select>
+
+      <button (click)="obtenerEgresos()">Filtrar</button>
+    </div>
+
+    <!-- Listado de egresos -->
+    <div class="egresos-list" *ngIf="egresos.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Detalle</th>
+            <th>Valor</th>
+            <!-- Agrega aquí más columnas si es necesario -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let egreso of egresos">
+            <td>{{ egreso.fecha  }}</td>
+            <td><button (click)="verDetalle(egreso)">Ver</button></td>
+            <td>{{ egreso.valor }}</td>
+            <!-- Agrega aquí más columnas si es necesario -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="no-egresos" *ngIf="egresos.length === 0">
+      <p>No se encontraron egresos con los filtros seleccionados.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Ventana modal -->
+<app-modal-egreso *ngIf="mostrarModal" [egreso]="egresoSeleccionado"></app-modal-egreso>
