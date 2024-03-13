@@ -21,11 +21,16 @@ export class IngresosService {
   constructor(private http: HttpClient, private tokenValidationService: TokenValidationService,) {
     this.myAppUrl = environment.apiUrl;
   }
-  getListaIngresos(tenantId: string): Observable<Ingreso[]> {
+  getListaIngresos(tenantId: string, fechaInicio:Date, fechaFin:Date): Observable<Ingreso[]> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
+    const params = {
+      tenantId,
+      fechaInicio: fechaInicio.toISOString(),
+      fechaFin: fechaFin.toISOString(),
+    };
     return this.http.get<Ingreso[]>(`${this.myAppUrl}${this.urlGet}`, {
-      params: { tenantId },
+      params,
       headers: headers
     });
   }
