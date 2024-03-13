@@ -32,6 +32,20 @@ import { CreateUserAdminComponent } from './Components/create-user-admin/create-
 import { ListCompaniesAprovedComponent } from './Components/list-companies-aproved/list-companies-aproved.component';
 import { SoliColaboradoresComponent } from './Components/soli-colaboradores/soli-colaboradores.component';
 import { DataUserComponent } from './Components/data-user/data-user.component';
+import { CrearEgresoComponent } from './Components/crear-egreso/crear-egreso.component';
+import { CrearTerceroComponent } from './Components/crear-tercero/crear-tercero.component';
+import { CrearCategoriaComponent } from './Components/crear-categoria/crear-categoria.component';
+import { ListTercerosComponent } from './Components/list-terceros/list-terceros.component';
+import { ListCategoriasComponent } from './Components/list-categorias/list-categorias.component';
+import { ListEgresosComponent } from './Components/list-egresos/list-egresos.component';
+import {  EgresosService} from "../app/services/egresos.service";
+import { ModalEgresoComponent } from "./Components/modal-egreso/modal-egreso.component";
+import { ModalTerceroComponent } from './Components/modal-tercero/modal-tercero.component';
+import { CompanyService } from "./services/company.service";
+import { ModalCompanySolicitudComponent } from './Components/modal-company-solicitud/modal-company-solicitud.component';
+import { InformesComponent } from './Components/informes/informes.component';
+import {InformesService  } from "./services/informes.service";
+import { GraficosComponent } from './Components/graficos/graficos.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +69,18 @@ import { DataUserComponent } from './Components/data-user/data-user.component';
     CreateUserAdminComponent,
     ListCompaniesAprovedComponent,
     SoliColaboradoresComponent,
-    DataUserComponent
+    DataUserComponent,
+    CrearEgresoComponent,
+    CrearTerceroComponent,
+    CrearCategoriaComponent,
+    ListTercerosComponent,
+    ListCategoriasComponent,
+    ListEgresosComponent,
+    ModalEgresoComponent,
+    ModalTerceroComponent,
+    ModalCompanySolicitudComponent,
+    InformesComponent,
+    GraficosComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +98,7 @@ import { DataUserComponent } from './Components/data-user/data-user.component';
     })
     
   ],
-  providers: [SignInUpService],
+  providers: [SignInUpService, EgresosService, CompanyService, InformesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

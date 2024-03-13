@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -48,10 +49,14 @@ export class RegistroEmpleadoComponent {
       // console.log('Usuario registrado:', response);
       this.router.navigate(['/']);
 
-      alert('¡Datos de usuario enviandos con exito!')
+      // alert('¡Datos de usuario enviandos con exito!')
+      Swal.fire('Éxito', 'Datos Inhade Usuario enviados correctamente.', 'success');
+
     }, error => {
       // console.error('Error al registrar:', error);
-      alert('ERROR al enviar datos. Intentelo nuevamente')
+      // alert('ERROR al enviar datos. Intentelo nuevamente')
+      Swal.fire('Error', ' Ocurrio un error al enviar los datos. ¡Intente Nuevamente!', 'error');
+
     });
   }
 

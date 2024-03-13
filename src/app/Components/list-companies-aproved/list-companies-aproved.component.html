@@ -5,11 +5,14 @@
           <tr>
             <th scope="col">Nombre de la Empresa</th>
             <th scope="col">Acciones</th>
+            <th scope="col">Estado</th>
+
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let company of companies">
             <td>{{ company.nameCompany }}</td>
+            <td [ngStyle]="{ color: company.estado === 'aprobado' ? 'green' : 'red' }">{{ company.estado }}</td>
             <td>
               <button (click)="activeCompany(company._id)" class="btn btn-primary">Activar</button>
               <button (click)="disbaledCompany(company._id)" class="btn btn-danger">Inhabilitar</button>

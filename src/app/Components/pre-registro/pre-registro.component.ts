@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./pre-registro.component.scss']
 })
 export class PreRegistroComponent implements OnInit {
+  
   pestanaActual: string = 'valorInicial'; 
   user = {
     email: '',

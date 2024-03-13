@@ -14,8 +14,10 @@ h2 {
 
 /* Estilos generales del formulario */
 .form-content {
-    background-image: url('../../../assets/fondoRegistCol.jpg');
-  background-size: cover;
+  /* Fallback para navegadores que no soportan gradientes */
+  background-color: #add8e6; /* Azul claro */
+  /* Degradado */
+  background-image: linear-gradient(to bottom, #38a0c3, #ffffff); /* Desde azul claro hasta blanco */  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }

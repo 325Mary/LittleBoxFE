@@ -10,27 +10,38 @@ import { Subscription } from 'rxjs';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-
   isLoggedIn: boolean = false;
-  userData: any;
-  loginStatusSubscription!: Subscription;
   isGerente: boolean = false;
   isSuperUsuario: boolean = false;
   isAdministrador: boolean = false;
   isColaborador: boolean = false;
+  loginStatusSubscription!: Subscription;
+  userData: any;
+
   constructor(private router: Router, private authService: SignInUpService, private tokenValidationService: TokenValidationService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.checkAuthentication(); // Verificar autenticación al cambiar de ruta
+      }
+    });
 
     this.checkAuthentication(); // Verificar autenticación al cargar el componente
 
     this.loginStatusSubscription = this.authService.loginStatusChanged.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
+      if (isLoggedIn) {
+        this.updateUserRoles(); // Actualizar roles después de iniciar sesión
+      } else {
+        this.resetUserRoles(); // Restablecer roles después de cerrar sesión
+      }
     });
   }
-  
-  
+  updateUserRoles() {
+    throw new Error('Method not implemented.');
+  }
+
   async checkAuthentication() {
     try {
       const token = localStorage.getItem('token');
@@ -39,13 +50,15 @@ export class SidebarComponent {
         this.userData = await this.tokenValidationService.getUserData(token);
         this.setUserRoles(this.userData.rol); // Establecer los roles del usuario
         this.cdr.detectChanges(); // Realizar detección de cambios
+      } else {
+        this.isLoggedIn = false; // Actualizar estado de autenticación si no hay token válido
+        this.resetUserRoles(); // Restablecer roles si no hay token válido
       }
     } catch (error) {
       console.error('Error al verificar la autenticación:', error);
     }
   }
-  
-  
+
   setUserRoles(rol: string) {
     if (rol) {
       this.isGerente = rol === 'Gerente';
@@ -54,4 +67,13 @@ export class SidebarComponent {
       this.isColaborador = rol === 'Colaborador';
     }
   }
+
+  resetUserRoles() {
+    this.isGerente = false;
+    this.isSuperUsuario = false;
+    this.isAdministrador = false;
+    this.isColaborador = false;
+  }
+
+ 
 }

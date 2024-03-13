@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { TokenValidationService } from "../../services/token-validation-service.service"; // Importa el servicio de validación de token
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -23,7 +25,7 @@ export class CreateUserAdminComponent {
     telephone: ''
   }
  
-  constructor(private userService: SignInUpService, private tokenService: TokenValidationService) { } 
+  constructor(private userService: SignInUpService, private tokenService: TokenValidationService,  private router: Router) { } 
   
   registrar(): void {
     const formData = new FormData();
@@ -50,8 +52,14 @@ export class CreateUserAdminComponent {
 
     this.userService.registrarUsuario(formData).subscribe(response => {
       console.log('Usuario registrado:', response);
+      this.router.navigate(['/employees']);
+
+      Swal.fire('Éxito', 'usuario creado correctamente.', 'success');
+
     }, error => {
       console.error('Error al registrar:', error);
+      Swal.fire('Error', 'Ocurrio un error al crear Usuario. ¡Intente Nuevamente!', 'error');
+
     });
   }
 }

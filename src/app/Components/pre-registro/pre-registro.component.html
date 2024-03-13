@@ -10,6 +10,7 @@
     </li>
   </ul>
 
+  
   <div class="tab-content">
     <div class="tab-pane fade" id="iniciarSesion" 
          [class.show]="pestanaActual === 'iniciarSesion'" 
@@ -20,12 +21,14 @@
         
             <form (ngSubmit)="onSubmit()">
             
-              <div class="mb-3">
-                <label>Usuario</label>
-                <input type="text" class="form-control" [(ngModel)]="user.email" name="email">
+              <div class="inputbox">
+                <input type="text"  [(ngModel)]="user.email" name="email" > 
+                <label >Usuario</label>
+              </div>
+
+              <div class="inputbox">
+                <input type="password"  [(ngModel)]="user.password" name="password">
                 <label>Password</label>
-  
-                <input type="password" class="form-control" [(ngModel)]="user.password" name="password">
               </div>
             <div *ngIf="mensajeError" class="alert alert-danger">
               {{ mensajeError }}

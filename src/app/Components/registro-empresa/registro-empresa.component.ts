@@ -3,6 +3,8 @@ import { SignInUpService } from "../../services/sign-in-up.service";
 import { response } from 'express';
 import { error } from 'console';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 
 
@@ -37,15 +39,33 @@ company = {
   constructor(private singService: SignInUpService, private route: ActivatedRoute,  private router: Router) { }
 
 
-  send(){
-    this.singService.createCompany(this.company).subscribe(
-      
-      response=> console.log('Datos enviados', response),
-      error =>console.log('Error al enviar Datos', error)
-      
-      
-    )
+  showErrorAlert(message: string) {
+    Swal.fire({
+      title: 'Ocurrio un error al registrarse. ¡Intente Nuevamente!',
+      text: message,
+      icon: 'error'
+    });
   }
+  
+
+  send() {
+    this.singService.createCompany(this.company).subscribe(
+      response => {
+        console.log('Datos enviados', response),
+        Swal.fire({
+          title: "¡Felicidades!",
+          text: "Tu registro se ha realizado exitosamente",
+          icon: "success"
+        });
+        
+    },
+      error => {
+        console.log('Error al enviar Datos', error);
+        this.showErrorAlert('Ocurrió un error al registrar la empresa. ¡Intente Nuevamente!');
+      }
+    );
+  }
+  
 
   registrar(): void {
     const formData = new FormData();
@@ -61,12 +81,20 @@ company = {
 
     this.singService.registrarUsuario(formData).subscribe(response => {
       console.log('Usuario registrado:', response);
+      Swal.fire({
+        title: "¡Felicidades!",
+        text: "Tu registro se ha realizado exitosamente, Este pendiente a su correo",
+        icon: "success"
+      });
+      
       this.router.navigate(['/']);
       // Mostrar mensaje de éxito (opcional)
-      alert('¡Envio de datos Exitoso!. este atento a su correo a la novedad de su usuario');
+      // alert('¡Envio de datos Exitoso!. este atento a su correo a la novedad de su usuario');
     }, error => {
       console.error('Error al registrar:', error);
-      alert('Ocurrio un error al registrarse. ¡Intente Nuevamente!')
+      // alert('Ocurrio un error al registrarse. ¡Intente Nuevamente!')
+      this.showErrorAlert('Ocurrió un error al registrar la empresa. ¡Intente Nuevamente!');
+  
 
     });
   }

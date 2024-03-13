@@ -2,7 +2,7 @@
    <h2> Datos de Solicitud de Empresa</h2>
 
    <div class="d-flex justify-content-center form-content">
-    <form (ngSubmit)="sendAndRegistrar()">
+    <form (ngSubmit)="sendAndRegistrar()" >
     <div class="mb-3">
       <label for="nameCompany" class="form-label">Nombre:</label>
       <input type="text"  [(ngModel)]="company.nameCompany"class="form-control" id="nameCompany" name="nameCompany"  placeholder="Nombre de empresa" required>

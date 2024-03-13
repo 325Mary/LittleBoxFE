@@ -8,6 +8,11 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class TokenValidationService {
   constructor(private jwtHelper: JwtHelperService) {}
 
+   // Método para obtener el token de autenticación del almacenamiento local
+   getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
   // Método para verificar si el token es válido
   public isValidToken(token: string): boolean {
     if (token) {

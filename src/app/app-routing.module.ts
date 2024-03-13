@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, importProvidersFrom } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RoleGuard } from "../app/Guards/role.guard";
 
@@ -19,6 +19,14 @@ import { CreateUserAdminComponent } from "../app/Components/create-user-admin/cr
 import { ListCompaniesAprovedComponent } from "../app/Components/list-companies-aproved/list-companies-aproved.component";
 import {SoliColaboradoresComponent  } from "../app/Components/soli-colaboradores/soli-colaboradores.component";
 import { DataUserComponent } from "../app/Components/data-user/data-user.component";
+import { CrearEgresoComponent } from "../app/Components/crear-egreso/crear-egreso.component";
+import { CrearTerceroComponent } from "../app/Components/crear-tercero/crear-tercero.component";
+import { CrearCategoriaComponent } from "../app/Components/crear-categoria/crear-categoria.component";
+import { ListTercerosComponent } from "../app/Components/list-terceros/list-terceros.component";
+import { ListCategoriasComponent } from "../app/Components/list-categorias/list-categorias.component";
+import { ListEgresosComponent } from "../app/Components/list-egresos/list-egresos.component";
+import { InformesComponent } from "../app/Components/informes/informes.component";
+import {  GraficosComponent} from "../app/Components/graficos/graficos.component";
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
@@ -37,6 +45,14 @@ const routes: Routes = [
   { path: 'listCompaniesAproved', component:ListCompaniesAprovedComponent },
   { path: 'SoliColaboradores', component: SoliColaboradoresComponent},
   { path: 'userData/:userId', component: DataUserComponent},
+  { path: 'crearEgreso', component:CrearEgresoComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
+  { path: 'crearTercero', component: CrearTerceroComponent,  canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
+  { path: 'crearCategoria', component: CrearCategoriaComponent ,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
+  { path: 'listTerceros', component: ListTercerosComponent ,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador', 'Colaborador'] }},
+  { path: 'listEgresos', component: ListEgresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
+  { path: 'listCatgorias', component: ListCategoriasComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador', 'Colaborador'] }},
+  { path: 'Informes', component: InformesComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
+  { path: 'graficos', component: GraficosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
   { path: '**', component: NotFoundComponent }
 ];
 
