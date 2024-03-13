@@ -66,7 +66,7 @@ export class SolicitudesService {
     if (file) { // Verifica si file no es nulo antes de agregarlo al FormData
       formData.append('facturaUrl', file, file.name);
     }
-  
+
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
   

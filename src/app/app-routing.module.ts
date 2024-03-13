@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddEditSolicitudComponent } from '../app/Components/add-edit-solicitud/add-edit-solicitud.component';
 import { ListEdictSolicitudComponent } from '../app/Components/list-edict-solicitud/list-edict-solicitud.component';
 import { ListDeleteIngresosComponent } from '../app/Components/ingresos/list-delete-ingresos/list-delete-ingresos.component';
+import { AddEditIngresoComponent } from '../app/Components/ingresos/add-edit-ingreso/add-edit-ingreso.component';
 import { RoleGuard } from "../app/Guards/role.guard";
 
 import { HomeComponent } from "../app/Components/home/home.component";
@@ -24,11 +25,15 @@ import {SoliColaboradoresComponent  } from "../app/Components/soli-colaboradores
 import { DataUserComponent } from "../app/Components/data-user/data-user.component";
 
 
+
 const routes: Routes = [
   { path: '', component: IndexComponent },
   // { path: 'home', component: HomeComponent },
-  { path: 'home', component: ListEdictSolicitudComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
-  // { path: 'home', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  // { path: 'home', component: ListEdictSolicitudComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'home', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'obtenerTodosLosIngresos', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'addIngreso', component: AddEditIngresoComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'editIngreso/:id', component: AddEditIngresoComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'sidebar', component: SidebarComponent },
   {
     path: 'obtenerTodasLasSolicitudes',

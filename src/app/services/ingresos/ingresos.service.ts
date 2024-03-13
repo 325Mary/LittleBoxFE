@@ -53,24 +53,15 @@ export class IngresosService {
   saveIngreso(
     ingreso: Ingreso,
     tenantId: string,
-    file: File | null
   ): Observable<void> {
-
-    const fechaDate = new Date(ingreso.fecha);
-
-    const formData: FormData = new FormData();
-    formData.append('ingresoId', ingreso.ingresoId?.toString()); 
-    formData.append('fecha', fechaDate.toISOString());
-    formData.append('detalle', ingreso.detalle);
-    formData.append('valor', ingreso.valor.toString());
-    formData.append('tenantId', tenantId);
-      
+    console.log
+    ("datos a enviar  en el servicio..",ingreso,tenantId)
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
   
     return this.http.post<void>(
       `${this.myAppUrl}${this.urlPost}`,
-      formData,
+      { ingreso: ingreso, tenantId: tenantId },
       { headers: headers }
     );
   }
@@ -89,27 +80,24 @@ export class IngresosService {
 
     
 
-  updateSolicitud(
+  updateIngreso(
     Id: any,
     nuevosDatos: Ingreso,
     tenantId: string,
   ): Observable<Ingreso> {
-
-    const fechaDate = new Date(nuevosDatos.fecha);
-    const formData = new FormData();
-    formData.append('ingresoId', nuevosDatos.ingresoId.toString()); 
-    formData.append('fecha', fechaDate.toISOString());
-    formData.append('detalle', nuevosDatos.detalle);
-    formData.append('valor', nuevosDatos.valor.toString()); // Convertir valor a cadena
-    formData.append('tenantId', tenantId);
-      
+    // Convertir la fecha a una cadena en formato ISO
+    nuevosDatos.fecha = new Date(nuevosDatos.fecha).toISOString();
+  
+    // Agregar el tenantId al objeto de datos
+    nuevosDatos.tenantId = tenantId;
+  
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
   
     return this.http.put<Ingreso>(
       `${this.myAppUrl}${this.urlPut}/${Id}`,
-      formData,
-      { headers:headers }
+      nuevosDatos,
+      { headers: headers }
     );
   }
   

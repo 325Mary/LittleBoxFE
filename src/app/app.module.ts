@@ -40,6 +40,7 @@ import { DataUserComponent } from './Components/data-user/data-user.component';
 
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { ListDeleteIngresosComponent } from './Components/ingresos/list-delete-ingresos/list-delete-ingresos.component';
+import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/add-edit-ingreso.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +69,7 @@ import { ListDeleteIngresosComponent } from './Components/ingresos/list-delete-i
     SoliColaboradoresComponent,
     DataUserComponent,
     ListDeleteIngresosComponent,
+    AddEditIngresoComponent,
   ],
   imports: [
     BrowserModule,
