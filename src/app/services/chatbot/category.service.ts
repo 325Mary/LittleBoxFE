@@ -11,7 +11,7 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
 
   showCategories (): Observable<any>{
-    return this.http.get("http://localhost:4200/showCategories")
+    return this.http.get("http://localhost:4000/showCategories")
     .pipe(
       catchError(er =>{
         console.log(er)
@@ -21,7 +21,7 @@ export class CategoryService {
   }
 
   deleteCategory(id: string): Observable<any> {
-    return this.http.delete("http://localhost:4200/deleteCategory/" + id)
+    return this.http.delete("http://localhost:4000/deleteCategory/" + id)
             .pipe(
       catchError(er =>{
         console.log(er)
@@ -31,7 +31,7 @@ export class CategoryService {
   }
 
   saveCategory (category: Category): Observable <any>{
-    return this.http.post("http://localhost:4200/saveCategory", category)
+    return this.http.post("http://localhost:4000/saveCategory", category)
             .pipe(
             catchError(er =>{
               console.log(er)
@@ -41,7 +41,7 @@ export class CategoryService {
     }
 
   getACategory(id: string): Observable <any>{
-    return this.http.get("http://localhost:4200/category/" + id)
+    return this.http.get("http://localhost:4000/category/" + id)
     .pipe(
       catchError(er => {
         console.log(er)
@@ -52,7 +52,7 @@ export class CategoryService {
 
 
   editCategory(id:string, category:Category): Observable <any>{
-    return this.http.put("http://localhost:4200/editCategory/" + id, category)
+    return this.http.put("http://localhost:4000/editCategory/" + id, category)
     .pipe(
       catchError(er =>{
         console.log(er)

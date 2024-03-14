@@ -11,7 +11,7 @@ export class SubcategoryService {
   constructor(private http: HttpClient) { }
 
   showSubcategories (): Observable<any>{
-    return this.http.get("http://localhost:4200/showSubcategories")
+    return this.http.get("http://localhost:4000/showSubcategories")
     .pipe(
       catchError(er =>{
         console.log(er)
@@ -21,7 +21,7 @@ export class SubcategoryService {
   }
 
   deleteSubcategories(id: string): Observable<any> {
-    return this.http.delete("http://localhost:4200/deleteSubcategories/" + id)
+    return this.http.delete("http://localhost:4000/deleteSubcategories/" + id)
             .pipe(
       catchError(er =>{
         console.log(er)
@@ -31,7 +31,7 @@ export class SubcategoryService {
   }
 
   saveSubcategory (subcategory: Subcategory): Observable <any>{
-    return this.http.post("http://localhost:4200/saveSubcategory", subcategory)
+    return this.http.post("http://localhost:4000/saveSubcategory", subcategory)
             .pipe(
             catchError(er =>{
               console.log(er)
@@ -41,7 +41,7 @@ export class SubcategoryService {
     }
 
     getASubcategory(id: string): Observable <any>{
-    return this.http.get("http://localhost:4200/getASubcategory/" + id)
+    return this.http.get("http://localhost:4000/getASubcategory/" + id)
     .pipe(
       catchError(er =>{
         console.log(er)
@@ -52,7 +52,7 @@ export class SubcategoryService {
 
 
   editSubcategory(id:string, subcategory: Subcategory): Observable <any>{
-    return this.http.put("http://localhost:4200/editSubcategory/" + id, subcategory)
+    return this.http.put("http://localhost:4000/editSubcategory/" + id, subcategory)
     .pipe(
       catchError(er =>{
         console.log(er)
@@ -62,7 +62,7 @@ export class SubcategoryService {
   }
 
   getSubcategoryIdentifier(identifier: string): Observable<any> {
-    return this.http.get(`http://localhost:4200/getSubcategoryIdentifier/${identifier}`)
+    return this.http.get(`http://localhost:4000/getSubcategoryIdentifier/${identifier}`)
     .pipe(
       catchError(er =>{
         console.log(er)
@@ -72,7 +72,7 @@ export class SubcategoryService {
   }
 
   getSubclassesByCategory(identifierCategory: string): Observable<any> {
-    return this.http.get(`http://localhost:4200/getSubclassesByCategory/${identifierCategory}`)
+    return this.http.get(`http://localhost:4000/getSubclassesByCategory/${identifierCategory}`)
       .pipe(
         catchError(error => {
           console.log(error);
