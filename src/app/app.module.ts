@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { SafePipe } from './pipes/safe.pipe'; // Importa tu tubería personalizada
 
 import { HomeComponent } from '../app/Components/home/home.component';
 import { SidebarComponent } from '../app/Components/sidebar/sidebar.component';
@@ -17,12 +19,15 @@ import { SignInUpService } from './services/sign-in-up.service';
 
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
+import { AddEditSolicitudComponent } from './Components/add-edit-solicitud/add-edit-solicitud.component';
+import { ListEdictSolicitudComponent } from './Components/list-edict-solicitud/list-edict-solicitud.component';
+//import { environment } from './environments/environment.prod'; // Para producción
 import { NotFoundComponent } from './Components/not-found/not-found.component';
 import { NoAutorizedComponent } from './Components/no-autorized/no-autorized.component';
 import { RestorePasswordComponent } from './Components/restore-password/restore-password.component';
@@ -47,10 +52,17 @@ import { InformesComponent } from './Components/informes/informes.component';
 import {InformesService  } from "./services/informes.service";
 import { GraficosComponent } from './Components/graficos/graficos.component';
 
+// import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { ListDeleteIngresosComponent } from './Components/ingresos/list-delete-ingresos/list-delete-ingresos.component';
+import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/add-edit-ingreso.component';
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
+    IndexComponent,
+    AddEditSolicitudComponent,
+    ListEdictSolicitudComponent,
+    SafePipe,
     PreRegistroComponent,
     RegistroEmpresaComponent,
     RegistroEmpleadoComponent,
@@ -80,7 +92,10 @@ import { GraficosComponent } from './Components/graficos/graficos.component';
     ModalTerceroComponent,
     ModalCompanySolicitudComponent,
     InformesComponent,
-    GraficosComponent
+    GraficosComponent,
+    // DataUserComponent,
+    ListDeleteIngresosComponent,
+    AddEditIngresoComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,16 +104,16 @@ import { GraficosComponent } from './Components/graficos/graficos.component';
     HttpClientModule,
     NgbModule,
     FormsModule,
+    // NgxExtendedPdfViewerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
           return localStorage.getItem('token');
         }
       }
-    })
-    
+    }),
   ],
-  providers: [SignInUpService, EgresosService, CompanyService, InformesService],
+  providers: [SignInUpService,{ provide: environment, useValue: environment }, EgresosService, CompanyService, InformesService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

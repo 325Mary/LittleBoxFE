@@ -1,5 +1,9 @@
 import { NgModule, importProvidersFrom } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddEditSolicitudComponent } from '../app/Components/add-edit-solicitud/add-edit-solicitud.component';
+import { ListEdictSolicitudComponent } from '../app/Components/list-edict-solicitud/list-edict-solicitud.component';
+import { ListDeleteIngresosComponent } from '../app/Components/ingresos/list-delete-ingresos/list-delete-ingresos.component';
+import { AddEditIngresoComponent } from '../app/Components/ingresos/add-edit-ingreso/add-edit-ingreso.component';
 import { RoleGuard } from "../app/Guards/role.guard";
 
 import { HomeComponent } from "../app/Components/home/home.component";
@@ -28,11 +32,27 @@ import { ListEgresosComponent } from "../app/Components/list-egresos/list-egreso
 import { InformesComponent } from "../app/Components/informes/informes.component";
 import {  GraficosComponent} from "../app/Components/graficos/graficos.component";
 
+
+
 const routes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'home', component: HomeComponent },
+  // { path: 'home', component: ListEdictSolicitudComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'listIngresos', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'obtenerTodosLosIngresos', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'addIngreso', component: AddEditIngresoComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'editIngreso/:id', component: AddEditIngresoComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'sidebar', component: SidebarComponent },
+  {
+    path: 'obtenerTodasLasSolicitudes',
+    component: ListEdictSolicitudComponent,
+  },
+  { path: 'add', component: AddEditSolicitudComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'edit/:id', component: AddEditSolicitudComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  // { path: '**', redirectTo: '', pathMatch: 'full' },
   { path: 'sidebar', component: SidebarComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'SignIn/Up', component: PreRegistroComponent },
+  // { path: 'SignIn/Up', component: ListEdictSolicitudComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'registroEmpresa', component: RegistroEmpresaComponent },
   { path: 'registroEmpleado', component: RegistroEmpleadoComponent },
   { path: 'employees', component: EmployeesComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
@@ -58,6 +78,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

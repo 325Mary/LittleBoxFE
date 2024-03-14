@@ -29,15 +29,30 @@ export class TokenValidationService {
     return null;
   }
 
-
-   // Método para verificar si el usuario tiene el rol especificado
-   public hasRole(token: string, rol: string): boolean {
+  // Método para verificar si el usuario tiene el rol especificado
+  public hasRole(token: string, rol: string): boolean {
     const userData = this.getUserData(token);
     return userData && userData.rol === rol;
   }
- 
-  public hasTenantId(token: string, tenantId: string): boolean{
-  const userTenant = this.getUserData(token);
-  return userTenant && userTenant.tenantId ===tenantId
+
+  public getTenantIdFromToken(): string | undefined {
+    // Obtiene el tenantId del usuario actualmente logueado
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      // Verifica si el token no es nulo
+      const userData = this.getUserData(token);
+      if (userData && userData.tenantId) {
+        // Verifica si se pudo obtener el tenantId del token
+        return userData.tenantId;
+      } else {
+        // Manejar el caso en el que no se pudo obtener el tenantId del token
+        console.error('No se encontró el tenantId en el token');
+        return undefined;
+      }
+    } else {
+      // Manejar el caso en que no se encuentre ningún token en localStorage
+      console.error('No se encontró ningún token en el almacenamiento local');
+      return undefined;
+    }
   }
 }
