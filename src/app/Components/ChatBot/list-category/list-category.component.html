@@ -24,8 +24,8 @@
                   <td>{{ category.name }}</td>
                   <td>{{ category.description }}</td>
                   <td>
-                    <i [routerLink]="['/formCategory', category._id]" class="fas fa-edit text-primary"></i>
-                    <i [routerLink]="['/']" (click)="deleteCategory(category._id)"  class="fas fa-trash text-danger"></i>
+                    <i (click)="openModal()" [routerLink]="['/formCategory', category._id]" class="fas fa-edit text-primary"></i>
+                    <i (click)="cerrarModal()" (click)="deleteCategory(category._id)"  class="fas fa-trash text-danger"></i>
                   </td>
                 </tr>
               </tbody>

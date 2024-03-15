@@ -48,6 +48,12 @@ const routes: Routes = [
   { path: 'SoliColaboradores', component: SoliColaboradoresComponent},
   { path: 'userData/:userId', component: DataUserComponent},
   { path: '**', component: NotFoundComponent },
+
+
+  { path: 'edit-query/:id', component: FormQueriesComponent},
+  { path: 'edit-category/:id', component: FormCategoryComponent},
+  { path: 'edit-subcategory/:id', component: FormSubcategoryComponent, outlet: 'modalOutlet'},
+
   {path: 'formQuery', component: FormQueriesComponent },
   {path: 'formCategory', component: FormCategoryComponent },
   {path: 'formSubcategory', component: FormSubcategoryComponent },

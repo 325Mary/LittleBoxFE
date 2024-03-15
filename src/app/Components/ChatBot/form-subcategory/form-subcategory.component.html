@@ -4,58 +4,37 @@
             <div class="card border-dark mb-3" style="background-color: rgba(220, 216, 216, 0.362);">
                 <div class="card-body text-center">
                     <span class="titulo">{{ titulo | uppercase }}</span>
-                    <form class="mt-3" [formGroup]="subcategoryForm" >
+                    <form class="mt-3" [formGroup]="subcategoryForm">
                         <div class="mb-3">
-
                             <label id="subtitulo" class="form-label mt-3 float-start">Identificador: </label>
-                            <input type="text" formControlName="identifier"
-                            class="form-control form-control-lg custom-input" placeholder="Identificador aquí">
-
-                            <div class="text-danger"
-                                    *ngIf="subcategoryForm.get('identifier')?.hasError('required') 
-                                    && subcategoryForm.get('identifier')?.touched">
-
-                                    <span>El identificador <strong>es obligatorio.</strong></span>
+                            <input type="text" formControlName="identifier" class="form-control form-control-lg custom-input" placeholder="Identificador aquí" required>
+                            <div class="text-danger" *ngIf="subcategoryForm.get('identifier')?.invalid && subcategoryForm.get('identifier')?.touched">
+                                <span>El identificador <strong>es obligatorio.</strong></span>
                             </div>
-
                         </div>
                         <div class="mb-3">
-
                             <label id="subtitulo" class="form-label mt-3 float-start">Nombre: </label>
-                            <input type="text" formControlName="name"
-                            class="form-control form-control-lg custom-input" placeholder="Nombre aquí">
-                            
-                            <div class="text-danger"
-                                    *ngIf="subcategoryForm.get('name')?.hasError('required') 
-                                    && subcategoryForm.get('name')?.touched">
-
-                                    <span>El nombre de la subcategoria <strong>es obligatoria.</strong></span>
+                            <input type="text" formControlName="name" class="form-control form-control-lg custom-input" placeholder="Nombre aquí" required>
+                            <div class="text-danger" *ngIf="subcategoryForm.get('name')?.invalid && subcategoryForm.get('name')?.touched">
+                                <span>El nombre de la subcategoría <strong>es obligatorio.</strong></span>
                             </div>
-                            
                         </div>
                         <div class="mb-3">
-                            <label id="subtitulo" class="form-label mt-3 float-start">Categoria: </label>
-                            <select formControlName="category" class="form-control form-control-lg custom-input">
-                              <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}</option>
+                            <label id="subtitulo" class="form-label mt-3 float-start">Categoría: </label>
+                            <select formControlName="category" class="form-control form-control-lg custom-input" required>
+                                <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}</option>
                             </select>
-                            <div class="text-danger"
-                                 *ngIf="subcategoryForm.get('category')?.hasError('required') 
-                                 && subcategoryForm.get('category')?.touched">
-                              <span>La categoria <strong>es obligatoria</strong></span>
+                            <div class="text-danger" *ngIf="subcategoryForm.get('category')?.invalid && subcategoryForm.get('category')?.touched">
+                                <span>La categoría <strong>es obligatoria</strong></span>
                             </div>
-                          </div>
-                          
-                    
+                        </div>
                     </form>
                     <div class="mb-3">
-                        <button  (click)="cerrarModal()" class="btn btn-secondary
-                        float-start btn-lg">VOLVER</button>
-                        <button type="submit" [disabled]="subcategoryForm.invalid" (click)="addSubcategory()"
-                         class="btn btn-success float-end btn-lg"  (click)="cerrarModal()">ACEPTAR</button>
+                        <button (click)="cerrarModal()" class="btn btn-secondary float-start btn-lg">VOLVER</button>
+                        <button type="submit" [disabled]="subcategoryForm.invalid" class="btn btn-success float-end btn-lg" (click)="addSubcategory()">ACEPTAR</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-

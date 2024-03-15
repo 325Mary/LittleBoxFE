@@ -1,101 +1,91 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
-import { CategoryService } from '../../../services/chatbot/category.service';
 import { Subcategory } from '../../../Models/subcategory';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { CategoryService } from '../../../services/chatbot/category.service';
 
 @Component({
   selector: 'app-form-subcategory',
   templateUrl: './form-subcategory.component.html',
-  styleUrl: './form-subcategory.component.scss'
+  styleUrls: ['./form-subcategory.component.scss']
 })
-export class FormSubcategoryComponent {
-  //Modal:
-  cerrarModal() {
-    this.activeModal.close('Modal cerrada');
-  }
-
-
-  //Componente:
-  subcategoryForm: FormGroup
+export class FormSubcategoryComponent implements OnInit {
+  subcategoryForm: FormGroup;
   titulo = "CREAR SUBCATEGORIA";
-  id: string | null
+  @Input() id: string | null = null;
   categories: any[] = [];
 
-  constructor (private buil : FormBuilder,
-              private router: Router,
+  constructor(private formBuilder: FormBuilder,
               private toastr: ToastrService,
-              private SService: SubcategoryService,
-              private CaService : CategoryService,
-              private aRouter: ActivatedRoute,
-              public activeModal: NgbActiveModal
-              ){
+              private subcategoryService: SubcategoryService,
+              private CaService: CategoryService,
+              public activeModal: NgbActiveModal) {
 
-    this.subcategoryForm = this.buil.group({
+    this.subcategoryForm = this.formBuilder.group({
       identifier: ['', Validators.required],
       name: ['', Validators.required],
       category: ['', Validators.required],
-    })
-    this.id = this.aRouter.snapshot.paramMap.get('id')
+    });
   }
 
   ngOnInit(): void {
-    
-      this.XEditar()
-      this.CaService.showCategories().subscribe(
-        (data: any[]) => {
-          this.categories = data;
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
+    this.loadCategories();
+    this.loadSubcategoryForEdit();
+  }
 
-  addSubcategory(){
-    const SUBCATEGORY: Subcategory = {
+  loadCategories(): void {
+    this.CaService.showCategories().subscribe( 
+      (data: any[]) => {
+        this.categories = data;
+      },
+      error => { 
+        console.log(error);
+      }
+    );
+  }
+
+  loadSubcategoryForEdit(): void {
+    if (this.id !== null) {
+      this.titulo = 'Editar subclase';
+      this.subcategoryService.getASubcategory(this.id).subscribe(data => {
+        this.subcategoryForm.setValue({
+          identifier: data.identifier,
+          name: data.name,
+          category: data.category
+        });
+      });
+    }
+  }
+
+  addSubcategory(): void {
+    const subcategory: Subcategory = {
       identifier: this.subcategoryForm.get('identifier')?.value,
       name: this.subcategoryForm.get('name')?.value,
       category: this.subcategoryForm.get('category')?.value
-    }
+    };
 
     if (this.id !== null) {
-      
-      this.SService.editSubcategory(this.id, SUBCATEGORY).subscribe(data => {
-        this.toastr.info('La subclase se ha actualizado con exito.', 'Se ha actualizado con exito:')
-        this.router.navigate(['/lista-subclase'])
-
-      }, error =>{
-        console.log(error)
-        this.subcategoryForm.reset()
-      })
-
-    }else{
-
-      this.SService.saveSubcategory(SUBCATEGORY).subscribe(data =>{
-        this.toastr.success('La subclase fue registrada con exito.', 'Subclase resgitrada:')
-        this.router.navigate(['/lista-subclase'])
-      }, error =>{
-        console.log(error)
-        this.subcategoryForm.reset()
-      })
+      this.subcategoryService.editSubcategory(this.id, subcategory).subscribe(data => {
+        this.toastr.info('La subclase se ha actualizado con éxito.', 'Se ha actualizado con éxito:');
+        this.activeModal.close('Modal cerrada');
+      }, error => {
+        console.log(error);
+        this.subcategoryForm.reset();
+      });
+    } else {
+      this.subcategoryService.saveSubcategory(subcategory).subscribe(data => {
+        this.toastr.success('La subclase fue registrada con éxito.', 'Subclase registrada:');
+        this.activeModal.close('Modal cerrada');
+      }, error => {
+        console.log(error);
+        this.subcategoryForm.reset();
+      });
     }
-    }
+  }
 
-  XEditar (){
-    if (this.id !== null) {
-
-      this.titulo = 'Editar subclase'
-      this.SService.getASubcategory(this.id).subscribe(data=>{
-        this.subcategoryForm.setValue({
-          referencia: data.referencia,
-          nombre: data.nombre,
-          categoria: data.categoria
-        })
-      })
-    }
+  cerrarModal(): void {
+    this.activeModal.close('Modal cerrada');
   }
 }

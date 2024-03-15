@@ -14,10 +14,10 @@
                       <br>
   
                       <div class="mb-3">
-                        <input type="text" class="form-control custom-input" placeholder="Buscar por referencia" [(ngModel)]="searchTermReferencia" (ngModelChange)="filtrarSubcategory()">
+                        <input type="text" class="form-control custom-input" placeholder="Buscar por referencia" [(ngModel)]="searchTermReferencia" (ngModelChange)="filtrarSubcategory()">  //Property 'filtrarSubcategory' does not exist on type 'listSubcategoryComponent'
                       </div>
                       
-                      <table *ngIf="filtrarSubcategory.length > 0" class="table table-bordered table-light table-hover border-dark mt-3">
+                      <table *ngIf="filteredSubcategory.length > 0" class="table table-bordered table-light table-hover border-dark mt-3">
                           <thead>
                             <tr>
                               <th scope="col">Identificador</th>
@@ -33,8 +33,8 @@
                               <td>{{ subcategory.name }}</td>
                               <td>{{ subcategory.category.name }}</td>
                               <td> 
-                                  <i [routerLink]="['/', subcategory._id]" class="fas fa-edit text-primary"></i>
-                                  <i (click)="eliminarSubclase(subcategory._id)"  class="fas fa-trash text-danger"></i>
+                                  <img (click)="openModalE(subcategory.id)" class="img-icon" src="../../../../assets/boligrafo.png">
+                                  <img (click)="cerrarModal()" class="img-icon" (click)="eliminarSubclase(subcategory._id)" src="../../../../assets/boton-x.png" >
                               </td>
                           </tr>
                           </tbody>
