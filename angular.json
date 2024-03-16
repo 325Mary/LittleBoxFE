@@ -37,6 +37,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeicons/primeicons.css",
               "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
 

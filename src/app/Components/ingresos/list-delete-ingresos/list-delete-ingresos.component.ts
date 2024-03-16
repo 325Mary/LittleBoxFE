@@ -5,6 +5,11 @@ import { Ingreso } from '../../../interfaces/ingreso';
 import { IngresosService } from '../../../services/ingresos/ingresos.service';
 import { SweetAlertService } from '../../../services/sweet-alert.service';
 import { TokenValidationService } from '../../../services/token-validation-service.service';
+import { PrimeNGConfig } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
+// import { PrimeNGLocaleService } from 'primeng/api';
+
+
 
 @Component({
   selector: 'app-list-delete-ingresos',
@@ -13,6 +18,8 @@ import { TokenValidationService } from '../../../services/token-validation-servi
 })
 export class ListDeleteIngresosComponent {
 
+  es: any;
+  locale: any;
   listIngresos: Ingreso[] = [];
   loading: boolean = false;
   tenantId: string = '';
@@ -29,8 +36,14 @@ export class ListDeleteIngresosComponent {
     private sweetAlertService: SweetAlertService,
     private tokenValidationService: TokenValidationService,
     private aRouter: ActivatedRoute,
+    // private config: PrimeNGConfig,
+    private translateService: TranslateService,
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
+    const userLang = navigator.language || 'en';
+    const languageCode = userLang.split('-')[0];
+    this.translateService.setDefaultLang(languageCode);
+    this.translateService.use(languageCode);
   }
   ngOnInit(): void {
     const token = localStorage.getItem('token');
@@ -48,7 +61,7 @@ export class ListDeleteIngresosComponent {
       console.error('No se encontró ningún token en el almacenamiento local');
     }
     // this.getListIngresos();
-    this.filtrarIngresos();
+    this.filtrarIngresos();   
   }
 
   getListIngresos(): void {

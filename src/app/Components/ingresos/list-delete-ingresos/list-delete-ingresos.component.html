@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div class="title">
     <h4>Listado de Ingresos</h4>
     <div class="filtro-fechas">
@@ -37,4 +37,57 @@
     </tbody>
   </table>
   <h5 *ngIf="listIngresos.length == 0">No hay Ingresos para mostrar</h5>
+</div> -->
+
+<div class="container">
+  <h4 class="titulo">Listado de Ingresos</h4>
+  <div class="container">
+    <div class="p-d-flex p-jc-between p-ai-center">
+      <div class="cont-fecha-add container p-d-flex p-ai-center">
+        <div class="filtro-fechas p-d-flex p-ai-center">
+          <div class="cont-fecha ui-g-12 ui-md-4">
+            <h5 for="fechaInicio">Fecha Inicio</h5>
+            <p-calendar [(ngModel)]="fechaInicio" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
+        <div class="cont-fecha ui-g-12 ui-md-4">
+          <h5 for="fechaFin">Fecha Fin:</h5>
+          <p-calendar [(ngModel)]="fechaFin" dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+          <!-- <label for="fechaInicio">Fecha Inicio:</label>
+          <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio">
+          <label for="fechaFin">Fecha Fin:</label>
+          <input type="date" id="fechaFin" [(ngModel)]="fechaFin"> -->
+          <div class="btn-filter">
+            <button class="button-filter" type="button" pButton icon="pi pi-filter" (click)="filtrarIngresos()" class="p-button-info"></button>
+          </div>
+        </div>
+        <button type="button" pButton icon="pi pi-plus" routerLink="/addIngreso" class="p-button-success"></button>
+      </div>
+    </div>
+  </div>
+  <p-table *ngIf="listIngresos.length > 0" [value]="listIngresos" dataKey="ingresoId" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Ingreso #</th>
+        <th>Fecha</th>
+        <th>Detalle</th>
+        <th>Valor</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-ingreso>
+      <tr>
+        <td>{{ ingreso.ingresoId }}</td>
+        <td>{{ ingreso.fecha }}</td>
+        <td>{{ ingreso.detalle }}</td>
+        <td>{{ ingreso.valor | currency }}</td>
+        <td>
+          <button [routerLink]="['/editIngreso', ingreso._id]" type="button" pButton icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-sm"></button>
+          <button (click)="deleteIngreso(ingreso._id)" type="button" pButton icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <h5 *ngIf="listIngresos.length == 0">No hay Ingresos para mostrar</h5>
 </div>
+
