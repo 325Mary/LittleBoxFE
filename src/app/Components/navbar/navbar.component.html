@@ -21,8 +21,14 @@
   <div *ngIf="isLoggedIn && isAdministrador || isGerente">
     <a  class="info " routerLink="/Informes/">INFORMES</a>
 </div>
+<div *ngIf="isLoggedIn && isAdministrador || isGerente ">
+  <a  class="info " routerLink="/obtenerTodosLosIngresos/">INGRESOS</a>
+</div>
   <div *ngIf="isLoggedIn && isAdministrador || isGerente ">
     <a  class="info " routerLink="/crearEgreso/">CREAR EGRESO</a>
+</div>
+<div *ngIf="isLoggedIn && isAdministrador || isGerente ">
+  <a  class="info " routerLink="/obtenerTodasLasSolicitudes/">SOLICITUDES</a>
 </div>
   <div *ngIf="isLoggedIn && userData">
       <img src="../../../assets/user.png" alt="Icono" class="info img-fluid rounded" style="width: 24px; height: 24px;"> 
