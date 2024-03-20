@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { SafePipe } from './pipes/safe.pipe'; // Importa tu tubería personalizada
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 import { HomeComponent } from '../app/Components/home/home.component';
 import { SidebarComponent } from '../app/Components/sidebar/sidebar.component';
@@ -55,6 +58,8 @@ import { GraficosComponent } from './Components/graficos/graficos.component';
 // import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { ListDeleteIngresosComponent } from './Components/ingresos/list-delete-ingresos/list-delete-ingresos.component';
 import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/add-edit-ingreso.component';
+import { NotificationsComponent } from './Components/notifications/notifications.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 @NgModule({
   declarations: [
     AppComponent,
@@ -96,6 +101,7 @@ import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/
     // DataUserComponent,
     ListDeleteIngresosComponent,
     AddEditIngresoComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,6 +110,8 @@ import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/
     HttpClientModule,
     NgbModule,
     FormsModule,
+    MatDialogModule,
+    MatIconModule ,
     // NgxExtendedPdfViewerModule,
     JwtModule.forRoot({
       config: {
@@ -113,7 +121,7 @@ import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/
       }
     }),
   ],
-  providers: [SignInUpService,{ provide: environment, useValue: environment }, EgresosService, CompanyService, InformesService],
+  providers: [SignInUpService,{ provide: environment, useValue: environment }, EgresosService, CompanyService, InformesService, provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

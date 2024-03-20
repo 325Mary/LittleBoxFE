@@ -1,0 +1,8 @@
+<div class="notification-container">
+  <h2>Notificaciones</h2>
+  <ul>
+    <li *ngFor="let notification of notifications">
+      <a [routerLink]="['/listDeSoliDeEmpresas/']"> {{ notification.message }}</a>
+    </li>
+  </ul>
+</div>

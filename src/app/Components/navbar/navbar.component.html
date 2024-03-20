@@ -29,6 +29,22 @@
       <span class="text-primary">{{ userData.username }}</span>
   </div>
   
+  <!-- <div *ngIf="isLoggedIn">
+    <a  class="info " routerLink="/notificaciones/">NOTIFICACIONES</a>
+</div> -->
+
+<div *ngIf="isLoggedIn">
+  <button mat-icon-button (click)="openNotifications()">
+    <mat-icon>notifications</mat-icon>
+    <span class="badge" [style.color]="notificationsCount > 0 ? 'red' : 'black'">{{ notificationsCount }}</span>
+  </button>
+  <div *ngIf="showNotifications" class="notification-container">
+    <app-notifications></app-notifications>
+  </div>
+</div>
+
+
+
   <div *ngIf="isLoggedIn" class="logout-section">
     <button class="btn" (click)="logout()">Cerrar sesión</button>
   </div>

@@ -1,0 +1,22 @@
+.notification-container {
+    position: absolute;
+    top: 50px; /* Ajusta esto según la altura de tu barra de navegación */
+    right: 20px;
+    width: 300px; /* Ajusta el ancho según sea necesario */
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  }
+  
+  .notification-counter {
+    background-color: red; /* Cambia el color de fondo del contador */
+    color: white; /* Cambia el color del texto del contador */
+    padding: 5px; /* Ajusta el relleno del contador según sea necesario */
+    border-radius: 50%; /* Aplica un borde redondeado al contador */
+    position: absolute; /* Coloca el contador en una posición absoluta */
+    top: 10px; /* Ajusta la posición vertical del contador según sea necesario */
+    right: 10px; /* Ajusta la posición horizontal del contador según sea necesario */
+  }
+  

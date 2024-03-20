@@ -3,6 +3,9 @@ import { NavigationStart, Router } from '@angular/router'; // Import Router here
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { TokenValidationService } from '../../services/token-validation-service.service';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationsComponent } from "../notifications/notifications.component";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: 'app-navbar',
@@ -20,12 +23,26 @@ export class NavbarComponent implements OnInit  {
   isAdministrador: boolean = false;
   isColaborador: boolean = false;
   currentRoute: string = '';
+  notificationsCount = 0; // Suponiendo que tienes un conteo de notificaciones
 
-  constructor(private router: Router, private authService: SignInUpService, private tokenValidationService: TokenValidationService, private cdr: ChangeDetectorRef) 
+
+  constructor(private router: Router, private authService: SignInUpService, 
+    private tokenValidationService: TokenValidationService, 
+    private cdr: ChangeDetectorRef, private dialog: MatDialog,
+    private notificationService: NotificationService ) 
   { this.router.events.subscribe((val) => {
     this.currentRoute = this.router.url;
   });}
 
+  showNotifications: boolean = false;
+
+  closeNotifications(): void {
+    this.showNotifications = false;
+  }
+
+  openNotifications(): void {
+    this.showNotifications = !this.showNotifications;
+  }
   
   
  
@@ -49,6 +66,11 @@ export class NavbarComponent implements OnInit  {
     if (this.isMenuOpen && (event.target as Element)?.closest('.menu-container') == null && (event.target as Element)?.closest('.contenedor-img') == null) {
       this.isMenuOpen = false;
     }
+    const target = event.target as HTMLElement;
+    if (!target.closest('.notification-container') && !target.closest('button[mat-icon-button]')) {
+      this.closeNotifications();
+    }
+  
   }
 
 
@@ -65,6 +87,16 @@ export class NavbarComponent implements OnInit  {
     this.loginStatusSubscription = this.authService.loginStatusChanged.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
     });
+
+    this.notificationService.getNotificationsByUserId().subscribe(
+      (notifications) => {
+        // Actualizar el contador de notificaciones
+        this.notificationsCount = notifications.length;
+      },
+      (error) => {
+        console.error('Error al obtener las notificaciones:', error);
+      }
+    );
   }
   
   
@@ -104,6 +136,13 @@ export class NavbarComponent implements OnInit  {
       console.error('Error al cerrar sesión:', error);
     }
   }
-  
+ 
+  // @HostListener('document:click', ['$event'])
+  // handleClick1(event: MouseEvent) {
+  //   const target = event.target as HTMLElement;
+  //   if (!target.closest('.notification-container') && !target.closest('button[mat-icon-button]')) {
+  //     this.closeNotifications();
+  //   }
+  // }
 }
 

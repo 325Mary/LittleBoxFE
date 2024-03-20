@@ -31,6 +31,7 @@ import { ListCategoriasComponent } from "../app/Components/list-categorias/list-
 import { ListEgresosComponent } from "../app/Components/list-egresos/list-egresos.component";
 import { InformesComponent } from "../app/Components/informes/informes.component";
 import {  GraficosComponent} from "../app/Components/graficos/graficos.component";
+import {  NotificationsComponent} from "../app/Components/notifications/notifications.component";
 
 
 
@@ -73,6 +74,7 @@ const routes: Routes = [
   { path: 'listCatgorias', component: ListCategoriasComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador', 'Colaborador'] }},
   { path: 'Informes', component: InformesComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
   { path: 'graficos', component: GraficosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
+  { path: 'notificaciones/:notificationId', component: NotificationsComponent },
   { path: '**', component: NotFoundComponent }
 ];
 
