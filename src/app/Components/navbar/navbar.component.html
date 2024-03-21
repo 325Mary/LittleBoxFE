@@ -13,7 +13,7 @@
       <img src="../../../assets/icons8-casa.svg" alt="">
     </a>
   </div>
-  <div *ngIf="isLoggedIn ">
+  <div *ngIf="isLoggedIn && isAdministrador || isGerente ">
     <a routerLink="/graficos/">   
        <img src="../../../assets/icons8-reequilibrar-la-cartera-50.png" alt="Icono" class="info img-fluid rounded" style="width: 24px; height: 24px;"> 
 </a>
