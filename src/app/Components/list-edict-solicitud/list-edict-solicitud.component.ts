@@ -7,6 +7,7 @@ import { EstadoSolicitud } from '../../interfaces/estadoSolicitud';
 import { EstadoSolicitudService } from '../../services/estado-solicitud.service';
 import { SweetAlertService } from '../../services/sweet-alert.service';
 import { TokenValidationService } from '../../services/token-validation-service.service';
+import { NotificacionesPushService } from '../../services/notificaciones-push.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class ListEdictSolicitudComponent {
     private tokenValidationService: TokenValidationService,
     private estadoSolicitud: EstadoSolicitudService,
     private aRouter: ActivatedRoute,
+    private pushNotificationService: NotificacionesPushService,
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
   }
@@ -127,6 +129,8 @@ export class ListEdictSolicitudComponent {
           this.sweetAlertService.showSuccessAlert(
             'Estado modificado exitosamente.',
           );
+          // Envía notificación push a los usuarios de las solicitudes
+        this.enviarNotificacionesAceptacion();
         }, (error) => {
           console.error(`Error al cambiar el estado de las solicitudes:`, error);
           const mensaje = `Error al cambiar el estado de las solicitudes:`+error.error.data
@@ -137,7 +141,23 @@ export class ListEdictSolicitudComponent {
     }
   }
   
-  
+  enviarNotificacionesAceptacion() {
+    // Itera sobre las solicitudes seleccionadas y envía notificaciones push a cada usuario
+    this.solicitudesSeleccionadas.forEach(solicitud => {
+      // Obtener PushSubscription del usuario correspondiente
+      this.pushNotificationService.subscribeUserToPush()
+        .then(pushSubscription => {
+          // Envía notificación push al usuario con el mensaje correspondiente
+          this.pushNotificationService.sendNotificationToUser(pushSubscription, `Tu solicitud ha sido ${this.estadoDeSolicitud}`);
+          console.log("estado de la solicitud enviada por push", this.estadoSeleccionado);
+          
+        })
+        .catch(error => {
+          console.error('Error al suscribir al usuario para enviar notificaciones push:', error);
+          // Manejo de errores
+        });
+    });
+  }
   
   seleccionarSolicitud(solicitudId: string) {
     console.log("Este es la solicitudId de seleccionar solicitud: ",solicitudId);
@@ -150,5 +170,10 @@ export class ListEdictSolicitudComponent {
       this.solicitudesSeleccionadas.push(solicitudId);
       console.log("solicitud push a array: ",this.solicitudesSeleccionadas);
     }
+  }
+
+  aceptarSolicitud(pushSubscription: PushSubscription): void {
+    // Lógica para aceptar la solicitud y enviar una notificación al usuario
+    this.pushNotificationService.sendNotificationToUser(pushSubscription, 'Tu solicitud ha sido aceptada.');
   }
 }

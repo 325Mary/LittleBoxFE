@@ -11,6 +11,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:4000/',
   firebaseConfig: {
+    fcmServerKey: 'pendiente clave firebase',
     apiKey: 'TU_API_KEY',
     authDomain: 'TU_DOMINIO_AUTH',
     projectId: 'TU_ID_DE_PROYECTO',

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -59,6 +59,7 @@ import { TooltipModule } from 'primeng/tooltip';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http,'assets/i18n/','.json');
@@ -129,6 +130,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
     })
   ],
   providers: [SignInUpService,HttpClient,{ provide: environment, useValue: environment }],

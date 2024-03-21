@@ -12,6 +12,7 @@ import { SweetAlertService } from '../../services/sweet-alert.service';
 import { TokenValidationService } from '../../services/token-validation-service.service';
 import { ModalService } from '../../services/modal.service';
 import { FacturaService } from '../../services/factura.service';
+import { NotificacionesPushService } from '../../services/notificaciones-push.service';
 
 @Component({
   selector: 'app-add-edit-solicitud',
@@ -66,6 +67,7 @@ export class AddEditSolicitudComponent {
     private sweetAlertService: SweetAlertService,
     private modalService:ModalService,
     private facturaService:FacturaService,
+    private pushNotificationService: NotificacionesPushService,
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
     const token = localStorage.getItem('token');
@@ -367,5 +369,17 @@ export class AddEditSolicitudComponent {
         this.router.navigate(['/obtenerTodasLasSolicitudes']);
       }, 1500);
     });
+  }
+
+  realizarSolicitud(): void {
+    // Lógica para realizar la solicitud
+    this.pushNotificationService.subscribeUserToPush()
+      .then((pushSubscription: PushSubscription) => {
+        // Lógica adicional después de suscribir al usuario
+        console.log('Usuario suscrito a las notificaciones push:', pushSubscription);
+      })
+      .catch((error:any) => {
+        console.error('Error al suscribir al usuario a las notificaciones push:', error);
+      });
   }
 }
