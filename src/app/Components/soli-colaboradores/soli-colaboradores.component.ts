@@ -19,6 +19,7 @@ export class SoliColaboradoresComponent implements OnInit {
     this.signInUpService.getUsersByTenantId().subscribe(
       (usuarios: any[]) => {
         this.usuarios = usuarios;
+        console.log('estos son los usuarios:',usuarios )
       },
       (error) => {
         console.error('Error al obtener usuarios:', error);

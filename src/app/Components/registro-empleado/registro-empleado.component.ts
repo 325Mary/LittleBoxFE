@@ -70,7 +70,7 @@ export class RegistroEmpleadoComponent {
       (data) => {
         this.companys = data;
         if (this.companys.length > 0) {
-          this.User.tenantId = this.companys[0].nameCompany;
+          this.User.tenantId = this.companys[0].tenantId;
         }
       },
       (error) => {
