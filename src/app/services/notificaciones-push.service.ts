@@ -1,77 +1,54 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { SwPush } from '@angular/service-worker';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
-import { TokenValidationService } from '../services/token-validation-service.service';
-
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { getToken, getMessaging, Messaging } from "@angular/fire/messaging";
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class NotificacionesPushService {
   private myAppUrl: string;
   private fcmServerKey: string; // Clave del servidor de FCM, obtenida desde la consola de Firebase
-  constructor(private http: HttpClient) {
+  
+
+  constructor(private swPush: SwPush, private http: HttpClient) {
     this.myAppUrl = environment.apiUrl;
-    this.fcmServerKey = environment.firebaseConfig.fcmServerKey; // Ajusta según tu clave del servidor de FCM
-    if (!('serviceWorker' in navigator)) {
-      console.warn("Service Worker isn't supported on this browser.");
-    }
+    this.fcmServerKey = 'TU_CLAVE_DEL_SERVIDOR_DE_FCM'; // Ajusta según tu clave del servidor de FCM
     if (!('PushManager' in window)) {
       console.warn("Push isn't supported on this browser.");
     }
   }
 
-  // askPermission() {
-  //   return new Promise((resolve, reject) => {
-  //     const permissionResult = Notification.requestPermission((result) => {
-  //       resolve(result);
-  //     });
-  
-  //     if (permissionResult) {
-  //       permissionResult.then(resolve, reject);
-  //     }
-  //   }).then((permissionResult) => {
-  //     if (permissionResult !== 'granted') {
-  //       throw new Error("We weren't granted permission.");
-  //     }
-  //   });
-  // }
-
   askPermission(): Promise<NotificationPermission> {
-    return new Promise((resolve, reject) => {
-      const permissionResult = Notification.requestPermission((result) => {
-        resolve(result);
-      });
+    return Notification.requestPermission();
+  }
 
-      if (permissionResult) {
-        permissionResult.then(resolve, reject);
+  async requestPermision(){
+    const messaging =  getMessaging()
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+        const token = await getToken(messaging, {vapidKey: 'BHOXMQkF97UR4ssSnlRqpQ1KOyX9bLWrHGyzP1fpOD0rvsTca6NBBvnr6QuyyfmPm7hg-AvbC1CkNfP3QZKrATc'})
+        console.log(token);
+        // ... (Optional) send the token tovyou backend to associate it whit the user
+      } else {
+        console.log('Unable to get permission to notify');
+        
       }
+    } catch (error) {
+      console.error('Unable to get permission to notify.', error);
+      
+    }
+  }
+
+  subscribeUserToPush(): Promise<PushSubscription> {
+    return this.swPush.requestSubscription({
+      serverPublicKey: 'LLAVE_PUBLICA_DE_TU_SERVIDOR_DE_APLICACIONES'
     });
   }
-
-  
-  subscribeUserToPush(): Promise<PushSubscription> {
-    return navigator.serviceWorker.register('/service-worker.js')
-      .then(registration => {
-        const subscribeOptions = {
-          userVisibleOnly: true,
-          applicationServerKey: this.urlBase64ToUint8Array(
-            'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U',
-          ),
-        };
-        return registration.pushManager.subscribe(subscribeOptions);
-      })
-      .then(pushSubscription => {
-        console.log('Received PushSubscription:', pushSubscription);
-        return pushSubscription;
-      });
-  }
-
-  // sendNotificationToUser(pushSubscription: PushSubscription, message: string): void {
-  //   // Aquí puedes enviar una notificación push al usuario utilizando la PushSubscription y el mensaje proporcionados
-  //   // Esto puede requerir una integración con un servicio de envío de notificaciones push
-  // }
 
   sendNotificationToUser(pushSubscription: PushSubscription, message: string): void {
     const notificationPayload = {
@@ -87,64 +64,19 @@ export class NotificacionesPushService {
       'Authorization': `key=${this.fcmServerKey}`
     });
 
-    this.http.post('https://fcm.googleapis.com/fcm/send', notificationPayload, { headers })
-      .subscribe(
-        response => {
-          console.log('Notificación enviada con éxito:', response);
-        },
-        error => {
-          console.error('Error al enviar la notificación:', error);
-        }
-      );
+    // Aquí puedes enviar la notificación al servidor de Firebase Cloud Messaging
+    // Para esta implementación, se asume que se utiliza Firebase Cloud Messaging (FCM)
+    // y la clave del servidor de FCM se utiliza para autorizar la solicitud.
+    // Ajusta esto según la configuración de tu servidor de notificaciones.
   }
 
-
-  private urlBase64ToUint8Array(base64String: string): Uint8Array {
-    // Esta función convierte una cadena base64 en un array de bytes
-    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-    const base64 = (base64String + padding)
-      .replace(/\-/g, '+')
-      .replace(/_/g, '/');
-
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-
-    for (let i = 0; i < rawData.length; ++i) {
-      outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
-  }
-  
-  // sendSubscriptionToBackend(pushSubscription: PushSubscription): Promise<any> {
-  //   const subscriptionObject = {
-  //     endpoint: pushSubscription.endpoint,
-  //     keys: {
-  //       p256dh: pushSubscription.getKey('p256dh'),
-  //       auth: pushSubscription.getKey('auth')
-  //     }
-  //   };
-
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json'
-  //   });
-
-  //   return this.http.post('/api/save-subscription/', subscriptionObject, { headers })
-  //     .toPromise()
-  //     .then(response => {
-  //       console.log('Subscription successfully saved on server:', response);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error saving subscription:', error);
-  //       throw error; // O maneja el error de alguna otra manera según tus necesidades
-  //     });
-  // }
-  
   sendSubscriptionToBackend(pushSubscription: PushSubscription): Observable<any> {
+
     const subscriptionObject = {
       endpoint: pushSubscription.endpoint,
       keys: {
-        p256dh: pushSubscription.getKey('p256dh'),
-        auth: pushSubscription.getKey('auth')
+        p256dh: this.encode(pushSubscription.getKey('p256dh')!),
+        auth: this.encode(pushSubscription.getKey('auth')!)
       }
     };
 
@@ -152,7 +84,15 @@ export class NotificacionesPushService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.post<any>(`${this.myAppUrl}/save-subscription/`, subscriptionObject, { headers });
+    return this.http.post<any>(`${this.myAppUrl}"/save-subscription/"`, subscriptionObject, { headers });
+    
   }
 
- }
+  private encode(value: ArrayBuffer): string {
+    const uintArray = new Uint8Array(value); // Convierte el ArrayBuffer a un Uint8Array
+    const array = Array.from(uintArray); // Convierte el Uint8Array a un arreglo de números
+    return btoa(String.fromCharCode.apply(null, array)); // Convierte los números a una cadena codificada en base64
+}
+
+
+}
