@@ -22,15 +22,29 @@ export class SolicitudesService {
     this.myAppUrl = environment.apiUrl;
   }
 
-  getListaSolicitudes(tenantId: string): Observable<Solicitud[]> {
+  // getListaSolicitudes(tenantId: string): Observable<Solicitud[]> {
+  //   const token = this.tokenValidationService.getToken();
+  //   const headers = new HttpHeaders({ 'Authorization': `${token}` });
+  //   return this.http.get<Solicitud[]>(`${this.myAppUrl}${this.urlGet}`, {
+  //     params: { tenantId },
+  //     headers: headers
+  //   });
+  // }
+
+  getListaSolicitudes(tenantId: string, fechaInicio: Date, fechaFin: Date, documento: string): Observable<Solicitud[]> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
+    const params = {
+      tenantId,
+      fechaInicio: fechaInicio.toISOString(),
+      fechaFin: fechaFin.toISOString(),
+      documento: documento
+    };
     return this.http.get<Solicitud[]>(`${this.myAppUrl}${this.urlGet}`, {
-      params: { tenantId },
+      params,
       headers: headers
     });
   }
-
 
 
   deleteSolicitud(solicitudId: any, tenantId: string): Observable<void> {

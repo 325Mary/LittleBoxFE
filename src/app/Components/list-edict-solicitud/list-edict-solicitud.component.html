@@ -1,6 +1,15 @@
 <div class="contenedor container">
   <div class="title">
     <h4>Listado de Solicitudes</h4>
+    <div class="filtro-fechas">
+      <label for="fechaInicio">Fecha Inicio:</label>
+      <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio">
+      <label for="fechaFin">Fecha Fin:</label>
+      <input type="date" id="fechaFin" [(ngModel)]="fechaFin">
+      <input type="text" id="documento" [(ngModel)]="documento" placeholder="Ingrese # Documento">
+      <button type="button" class="btn btn-primary" (click)="filtrarSolicitudes()">Filtrar</button>
+    </div>
+    
     <div class="estado-solicitudes-container">
       <label for="estado-select">Estado:</label>
       <select id="estado-select" [(ngModel)]="estadoSeleccionado"name="estado" class="form-control" required #terceroInput="ngModel">
@@ -29,7 +38,7 @@
     <tbody>
       <tr *ngFor="let solicitud of listSolicitudes" class="table-active">
         <td>{{ solicitud.solicitudId }}</td>
-        <td>{{ solicitud.fecha }}</td>
+        <td>{{ solicitud.fecha | date: 'dd-MM-yyyy' }}</td>
         <td>{{ solicitud.tercero?.nombreTercero }}</td>
         <td>{{ solicitud.estado?.nombre }}</td>
         <td>{{ solicitud.detalle }}</td>

@@ -12,6 +12,8 @@ import { SweetAlertService } from '../../services/sweet-alert.service';
 import { TokenValidationService } from '../../services/token-validation-service.service';
 import { ModalService } from '../../services/modal.service';
 import { FacturaService } from '../../services/factura.service';
+import { TerceroModalComponent } from "../../Components/modals/tercero-modal/tercero-modal.component";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-edit-solicitud',
@@ -64,8 +66,9 @@ export class AddEditSolicitudComponent {
     private aRouter: ActivatedRoute,
     private tokenValidationService: TokenValidationService,
     private sweetAlertService: SweetAlertService,
-    private modalService:ModalService,
+    private modalService2:ModalService,
     private facturaService:FacturaService,
+    private modalService: NgbModal
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
     const token = localStorage.getItem('token');
@@ -112,7 +115,7 @@ export class AddEditSolicitudComponent {
     reader.readAsDataURL(file);
   if (this.facturaSeleccionada) {
      // Emitir la factura seleccionada al servicio modal
-     this.modalService.enviarFacturaSeleccionada(this.facturaSeleccionada);
+     this.modalService2.enviarFacturaSeleccionada(this.facturaSeleccionada);
   }else{
     console.error('No se ha seleccionado ningun archivo.');
   }
@@ -367,5 +370,11 @@ export class AddEditSolicitudComponent {
         this.router.navigate(['/obtenerTodasLasSolicitudes']);
       }, 1500);
     });
+  }
+
+  openModal() {
+    const modalRef = this.modalService.open(TerceroModalComponent); // Abre el modal
+  //   modalRef.componentInstance.tercero = tercero; // Pasa el tercero seleccionado al modal
+  // }
   }
 }

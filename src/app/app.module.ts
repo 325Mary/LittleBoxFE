@@ -55,6 +55,7 @@ import { GraficosComponent } from './Components/graficos/graficos.component';
 // import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { ListDeleteIngresosComponent } from './Components/ingresos/list-delete-ingresos/list-delete-ingresos.component';
 import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/add-edit-ingreso.component';
+import { TerceroModalComponent } from './Components/modals/tercero-modal/tercero-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -96,6 +97,7 @@ import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/
     // DataUserComponent,
     ListDeleteIngresosComponent,
     AddEditIngresoComponent,
+    TerceroModalComponent,
   ],
   imports: [
     BrowserModule,
