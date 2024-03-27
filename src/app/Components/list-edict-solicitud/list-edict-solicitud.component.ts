@@ -7,6 +7,9 @@ import { EstadoSolicitud } from '../../interfaces/estadoSolicitud';
 import { EstadoSolicitudService } from '../../services/estado-solicitud.service';
 import { SweetAlertService } from '../../services/sweet-alert.service';
 import { TokenValidationService } from '../../services/token-validation-service.service';
+import { SolicitudModalComponent } from "../../Components/modals/solicitud-modal/solicitud-modal.component";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 // import { DatePipe } from '@angular/common';
 
 
@@ -44,6 +47,7 @@ export class ListEdictSolicitudComponent {
     private tokenValidationService: TokenValidationService,
     private estadoSolicitud: EstadoSolicitudService,
     private aRouter: ActivatedRoute,
+    private modalService: NgbModal
     // private datePipe: DatePipe,
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
@@ -219,5 +223,10 @@ export class ListEdictSolicitudComponent {
       this.solicitudesSeleccionadas.push(solicitudId);
       console.log("solicitud push a array: ", this.solicitudesSeleccionadas);
     }
+  }
+
+  verDetalle(solicitud: any) {
+    const modalRef = this.modalService.open(SolicitudModalComponent);
+    modalRef.componentInstance.solicitud = solicitud;
   }
 }

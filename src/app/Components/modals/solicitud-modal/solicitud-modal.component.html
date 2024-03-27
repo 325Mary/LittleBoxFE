@@ -1,0 +1,21 @@
+<!-- <div class="modal-content">
+    <h3>Detalles de la solicitud</h3>
+    <p>Id: {{ solicitud?.solicitudId }}</p>
+    <p>Detalle: {{ solicitud?.detalle }}</p>
+    <p>Tercero: {{ solicitud?.tercero.nombreTercero }}</p>
+    <p>Categoría: {{ solicitud?.categoria.nombre }}</p>
+    <p>Factura: <button (click)="verFactura()">Descargar factura</button></p>    
+  </div> -->
+
+  <div class="custom-container">
+    <h3 class="mb-3">Detalles de la solicitud</h3>
+    <div class="mb-3">
+      <p class="mb-1">Id: {{ solicitud?.solicitudId }}</p>
+      <p class="mb-1">Detalle: {{ solicitud?.detalle }}</p>
+      <p class="mb-1">Tercero: {{ solicitud?.tercero.nombreTercero }}</p>
+      <p class="mb-1">Categoría: {{ solicitud?.categoria.nombre }}</p>
+      <!-- <p>Factura: {{ egreso?.factura }}</p> -->
+      <p class="mb-1">Factura: <button class="btn btn-link p-0" (click)="verFactura()">Descargar factura</button></p>
+    </div>
+  </div>
+  

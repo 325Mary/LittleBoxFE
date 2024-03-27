@@ -56,6 +56,7 @@ import { GraficosComponent } from './Components/graficos/graficos.component';
 import { ListDeleteIngresosComponent } from './Components/ingresos/list-delete-ingresos/list-delete-ingresos.component';
 import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/add-edit-ingreso.component';
 import { TerceroModalComponent } from './Components/modals/tercero-modal/tercero-modal.component';
+import { SolicitudModalComponent } from './Components/modals/solicitud-modal/solicitud-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,6 +99,7 @@ import { TerceroModalComponent } from './Components/modals/tercero-modal/tercero
     ListDeleteIngresosComponent,
     AddEditIngresoComponent,
     TerceroModalComponent,
+    SolicitudModalComponent,
   ],
   imports: [
     BrowserModule,

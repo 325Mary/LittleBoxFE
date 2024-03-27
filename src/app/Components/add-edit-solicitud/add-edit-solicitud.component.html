@@ -57,9 +57,13 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="facturaInput">Factura:</label>
+              <!-- <label for="facturaInput">Factura:</label>
               <input type="file" (change)="onFileSelected($event)" class="form-control-file" id="facturaInput"
                 [(ngModel)]="facturaFile" name="verFactura" #facturaInput>
+              <button type="button" class="btn btn-sm btn-danger mt-2" (click)="removeFactura()">Eliminar
+                Factura</button> -->
+              <label class="facturaInput">Factura:</label>
+              <input type="file" (change)="onFileSelected($event)" name="factura" class="form-control" id="facturaInput" [(ngModel)]="formulario.facturaUrl">
               <button type="button" class="btn btn-sm btn-danger mt-2" (click)="removeFactura()">Eliminar
                 Factura</button>
             </div>

@@ -45,6 +45,8 @@ export class AddEditSolicitudComponent {
 
   extension: string = '';
 
+  solicitud: any = {};
+
   formulario: Solicitud = {
     solicitudId: 0,
     tenantId: '',
@@ -87,39 +89,53 @@ export class AddEditSolicitudComponent {
 
   
 
-  onFileSelected(event: any) {
-    console.log("Evento de cambio:", event);
+  // onFileSelected(event: any) {
+  //   console.log("Evento de cambio:", event);
   
-    if (event.target.files.length === 0) {
-      return;
-    }
+  //   if (event.target.files.length === 0) {
+  //     return;
+  //   }
   
-    const file = event.target.files[0];
+  //   const file = event.target.files[0];
   
-    // Validar tipo de archivo
-    const allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
-    const extension = file.name.split('.').pop()?.toLowerCase();
-    if (!allowedExtensions.includes(extension)) {
-      console.error('El archivo seleccionado no es compatible.');
-      this.sweetAlertService.showErrorAlert('El archivo seleccionado no es compatible. Solo se admiten archivos JPG, JPEG, PNG y PDF.');
-      return;
-    }
+  //   // Validar tipo de archivo
+  //   const allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
+  //   const extension = file.name.split('.').pop()?.toLowerCase();
+  //   if (!allowedExtensions.includes(extension)) {
+  //     console.error('El archivo seleccionado no es compatible.');
+  //     this.sweetAlertService.showErrorAlert('El archivo seleccionado no es compatible. Solo se admiten archivos JPG, JPEG, PNG y PDF.');
+  //     return;
+  //   }
   
-    this.facturaSeleccionada = file;
+  //   this.facturaSeleccionada = file;
   
-    // Obtener la URL del archivo
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.formulario.facturaUrl = reader.result as string;
-    };
-    reader.readAsDataURL(file);
-  if (this.facturaSeleccionada) {
-     // Emitir la factura seleccionada al servicio modal
-     this.modalService2.enviarFacturaSeleccionada(this.facturaSeleccionada);
-  }else{
-    console.error('No se ha seleccionado ningun archivo.');
-  }
+  //   // Obtener la URL del archivo
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     this.formulario.facturaUrl = reader.result as string;
+  //   };
+  //   reader.readAsDataURL(file);
+  // if (this.facturaSeleccionada) {
+  //    // Emitir la factura seleccionada al servicio modal
+  //    this.modalService2.enviarFacturaSeleccionada(this.facturaSeleccionada);
+  // }else{
+  //   console.error('No se ha seleccionado ningun archivo.');
+  // }
    
+  // }
+
+  onFileSelected(event: any) {
+    const selectedFile = event.target.files[0]; // Obtener el archivo seleccionado
+    const fileReader = new FileReader();
+    
+    fileReader.onload = () => {
+      // Cuando la lectura del archivo esté completa
+      // Asignar el contenido del archivo (sin prefijo de ruta) a company.pdfRunt
+      this.solicitud.factura = fileReader.result as string; // Esto asume que pdfRunt es de tipo string
+    };
+    
+    // Leer el contenido del archivo como una URL de datos (data URL)
+    fileReader.readAsDataURL(selectedFile);
   }
   
 
@@ -358,7 +374,7 @@ export class AddEditSolicitudComponent {
 
   realizarInsercion() {
     console.log('este es el formulario con los datos en saveSolicitud= ', this.formulario, " esta es la url de la factura guardada: ", this.facturaSeleccionada);
-    this.solicitudesService.savesolicitud(this.formulario, this.tenantId,this.facturaSeleccionada).subscribe(() => {
+    this.solicitudesService.savesolicitud(this.formulario).subscribe(() => {
       console.log("estos son los datos al intentar guardar el formulario: ",this.formulario, " esta es la url de la factura guardada: ", this.facturaSeleccionada);
       
       // Muestra la alerta de éxito con SweetAlert2
@@ -377,4 +393,5 @@ export class AddEditSolicitudComponent {
   //   modalRef.componentInstance.tercero = tercero; // Pasa el tercero seleccionado al modal
   // }
   }
+  
 }
