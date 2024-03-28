@@ -26,17 +26,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       this.refreshNotifications();
     });
 
-    // Suscribirse a los cambios de ruta para marcar la notificación como leída
-    this.routerSubscription = this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        console.log('Evento de navegación:', event);
-        const notificationId = this.route.snapshot.params['notificationId'];
-        if (notificationId) {
-          this.markAsRead(notificationId);
-          console.log('ID de notificación:', notificationId);
-        }
-      }
-    });
     
   }
 
@@ -65,14 +54,12 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     return notifications.filter(notification => !this.previousNotifications.includes(notification));
   }
   
-  markAsRead(notificationId: string): void {
-    this.notificationService.markNotificationAsRead(notificationId).subscribe(
-      () => {
-        // Actualizar la lista de notificaciones o realizar cualquier otra acción necesaria
-      },
-      error => {
+  handleClickNotification(notificationId: string) {
+    this.notificationService.markNotificationAsRead(notificationId)
+      .subscribe(() => {
+        // Realiza alguna acción adicional si es necesario, como actualizar la lista de notificaciones
+      }, error => {
         console.error('Error al marcar la notificación como leída:', error);
-      }
-    );
+      });
   }
 }

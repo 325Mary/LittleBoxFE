@@ -3,21 +3,17 @@
   top: 50px; /* Ajusta esto según la altura de tu barra de navegación */
   right: 20px;
   width: 300px; /* Ajusta el ancho según sea necesario */
-  background-color: white;
-  border: 4px solid #ccc;
+  background-color: rgb(69, 117, 238);
+  border-radius: 4px solid #ccc;
   padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
   z-index: 1000; /* Asegura que esté por encima de otros elementos */
 }
 
-.notification-counter {
-  background-color: red; /* Cambia el color de fondo del contador */
-  color: white; /* Cambia el color del texto del contador */
-  padding: 5px; /* Ajusta el relleno del contador según sea necesario */
-  border-radius: 50%; /* Aplica un borde redondeado al contador */
-  position: absolute; /* Coloca el contador en una posición absoluta */
-  top: 10px; /* Ajusta la posición vertical del contador según sea necesario */
-  right: 10px; /* Ajusta la posición horizontal del contador según sea necesario */
+.notification-container a {
+  text-decoration: none; /* Esto elimina la subrayado de los enlaces */
+  color: inherit; /* Esto hace que los enlaces tengan el mismo color que el texto normal */
+  cursor: default; /* Esto evita que el cursor se convierta en una mano cuando pasas sobre los enlaces */
 }
 
 .notification-container ul {
@@ -28,11 +24,11 @@
 }
 
 .notification-container ul::-webkit-scrollbar {
-  width: 10px; /* Ancho de la barra de desplazamiento */
+  width: 5px; /* Ancho de la barra de desplazamiento */
 }
 
 .notification-container ul::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color de fondo de la barra de desplazamiento */
+  background: #a8a5a5; /* Color de fondo de la barra de desplazamiento */
 }
 
 .notification-container ul::-webkit-scrollbar-thumb {
@@ -45,11 +41,15 @@
 }
 
 .notification-container li {
-  border-bottom: 1px solid #ccc; /* Añadimos una línea divisora en la parte inferior */
-  padding-bottom: 5px; /* Espacio entre cada elemento y la línea divisora */
-  margin-bottom: 5px; /* Espacio entre cada elemento */
+  border-bottom: 1px solid #121111; /* Añadimos una línea divisora en la parte inferior */
+  // padding-bottom: 2px; /* Espacio entre cada elemento y la línea divisora */
+  // margin-bottom: 2px; /* Espacio entre cada elemento */
 }
 
-.notification-container li:last-child {
-  border-bottom: none; /* Quitamos la línea divisora del último elemento */
+// .notification-container li:last-child {
+//   border-bottom: none; /* Quitamos la línea divisora del último elemento */
+// }
+
+.notification-container li.unread {
+  background-color: #4f69ee; /* Color oscuro para notificaciones no leídas */
 }

@@ -4,15 +4,14 @@ import { SignInUpService } from "../../services/sign-in-up.service";
 import { TokenValidationService } from '../../services/token-validation-service.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { NotificationsComponent } from "../notifications/notifications.component";
-import {NotificationService} from "../../services/notification.service";
+import { NotificationService } from "../../services/notification.service";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit  {
+export class NavbarComponent implements OnInit {
   modalOpen = false;
   isMenuOpen = false;
   isLoggedIn: boolean = false;
@@ -23,16 +22,17 @@ export class NavbarComponent implements OnInit  {
   isAdministrador: boolean = false;
   isColaborador: boolean = false;
   currentRoute: string = '';
-  notificationsCount = 0; // Suponiendo que tienes un conteo de notificaciones
+  notificationsCount = 0;
 
-
-  constructor(private router: Router, private authService: SignInUpService, 
-    private tokenValidationService: TokenValidationService, 
+  constructor(private router: Router, private authService: SignInUpService,
+    private tokenValidationService: TokenValidationService,
     private cdr: ChangeDetectorRef, private dialog: MatDialog,
-    private notificationService: NotificationService ) 
-  { this.router.events.subscribe((val) => {
-    this.currentRoute = this.router.url;
-  });}
+    private notificationService: NotificationService)
+  {
+    this.router.events.subscribe((val) => {
+      this.currentRoute = this.router.url;
+    });
+  }
 
   showNotifications: boolean = false;
 
@@ -43,19 +43,6 @@ export class NavbarComponent implements OnInit  {
   openNotifications(): void {
     this.showNotifications = !this.showNotifications;
   }
-  
-  
- 
-  //vetanas modales
-  openModal() {
-    this.modalOpen = true;
-  }
-
-  closeModal() {
-    this.modalOpen = false;
-  }
-  
-
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -70,9 +57,7 @@ export class NavbarComponent implements OnInit  {
     if (!target.closest('.notification-container') && !target.closest('button[mat-icon-button]')) {
       this.closeNotifications();
     }
-  
   }
-
 
   ngOnInit(): void {
     this.router.events.subscribe(event => {
@@ -88,19 +73,24 @@ export class NavbarComponent implements OnInit  {
       this.isLoggedIn = isLoggedIn;
     });
 
-    this.notificationService.getNotificationsByUserId().subscribe(
-      (notifications) => {
-        // Actualizar el contador de notificaciones
-        this.notificationsCount = notifications.length;
-      },
-      (error) => {
-        console.error('Error al obtener las notificaciones:', error);
-      }
-    );
+    this.refreshNotifications(); // Actualizar el contador de notificaciones al iniciar el componente
   }
-  
-  
-  async checkAuthentication() {
+
+  async refreshNotifications(): Promise<void> {
+    try {
+      const notifications = await this.notificationService.getNotificationsByUserId().toPromise();
+
+      // Verificar si notifications no es undefined antes de acceder a la propiedad length
+      if (notifications !== undefined) {
+        // Contar las notificaciones no leídas
+        this.notificationsCount = notifications.filter(notification => !notification.read).length;
+      }
+    } catch (error) {
+      console.error('Error al obtener las notificaciones:', error);
+    }
+  }
+
+  async checkAuthentication(): Promise<void> {
     try {
       const token = localStorage.getItem('token');
       if (token && await this.tokenValidationService.isValidToken(token)) {
@@ -113,9 +103,8 @@ export class NavbarComponent implements OnInit  {
       console.error('Error al verificar la autenticación:', error);
     }
   }
-  
-  
-  setUserRoles(rol: string) {
+
+  setUserRoles(rol: string): void {
     if (rol) {
       this.isGerente = rol === 'Gerente';
       this.isSuperUsuario = rol === 'SuperUsuario';
@@ -123,26 +112,25 @@ export class NavbarComponent implements OnInit  {
       this.isColaborador = rol === 'Colaborador';
     }
   }
-  
 
-  logout() {
+  logout(): void {
     try {
-      // Llamar al método de cierre de sesión del servicio
       this.authService.logout();
-      this.isLoggedIn = false; // Actualizar el estado de autenticación
-      this.router.navigate(['/']); // Navegar a la ruta predeterminada
-      this.cdr.detectChanges(); // Realizar detección de cambios
+      this.isLoggedIn = false;
+      this.router.navigate(['/']);
+      this.cdr.detectChanges();
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
   }
- 
-  // @HostListener('document:click', ['$event'])
-  // handleClick1(event: MouseEvent) {
-  //   const target = event.target as HTMLElement;
-  //   if (!target.closest('.notification-container') && !target.closest('button[mat-icon-button]')) {
-  //     this.closeNotifications();
-  //   }
-  // }
-}
 
+  openModal(): void {
+    this.modalOpen = true;
+  }
+
+  closeModal(): void {
+    this.modalOpen = false;
+  }
+
+  
+}

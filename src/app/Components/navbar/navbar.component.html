@@ -27,7 +27,7 @@
   <div *ngIf="isLoggedIn && isAdministrador || isGerente ">
     <a  class="info " routerLink="/crearEgreso/">CREAR EGRESO</a>
 </div>
-<div *ngIf="isLoggedIn && isAdministrador || isGerente ">
+<div *ngIf="isLoggedIn && isAdministrador || isGerente || isColaborador ">
   <a  class="info " routerLink="/obtenerTodasLasSolicitudes/">SOLICITUDES</a>
 </div>
   <div *ngIf="isLoggedIn && userData">
@@ -40,10 +40,11 @@
 </div> -->
 
 <div *ngIf="isLoggedIn">
-  <button mat-icon-button (click)="openNotifications()">
-    <mat-icon>notifications</mat-icon>
-    <span class="badge" [style.color]="notificationsCount > 0 ? 'red' : 'black'">{{ notificationsCount }}</span>
-  </button>
+ <button mat-icon-button (click)="openNotifications()">
+  <mat-icon>notifications</mat-icon>
+  <span class="badge" [style.color]="notificationsCount > 0 ? 'red' : 'blue'">{{ notificationsCount }}</span>
+</button>
+
   <div *ngIf="showNotifications" class="notification-container">
     <app-notifications></app-notifications>
   </div>

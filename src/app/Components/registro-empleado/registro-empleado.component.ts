@@ -3,34 +3,26 @@ import { SignInUpService } from "../../services/sign-in-up.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-registro-empleado',
   templateUrl: './registro-empleado.component.html',
   styleUrls: ['./registro-empleado.component.scss']
 })
 export class RegistroEmpleadoComponent {
-  defaultRole: any;
-  selectedCompanys: string = '';
-  companys: any =[];
+  selectedCompany: any; // Variable para almacenar la empresa seleccionada
+  companys: any[] = [];
   User = {
     username: '',
     identification: '',
     telephone: '',
     email: '',
-    tenantId: '',
+    tenantId: '', // Almacenará el tenantId de la empresa seleccionada
     direction: '',
-    rol:'Colaborador'
+    rol: 'Colaborador'
   }
-    // imgfirme: '' as string | File  }
- 
-  constructor(private userService: SignInUpService,  private route: ActivatedRoute,  private router: Router) { }
 
-  // handleFileInput(event: any): void {
-  //   const file = event.target.files[0];
-  //   this.User.imgfirme = file;
-  // }
-  
+  constructor(private userService: SignInUpService, private route: ActivatedRoute, private router: Router) { }
+
   registrar(): void {
     const formData = new FormData();
 
@@ -40,38 +32,32 @@ export class RegistroEmpleadoComponent {
     formData.append('email', this.User.email);
     formData.append('tenantId', this.User.tenantId);
     formData.append('direction', this.User.direction);
-    formData.append('rol', this.User.rol); 
+    formData.append('rol', this.User.rol);
 
-    // if (this.User.imgfirme instanceof File) {
-    //   formData.append('imgfirme', this.User.imgfirme);
-    // }
     this.userService.registrarUsuario(formData).subscribe(response => {
-      // console.log('Usuario registrado:', response);
       this.router.navigate(['/']);
-
-      // alert('¡Datos de usuario enviandos con exito!')
       Swal.fire('Éxito', 'Datos Inhade Usuario enviados correctamente.', 'success');
-
     }, error => {
-      // console.error('Error al registrar:', error);
-      // alert('ERROR al enviar datos. Intentelo nuevamente')
       Swal.fire('Error', ' Ocurrio un error al enviar los datos. ¡Intente Nuevamente!', 'error');
-
     });
   }
 
-  ngOnInit(): void {
-    this.listCompanys();
-    // this.listRoles(); // Se llama a listRoles para cargar la lista de roles
-  }
+  // Después de inicializar tu componente, establece selectedCompany en null.
+ngOnInit(): void {
+  this.selectedCompany = null;
+  this.listCompanys();
+}
+
 
   listCompanys(): void {
     this.userService.listCompanys().subscribe(
       (data) => {
         this.companys = data;
-        if (this.companys.length > 0) {
-          this.User.tenantId = this.companys[0].tenantId;
-        }
+        // if (this.companys.length > 0) {
+        //   // Establece la primera empresa como seleccionada por defecto
+        //   this.selectedCompany = this.companys[0];
+        //   this.User.tenantId = this.selectedCompany.tenantId;
+        // }
       },
       (error) => {
         console.error('Error al obtener empresas', error);
@@ -79,17 +65,8 @@ export class RegistroEmpleadoComponent {
     );
   }
 
-  // listRoles(): void {
-  //   this.userService.listRoles().subscribe(
-  //     (data) => {
-  //       this.rol = data; 
-  //       // Aquí establece el rol por defecto según tu lógica
-  //       this.defaultRole = this.rol.find(rol => rol.nameRol === 'Colaborador');
-  //       this.selectedRole = this.defaultRole; // Establece el rol por defecto como seleccionado
-  //     },
-  //     (error) => {
-  //       console.error('Error al obtener roles', error);
-  //     }
-  //   );
-  // }
+  onCompanySelect(): void {
+    // Cuando se selecciona una empresa, actualiza el tenantId en User
+    this.User.tenantId = this.selectedCompany.tenantId;
+  }
 }

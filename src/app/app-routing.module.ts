@@ -48,7 +48,7 @@ const routes: Routes = [
     path: 'obtenerTodasLasSolicitudes',
     component: ListEdictSolicitudComponent,
   },
-  { path: 'add', component: AddEditSolicitudComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'add', component: AddEditSolicitudComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario', 'Colaborador'] } },
   { path: 'edit/:id', component: AddEditSolicitudComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   // { path: '**', redirectTo: '', pathMatch: 'full' },
   { path: 'sidebar', component: SidebarComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
