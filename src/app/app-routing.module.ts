@@ -87,7 +87,6 @@ const routes: Routes = [
   { path: 'listCatgorias', component: ListCategoriasComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador', 'Colaborador'] }},
   { path: 'Informes', component: InformesComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
   { path: 'graficos', component: GraficosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
-  { path: '**', component: NotFoundComponent }
   { path: '**', component: NotFoundComponent },
 
 
