@@ -1,0 +1,64 @@
+<div class="additional-background">
+    <div class="container">
+      <h2>INFORMES</h2>
+  
+      <!-- Filtros -->
+      <div class="filters">
+        <label for="fechaInicio">Fecha de inicio:</label>
+        <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio">
+        
+        <label for="fechaFin">Fecha de fin:</label>
+        <input type="date" id="fechaFin" [(ngModel)]="fechaFin">
+  
+        <label for="categoria">Categoría:</label>
+        <select id="categoria" [(ngModel)]="categoriaSeleccionada">
+          <option value="">-- sin seleccionar --</option>
+          <option *ngFor="let cat of categoria" [value]="cat._id">{{ cat.nombre }}</option>
+        </select>
+  
+        <label for="tercero">Tercero:</label>
+        <select id="tercero" [(ngModel)]="terceroSeleccionado">
+          <option value="">-- sin seleccionar --</option>
+          <option *ngFor="let ter of tercero" [value]="ter._id">{{ ter.nombreTercero }}</option>
+        </select>
+  
+        <button (click)="obtenerMovimientoDeC()">Filtrar</button>
+      </div>
+  
+      <!-- Listado de egresos -->
+      <div class="movimiento-list" *ngIf="movimientosDeCaja.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Fecha</th>
+              <th>Detalle</th>
+              <th>Ingreso</th>
+              <th>Egreso</th>
+              <th>Saldo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tbody>
+              <tr *ngFor="let movimientoDeCaja of movimientosDeCaja">
+                <td>{{ movimientoDeCaja.numeroDocumento }}</td>
+                <td>{{ movimientoDeCaja.fecha }}</td>
+                <td>{{ movimientoDeCaja.detalle }}</td>
+                <td *ngIf="movimientoDeCaja.tipoMovimiento === 'Ingreso'">{{ movimientoDeCaja.valor }}</td>
+                <td *ngIf="movimientoDeCaja.tipoMovimiento === 'Egreso'">-</td>
+                <td *ngIf="movimientoDeCaja.tipoMovimiento === 'Egreso'">{{ movimientoDeCaja.valor }}</td>
+                <td>{{ movimientoDeCaja.saldo }}</td>
+              </tr>
+            </tbody>
+            
+          </table>
+          <button (click)="exportarExcel()">Exportar a Excel</button>
+        
+      </div>
+      <div class="no-informes" *ngIf="movimientosDeCaja.length === 0">
+        <p>No se encontraron Informes con los filtros seleccionados.</p>
+      </div>
+    </div>
+  </div>
+  
+  

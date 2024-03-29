@@ -1,0 +1,29 @@
+<div class="custom-container">
+    <div class="row justify-content-center">
+      <div class="col-md-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Documento</th>
+              <th>Dirección</th>
+              <th>Teléfono</th>
+              <th>Email</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tercero of terceros">
+              <td>{{ tercero.nombreTercero }}</td>
+              <td>{{ tercero.documentoTercero }}</td>
+              <td>{{ tercero.direccionTercero }}</td>
+              <td>{{ tercero.telefonoTercero }}</td>
+              <td>{{ tercero.emailTercero }}</td>
+              <td><button (click)="openEditModal(tercero)">Editar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

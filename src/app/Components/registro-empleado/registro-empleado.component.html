@@ -7,7 +7,7 @@
               <label for="tenantId" class="form-label">Empresas regisradas</label>
               <select [(ngModel)]="selectedCompanys" class="form-control" id="tenantId" name="tenantId" required>
                   <option value="">Seleccione Nombre de la empresa</option>
-                  <option *ngFor="let companys of companys" [value]="companys">{{companys.tenantId}}</option>
+                  <option *ngFor="let companys of companys" [value]="companys">{{companys.nameCompany}}</option>
               </select>
           </div>
 

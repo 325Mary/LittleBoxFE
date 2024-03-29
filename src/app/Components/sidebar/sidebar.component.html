@@ -3,10 +3,19 @@
       <li ><a routerLink="/home/">Inicio</a></li>
       <li *ngIf="isLoggedIn && isGerente"><a routerLink="/employees/">Empleados</a></li>
       <li><a routerLink="/personalization/">Personalizacion</a></li>
-      <li *ngIf="isLoggedIn && isSuperUsuario"><a routerLink= "/listDeSoliDeEmpresas/">Solicitudes de empresas</a></li>
+      <li *ngIf="isLoggedIn && isSuperUsuario "><a routerLink= "/listDeSoliDeEmpresas/">Solicitudes de empresas</a></li>
       <li *ngIf="isLoggedIn && isGerente"><a routerLink="/crearUserAdmin/">Crear Administrador</a></li>
       <li *ngIf="isLoggedIn && isSuperUsuario"><a routerLink="/listCompaniesAproved/" >Lista de empresas</a>  </li>
       <li *ngIf="isLoggedIn && isAdministrador"><a routerLink="/SoliColaboradores/">Solicitudes de Colaboradores</a></li>
+      <li *ngIf="isLoggedIn && isGerente || isAdministrador "><a routerLink="/crearTercero/">Crear Tercero </a></li>
+      <li *ngIf="isLoggedIn && isGerente || isAdministrador "><a routerLink="/crearCategoria/">Crear Categoria </a></li>
+      <li *ngIf="isLoggedIn && isGerente || isAdministrador "><a routerLink="/listTerceros/">Listar Terceros </a></li>
+      <li *ngIf="isLoggedIn && isGerente || isAdministrador "><a routerLink="/listCatgorias/">Listar Categorias </a></li>
+      <li *ngIf="isLoggedIn && isGerente || isAdministrador "><a routerLink="/listEgresos/">Listar Egresos </a></li>
+      <li *ngIf="isLoggedIn && isGerente || isAdministrador "><a routerLink="/listIngresos/">Listar Ingresos </a></li>
+
+
+
 
     </ul>
   </div>

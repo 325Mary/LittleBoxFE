@@ -1,23 +1,32 @@
 
 <div class="navbar">
 
-  <div  *ngIf="!isLoggedIn" class="logo">
-      <img src="../../assets/logo_little_box.png" >
-  </div>
+  <div  *ngIf="!isLoggedIn" >
+      <a routerLink="/"><img  class="logo" src="../../assets/logo_little_box.png" ></a>
+      </div>
 
   <div class="menu-container" [ngClass]="{'menu-open': isMenuOpen}">
     <app-sidebar></app-sidebar>
   </div>
   <div *ngIf="isLoggedIn" class="contenedor-img">
     <a (click)="toggleMenu()">
-      <img src="../../../assets/bx-home.svg" alt="">
+      <img src="../../../assets/icons8-casa.svg" alt="">
     </a>
   </div>
-  
-  <!-- Mostrar elementos específicos si el usuario está autenticado -->
+  <div *ngIf="isLoggedIn ">
+    <a routerLink="/graficos/">   
+       <img src="../../../assets/icons8-reequilibrar-la-cartera-50.png" alt="Icono" class="info img-fluid rounded" style="width: 24px; height: 24px;"> 
+</a>
+</div>
+  <div *ngIf="isLoggedIn && isAdministrador || isGerente">
+    <a  class="info " routerLink="/Informes/">INFORMES</a>
+</div>
+  <div *ngIf="isLoggedIn && isAdministrador || isGerente ">
+    <a  class="info " routerLink="/crearEgreso/">CREAR EGRESO</a>
+</div>
   <div *ngIf="isLoggedIn && userData">
-      <img src="../../../assets/bx-user-circle (1).svg" alt="Icono" class="user-info "> 
-      <span>{{ userData.username }}</span>
+      <img src="../../../assets/user.png" alt="Icono" class="info img-fluid rounded" style="width: 24px; height: 24px;"> 
+      <span class="text-primary">{{ userData.username }}</span>
   </div>
   
   <div *ngIf="isLoggedIn" class="logout-section">
@@ -25,7 +34,7 @@
   </div>
 
   <!-- Mostrar botón de SignIn/Up si el usuario no está autenticado -->
-  <a href="#" *ngIf="!isLoggedIn" (click)="openModal()" class="right">SignIn/Up</a>
+  <a href="#" *ngIf="currentRoute === '/' && !isLoggedIn" (click)="openModal()" class="right">SignIn/Up</a>
 
   <!-- Mostrar el modal de registro si se abre -->
   <div class="modal" [class.active]="modalOpen">
@@ -34,4 +43,7 @@
       <app-pre-registro></app-pre-registro>
     </div>
   </div>
+
+  
+  
 </div>

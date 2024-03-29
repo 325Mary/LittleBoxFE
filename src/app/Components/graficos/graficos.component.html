@@ -1,0 +1,31 @@
+<div class="additional-background">
+    <div class="container">
+      <h2>Generar Gráfico de Gastos</h2>
+      <form (ngSubmit)="obtenerMovimientoDeC()">
+        <label for="fechaInicio">Fecha de inicio:</label>
+        <input type="date" id="fechaInicio" name="fechaInicio" [(ngModel)]="fechaInicio">
+        <label for="fechaFin">Fecha de fin:</label>
+        <input type="date" id="fechaFin" name="fechaFin" [(ngModel)]="fechaFin">
+    
+        <label for="categoria">Categoría:</label>
+        <input type="radio" id="categoria" name="filtro" value="categoria" [(ngModel)]="filtro">
+        <label for="tercero">Tercero:</label>
+        <input type="radio" id="tercero" name="filtro" value="tercero" [(ngModel)]="filtro">
+    
+        <button type="submit">Generar Gráfico</button>
+      </form>
+    </div>
+  
+    <div class="charts-container">
+      <!-- Gráfico de barras -->
+      <div class="chart-container">
+        <canvas id="myChart" width="400" height="400"></canvas>
+      </div>
+      
+      <!-- Gráfico de torta -->
+      <div class="chart-container">
+        <canvas id="myChartTorta" width="400" height="400"></canvas>
+      </div>
+    </div>
+  </div>
+  

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { SafePipe } from './pipes/safe.pipe'; // Importa tu tubería personalizada
 
 import { HomeComponent } from '../app/Components/home/home.component';
 import { SidebarComponent } from '../app/Components/sidebar/sidebar.component';
@@ -35,6 +37,10 @@ import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
+import { AddEditSolicitudComponent } from './Components/add-edit-solicitud/add-edit-solicitud.component';
+import { ListEdictSolicitudComponent } from './Components/list-edict-solicitud/list-edict-solicitud.component';
+//import { environment } from './environments/environment.prod'; // Para producción
 import { NotFoundComponent } from './Components/not-found/not-found.component';
 import { NoAutorizedComponent } from './Components/no-autorized/no-autorized.component';
 import { RestorePasswordComponent } from './Components/restore-password/restore-password.component';
@@ -44,6 +50,24 @@ import { CreateUserAdminComponent } from './Components/create-user-admin/create-
 import { ListCompaniesAprovedComponent } from './Components/list-companies-aproved/list-companies-aproved.component';
 import { SoliColaboradoresComponent } from './Components/soli-colaboradores/soli-colaboradores.component';
 import { DataUserComponent } from './Components/data-user/data-user.component';
+import { CrearEgresoComponent } from './Components/crear-egreso/crear-egreso.component';
+import { CrearTerceroComponent } from './Components/crear-tercero/crear-tercero.component';
+import { CrearCategoriaComponent } from './Components/crear-categoria/crear-categoria.component';
+import { ListTercerosComponent } from './Components/list-terceros/list-terceros.component';
+import { ListCategoriasComponent } from './Components/list-categorias/list-categorias.component';
+import { ListEgresosComponent } from './Components/list-egresos/list-egresos.component';
+import {  EgresosService} from "../app/services/egresos.service";
+import { ModalEgresoComponent } from "./Components/modal-egreso/modal-egreso.component";
+import { ModalTerceroComponent } from './Components/modal-tercero/modal-tercero.component';
+import { CompanyService } from "./services/company.service";
+import { ModalCompanySolicitudComponent } from './Components/modal-company-solicitud/modal-company-solicitud.component';
+import { InformesComponent } from './Components/informes/informes.component';
+import {InformesService  } from "./services/informes.service";
+import { GraficosComponent } from './Components/graficos/graficos.component';
+
+// import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { ListDeleteIngresosComponent } from './Components/ingresos/list-delete-ingresos/list-delete-ingresos.component';
+import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/add-edit-ingreso.component';
 import { EditSubcategoryComponent } from './Components/ChatBot/edit-subcategory/edit-subcategory.component';
 import { EditQueriesComponent } from './Components/ChatBot/edit-queries/edit-queries.component';
 import { EditCategoryComponent } from './Components/ChatBot/edit-category/edit-category.component';
@@ -52,6 +76,10 @@ import { EditCategoryComponent } from './Components/ChatBot/edit-category/edit-c
   declarations: [
     AppComponent,
     NavbarComponent,
+    IndexComponent,
+    AddEditSolicitudComponent,
+    ListEdictSolicitudComponent,
+    SafePipe,
     IndexComponent,
     ChatbodyComponent,
     ListCategoryComponent,
@@ -82,7 +110,21 @@ import { EditCategoryComponent } from './Components/ChatBot/edit-category/edit-c
     DataUserComponent,
     EditCategoryComponent,
     EditSubcategoryComponent,
-    EditQueriesComponent
+    EditQueriesComponent,
+    CrearEgresoComponent,
+    CrearTerceroComponent,
+    CrearCategoriaComponent,
+    ListTercerosComponent,
+    ListCategoriasComponent,
+    ListEgresosComponent,
+    ModalEgresoComponent,
+    ModalTerceroComponent,
+    ModalCompanySolicitudComponent,
+    InformesComponent,
+    GraficosComponent,
+    // DataUserComponent,
+    ListDeleteIngresosComponent,
+    AddEditIngresoComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,10 +142,9 @@ import { EditCategoryComponent } from './Components/ChatBot/edit-category/edit-c
           return localStorage.getItem('token');
         }
       }
-    })
-    
+    }),
   ],
-  providers: [SignInUpService],
+  providers: [SignInUpService,{ provide: environment, useValue: environment }, EgresosService, CompanyService, InformesService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

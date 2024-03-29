@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router'; // Import Router here
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { TokenValidationService } from '../../services/token-validation-service.service';
 import { Subscription } from 'rxjs';
@@ -19,8 +19,12 @@ export class NavbarComponent implements OnInit  {
   isSuperUsuario: boolean = false;
   isAdministrador: boolean = false;
   isColaborador: boolean = false;
+  currentRoute: string = '';
 
-  constructor(private router: Router, private authService: SignInUpService, private tokenValidationService: TokenValidationService, private cdr: ChangeDetectorRef) {}
+  constructor(private router: Router, private authService: SignInUpService, private tokenValidationService: TokenValidationService, private cdr: ChangeDetectorRef) 
+  { this.router.events.subscribe((val) => {
+    this.currentRoute = this.router.url;
+  });}
 
   
   

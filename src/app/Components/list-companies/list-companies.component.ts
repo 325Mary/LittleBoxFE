@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import{CompanyService} from '../../services/company.service'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {  ModalCompanySolicitudComponent} from "../modal-company-solicitud/modal-company-solicitud.component";
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,7 +14,8 @@ import{CompanyService} from '../../services/company.service'
 export class ListCompaniesComponent  implements OnInit {
   companies: any = [];
 
-  constructor(private companyService: CompanyService) { }
+  constructor(private companyService: CompanyService, private modalService: NgbModal,  private router: Router
+    ) { }
 
   ngOnInit(): void {
     this.loadCompanies();
@@ -24,15 +29,20 @@ export class ListCompaniesComponent  implements OnInit {
 
   approveCompany(companyId: string) {
     this.companyService.approveCompany(companyId).subscribe(() => {
-      // Recargar la lista de empresas después de aprobar
-      this.loadCompanies();
+      Swal.fire('¡Empresa Aprobada Exitosamente!', 'Los cambios se han guardado correctamente.', 'success');
+      window.location.reload();  // Recargar la página actual    
+    }, error =>{
+      Swal.fire('¡Error al Aprobar Empresa!', 'Los cambios  no se han guardado correctamente.', 'error');
     });
   }
+  
 
   denyCompany(companyId: string) {
     this.companyService.denyCompany(companyId).subscribe(() => {
-      // Recargar la lista de empresas después de denegar
-      this.loadCompanies();
+      Swal.fire('¡Cambios guardados!', 'Los cambios se han guardado correctamente.', 'success');
+    },
+    error=>{
+      Swal.fire('Error al Denegar Empresa',  'Los cambios no se han guardado correctamente.' ,'error');
     });
   }
 
@@ -73,6 +83,9 @@ export class ListCompaniesComponent  implements OnInit {
     }
 }
 
-
+verDetalle(company: any) {
+  const modalRef = this.modalService.open(ModalCompanySolicitudComponent);
+  modalRef.componentInstance.company = company;
+}
   
 }

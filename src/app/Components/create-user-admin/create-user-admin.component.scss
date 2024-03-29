@@ -1,6 +1,6 @@
 .container {
     width: 50%;
-    margin: 50px auto;
+    margin: 60px auto;
     text-align: center;
   }
   
@@ -12,9 +12,11 @@
     width: 80%; /* Reducimos un poco el ancho del formulario */
     margin: 0 auto; /* Centramos el formulario */
     padding: 20px;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: transparent;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+
   }
   
   .form-group {
@@ -29,18 +31,22 @@
   input {
     width: calc(100% - 16px); /* Ajustamos el ancho para que tenga en cuenta el padding */
     padding: 8px;
-    border-radius: 3px;
+    border-radius: 9px;
     border: 1px solid #ccc;
   }
   
-  button {
-    width: calc(100% - 16px); /* Ajustamos el ancho para que tenga en cuenta el padding */
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
+  button{
     background-color: #007bff;
     color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    width: 20%; /* Hacer que el botón ocupe todo el ancho disponible */
+    margin-left: 35%; /* Establecer margen izquierdo automático */
+    margin-right: 50%; /* Establecer margen derecho automático */
+    display: block; /* Asegurar que el botón sea un bloque para aplicar márgenes automáticamente */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Sombra suave */
+
   }
   
   button:hover {
