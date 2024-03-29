@@ -27,7 +27,7 @@
   <div *ngIf="isLoggedIn && isAdministrador || isGerente ">
     <a  class="info " routerLink="/crearEgreso/">CREAR EGRESO</a>
 </div>
-<div *ngIf="isLoggedIn && isAdministrador || isGerente ">
+<div *ngIf="isLoggedIn && isAdministrador || isGerente || isColaborador ">
   <a  class="info " routerLink="/obtenerTodasLasSolicitudes/">SOLICITUDES</a>
 </div>
   <div *ngIf="isLoggedIn && userData">

@@ -8,9 +8,10 @@ import { EstadoSolicitudService } from '../../services/estado-solicitud.service'
 import { SweetAlertService } from '../../services/sweet-alert.service';
 import { TokenValidationService } from '../../services/token-validation-service.service';
 import { SolicitudModalComponent } from "../../Components/modals/solicitud-modal/solicitud-modal.component";
+import { SignInUpService } from "../../services/sign-in-up.service";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import spanish from '../../../assets/i18n/spanish.json';
 
-// import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -18,7 +19,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './list-edict-solicitud.component.html',
   styleUrl: './list-edict-solicitud.component.scss',
 })
-export class ListEdictSolicitudComponent {
+export class ListEdictSolicitudComponent implements OnInit{
+
+  dtOptions: DataTables.Settings = {};
+  languageOptions: any;
+
+
   listSolicitudes: Solicitud[] = [];
   estadoDeSolicitud: EstadoSolicitud[] = [];
   estadoSeleccionado: string | null = null;
@@ -26,19 +32,12 @@ export class ListEdictSolicitudComponent {
   loading: boolean = false;
   tenantId: string = '';
   id: string | null;
+   rolUsuario: string = ''; // Variable que almacena el rol del usuario
 
   // fechaInicio = new Date('2024-01-01');
   fechaInicio = new Date();
   fechaFin = new Date();
 
-  // fechaInicio: string = '';
-  // fechaFin: string = '';
-
-  // fechaInicio: string = "";
-  // fechaFin: string = "";
-
-  // fechaInicio: Date | null = null;
-  // fechaFin: Date | null = null;
   documento = ""
 
   constructor(
@@ -47,21 +46,17 @@ export class ListEdictSolicitudComponent {
     private tokenValidationService: TokenValidationService,
     private estadoSolicitud: EstadoSolicitudService,
     private aRouter: ActivatedRoute,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private signInUpService: SignInUpService
     // private datePipe: DatePipe,
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
-    // Inicializar las fechas con la fecha actual
-    // this.fechaInicio = this.formatDate(new Date());
-    // this.fechaFin = this.formatDate(new Date());
-    // this.fechaInicio = this.formatoFecha(new Date(this.fechaInicio));
-    // this.fechaFin = this.formatoFecha(new Date(this.fechaFin));
-  // this.fechaInicio = new Date();
-  //  this.fechaFin = new Date();
+  
   }
 
   ngOnInit(): void {
     this.getEstadoSolicitud();
+    this.getRolUser()
     const token = localStorage.getItem('token');
     if (token) {
       const tenantId = this.tokenValidationService.getTenantIdFromToken();
@@ -76,6 +71,11 @@ export class ListEdictSolicitudComponent {
     } else {
       console.error('No se encontró ningún token en el almacenamiento local');
     }
+    this.languageOptions = spanish;
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: this.languageOptions
+    };
     // Obtener la fecha actual
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -88,19 +88,39 @@ export class ListEdictSolicitudComponent {
   }
 
 
+  getColorByEstado(estado: string | undefined): string {
+    switch (estado) {
+      case 'pendiente':
+        return 'orange'; // color naranja
+      case 'aprobado':
+        return 'blue'; // color azul
+      case 'finalizado':
+        return 'green'; // color verde
+      case 'rechazado':
+        return 'red'; // color rojo
+      default:
+        return ''; // color predeterminado o ninguno
+    }
+  }
+  
+
   getEstadoSolicitud(): void {
     this.estadoSolicitud.getListaEstadoSolicitudes().subscribe((Data: any) => {
       this.estadoDeSolicitud = [...Data.data];
     });
   }
 
+  getRolUser(): void {
+    const userRole = this.signInUpService.getUserRole(); // Obtener el rol del usuario
+    if (userRole !== null) {
+      this.rolUsuario = userRole; // Establecer el rol del usuario solo si no es null
+    } else {
+      console.error('No se pudo obtener el rol del usuario');
+    }
+  }
+
   getListSolicitudes(): void {
-    // this.loading = true;
-
-    //Convertir las fechas de cadena de texto a objetos Date
-    // const fechaInicioDate = new Date(this.fechaInicio);
-    // const fechaFinDate = new Date(this.fechaFin);
-
+    
     if (!this.fechaInicio || !this.fechaFin) {
       this.sweetAlertService.showErrorAlert('Debes seleccionar ambas fechas para filtrar.');
       return;
@@ -111,6 +131,7 @@ export class ListEdictSolicitudComponent {
         console.log("estas son las solicitudes: ", data);
         this.listSolicitudes = [...data.data];
         // this.loading = false;
+        console.log("estado: ", this.listSolicitudes);
         console.log("Datos de las solicitudes: ", this.listSolicitudes);
       });
   }
@@ -161,28 +182,6 @@ export class ListEdictSolicitudComponent {
     }
   }
 
-  // guardarCambiosEstado() {
-  //   if (this.estadoSeleccionado !== null && this.solicitudesSeleccionadas.length > 0) {
-  //     this.solicitudesSeleccionadas.forEach((solicitudId) => {
-  //       console.log("solicitudId de guardarcambiosestado: ", solicitudId);
-
-  //       if (solicitudId) { // Verificar que solicitudId no sea null o undefined
-  //         console.log("Este es el estado seleccionado:", this.estadoSeleccionado);
-  //         this.solicitudesService.updateEstadoSolicitud(solicitudId, this.estadoSeleccionado!, this.tenantId)        
-  //           .subscribe(() => {
-  //             console.log(`Estado de la solicitud ${solicitudId} cambiado correctamente.`);
-  //             // Aquí podrías agregar lógica adicional si lo necesitas, como actualizar la lista de solicitudes
-  //           }, (error) => {
-  //             console.error(`Error al cambiar el estado de la solicitud ${solicitudId}:`, error);
-  //           });
-  //       } else {
-  //         console.warn(`El id de la solicitud es ${solicitudId}, no se puede cambiar el estado.`);
-  //       }
-  //     });
-  //   } else {
-  //     console.log('Por favor selecciona al menos una solicitud y un nuevo estado.');
-  //   }
-  // }
   guardarCambiosEstado() {
     if (this.estadoSeleccionado !== null && this.solicitudesSeleccionadas.length > 0) {
       const solicitudesIds = this.solicitudesSeleccionadas; // Solo los IDs de las solicitudes

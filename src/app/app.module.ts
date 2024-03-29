@@ -20,7 +20,7 @@ import { SignInUpService } from './services/sign-in-up.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
-
+import { DataTablesModule } from "angular-datatables";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -108,6 +108,7 @@ import { SolicitudModalComponent } from './Components/modals/solicitud-modal/sol
     HttpClientModule,
     NgbModule,
     FormsModule,
+    DataTablesModule,
     // NgxExtendedPdfViewerModule,
     JwtModule.forRoot({
       config: {
