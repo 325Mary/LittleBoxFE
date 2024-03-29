@@ -5,6 +5,7 @@ import { Ingreso } from '../../../interfaces/ingreso';
 import { IngresosService } from '../../../services/ingresos/ingresos.service';
 import { SweetAlertService } from '../../../services/sweet-alert.service';
 import { TokenValidationService } from '../../../services/token-validation-service.service';
+import spanish from '../../../../assets/i18n/spanish.json';
 
 @Component({
   selector: 'app-list-delete-ingresos',
@@ -12,6 +13,9 @@ import { TokenValidationService } from '../../../services/token-validation-servi
   styleUrl: './list-delete-ingresos.component.scss'
 })
 export class ListDeleteIngresosComponent {
+
+  dtOptions: DataTables.Settings = {};
+  languageOptions: any;
 
   listIngresos: Ingreso[] = [];
   loading: boolean = false;
@@ -47,6 +51,12 @@ export class ListDeleteIngresosComponent {
     } else {
       console.error('No se encontró ningún token en el almacenamiento local');
     }
+
+    this.languageOptions = spanish;
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: this.languageOptions
+    };
     // this.getListIngresos();
     this.filtrarIngresos();
   }

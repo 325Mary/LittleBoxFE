@@ -32,7 +32,7 @@ export class ListEdictSolicitudComponent implements OnInit{
   loading: boolean = false;
   tenantId: string = '';
   id: string | null;
-   rolUsuario: string = ''; // Variable que almacena el rol del usuario
+  rolUsuario: string = ''; // Variable que almacena el rol del usuario
 
   // fechaInicio = new Date('2024-01-01');
   fechaInicio = new Date();

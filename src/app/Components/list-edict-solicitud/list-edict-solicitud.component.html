@@ -31,7 +31,7 @@
         <th scope="col">Estado</th>
         <th scope="col">Detalle</th>
         <th scope="col">Valor</th>
-        <th scope="col">Seleccionar</th>
+        <th scope="col">Selec</th>
         <th scope="col">Acciones</th>
       </tr>
     </thead>
@@ -46,11 +46,13 @@
         <td>{{ solicitud.detalle }}</td>
         <td>{{ solicitud.valor | currency }}</td>
         <td>
-          <input *ngIf="rolUsuario !== 'Colaborador'" type="checkbox" (change)="seleccionarSolicitud(solicitud?._id)">
+          <div class="checkbox-container">
+            <input *ngIf="rolUsuario !== 'Colaborador'" type="checkbox" (change)="seleccionarSolicitud(solicitud?._id)">
+          </div>
         </td>
         <td>
           <button *ngIf="rolUsuario !== 'Colaborador'" [routerLink]="['/edit', solicitud._id]" type="button" class="btn btn-info btn-sm">Editar</button>
-          <button (click)="verDetalle(solicitud)" type="button" class="btn btn-info btn-sm">Ver</button>
+          <button (click)="verDetalle(solicitud)" type="button" class="btn btn-info btn-sm ms-2">Ver</button>
           <button *ngIf="rolUsuario !== 'Colaborador'" (click)="deleteSolicitud(solicitud._id)" type="button" class="btn btn-danger btn-sm ms-2">Eliminar</button>
         </td>
       </tr>

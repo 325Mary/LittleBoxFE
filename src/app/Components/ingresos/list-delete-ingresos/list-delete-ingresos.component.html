@@ -13,7 +13,7 @@
     </div>
   </div>
   
-  <table *ngIf="listIngresos.length > 0" class="table table-hover">
+  <table datatable [dtOptions]="dtOptions" *ngIf="listIngresos.length > 0" class="table table-hover">
     <thead>
       <tr class="table-primary">
         <th scope="col">Ingreso #</th>
@@ -26,7 +26,7 @@
     <tbody>
       <tr *ngFor="let ingreso of listIngresos" class="table-active">
         <td>{{ ingreso.ingresoId }}</td>
-        <td>{{ ingreso.fecha }}</td>
+        <td>{{ ingreso.fecha | date: 'dd-MM-yyyy'}}</td>
         <td>{{ ingreso.detalle }}</td>
         <td>{{ ingreso.valor | currency }}</td>
         <td>
