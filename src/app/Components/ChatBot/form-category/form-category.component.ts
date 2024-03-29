@@ -1,86 +1,55 @@
-import { Component } from '@angular/core';
-import { Category } from '../../../Models/category';
+import { Component, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryService } from '../../../services/chatbot/category.service';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
-  selector: 'app-form-category',
-  templateUrl: './form-category.component.html',
-  styleUrl: './form-category.component.scss'
+    selector: 'app-form-category',
+    templateUrl: './form-category.component.html',
+    styleUrls: ['./form-category.component.scss']
 })
 export class FormCategoryComponent {
+    
+    name: string = '';
+    description: string = '';
 
-   //Modal:
-   cerrarModal() {
-    this.activeModal.close('Modal cerrada');
-  }
+    constructor(
+        private toastr: ToastrService,
+        private categoryService: CategoryService,
+        public activeModal: NgbActiveModal
+    ) {}
 
-
-  //Component: 
-  categoryForm: FormGroup
-  titulo = "CREAR CATEGORIA";
-  id: string | null
-
-  constructor (private buil : FormBuilder,
-              private toastr: ToastrService,
-              private CaService: CategoryService,
-              private aRouter: ActivatedRoute,
-              public activeModal: NgbActiveModal){
-
-
-
-    this.categoryForm = this.buil.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-    })
-    this.id = this.aRouter.snapshot.paramMap.get('id')
-  }
-
-  ngOnInit(): void {
-      this.XEditar()
-  }
-
-  addCategory(){
-    const CATEGORY: Category = {
-      name: this.categoryForm.get('name')?.value,
-      description: this.categoryForm.get('description')?.value
+    cerrarModal() {
+        this.activeModal.close('Modal cerrada');
     }
 
-    if (this.id !== null) {
-      
-      this.CaService.editCategory(this.id, CATEGORY).subscribe(data => {
-        this.toastr.info('La categoria se ha actualizado con exito.', 'Se ha actualizado con exito:')
+    addCategory() {
+        if (!this.name || !this.description) {
+            this.toastr.error('Por favor, completa todos los campos.');
+            return;
+        }
 
-      }, error =>{
-        console.log(error)
-        this.categoryForm.reset()
-      })
+        const newCategory = {
+            name: this.name,
+            description: this.description
+        };
 
-    }else{
-
-      this.CaService.saveCategory(CATEGORY).subscribe(data =>{
-        this.toastr.success('La categoria fue registrada con exito.', 'Categoria registrada:')
-      }, error =>{
-        console.log(error)
-        this.categoryForm.reset()
-      })
+        this.categoryService.saveCategory(newCategory).subscribe(
+            () => {
+                this.toastr.success('La categoría fue registrada con éxito.', 'Categoría registrada:');
+                this.activeModal.close('Modal cerrada');
+            },
+            (error) => {
+                console.error(error);
+                this.resetForm();
+            }
+        );
     }
+
+    resetForm() {
+        this.name = '';
+        this.description = '';
     }
-
-  XEditar (){
-    if (this.id !== null) {
-
-      this.titulo = 'Editar categoria'
-      this.CaService.getACategory(this.id).subscribe(data=>{
-        this.categoryForm.setValue({
-          name: data.name,
-          description: data.description,
-        })
-      })
-    }
-  }
-
 }

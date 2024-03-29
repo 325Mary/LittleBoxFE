@@ -71,8 +71,8 @@ export class SubcategoryService {
     )
   }
 
-  getSubclassesByCategory(identifierCategory: string): Observable<any> {
-    return this.http.get(`http://localhost:4000/getSubclassesByCategory/${identifierCategory}`)
+  getSubcategoryByCategory(identifierCategory: string): Observable<any> {
+    return this.http.get(`http://localhost:4000/getSubcategoriesByCategory/${identifierCategory}`)
       .pipe(
         catchError(error => {
           console.log(error);

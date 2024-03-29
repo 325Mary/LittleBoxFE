@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
+
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormSubcategoryComponent } from '../form-subcategory/form-subcategory.component';
+import { EditSubcategoryComponent } from '../edit-subcategory/edit-subcategory.component';
+import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
 
 @Component({
   selector: 'app-list-subcategory',
   templateUrl: './list-subcategory.component.html',
-  styleUrl: './list-subcategory.component.scss'
+  styleUrls: ['./list-subcategory.component.scss']
 })
 export class ListSubcategoryComponent {
 
@@ -17,52 +19,76 @@ export class ListSubcategoryComponent {
   }
 
   openModal() {
-    const modalRef = this.modalService.open( FormSubcategoryComponent, { size: 'lg' });
-  }
-
-  openModalE(id: string | null) {
     const modalRef = this.modalService.open(FormSubcategoryComponent, { size: 'lg' });
-    modalRef.componentInstance.id = id;
+    modalRef.result.then((result) => {
+      this.reloadSubcategories();
+    }, (reason) => {
+      console.log('Modal cerrada sin guardar cambios.');
+    });
   }
-
 
   public listSubcategory: any[] = [];
   public filteredSubcategory: any[] = [];
-  public searchTermReferencia: string = '';
+  public searchTerm: string = '';
 
-  constructor(private subcategoryService: SubcategoryService, 
-    private toastr: ToastrService,
-    public activeModal: NgbActiveModal,
-    public modalService: NgbModal) { }
+  constructor(private SService: SubcategoryService, 
+              private toastr: ToastrService,
+              public activeModal: NgbActiveModal,
+              public modalService: NgbModal) { }
 
   ngOnInit() {
-    this.loadSubcategories();
-  }
-
-  loadSubcategories(): void {
-    this.subcategoryService.showSubcategories().subscribe((lista) => {
+    this.SService.showSubcategories().subscribe((lista) => {
       this.listSubcategory = lista;
-      this.filteredSubcategory = [...this.listSubcategory]; 
-      this.listSubcategory.sort((a, b) => {
-        return a.name.localeCompare(b.name);
-      });
+      this.filtrarSubcategory(); 
+      this.ordenarLista();
     });
   }
 
-  eliminarSubclase(id: any) {
-    this.subcategoryService.deleteSubcategories(id).subscribe(
-  (data) => {
-    this.toastr.error('La subclase fue eliminada con exito.', 'Subclase eliminada: ');
-    this.loadSubcategories(); 
-  },(error) => {
-    console.log(error);
-    });
-  }
-  filtrarSubcategory(): void {
-    this.filteredSubcategory = this.listSubcategory.filter(subcategory =>
-      subcategory.identifier.toLowerCase().includes(this.searchTermReferencia.toLowerCase()) ||
-      subcategory.name.toLowerCase().includes(this.searchTermReferencia.toLowerCase()) ||
-      subcategory.category.name.toLowerCase().includes(this.searchTermReferencia.toLowerCase())
+  eliminarSubcategory(id: any) {
+    this.SService.deleteSubcategories(id).subscribe(
+      (data) => {
+        this.toastr.error('La subclase fue eliminada con exito.', 'Subclase eliminada: ');
+        this.filtrarSubcategory(); 
+        this.reloadSubcategories();
+      },
+      (error) => {
+        console.log(error);
+      }
     );
   }
+
+  ordenarLista() {
+    this.listSubcategory.sort((a, b) => a.referencia - b.referencia);
+  }
+
+  filtrarSubcategory() {
+    this.filteredSubcategory = this.listSubcategory.filter(
+        (subcatetegory: any) =>
+        subcatetegory.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
 }
+
+  reloadSubcategories() {
+    this.SService.showSubcategories().subscribe(lista => {
+      this.listSubcategory = lista;
+      this.filteredSubcategory = lista;
+      this.ordenarLista();
+    });
+  }
+
+  openEditModal(subcategoryId: any) {
+    const modalRef = this.modalService.open(EditSubcategoryComponent, { size: 'lg' });
+    modalRef.componentInstance.mode = 'edit'; 
+    modalRef.componentInstance.subcategoryId = subcategoryId; 
+    modalRef.result.then(
+        () => {
+            this.reloadSubcategories();
+        },
+        (reason) => {
+            this.toastr.info('Subcategoria guardada sin cambios.', 'Subcategoria editada: ')
+        }
+    );
+}
+
+}
+

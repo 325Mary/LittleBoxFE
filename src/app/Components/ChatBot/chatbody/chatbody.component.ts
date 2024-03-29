@@ -1,94 +1,119 @@
-import { Component, Input } from '@angular/core';
-import { QueriesService } from '../../../services/chatbot/queries.service';
-import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
+import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuComponent } from '../menu/menu.component';
+import { QueriesService } from '../../../services/chatbot/queries.service';
+import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
+import { CategoryService } from '../../../services/chatbot/category.service';
 
 
 interface Message {
+  profilePicture?: string;
   pregunta: string;
   respuesta: string;
-  fotoPerfil?: string;
   origen: 'usuario' | 'bot';
 }
 
-interface Category {
-  referencia: string;
-  nombre: string;
-  descripcion: string;
-}
- 
 @Component({
   selector: 'app-chatbody',
   templateUrl: './chatbody.component.html',
-  styleUrl: './chatbody.component.scss'
+  styleUrls: ['./chatbody.component.scss'],
 })
-
-
 export class ChatbodyComponent {
-
-
   userInput: string = '';
   chatHistory: Message[] = [];
-  categories: Category[] = [];
 
-  constructor(private QService: QueriesService, 
+  category: string = '';
+  subcategory: string = ''; 
+  categories: any[] = [];
+  subcategories: any[] = []; 
+  queries: any [] = []
+
+  constructor(
     private modalService: NgbModal,
-    public activeModal: NgbActiveModal) 
-  {}
+    public activeModal: NgbActiveModal,
+    private QService: QueriesService,
+    private SService: SubcategoryService,
+    private CService: CategoryService
+  ) {}
 
-  //Configuracion:
-  openModal() {
-    const modalRef = this.modalService.open( MenuComponent, { size: 'lg' });
-  }
-
-  cerrarModal() {
-    this.activeModal.close('Modal cerrada');
-  }
-
-  //Componente:
   ngOnInit(): void {
-    this.mostrarMensajeBienvenida();
+    this.obtenerCategorias();
+    if (this.categories.length > 0) {
+      this.obtenerSubcategoriasPorCategoria(this.categories[0]._id);
+    }
+    this.showWelcomeMessage();
+  }
+  
+  obtenerCategorias() {
+    this.CService.showCategories().subscribe(
+      (data) => {
+        this.categories = data; 
+      },
+      (error) => {
+        console.error('Error obteniendo categorías:', error);
+      }
+    );
   }
 
-  mostrarMensajeBienvenida() {
+  obtenerSubcategoriasPorCategoria(categoriaId: string) {
+    this.SService.getSubcategoryByCategory(categoriaId).subscribe(
+      (data) => {
+        this.subcategories = data; 
+      },
+      (error) => {
+        console.error('Error obteniendo subcategorías:', error);
+      }
+    );
+  }
+
+  onCategoryChange() {
+    this.subcategory = ''; 
+    this.obtenerSubcategoriasPorCategoria(this.category);
+  }
+
+  onSubcategoryChange() {
+    this.QService.getQueriesBySubcategory(this.subcategory).subscribe(
+      (data) => {
+        this.queries = data;
+      },
+      (error) => {
+        console.error('Error obteniendo consultas:', error);
+      }
+    );
+  }
+
+  showWelcomeMessage() {
     this.chatHistory.push({
-      pregunta: '¡Bienvenido! ¿En qué puedo ayudarte? Escribe "Help" para ver las categorías.',
+      pregunta: '¡Hola! ¿En qué puedo ayudarte hoy? Escribe "Ayuda" para poder explicarte.?',
       respuesta: '',
-      fotoPerfil: 'assets/bot.png',
+      profilePicture: 'assets/bot.png',
       origen: 'bot'
     });
   }
 
-  enviarMensaje() {
-    const userInputLower = this.userInput.toLowerCase();
-
-    if (userInputLower === 'help') {
-
-      this.consultarPorReferencia(userInputLower);
-    } else {
-      this.mostrarMensajeNoEntendido();
-    }
-
+  sendMessage() {
+    this.getQuery();
     this.userInput = '';
   }
 
-  consultarPorReferencia(indentifier: string) {
-    const indentifierQ = indentifier;
-    this.QService.getConsultationIdentifier(indentifierQ).subscribe(
-      (query) => {
-        if (query) {
+  getQuery() {
+    const userInputLower = this.userInput.toLowerCase();
+
+    this.QService.getQueryIdentifier(userInputLower).subscribe(
+      (response) => {
+        if (response.status === 200) {
+          const query = response.data;
           this.chatHistory.push({
-            pregunta: query.pregunta,
-            respuesta: query.respuesta,
-            fotoPerfil: 'assets/bot.png',
+            profilePicture: 'assets/bot.png',
+            pregunta: query.question,
+            respuesta: query.answer,
             origen: 'bot'
           });
         } else {
           this.chatHistory.push({
-            pregunta: 'No se encontró ninguna consulta con esa referencia.',
+            pregunta: 'No query found with that identifier.',
             respuesta: '',
-            fotoPerfil: 'assets/bot.png',
+            profilePicture: 'assets/bot.png',
             origen: 'bot'
           });
         }
@@ -96,22 +121,29 @@ export class ChatbodyComponent {
       (error) => {
         console.error(error);
         this.chatHistory.push({
-          pregunta: 'Ocurrió un error al obtener la consulta. Por favor, inténtalo de nuevo.',
+          pregunta: 'An error occurred while fetching the query. Please try again.',
           respuesta: '',
-          fotoPerfil: 'assets/bot.png',
+          profilePicture: 'assets/bot.png',
           origen: 'bot'
         });
       }
     );
   }
 
-  mostrarMensajeNoEntendido() {
+  showUnknownMessage() {
     this.chatHistory.push({
       pregunta: this.userInput,
-      respuesta: 'No entiendo. Escribe "Help" para obtener ayuda.',
-      fotoPerfil: 'assets/bot.png',
+      respuesta: 'I do not understand.',
+      profilePicture: 'assets/bot.png',
       origen: 'bot'
     });
   }
 
+  openModal() {
+    const modalRef = this.modalService.open(MenuComponent, { size: 'lg' });
+  }
+
+  cerrarModal() {
+    this.activeModal.close('Modal closed');
+  }
 }

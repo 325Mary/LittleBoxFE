@@ -31,10 +31,10 @@ import {SoliColaboradoresComponent  } from "../app/Components/soli-colaboradores
 import { DataUserComponent } from "../app/Components/data-user/data-user.component";
 
 const routes: Routes = [
-  { path: '', component: IndexComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'sidebar', component: SidebarComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
-  { path: 'SignIn/Up', component: PreRegistroComponent },
+  { path: '', component: HomeComponent },
+  // { path: 'home', component: HomeComponent },
+  // { path: 'sidebar', component: SidebarComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  // { path: 'SignIn/Up', component: PreRegistroComponent },
   { path: 'registroEmpresa', component: RegistroEmpresaComponent },
   { path: 'registroEmpleado', component: RegistroEmpleadoComponent },
   { path: 'employees', component: EmployeesComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },

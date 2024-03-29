@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChatbodyComponent } from '../ChatBot/chatbody/chatbody.component';
 
@@ -10,7 +9,8 @@ import { ChatbodyComponent } from '../ChatBot/chatbody/chatbody.component';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal) 
+  { }
 
   openModal() {
     const modalRef = this.modalService.open(ChatbodyComponent, { size: 'lg' });

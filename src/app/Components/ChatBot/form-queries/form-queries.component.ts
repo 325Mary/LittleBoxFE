@@ -1,114 +1,82 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { CategoryService } from '../../../services/chatbot/category.service';
-import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
-import { Query } from '../../../Models/queries';
-import { QueriesService } from '../../../services/chatbot/queries.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { QueriesService } from '../../../services/chatbot/queries.service';
+import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
 
 @Component({
   selector: 'app-form-queries',
   templateUrl: './form-queries.component.html',
-  styleUrl: './form-queries.component.scss'
+  styleUrls: ['./form-queries.component.scss'],
 })
-export class FormQueriesComponent {
-   //Modal:
-   cerrarModal() {
+export class FormQueriesComponent implements OnInit {
+  identifier: string = '';
+  question: string = '';
+  answer: string = '';
+  subcategories: any[] = [];
+  subcategory: string = '';
+
+  constructor(
+    private toastr: ToastrService,
+    private QService: QueriesService,
+    public activeModal: NgbActiveModal,
+    public SService: SubcategoryService
+  ) {}
+
+  cerrarModal() {
     this.activeModal.close('Modal cerrada');
   }
 
-
-  //Component: 
-  queryForm: FormGroup;
-  titulo = "CREAR CONSULTA";
-  id: string | null;
-  errorReferenciaEnUso: string = '';
-  subcategories: any[] = [];
-
-  constructor(
-    private buil: FormBuilder,
-    private router: Router,
-    private toastr: ToastrService,
-    private QService: QueriesService,
-    private aRouter: ActivatedRoute,
-    private SService: SubcategoryService,
-    public activeModal: NgbActiveModal
-  ) {
-    this.queryForm = this.buil.group({
-      identifier: ['', Validators.required],
-      question: ['', Validators.required],
-      answer: ['', Validators.required],
-      subcategory: ['', Validators.required]
-    });
-    this.id = this.aRouter.snapshot.paramMap.get('id');
+  ngOnInit(): void {
+    this.loadSubcategories();
   }
 
-  
-  ngOnInit(): void {
-    this.XEditar()
+  loadSubcategories() {
     this.SService.showSubcategories().subscribe(
       (data: any[]) => {
         this.subcategories = data;
       },
-      error => {
-        console.log(error);
+      (error) => {
+        console.error('Error al cargar las categorías:', error);
       }
     );
   }
-    
-  onlyNumber(event: any) {
-    const pattern = /^[0-9]*$/;
-    if (event.key.length === 1 && !pattern.test(event.key)) {
-      event.preventDefault();
-    }
-  }
-  
-  esTeclaBorrado(event: any): boolean {
-    return event.key === 'Backspace' || event.key === 'Delete';
-  }
 
   addQuery() {
-    const QUERY: Query = {
-      identifier: this.queryForm.get('identifier')?.value,
-      question: this.queryForm.get('question')?.value,
-      answer: this.queryForm.get('answer')?.value,
-      subcategory: this.queryForm.get('subcategory')?.value,
+    if (
+      !this.identifier ||
+      !this.question ||
+      !this.answer ||
+      !this.subcategory
+    ) {
+      this.toastr.error('Por favor, completa todos los campos.');
+      return;
+    }
+
+    const newQuery = {
+      identifier: this.identifier,
+      question: this.question,
+      answer: this.answer,
+      subcategory: {
+        _id: this.subcategory,
+        name: '',
+      },
     };
-
-    if (this.id !== null) {
-      this.QService.editQuery(this.id, QUERY).subscribe(data => {
-        this.toastr.info('La consulta se ha actualizado con éxito.', 'Se ha actualizado con éxito:');
-        this.router.navigate(['/listCategory']);
-      }, error => {
-        console.log(error);
-        this.queryForm.reset();
-      });
-
-    } else {
-      this.QService.saveQuery(QUERY).subscribe(data => {
-        this.toastr.success('La consulta fue registrada con éxito.', 'Consulta registrada:');
-        this.router.navigate(['/listCategory']);
-      }, error => {
-        console.log(error);
-        this.queryForm.reset();
-      });
-    }
-  }
-
-  XEditar() {
-    if (this.id !== null) {
-      this.titulo = 'Editar consulta';
-      this.QService.getAQuery(this.id).subscribe(data => {
-        this.queryForm.setValue({
-          identifier: data.identifier,
-          question: data.question,
-          answer: data.answer,
-          subcategory: data.subcategory,
-        });
-      });
-    }
+    this.QService.saveQuery(newQuery).subscribe(
+      () => {
+        this.toastr.success(
+          'La consulta fue registrada con éxito.',
+          'Consulta registrada:'
+        );
+        this.activeModal.close('Modal cerrada');
+      },
+      (error) => {
+        console.error('Error al registrar la consulta:', error);
+        this.toastr.error(
+          'Error al registrar la consulta. Por favor, inténtalo de nuevo.',
+          'Error'
+        );
+      }
+    );
   }
 }

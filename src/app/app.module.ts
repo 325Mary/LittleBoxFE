@@ -44,6 +44,9 @@ import { CreateUserAdminComponent } from './Components/create-user-admin/create-
 import { ListCompaniesAprovedComponent } from './Components/list-companies-aproved/list-companies-aproved.component';
 import { SoliColaboradoresComponent } from './Components/soli-colaboradores/soli-colaboradores.component';
 import { DataUserComponent } from './Components/data-user/data-user.component';
+import { EditSubcategoryComponent } from './Components/ChatBot/edit-subcategory/edit-subcategory.component';
+import { EditQueriesComponent } from './Components/ChatBot/edit-queries/edit-queries.component';
+import { EditCategoryComponent } from './Components/ChatBot/edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +79,10 @@ import { DataUserComponent } from './Components/data-user/data-user.component';
     CreateUserAdminComponent,
     ListCompaniesAprovedComponent,
     SoliColaboradoresComponent,
-    DataUserComponent
+    DataUserComponent,
+    EditCategoryComponent,
+    EditSubcategoryComponent,
+    EditQueriesComponent
   ],
   imports: [
     BrowserModule,

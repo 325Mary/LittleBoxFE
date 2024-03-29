@@ -1,52 +1,44 @@
 import { Component } from '@angular/core';
-import { QueriesService } from '../../../services/chatbot/queries.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormQueriesComponent } from '../form-queries/form-queries.component';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditQueriesComponent } from '../edit-queries/edit-queries.component';
+import { QueriesService } from '../../../services/chatbot/queries.service';
 
 @Component({
   selector: 'app-list-queries',
   templateUrl: './list-queries.component.html',
-  styleUrl: './list-queries.component.scss'
+  styleUrls: ['./list-queries.component.scss']
 })
 export class ListQueriesComponent {
 
-
-  //Modal: 
-  cerrarModal() {
-    this.activeModal.close('Modal cerrada');
-  }
-  
-  openModal() {
-    const modalRef = this.modalService.open( FormQueriesComponent, { size: 'lg' });
-  }
-
+  constructor(private QService: QueriesService, 
+              private toastr: ToastrService,
+              public activeModal: NgbActiveModal,
+              public modalService: NgbModal) { }
 
   public listQuery: any[] = [];
   public filteredQuery: any[] = [];
   public searchTermReferencia: string = '';
 
-  constructor(private QService: QueriesService, 
-              private toastr: ToastrService,
-              private router: Router,
-              public activeModal: NgbActiveModal,
-              public modalService: NgbModal) { }
-
   ngOnInit() {
-    this.QService.showQueries().subscribe((lista) => {
-        this.listQuery = lista;
-        this.ordenarLista();
-        this.filtrarQuery();
-      });
-}
+    this.loadQueries();
+  }
 
-  deleteAQuery(id: any) {
+  loadQueries() {
+    this.QService.showQueries().subscribe((lista) => {
+      this.listQuery = lista;
+      this.filtrarQuery(); 
+      this.ordenarLista();
+    });
+  }
+
+  eliminarQuery(id: any) {
     this.QService.deleteQuery(id).subscribe(
       (data) => {
-        this.toastr.error('La consulta fue eliminada con éxito.', 'Consulta eliminada: ');
+        this.toastr.error('La subclase fue eliminada con exito.', 'Subclase eliminada: ');
         this.filtrarQuery(); 
-        this.router.navigate(['/'])
+        this.reloadQueries();
       },
       (error) => {
         console.log(error);
@@ -68,5 +60,38 @@ export class ListQueriesComponent {
     }
   }
 
+  reloadQueries() {
+    this.QService.showQueries().subscribe(lista => {
+      this.listQuery = lista;
+      this.filteredQuery = lista;
+      this.ordenarLista();
+    });
+  }
+
+  openEditModal(queryId: any) {
+    const modalRef = this.modalService.open(EditQueriesComponent, { size: 'lg' });
+    modalRef.componentInstance.mode = 'edit'; 
+    modalRef.componentInstance.queryId = queryId; 
+    modalRef.result.then(
+        () => {
+            this.reloadQueries();
+        },
+        (reason) => {
+            this.toastr.info('Consulta guardada sin cambios.', 'Consulta editada: ')
+        }
+    );
+  }
+  cerrarModal() {
+    this.activeModal.close('Modal cerrada');
+  }
+
+  openModal() {
+    const modalRef = this.modalService.open(FormQueriesComponent, { size: 'lg' });
+    modalRef.result.then((result) => {
+      this.reloadQueries();
+    }, (reason) => {
+      console.log('Modal cerrada sin guardar cambios.');
+    });
+  }
 
 }
