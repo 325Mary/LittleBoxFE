@@ -50,7 +50,7 @@ const routes: Routes = [
   },
   { path: 'modal-terceros', component: TerceroModalComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador', 'Colaborador'] } },
   { path: 'add', component: AddEditSolicitudComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador','Colaborador'] } },
-  { path: 'edit/:id', component: AddEditSolicitudComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  { path: 'edit/:id', component: AddEditSolicitudComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador','Colaborador'] } },
   // { path: '**', redirectTo: '', pathMatch: 'full' },
   { path: 'sidebar', component: SidebarComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'SignIn/Up', component: PreRegistroComponent },
