@@ -44,13 +44,13 @@ export class FormQueriesComponent implements OnInit {
   }
 
   addQuery() {
-    if (!this.identifier || !this.question || !this.answer || !this.subcategory) {
+    if (!this.question || !this.answer || !this.subcategory) {
       this.toastr.error('Por favor, completa todos los campos.');
       return;
     }
 
     const newQuery = {
-      identifier: this.identifier,
+      identifier: "",
       question: this.question,
       answer: this.answer,
       subcategory: {

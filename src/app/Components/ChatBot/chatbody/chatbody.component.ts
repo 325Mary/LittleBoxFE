@@ -24,9 +24,9 @@ export class ChatbodyComponent {
   chatHistory: Message[] = [];
 
   category: string = '';
-  subcategory: string = ''; 
+  subcategory: string = '';
   categories: any[] = [];
-  subcategories: any[] = []; 
+  subcategories: any[] = [];
   queries: any[] = [];
 
   constructor(
@@ -44,11 +44,11 @@ export class ChatbodyComponent {
     }
     this.showWelcomeMessage();
   }
-  
+
   obtenerCategorias() {
     this.CService.showCategories().subscribe(
       (data) => {
-        this.categories = data; 
+        this.categories = data;
       },
       (error) => {
         console.error('Error obteniendo categorías:', error);
@@ -59,7 +59,7 @@ export class ChatbodyComponent {
   obtenerSubcategoriasPorCategoria(categoriaId: string) {
     this.SService.getSubcategoryByCategory(categoriaId).subscribe(
       (data) => {
-        this.subcategories = data; 
+        this.subcategories = data;
       },
       (error) => {
         console.error('Error obteniendo subcategorías:', error);
@@ -68,7 +68,7 @@ export class ChatbodyComponent {
   }
 
   onCategoryChange() {
-    this.subcategory = ''; 
+    this.subcategory = '';
     this.obtenerSubcategoriasPorCategoria(this.category);
   }
 
@@ -94,31 +94,43 @@ export class ChatbodyComponent {
   }
 
   sendMessage() {
-    // Agregar el mensaje del usuario al historial del chat
-    this.chatHistory.push({
-      profilePicture: '', // Puedes agregar una imagen de perfil si lo deseas
-      pregunta: this.userInput,
-      respuesta: '',
-      origen: 'usuario'
-    });
+    if (this.userInput.toLowerCase() === 'bloque') {
+      // Mostrar la pregunta y respuesta sobre el bloque
+      this.chatHistory.push({
+        profilePicture: 'assets/bot.png',
+        pregunta: 'Con gusto te explico, el bloque es un camino para encontrar la respuesta deseada. Como inicio, tendrás que seleccionar una categoría, que es el tema principal. Luego, seleccionas la subcategoría, que es el tema central para identificar si la pregunta se refiere a un funcionamiento, explicación u otra funcionalidad. Finalmente, se muestran las preguntas relacionadas a lo seleccionado, donde encontrarás el identificador y la pregunta. Solo busca la pregunta de tu agrado y pon su identificador en la barra de búsqueda del chatbot, y el chatbot te responderá exitosamente.',
+        respuesta: '¿Para qué sirve el bloque?',
+        origen: 'bot'
+      });
+      this.scrollToBottom();
+      this.userInput = ''; // Limpiar el input después de enviar el mensaje sobre el bloque
+    } else {
+      // Agregar el mensaje del usuario al historial del chat
+      this.chatHistory.push({
+        profilePicture: '', // Puedes agregar una imagen de perfil si lo deseas
+        pregunta: this.userInput,
+        respuesta: '',
+        origen: 'usuario'
+      });
 
-    // Obtener la pregunta y la respuesta correspondiente según el ID seleccionado
-    this.getQuery();
-    this.userInput = ''; // Limpiar el input después de enviar el mensaje
+      // Obtener la pregunta y la respuesta correspondiente según el ID seleccionado
+      this.getQuery();
+      this.userInput = ''; // Limpiar el input después de enviar el mensaje
+    }
   }
 
   getQuery() {
     const userInputLower = this.userInput.toLowerCase();
-  
+
     this.QService.getQueryIdentifier(userInputLower).subscribe(
       (response) => {
         if (response.status === 200) {
           const query = response.data;
-          // Mostrar la pregunta en negrita y la respuesta debajo
+          // Mostrar la respuesta en la parte superior y la pregunta en la parte inferior
           this.chatHistory.push({
             profilePicture: 'assets/bot.png',
-            pregunta: `<strong>${query.question}</strong>`,
-            respuesta: query.answer,
+            pregunta: query.answer,
+            respuesta: query.question,
             origen: 'bot'
           });
         } else {
@@ -146,7 +158,6 @@ export class ChatbodyComponent {
     );
   }
 
-
   showUnknownMessage() {
     this.chatHistory.push({
       pregunta: this.userInput,
@@ -168,6 +179,6 @@ export class ChatbodyComponent {
   scrollToBottom() {
     try {
       this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
-    } catch(err) { }
+    } catch (err) { }
   }
 }
