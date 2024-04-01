@@ -1,3 +1,11 @@
 .contenedor{
     padding: 5rem 0 0 0;
 }
+
+.checkbox-container {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    height: 100%; /* Ajustar la altura para centrar verticalmente */
+  }
+  

@@ -22,15 +22,29 @@ export class SolicitudesService {
     this.myAppUrl = environment.apiUrl;
   }
 
-  getListaSolicitudes(tenantId: string): Observable<Solicitud[]> {
+  // getListaSolicitudes(tenantId: string): Observable<Solicitud[]> {
+  //   const token = this.tokenValidationService.getToken();
+  //   const headers = new HttpHeaders({ 'Authorization': `${token}` });
+  //   return this.http.get<Solicitud[]>(`${this.myAppUrl}${this.urlGet}`, {
+  //     params: { tenantId },
+  //     headers: headers
+  //   });
+  // }
+
+  getListaSolicitudes(tenantId: string, fechaInicio: Date, fechaFin: Date, documento: string): Observable<Solicitud[]> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
+    const params = {
+      tenantId,
+      fechaInicio: fechaInicio.toISOString(),
+      fechaFin: fechaFin.toISOString(),
+      documento: documento
+    };
     return this.http.get<Solicitud[]>(`${this.myAppUrl}${this.urlGet}`, {
-      params: { tenantId },
+      params,
       headers: headers
     });
   }
-
 
 
   deleteSolicitud(solicitudId: any, tenantId: string): Observable<void> {
@@ -46,35 +60,42 @@ export class SolicitudesService {
   }
 
 
-  savesolicitud(
-    solicitud: Solicitud,
-    tenantId: string,
-    file: File | null
-  ): Observable<void> {
+  // savesolicitud(
+  //   solicitud: Solicitud,
+  //   tenantId: string,
+  //   file: File | null
+  // ): Observable<void> {
 
-    const fechaDate = new Date(solicitud.fecha);
+  //   const fechaDate = new Date(solicitud.fecha);
 
-    const formData: FormData = new FormData();
-    formData.append('solicitudId', solicitud.solicitudId.toString()); 
-    formData.append('tercero', solicitud.tercero?._id);
-    formData.append('fecha', fechaDate.toISOString());
-    formData.append('detalle', solicitud.detalle);
-    formData.append('valor', solicitud.valor.toString()); // Convertir valor a cadena
-    formData.append('categoria', solicitud.categoria?._id);
-    formData.append('estado', solicitud.estado?._id);
-    formData.append('tenantId', tenantId);
-    if (file) { // Verifica si file no es nulo antes de agregarlo al FormData
-      formData.append('facturaUrl', file, file.name);
-    }
+  //   const formData: FormData = new FormData();
+  //   formData.append('solicitudId', solicitud.solicitudId.toString()); 
+  //   formData.append('tercero', solicitud.tercero?._id);
+  //   formData.append('fecha', fechaDate.toISOString());
+  //   formData.append('detalle', solicitud.detalle);
+  //   formData.append('valor', solicitud.valor.toString()); // Convertir valor a cadena
+  //   formData.append('categoria', solicitud.categoria?._id);
+  //   formData.append('estado', solicitud.estado?._id);
+  //   formData.append('tenantId', tenantId);
+  //   if (file) { // Verifica si file no es nulo antes de agregarlo al FormData
+  //     formData.append('facturaUrl', file, file.name);
+  //   }
 
+  //   const token = this.tokenValidationService.getToken();
+  //   const headers = new HttpHeaders({ 'Authorization': `${token}` });
+  
+  //   return this.http.post<void>(
+  //     `${this.myAppUrl}${this.urlPost}`,
+  //     formData,
+  //     { headers: headers }
+  //   );
+  // }
+
+  savesolicitud(solicitud: any): Observable<any> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
-  
-    return this.http.post<void>(
-      `${this.myAppUrl}${this.urlPost}`,
-      formData,
-      { headers: headers }
-    );
+
+    return this.http.post<any>(`${this.myAppUrl}${this.urlPost}`, solicitud, { headers });
   }
   
 

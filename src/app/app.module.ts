@@ -23,7 +23,7 @@ import { SignInUpService } from './services/sign-in-up.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
-
+import { DataTablesModule } from "angular-datatables";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,6 +60,8 @@ import { ListDeleteIngresosComponent } from './Components/ingresos/list-delete-i
 import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/add-edit-ingreso.component';
 import { NotificationsComponent } from './Components/notifications/notifications.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { TerceroModalComponent } from './Components/modals/tercero-modal/tercero-modal.component';
+import { SolicitudModalComponent } from './Components/modals/solicitud-modal/solicitud-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,6 +104,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     ListDeleteIngresosComponent,
     AddEditIngresoComponent,
     NotificationsComponent,
+    TerceroModalComponent,
+    SolicitudModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +116,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     FormsModule,
     MatDialogModule,
     MatIconModule ,
+    DataTablesModule,
     // NgxExtendedPdfViewerModule,
     JwtModule.forRoot({
       config: {

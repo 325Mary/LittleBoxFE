@@ -32,6 +32,7 @@ import { ListEgresosComponent } from "../app/Components/list-egresos/list-egreso
 import { InformesComponent } from "../app/Components/informes/informes.component";
 import {  GraficosComponent} from "../app/Components/graficos/graficos.component";
 import {  NotificationsComponent} from "../app/Components/notifications/notifications.component";
+import { TerceroModalComponent } from '../app/Components/modals/tercero-modal/tercero-modal.component';
 
 
 
@@ -46,7 +47,7 @@ const routes: Routes = [
   { path: 'sidebar', component: SidebarComponent },
   {
     path: 'obtenerTodasLasSolicitudes',
-    component: ListEdictSolicitudComponent,
+    component: ListEdictSolicitudComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador','Colaborador'] }
   },
   { path: 'add', component: AddEditSolicitudComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario', 'Colaborador'] } },
   { path: 'edit/:id', component: AddEditSolicitudComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
