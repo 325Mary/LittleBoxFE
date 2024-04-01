@@ -12,13 +12,14 @@
     
     <div *ngIf="rolUsuario !== 'Colaborador'" class="estado-solicitudes-container">
       <label for="estado-select">Estado:</label>
-      <select id="estado-select" [(ngModel)]="estadoSeleccionado"name="estado" class="form-control" required #terceroInput="ngModel">
+      <select id="estado-select" [(ngModel)]="estadoSeleccionado" name="estado" class="form-control" required #terceroInput="ngModel">
         <option *ngFor="let estado of estadoDeSolicitud" [value]="estado._id">
           {{ estado.nombre }}
         </option>
       </select>
       <button (click)="guardarCambiosEstado()" type="button" class="btn btn-danger btn-sm ms-2">Guardar</button>
     </div>
+    
   </div>
 
   <button type="button" class="btn btn-success" routerLink="/add">Agregar Solicitud</button>
@@ -51,7 +52,7 @@
           </div>
         </td>
         <td>
-          <button *ngIf="rolUsuario !== 'Colaborador'" [routerLink]="['/edit', solicitud._id]" type="button" class="btn btn-info btn-sm">Editar</button>
+          <button [routerLink]="['/edit', solicitud._id]" type="button" class="btn btn-info btn-sm">Editar</button>
           <button (click)="verDetalle(solicitud)" type="button" class="btn btn-info btn-sm ms-2">Ver</button>
           <button *ngIf="rolUsuario !== 'Colaborador'" (click)="deleteSolicitud(solicitud._id)" type="button" class="btn btn-danger btn-sm ms-2">Eliminar</button>
         </td>

@@ -74,6 +74,7 @@ export class AddEditSolicitudComponent {
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
     const token = localStorage.getItem('token');
+    // this.formulario.estado = this.estadoSolicitudesService.
     if (token) {
       const tenantId = this.tokenValidationService.getTenantIdFromToken();
       if (tenantId) {
