@@ -1,14 +1,12 @@
 export class Subcategory {
     _id?: string;
-    identifier: string;
     name: string;
     category: {
       _id?: string;
       name: string;
     };
   
-    constructor(identifier: string, name: string, category:  { _id?: string; name: string }) {
-      this.identifier = identifier;
+    constructor( name: string, category:  { _id?: string; name: string }) {
       this.name = name;
       this.category = category;
     }

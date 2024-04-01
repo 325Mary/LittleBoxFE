@@ -13,7 +13,6 @@ import { CategoryService } from '../../../services/chatbot/category.service';
 export class FormSubcategoryComponent {
   @Input() mode: 'create' | 'edit' = 'create';
 
-  identifier: string = '';
   name: string = '';
   category: string = '';
   categories: any[] = [];
@@ -37,6 +36,7 @@ export class FormSubcategoryComponent {
     this.CaService.showCategories().subscribe(
       (data: any[]) => {
         this.categories = data;
+        
       },
       (error) => {
         console.error('Error al cargar las categorías:', error);
@@ -44,20 +44,20 @@ export class FormSubcategoryComponent {
     );
   }
 
-  addOrUpdateSubcategory() {
-    if (!this.identifier || !this.name || !this.category) {
+  addSubcategory() {
+    if ( !this.name || !this.category) {
       this.toastr.error('Por favor, completa todos los campos.');
       return;
     }
 
     const newSubcategory = {
-      identifier: this.identifier,
       name: this.name,
       category: {
         _id: this.category,
         name: '',
       },
     };
+
     this.SService.saveSubcategory(newSubcategory).subscribe(
       () => {
         this.toastr.success(
@@ -71,7 +71,8 @@ export class FormSubcategoryComponent {
         this.toastr.error(
           'Error al registrar la subcategoría. Por favor, inténtalo de nuevo.',
           'Error'
-        );
+          );
+          this.activeModal.close('Modal cerrada');
       }
     );
   }

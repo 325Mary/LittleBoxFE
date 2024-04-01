@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuComponent } from '../menu/menu.component';
 import { QueriesService } from '../../../services/chatbot/queries.service';
 import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
 import { CategoryService } from '../../../services/chatbot/category.service';
-
 
 interface Message {
   profilePicture?: string;
@@ -19,6 +18,8 @@ interface Message {
   styleUrls: ['./chatbody.component.scss'],
 })
 export class ChatbodyComponent {
+  @ViewChild('chatContainer') private chatContainer!: ElementRef;
+
   userInput: string = '';
   chatHistory: Message[] = [];
 
@@ -26,7 +27,7 @@ export class ChatbodyComponent {
   subcategory: string = ''; 
   categories: any[] = [];
   subcategories: any[] = []; 
-  queries: any [] = []
+  queries: any[] = [];
 
   constructor(
     private modalService: NgbModal,
@@ -89,54 +90,71 @@ export class ChatbodyComponent {
       profilePicture: 'assets/bot.png',
       origen: 'bot'
     });
+    this.scrollToBottom();
   }
 
   sendMessage() {
+    // Agregar el mensaje del usuario al historial del chat
+    this.chatHistory.push({
+      profilePicture: '', // Puedes agregar una imagen de perfil si lo deseas
+      pregunta: this.userInput,
+      respuesta: '',
+      origen: 'usuario'
+    });
+
+    // Obtener la pregunta y la respuesta correspondiente según el ID seleccionado
     this.getQuery();
-    this.userInput = '';
+    this.userInput = ''; // Limpiar el input después de enviar el mensaje
   }
 
   getQuery() {
     const userInputLower = this.userInput.toLowerCase();
-
+  
     this.QService.getQueryIdentifier(userInputLower).subscribe(
       (response) => {
         if (response.status === 200) {
           const query = response.data;
+          // Mostrar la pregunta en negrita y la respuesta debajo
           this.chatHistory.push({
             profilePicture: 'assets/bot.png',
-            pregunta: query.question,
+            pregunta: `<strong>${query.question}</strong>`,
             respuesta: query.answer,
             origen: 'bot'
           });
         } else {
+          // En caso de no encontrar la consulta, mostrar un mensaje de error
           this.chatHistory.push({
-            pregunta: 'No query found with that identifier.',
-            respuesta: '',
             profilePicture: 'assets/bot.png',
+            pregunta: 'No se encontró ninguna consulta con ese identificador.',
+            respuesta: '',
             origen: 'bot'
           });
         }
+        this.scrollToBottom();
       },
       (error) => {
         console.error(error);
+        // En caso de error, mostrar un mensaje de error
         this.chatHistory.push({
-          pregunta: 'An error occurred while fetching the query. Please try again.',
-          respuesta: '',
           profilePicture: 'assets/bot.png',
+          pregunta: 'Ocurrió un error al obtener la consulta. Por favor, inténtelo de nuevo.',
+          respuesta: '',
           origen: 'bot'
         });
+        this.scrollToBottom();
       }
     );
   }
 
+
   showUnknownMessage() {
     this.chatHistory.push({
       pregunta: this.userInput,
-      respuesta: 'I do not understand.',
+      respuesta: 'No entiendo.',
       profilePicture: 'assets/bot.png',
       origen: 'bot'
     });
+    this.scrollToBottom();
   }
 
   openModal() {
@@ -144,6 +162,12 @@ export class ChatbodyComponent {
   }
 
   cerrarModal() {
-    this.activeModal.close('Modal closed');
+    this.activeModal.close('Modal cerrado');
+  }
+
+  scrollToBottom() {
+    try {
+      this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+    } catch(err) { }
   }
 }

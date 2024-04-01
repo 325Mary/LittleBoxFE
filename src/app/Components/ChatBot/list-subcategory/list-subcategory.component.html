@@ -17,7 +17,6 @@
         <table *ngIf="filteredSubcategory.length > 0" class="table table-bordered table-light table-hover border-dark mt-3">
           <thead>
             <tr>
-              <th scope="col">Identificador</th>
               <th scope="col">Nombre</th>
               <th scope="col">Categoria</th>
               <th scope="col"></th>
@@ -25,7 +24,6 @@
           </thead>
           <tbody>
             <tr *ngFor="let subcategory of filteredSubcategory">
-              <td>{{ subcategory.identifier }}</td>
               <td>{{ subcategory.name }}</td>
               <td>{{ subcategory.category.name }}</td>
               <td>

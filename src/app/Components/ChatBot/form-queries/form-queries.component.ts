@@ -10,7 +10,8 @@ import { SubcategoryService } from '../../../services/chatbot/subcategory.servic
   styleUrls: ['./form-queries.component.scss'],
 })
 export class FormQueriesComponent implements OnInit {
-  identifier: string = '';
+  
+  identifier: string = "";
   question: string = '';
   answer: string = '';
   subcategories: any[] = [];
@@ -20,7 +21,7 @@ export class FormQueriesComponent implements OnInit {
     private toastr: ToastrService,
     private QService: QueriesService,
     public activeModal: NgbActiveModal,
-    public SService: SubcategoryService
+    public SService: SubcategoryService,
   ) {}
 
   cerrarModal() {
@@ -36,19 +37,14 @@ export class FormQueriesComponent implements OnInit {
       (data: any[]) => {
         this.subcategories = data;
       },
-      (error) => {
+      error => {
         console.error('Error al cargar las categorías:', error);
       }
     );
   }
 
   addQuery() {
-    if (
-      !this.identifier ||
-      !this.question ||
-      !this.answer ||
-      !this.subcategory
-    ) {
+    if (!this.identifier || !this.question || !this.answer || !this.subcategory) {
       this.toastr.error('Por favor, completa todos los campos.');
       return;
     }
@@ -58,24 +54,18 @@ export class FormQueriesComponent implements OnInit {
       question: this.question,
       answer: this.answer,
       subcategory: {
-        _id: this.subcategory,
-        name: '',
-      },
+        _id: this.subcategory,  
+        name: ''  
+      }
     };
     this.QService.saveQuery(newQuery).subscribe(
       () => {
-        this.toastr.success(
-          'La consulta fue registrada con éxito.',
-          'Consulta registrada:'
-        );
+        this.toastr.success('La consulta fue registrada con éxito.', 'Consulta registrada:');
         this.activeModal.close('Modal cerrada');
       },
       (error) => {
         console.error('Error al registrar la consulta:', error);
-        this.toastr.error(
-          'Error al registrar la consulta. Por favor, inténtalo de nuevo.',
-          'Error'
-        );
+        this.toastr.error('Error al registrar la consulta. Por favor, inténtalo de nuevo.', 'Error');
       }
     );
   }

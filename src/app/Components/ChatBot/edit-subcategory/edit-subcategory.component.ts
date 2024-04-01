@@ -14,7 +14,7 @@ export class EditSubcategoryComponent {
   @Input() mode: 'create' | 'edit' = 'create'; 
   @Input() subcategoryId: string | null = null;
 
-  identifier: string = '';
+
   name: string = '';
   category: string = '';
   categories: any[] = [];
@@ -51,7 +51,7 @@ export class EditSubcategoryComponent {
   loadSubcategoryDetails(id: string) {
       this.SService.getASubcategory(id).subscribe(
           (data: any) => {
-              this.identifier = data.identifier;
+          
               this.name = data.name;
               this.category = data.category;
           },
@@ -62,14 +62,13 @@ export class EditSubcategoryComponent {
   }
 
   updateSubcategory() { 
-      if (!this.identifier || !this.name || !this.category) {
+      if ( !this.name || !this.category) {
           this.toastr.error('Por favor, completa todos los campos.');
           return;
       }
 
       if (this.subcategoryId) {
           const updatedSubcategory = {
-              identifier: this.identifier,
               name: this.name,
               category: {
                 _id: this.category,  

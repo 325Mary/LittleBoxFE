@@ -32,16 +32,23 @@
   cursor: pointer;
 }
 
-.table-container {
-  overflow-x: auto; /* Barra de desplazamiento horizontal si es necesario */
-  max-width: 100%; /* Ancho máximo de la tabla */
+.short-text {
+  cursor: pointer;
 }
 
+.eye-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
 
+.full-text {
+  display: none;
+}
 
-
-
-
+.full-text.show {
+  display: block;
+}
 
 
 

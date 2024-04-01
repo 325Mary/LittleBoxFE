@@ -20,6 +20,14 @@ export class SubcategoryService {
     )
   }
 
+  // showSubcategories (tenantId: string): Observable<any>{
+  //   const token = this.tokenValidationService.getToken();
+  //   const headers = new HttpHeaders ({ 'Authorization': `${token}`})
+  //   return this.http.get<any[]>(`${this.myAppUrl}${this.urlGet}`, {
+  //     params: { tenantId },
+  //     headers: headers
+  //   })}
+
   deleteSubcategories(id: string): Observable<any> {
     return this.http.delete("http://localhost:4000/deleteSubcategories/" + id)
             .pipe(
