@@ -95,7 +95,7 @@ export class ChatbodyComponent {
 
   sendMessage() {
     if (this.userInput.toLowerCase() === 'bloque') {
-      // Mostrar la pregunta y respuesta sobre el bloque
+     
       this.chatHistory.push({
         profilePicture: 'assets/bot.png',
         pregunta: 'Con gusto te explico, el bloque es un camino para encontrar la respuesta deseada. Como inicio, tendrás que seleccionar una categoría, que es el tema principal. Luego, seleccionas la subcategoría, que es el tema central para identificar si la pregunta se refiere a un funcionamiento, explicación u otra funcionalidad. Finalmente, se muestran las preguntas relacionadas a lo seleccionado, donde encontrarás el identificador y la pregunta. Solo busca la pregunta de tu agrado y pon su identificador en la barra de búsqueda del chatbot, y el chatbot te responderá exitosamente.',
@@ -103,19 +103,19 @@ export class ChatbodyComponent {
         origen: 'bot'
       });
       this.scrollToBottom();
-      this.userInput = ''; // Limpiar el input después de enviar el mensaje sobre el bloque
+      this.userInput = ''; 
     } else {
-      // Agregar el mensaje del usuario al historial del chat
+      
       this.chatHistory.push({
-        profilePicture: '', // Puedes agregar una imagen de perfil si lo deseas
+        profilePicture: '', 
         pregunta: this.userInput,
         respuesta: '',
         origen: 'usuario'
       });
 
-      // Obtener la pregunta y la respuesta correspondiente según el ID seleccionado
+ 
       this.getQuery();
-      this.userInput = ''; // Limpiar el input después de enviar el mensaje
+      this.userInput = ''; 
     }
   }
 
@@ -126,7 +126,6 @@ export class ChatbodyComponent {
       (response) => {
         if (response.status === 200) {
           const query = response.data;
-          // Mostrar la respuesta en la parte superior y la pregunta en la parte inferior
           this.chatHistory.push({
             profilePicture: 'assets/bot.png',
             pregunta: query.answer,
@@ -134,7 +133,6 @@ export class ChatbodyComponent {
             origen: 'bot'
           });
         } else {
-          // En caso de no encontrar la consulta, mostrar un mensaje de error
           this.chatHistory.push({
             profilePicture: 'assets/bot.png',
             pregunta: 'No se encontró ninguna consulta con ese identificador.',
@@ -146,7 +144,6 @@ export class ChatbodyComponent {
       },
       (error) => {
         console.error(error);
-        // En caso de error, mostrar un mensaje de error
         this.chatHistory.push({
           profilePicture: 'assets/bot.png',
           pregunta: 'Ocurrió un error al obtener la consulta. Por favor, inténtelo de nuevo.',
