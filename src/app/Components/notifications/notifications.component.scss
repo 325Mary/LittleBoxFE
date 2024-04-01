@@ -3,7 +3,7 @@
   top: 50px; /* Ajusta esto según la altura de tu barra de navegación */
   right: 20px;
   width: 300px; /* Ajusta el ancho según sea necesario */
-  background-color: rgb(69, 117, 238);
+  background-color: rgb(171, 191, 240);
   border-radius: 4px solid #ccc;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
@@ -51,5 +51,6 @@
 // }
 
 .notification-container li.unread {
-  background-color: #4f69ee; /* Color oscuro para notificaciones no leídas */
+  background-color: #0d32eb; /* Color oscuro para notificaciones no leídas */
+  color: rgb(109, 165, 248);
 }
