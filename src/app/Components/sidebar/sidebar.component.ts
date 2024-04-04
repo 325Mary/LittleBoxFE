@@ -7,9 +7,11 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
+  visibleSidebar: boolean = false;
+  position: string = 'left';
   isLoggedIn: boolean = false;
   isGerente: boolean = false;
   isSuperUsuario: boolean = false;
@@ -17,8 +19,9 @@ export class SidebarComponent {
   isColaborador: boolean = false;
   loginStatusSubscription!: Subscription;
   userData: any;
+  isOpen = false;
 
-  constructor(private router: Router, private authService: SignInUpService, private tokenValidationService: TokenValidationService, private cdr: ChangeDetectorRef) {}
+  constructor(private router: Router, private authService: SignInUpService, private tokenValidationService: TokenValidationService, private cdr: ChangeDetectorRef,) {}
 
   ngOnInit(): void {
     this.router.events.subscribe(event => {
@@ -75,5 +78,4 @@ export class SidebarComponent {
     this.isColaborador = false;
   }
 
- 
 }

@@ -21,7 +21,7 @@ import { ChangePasswordComponent } from '../app/Components/change-password/chang
 import { PersonalizationComponent } from '../app/Components/personalization/personalization.component';
 import { SignInUpService } from './services/sign-in-up.service';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
 import { DataTablesModule } from "angular-datatables";
@@ -65,6 +65,16 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { TerceroModalComponent } from './Components/modals/tercero-modal/tercero-modal.component';
 import { SolicitudModalComponent } from './Components/modals/solicitud-modal/solicitud-modal.component';
 import { CaducidadTokenComponent } from './Components/caducidad-token/caducidad-token.component';
+
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import {SidebarModule} from 'primeng/sidebar';
+import {ButtonModule} from 'primeng/button';
+import { MenubarModule } from 'primeng/menubar';
+import { MenuModule } from 'primeng/menu';
+import { AvatarModule } from 'primeng/avatar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -121,7 +131,11 @@ import { CaducidadTokenComponent } from './Components/caducidad-token/caducidad-
     MatDialogModule,
     MatIconModule ,
     DataTablesModule,
-    // NgxExtendedPdfViewerModule,
+    SidebarModule,
+    ButtonModule,
+    MenubarModule,
+    MenuModule,
+    AvatarModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -129,8 +143,17 @@ import { CaducidadTokenComponent } from './Components/caducidad-token/caducidad-
         }
       }
     }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+        },
+        deps: [HttpClient]
+      }
+    })
   ],
-  providers: [SignInUpService,{ provide: environment, useValue: environment,  }, EgresosService, CompanyService, InformesService, provideAnimationsAsync(), TokenInterceptorService],
+  providers: [SignInUpService,{ provide: environment, useValue: environment }, EgresosService, CompanyService, InformesService, provideAnimationsAsync(), TokenInterceptorService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

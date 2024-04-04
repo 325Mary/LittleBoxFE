@@ -1,72 +1,47 @@
+<p-menubar [model]="items" [style.width.%]="100" class="menu-contain" styleClass="custom-menubar">
 
-<div class="navbar">
-
-  <div  *ngIf="!isLoggedIn" >
-      <a routerLink="/"><img  class="logo" src="../../assets/logo_little_box.png" ></a>
-      </div>
-
-  <div class="menu-container" [ngClass]="{'menu-open': isMenuOpen}">
-    <app-sidebar></app-sidebar>
-  </div>
-  <div *ngIf="isLoggedIn" class="contenedor-img">
-    <a (click)="toggleMenu()">
-      <img src="../../../assets/icons8-casa.svg" alt="">
-    </a>
-  </div>
-  <div *ngIf="isLoggedIn && isAdministrador || isGerente ">
-    <a routerLink="/graficos/">   
-       <img src="../../../assets/icons8-reequilibrar-la-cartera-50.png" alt="Icono" class="info img-fluid rounded" style="width: 24px; height: 24px;"> 
-</a>
-</div>
-  <div *ngIf="isLoggedIn && isAdministrador || isGerente">
-    <a  class="info " routerLink="/Informes/">INFORMES</a>
-</div>
-<div *ngIf="isLoggedIn && isAdministrador || isGerente ">
-  <a  class="info " routerLink="/obtenerTodosLosIngresos/">INGRESOS</a>
-</div>
-  <div *ngIf="isLoggedIn && isAdministrador || isGerente ">
-    <a  class="info " routerLink="/crearEgreso/">CREAR EGRESO</a>
-</div>
-<div *ngIf="isLoggedIn && isAdministrador || isGerente || isColaborador ">
-  <a  class="info " routerLink="/obtenerTodasLasSolicitudes/">SOLICITUDES</a>
-</div>
-  <div *ngIf="isLoggedIn && userData">
-      <img src="../../../assets/user.png" alt="Icono" class="info img-fluid rounded" style="width: 24px; height: 24px;"> 
-      <span class="text-primary">{{ userData.username }}</span>
-  </div>
-  
-  <!-- <div *ngIf="isLoggedIn">
-    <a  class="info " routerLink="/notificaciones/">NOTIFICACIONES</a>
-</div> -->
-
-<div *ngIf="isLoggedIn">
- <button mat-icon-button (click)="openNotifications()">
-  <mat-icon>notifications</mat-icon>
-  <span class="badge" [style.color]="notificationsCount > 0 ? 'red' : 'blue'">{{ notificationsCount }}</span>
-</button>
-
-  <div *ngIf="showNotifications" class="notification-container">
-    <app-notifications></app-notifications>
-  </div>
-</div>
-
-
-
-  <div *ngIf="isLoggedIn" class="logout-section">
-    <button class="btn" (click)="logout()">Cerrar sesión</button>
-  </div>
-
-  <!-- Mostrar botón de SignIn/Up si el usuario no está autenticado -->
-  <a href="#" *ngIf="currentRoute === '/' && !isLoggedIn" (click)="openModal()" class="right">SignIn/Up</a>
-
-  <!-- Mostrar el modal de registro si se abre -->
-  <div class="modal" [class.active]="modalOpen">
-    <div class="modal-content">
-      <span class="close" (click)="closeModal()">&times;</span>
-      <app-pre-registro></app-pre-registro>
+  <ng-template pTemplate="start">
+    <div class="p-d-flex p-flex-row p-align-center">
+      <a routerLink="/" *ngIf="!isLoggedIn"><img class="logo" src="../../assets/logo_little_box.png" height="40"
+          class="mr-2"></a>
+      <button pButton type="button" (click)="sidebarVisible = true" icon="pi pi-bars"
+        class="p-button-rounded p-button-outlined p-ml-auto mr-2" heigth="40" *ngIf="isLoggedIn"></button>
     </div>
-  </div>
+  </ng-template>
+  
+  <ng-template pTemplate="end">
+    <div class="p-d-flex p-flex-row-reverse p-align-center">
+      <button *ngIf="isLoggedIn" pButton type="button" (click)="logout()" icon="pi pi-power-off"
+        class="p-button-rounded p-button-outlined" height="40" class="mr-2">Quit</button>
+      <button *ngIf="!isLoggedIn" pButton type="button" (click)="openModal()" icon="pi pi-user-plus"
+        class="p-button-rounded p-button-outlined" height="40" class="mr-2">SignIn/Up</button>
+    </div>
+  </ng-template>
 
-  
-  
+  <!-- <ng-template pTemplate="content" styleClass="custom-menu-content">
+    <div class="p-d-flex p-flex-row p-align-center p-mx-auto">
+      <ng-container *ngFor="let item of items">
+        <a pMenuItem [routerLink]="item.routerLink" class="menu-item" *ngIf="item.visible" styleClass="custom-menuitem">
+          <span class="p-menuitem-text">{{ item.label }}</span>
+          <i [class]="item.icon"></i>
+        </a>
+      </ng-container>
+    </div>
+  </ng-template> -->
+
+</p-menubar>
+
+<div class="card flex justify-content-center">
+  <p-sidebar #sidebarRef [(visible)]="sidebarVisible">
+    <app-sidebar></app-sidebar>
+
+  </p-sidebar>
+</div>
+
+<!-- Mostrar el modal de registro si se abre -->
+<div class="modal" [class.active]="modalOpen">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <app-pre-registro></app-pre-registro>
+  </div>
 </div>
