@@ -1,75 +1,54 @@
-
 /* Estilos para los títulos del formulario */
 h2 {
-    text-align: center; /* Centrar texto */
-    color: #ebe6e6; /* Color del texto */
-    background-color: #4a4949;
-    margin: 0;
-    margin-bottom: 0; /* Establecer el margen inferior a 0 */
-    padding: 20px; /* Ajustar el padding */
-    border: 0;
-    z-index: 0; /* Índice z */
-  }
+    margin-top: 60px; /* Reducir el espacio superior para los títulos */
+    color: #333; /* Color de texto más oscuro */
+}
   
   
-  /* Estilos generales del formulario */
-  .form-content {
-     /* Fallback para navegadores que no soportan gradientes */
-     background-color: #add8e6; /* Azul claro */
-     /* Degradado */
-     background-image: linear-gradient(to bottom, #38a0c3, #ffffff); /* Desde azul claro hasta blanco */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  
-  /* Estilos para el contenedor del formulario */
-  .form-content form {
-    background-color: rgba(242, 242, 242, 0.2); /* Color de fondo semi-transparente */
-    padding: 50px; /* Espaciado interno */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
-    position: relative; /* Posición relativa */
-  
-  }
+/* Estilos generales del formulario */
+.form-content {
+    background-image: linear-gradient(to bottom, #f7f7f7, #e0e0e0); /* Degradado de gris claro */
+}
 
-  label{
-    font-size: 17px;
-    color: #111111;
-    margin-bottom: 10px;
+
+/* Estilos para el contenedor del formulario */
+.form-content form {
+    background-color: #fff; /* Fondo blanco */
+    padding: 30px; /* Espaciado interno reducido */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6); /* Sombra más suave */
+}
+
+label {
+    font-size: 16px; /* Tamaño de fuente reducido */
+    color: #555; /* Color de texto más oscuro */
+    margin-bottom: 8px; /* Espacio inferior reducido */
 }
 
 input {
-    padding: 8px;
-    background-color: #709dea;
+    padding: 10px; /* Aumentar el relleno */
+    background-color: #f2f2f2; /* Fondo gris claro */
     font-size: 16px;
-    color: #1854cd;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    width: 400px;
+    color: #333; /* Color de texto más oscuro */
+    margin-bottom: 16px; /* Espacio inferior aumentado */
+    border-radius: 6px; /* Bordes redondeados */
+    width: 100%; /* Ancho completo */
 }
-  
 
-
-.btn{
+.btn {
     cursor: pointer;
+    background-color: #4CAF50; /* Color de fondo verde */
+    color: white; /* Color de texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    padding: 10px 20px; /* Relleno aumentado */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
 }
 
-.btn:hover{
-    background-color: #1e2db5;
+.btn:hover {
+    background-color: #45a049; /* Cambio de color al pasar el ratón */
 }
-
-@media(max-width: 991px){
-    body{
-        padding: 30px;
-    }
-
-    .form-content{
-        width: 100%;
-    }
-
-    form{
-        width: 100%;
-    }
-}
-

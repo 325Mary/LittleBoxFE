@@ -12,6 +12,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   notifications: any[] = [];
   previousNotifications: any[] = [];
   notificationsCount: number = 0;
+  initialNotificationCount = 10; // Define el número inicial de notificaciones a mostrar
+  visibleNotifications: any[] = [];
+  showLoadMoreLink: boolean = true; // Variable de control para mostrar u ocultar el enlace "Mostrar más"
 
   subscription: Subscription = new Subscription();
   routerSubscription: Subscription = new Subscription();
@@ -25,8 +28,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     this.subscription = interval(30000).subscribe(() => {
       this.refreshNotifications();
     });
-
-    
   }
 
   ngOnDestroy(): void {
@@ -43,17 +44,32 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         }
         this.notifications = notifications;
         this.previousNotifications = notifications;
+        // Mostrar solo las primeras 10 notificaciones inicialmente
+        this.visibleNotifications = this.notifications.slice(0, this.initialNotificationCount);
+        // Determinar si se deben mostrar más notificaciones
+        this.showLoadMoreLink = this.notifications.length > this.initialNotificationCount;
       },
       (error) => {
         console.error('Error al obtener las notificaciones:', error);
       }
     );
   }
-  
+
+  loadMoreNotifications() {
+    // Añadir 10 notificaciones adicionales a las visibles
+    const startIndex = this.visibleNotifications.length;
+    const endIndex = startIndex + this.initialNotificationCount;
+    this.visibleNotifications = [...this.visibleNotifications, ...this.notifications.slice(startIndex, endIndex)];
+    // Ocultar el enlace "Mostrar más" si no hay más notificaciones para mostrar
+    if (this.visibleNotifications.length >= this.notifications.length) {
+      this.showLoadMoreLink = false;
+    }
+  }
+
   getNewNotifications(notifications: any[]): any[] {
     return notifications.filter(notification => !this.previousNotifications.includes(notification));
   }
-  
+
   handleClickNotification(notificationId: string) {
     this.notificationService.markNotificationAsRead(notificationId)
       .subscribe(() => {

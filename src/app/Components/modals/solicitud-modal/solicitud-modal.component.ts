@@ -17,16 +17,16 @@ export class SolicitudModalComponent {
 
   
   async verFactura(): Promise<void> {
-    if (this.solicitud && this.solicitud.factura && this.solicitud.solicitudIdId) {
+    if (this.solicitud && this.solicitud.facturaUrl && this.solicitud.solicitudId) {
       // Llamar al método para abrir la factura en el navegador
-      await this.openPdf(this.solicitud.factura, 'factura', this.solicitud.egresoId);
+      await this.openPdf(this.solicitud.facturaUrl, 'factura', this.solicitud.solicitudId);
     } else {
       // Manejar el caso donde no hay URL de factura definida en el egreso o no hay ID de egreso
       alert('Error al obtener la Factura');
     }
   }
 
-  async openPdf(urlPdf: string, facturaName: string, solicitudId: string): Promise<void> {
+  async openPdf(urlPdf: string, facturaUrl: string, solicitudId: string): Promise<void> {
     try {
         const response = await fetch(urlPdf, {
             method: 'GET'
@@ -46,7 +46,7 @@ export class SolicitudModalComponent {
             }
   
             // Crear el nombre de archivo único combinando el ID del egreso con el nombre de la factura
-            const uniqueFilename = `${solicitudId}_${facturaName}`;
+            const uniqueFilename = `${solicitudId}_${facturaUrl}`;
   
             // Crear el Blob y descargar el archivo
             const blob = new Blob([await response.blob()], { type: 'application/pdf' });

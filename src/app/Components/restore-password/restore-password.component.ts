@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-restore-password',
@@ -25,6 +26,11 @@ export class RestorePasswordComponent {
       error => {
         console.error('Error al solicitar restablecimiento:', error);
         // Manejar el error (mostrar mensaje de error al usuario, etc.)
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al solicitar restablecimiento, correo no encontrado ',
+          icon: 'error'
+        });
       }
     );
   }
@@ -35,15 +41,20 @@ export class RestorePasswordComponent {
         console.log('Contraseña restablecida con éxito:', response);
         // Manejar la respuesta según sea necesario (mostrar mensaje al usuario, redirigir, etc.)
         this.router.navigate(['/']); 
-        alert('¡Cambio de contraseña exitoso! .');
-
-
+        Swal.fire({
+          title: 'Éxito',
+          text: '¡Cambio de contraseña exitoso!',
+          icon: 'success'
+        });
       },
       error => {
         console.error('Error al restablecer contraseña:', error);
-        alert('Codigo Incorrecto');
-
         // Manejar el error (mostrar mensaje de error al usuario, etc.)
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al restablecer contraseña ',
+          icon: 'error'
+        });
       }
     );
   }

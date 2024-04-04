@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SafePipe } from './pipes/safe.pipe'; // Importa tu tubería personalizada
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 import { HomeComponent } from '../app/Components/home/home.component';
@@ -54,6 +55,7 @@ import { ModalCompanySolicitudComponent } from './Components/modal-company-solic
 import { InformesComponent } from './Components/informes/informes.component';
 import {InformesService  } from "./services/informes.service";
 import { GraficosComponent } from './Components/graficos/graficos.component';
+import { TokenInterceptorService } from "./services/token-interceptor.service";
 
 // import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { ListDeleteIngresosComponent } from './Components/ingresos/list-delete-ingresos/list-delete-ingresos.component';
@@ -62,6 +64,7 @@ import { NotificationsComponent } from './Components/notifications/notifications
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TerceroModalComponent } from './Components/modals/tercero-modal/tercero-modal.component';
 import { SolicitudModalComponent } from './Components/modals/solicitud-modal/solicitud-modal.component';
+import { CaducidadTokenComponent } from './Components/caducidad-token/caducidad-token.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,6 +109,7 @@ import { SolicitudModalComponent } from './Components/modals/solicitud-modal/sol
     NotificationsComponent,
     TerceroModalComponent,
     SolicitudModalComponent,
+    CaducidadTokenComponent,
   ],
   imports: [
     BrowserModule,
@@ -126,7 +130,7 @@ import { SolicitudModalComponent } from './Components/modals/solicitud-modal/sol
       }
     }),
   ],
-  providers: [SignInUpService,{ provide: environment, useValue: environment }, EgresosService, CompanyService, InformesService, provideAnimationsAsync()],
+  providers: [SignInUpService,{ provide: environment, useValue: environment,  }, EgresosService, CompanyService, InformesService, provideAnimationsAsync(), TokenInterceptorService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

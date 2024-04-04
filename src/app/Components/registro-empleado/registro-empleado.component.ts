@@ -36,7 +36,7 @@ export class RegistroEmpleadoComponent {
 
     this.userService.registrarUsuario(formData).subscribe(response => {
       this.router.navigate(['/']);
-      Swal.fire('Éxito', 'Datos Inhade Usuario enviados correctamente.', 'success');
+      Swal.fire('Éxito', 'Datos de Usuario enviados correctamente.', 'success');
     }, error => {
       Swal.fire('Error', ' Ocurrio un error al enviar los datos. ¡Intente Nuevamente!', 'error');
     });

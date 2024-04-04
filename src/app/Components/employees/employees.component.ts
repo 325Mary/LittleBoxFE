@@ -20,6 +20,7 @@ export class EmployeesComponent  implements OnInit {
   obtenerUsuariosPorTenantId() {
     this.signInUpService.getUsersByTenantId().subscribe(
       (usuarios: any[]) => {
+        console.log(usuarios)
         this.usuarios = usuarios;
       },
       (error) => {

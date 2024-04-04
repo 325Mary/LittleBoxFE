@@ -1,12 +1,12 @@
 .notification-container {
   position: absolute;
   top: 50px; /* Ajusta esto según la altura de tu barra de navegación */
-  right: 20px;
-  width: 300px; /* Ajusta el ancho según sea necesario */
-  background-color: rgb(171, 191, 240);
-  border-radius: 4px solid #ccc;
+  right: 120px;
+  width: 250px; /* Ajusta el ancho según sea necesario */
+  background-color: rgb(240, 241, 243);
+  border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 10px rgba(20, 23, 227, 0.9);
   z-index: 1000; /* Asegura que esté por encima de otros elementos */
 }
 
@@ -17,10 +17,12 @@
 }
 
 .notification-container ul {
+  text-align: center;
   list-style-type: none; /* Quitamos los estilos de la lista */
   padding: 0; /* Quitamos el padding para que no haya espacio extra */
-  max-height: 180px; /* Altura máxima de la lista */
+  max-height: 200px; /* Altura máxima de la lista */
   overflow-y: auto; /* Agregamos una barra de desplazamiento vertical */
+  border-radius: 5px;
 }
 
 .notification-container ul::-webkit-scrollbar {
@@ -28,11 +30,11 @@
 }
 
 .notification-container ul::-webkit-scrollbar-track {
-  background: #a8a5a5; /* Color de fondo de la barra de desplazamiento */
+  background: #f1f0f0; /* Color de fondo de la barra de desplazamiento */
 }
 
 .notification-container ul::-webkit-scrollbar-thumb {
-  background: #888; /* Color del pulgar de la barra de desplazamiento */
+  background: #121111; /* Color del pulgar de la barra de desplazamiento */
   border-radius: 5px; /* Radio de borde del pulgar */
 }
 
@@ -51,6 +53,17 @@
 // }
 
 .notification-container li.unread {
-  background-color: #0d32eb; /* Color oscuro para notificaciones no leídas */
-  color: rgb(109, 165, 248);
+  background-color: #045ceb; /* Color oscuro para notificaciones no leídas */
+  color: rgb(251, 252, 255);
 }
+
+.load-more {
+  color: blue; /* Color del texto */
+  cursor: pointer; /* Cambia el cursor al pasar el mouse */
+}
+
+.load-more:hover {
+  color: darkblue; /* Cambia el color del texto al pasar el mouse */
+}
+
+

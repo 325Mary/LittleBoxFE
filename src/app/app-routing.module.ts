@@ -33,7 +33,7 @@ import { InformesComponent } from "../app/Components/informes/informes.component
 import {  GraficosComponent} from "../app/Components/graficos/graficos.component";
 import {  NotificationsComponent} from "../app/Components/notifications/notifications.component";
 import { TerceroModalComponent } from '../app/Components/modals/tercero-modal/tercero-modal.component';
-
+import { CaducidadTokenComponent } from "../app/Components/caducidad-token/caducidad-token.component";
 
 
 const routes: Routes = [
@@ -77,6 +77,7 @@ const routes: Routes = [
   { path: 'Informes', component: InformesComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
   { path: 'graficos', component: GraficosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
   { path: 'notificaciones/:notificationId', component: NotificationsComponent },
+  { path: 'exit', component: CaducidadTokenComponent},
   { path: '**', component: NotFoundComponent }
 ];
 

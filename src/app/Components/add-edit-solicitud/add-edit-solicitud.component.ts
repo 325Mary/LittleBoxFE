@@ -132,7 +132,7 @@ export class AddEditSolicitudComponent {
     fileReader.onload = () => {
       // Cuando la lectura del archivo esté completa
       // Asignar el contenido del archivo (sin prefijo de ruta) a company.pdfRunt
-      this.solicitud.factura = fileReader.result as string; // Esto asume que pdfRunt es de tipo string
+      this.formulario.facturaUrl = fileReader.result as string; // Esto asume que pdfRunt es de tipo string
     };
     
     // Leer el contenido del archivo como una URL de datos (data URL)

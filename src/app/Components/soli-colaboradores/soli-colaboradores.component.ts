@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SignInUpService } from "../../services/sign-in-up.service";
+import Swal from 'sweetalert2'; // Importa SweetAlert2
 import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-soli-colaboradores',
   templateUrl: './soli-colaboradores.component.html',
@@ -18,11 +20,17 @@ export class SoliColaboradoresComponent implements OnInit {
   obtenerUsuariosPorTenantId() {
     this.signInUpService.getUsersByTenantId().subscribe(
       (usuarios: any[]) => {
-        this.usuarios = usuarios;
-        console.log('estos son los usuarios:',usuarios )
+        // Filtrar usuarios con status "pendiente"
+        this.usuarios = usuarios.filter(usuario => usuario.status === 'pendiente');
+        console.log('Estos son los usuarios pendientes:', this.usuarios);
       },
       (error) => {
-        console.error('Error al obtener usuarios:', error);
+        // Manejar el error con SweetAlert2
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al obtener usuarios: ' + error.message // Puedes mostrar el mensaje de error
+        });
       }
     );
   }
@@ -31,7 +39,11 @@ export class SoliColaboradoresComponent implements OnInit {
   activarUsuario(userId: string) {
     const token = localStorage.getItem('token');
     if (!token) {
-      console.error('No se proporcionó un token válido.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se proporcionó un token válido.'
+      });
       return;
     }
     this.signInUpService.activeUser(userId, token).subscribe(
@@ -39,10 +51,14 @@ export class SoliColaboradoresComponent implements OnInit {
         console.log('Usuario activado:', response);
         // Actualizar la lista de usuarios después de activar uno
         this.obtenerUsuariosPorTenantId();
-        alert('Usuario Activo')
+        Swal.fire('¡Usuario activado!', '', 'success'); // Muestra una alerta de éxito con SweetAlert2
       },
       error => {
-        console.error('Error al activar el usuario:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al activar el usuario: '
+        });
       }
     );
   }
@@ -51,7 +67,11 @@ export class SoliColaboradoresComponent implements OnInit {
   deniedUsuario(userId: string) {
     const token = localStorage.getItem('token');
     if (!token) {
-      console.error('No se proporcionó un token válido.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se proporcionó un token válido.'
+      });
       return;
     }
     this.signInUpService.denyUser(userId, token).subscribe(
@@ -59,12 +79,15 @@ export class SoliColaboradoresComponent implements OnInit {
         console.log('Usuario Denegado:', response);
         // Actualizar la lista de usuarios después de inactivar uno
         this.obtenerUsuariosPorTenantId();
-        alert('Usuario Denegado')
+        Swal.fire('¡Usuario denegado!', '', 'success'); // Muestra una alerta de éxito con SweetAlert2
       },
       error => {
-        console.error('Error al inactivar el usuario:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al denegar el usuario: '
+        });
       }
     );
   }
 }
-

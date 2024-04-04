@@ -8,9 +8,11 @@
 </div> -->
 <!-- notification-list.component.html -->
 <div class="notification-container">
-  <h2>Notificaciones</h2>
+  <u>
+  <h2 class="text-center">Notificaciones</h2>
+  </u>
   <ul>
-    <li *ngFor="let notification of notifications" [ngClass]="{ 'unread': !notification.read }">
+    <li *ngFor="let notification of visibleNotifications" [ngClass]="{ 'unread': !notification.read }">
       <!-- Si la notificación tiene una URL, mostrar un enlace -->
       <div (click)="handleClickNotification(notification._id)">
         <a *ngIf="notification.url" [routerLink]="notification.url">
@@ -22,6 +24,11 @@
         {{ notification.message }}
       </ng-container>
     </li>
+    <p *ngIf="showLoadMoreLink && notifications.length > visibleNotifications.length"   class="load-more" (click)="loadMoreNotifications()">
+      Mostrar más>>>
+    </p>
   </ul>
+  <!-- <p *ngIf="showLoadMoreLink && notifications.length > visibleNotifications.length" (click)="loadMoreNotifications()">
+    Mostrar más...
+  </p> -->
 </div>
-
