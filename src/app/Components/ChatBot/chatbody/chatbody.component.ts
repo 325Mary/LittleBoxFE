@@ -50,7 +50,6 @@ export class ChatbodyComponent {
   obtenerCategorias() {
     const tenantId = this.tokenValidationService.getTenantIdFromToken();
     if (tenantId) {
-      
       this.CService.showCategories(tenantId).subscribe(
         (data) => {
           this.categories = data;
@@ -59,21 +58,21 @@ export class ChatbodyComponent {
           console.error('Error obteniendo categorías:', error);
         }
       );
-    }else {
+    } else {
       console.error('No se pudo obtener el tenantId.');
     }
   }
 
   obtenerSubcategoriasPorCategoria(categoriaId: string) {
-    const tenantId = this.tokenValidationService.getTenantIdFromToken()
+    const tenantId = this.tokenValidationService.getTenantIdFromToken();
 
-    if(tenantId){
+    if (tenantId) {
       this.SService.getSubcategoryByCategory(categoriaId, tenantId).subscribe(
         (data) => {
           this.subcategories = data;
         }
       );
-    }else {
+    } else {
       console.error('No se pudo obtener el tenantId.');
     }
   }
@@ -84,10 +83,13 @@ export class ChatbodyComponent {
   }
 
   onSubcategoryChange() {
-    const tenantId = this.tokenValidationService.getTenantIdFromToken()
+    const tenantId = this.tokenValidationService.getTenantIdFromToken();
 
     if (tenantId) {
-      this.QService.getQueriesBySubcategory( this.subcategory, tenantId).subscribe(
+      this.QService.getQueriesBySubcategory(
+        this.subcategory,
+        tenantId
+      ).subscribe(
         (data) => {
           this.queries = data;
         },
@@ -95,56 +97,53 @@ export class ChatbodyComponent {
           console.error('Error obteniendo consultas:', error);
         }
       );
-    }else {
+    } else {
       console.error('No se pudo obtener el tenantId.');
     }
   }
 
   showWelcomeMessage() {
     this.chatHistory.push({
-      pregunta: '¡Hola! ¿En qué puedo ayudarte hoy? Escribe "Ayuda" para poder explicarte.?',
+      pregunta:
+        '¡Hola! ¿En qué puedo ayudarte hoy? Escribe "Ayuda" para poder explicarte.?',
       respuesta: '',
       profilePicture: 'assets/bot.png',
-      origen: 'bot'
+      origen: 'bot',
     });
     this.scrollToBottom();
   }
 
   sendMessage() {
     if (this.userInput.toLowerCase() === 'bloque') {
-     
       this.chatHistory.push({
         profilePicture: 'assets/bot.png',
-        pregunta: 'Con gusto te explico, el bloque es un camino para encontrar la respuesta deseada. Como inicio, tendrás que seleccionar una categoría, que es el tema principal. Luego, seleccionas la subcategoría, que es el tema central para identificar si la pregunta se refiere a un funcionamiento, explicación u otra funcionalidad. Finalmente, se muestran las preguntas relacionadas a lo seleccionado, donde encontrarás el identificador y la pregunta. Solo busca la pregunta de tu agrado y pon su identificador en la barra de búsqueda del chatbot, y el chatbot te responderá exitosamente.',
+        pregunta:
+          'Con gusto te explico, el bloque es un camino para encontrar la respuesta deseada. Como inicio, tendrás que seleccionar una categoría, que es el tema principal. Luego, seleccionas la subcategoría, que es el tema central para identificar si la pregunta se refiere a un funcionamiento, explicación u otra funcionalidad. Finalmente, se muestran las preguntas relacionadas a lo seleccionado, donde encontrarás el identificador y la pregunta. Solo busca la pregunta de tu agrado y pon su identificador en la barra de búsqueda del chatbot, y el chatbot te responderá exitosamente.',
         respuesta: '¿Para qué sirve el bloque?',
-        origen: 'bot'
+        origen: 'bot',
       });
       this.scrollToBottom();
-      this.userInput = ''; 
+      this.userInput = '';
     } else {
-      
       this.chatHistory.push({
-        profilePicture: '', 
+        profilePicture: '',
         pregunta: this.userInput,
         respuesta: '',
-        origen: 'usuario'
+        origen: 'usuario',
       });
 
- 
       this.getQuery();
-      this.userInput = ''; 
+      this.userInput = '';
     }
   }
 
   getQuery() {
     const userInputLower = this.userInput.toLowerCase();
-    const tenantId = this.tokenValidationService.getTenantIdFromToken()
+    const tenantId = this.tokenValidationService.getTenantIdFromToken();
     if (!tenantId) {
       console.error('No se pudo obtener el tenantId.');
-      return
+      return;
     }
-
-    
 
     this.QService.getQueryIdentifier(userInputLower, tenantId).subscribe(
       (response) => {
@@ -154,14 +153,14 @@ export class ChatbodyComponent {
             profilePicture: 'assets/bot.png',
             pregunta: query.answer,
             respuesta: query.question,
-            origen: 'bot'
+            origen: 'bot',
           });
         } else {
           this.chatHistory.push({
             profilePicture: 'assets/bot.png',
             pregunta: 'No se encontró ninguna consulta con ese identificador.',
             respuesta: '',
-            origen: 'bot'
+            origen: 'bot',
           });
         }
         this.scrollToBottom();
@@ -170,9 +169,10 @@ export class ChatbodyComponent {
         console.error(error);
         this.chatHistory.push({
           profilePicture: 'assets/bot.png',
-          pregunta: 'Ocurrió un error al obtener la consulta. Por favor, inténtelo de nuevo.',
+          pregunta:
+            'Ocurrió un error al obtener la consulta. Por favor, inténtelo de nuevo.',
           respuesta: '',
-          origen: 'bot'
+          origen: 'bot',
         });
         this.scrollToBottom();
       }
@@ -184,7 +184,7 @@ export class ChatbodyComponent {
       pregunta: this.userInput,
       respuesta: 'No entiendo.',
       profilePicture: 'assets/bot.png',
-      origen: 'bot'
+      origen: 'bot',
     });
     this.scrollToBottom();
   }
@@ -199,7 +199,8 @@ export class ChatbodyComponent {
 
   scrollToBottom() {
     try {
-      this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
-    } catch (err) { }
+      this.chatContainer.nativeElement.scrollTop =
+        this.chatContainer.nativeElement.scrollHeight;
+    } catch (err) {}
   }
 }

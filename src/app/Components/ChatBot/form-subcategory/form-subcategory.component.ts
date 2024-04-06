@@ -38,25 +38,23 @@ export class FormSubcategoryComponent {
     const tenantId = this.tokenValidationService.getTenantIdFromToken();
 
     if (tenantId) {
-      this.CaService.showCategories(tenantId).subscribe(
-        (data: any[]) => {
-          this.categories = data;
-        })
-  } else {
-    console.error('No se pudo obtener el tenantId.');
+      this.CaService.showCategories(tenantId).subscribe((data: any[]) => {
+        this.categories = data;
+      });
+    } else {
+      console.error('No se pudo obtener el tenantId.');
+    }
   }
-}
 
   addSubcategory() {
-
     const tenantId = this.tokenValidationService.getTenantIdFromToken();
-    
+
     if (tenantId) {
-      if ( !this.name || !this.category) {
+      if (!this.name || !this.category) {
         this.toastr.error('Por favor, completa todos los campos.');
         return;
       }
-  
+
       const newSubcategory = {
         name: this.name,
         category: {
@@ -64,8 +62,8 @@ export class FormSubcategoryComponent {
           name: '',
         },
       };
-  
-      this.SService.saveSubcategory(newSubcategory,tenantId).subscribe(
+
+      this.SService.saveSubcategory(newSubcategory, tenantId).subscribe(
         () => {
           this.toastr.success(
             'La subcategoría fue registrada con éxito.',
@@ -78,13 +76,12 @@ export class FormSubcategoryComponent {
           this.toastr.error(
             'Error al registrar la subcategoría. Por favor, inténtalo de nuevo.',
             'Error'
-            );
-            this.activeModal.close('Modal cerrada');
+          );
+          this.activeModal.close('Modal cerrada');
         }
       );
-    }else {
+    } else {
       console.error('No se pudo obtener el tenantId.');
     }
-      
-    }
+  }
 }

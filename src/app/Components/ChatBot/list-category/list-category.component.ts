@@ -30,7 +30,6 @@ export class ListCategoryComponent {
     this.loadCategories();
   }
 
-  
   filtrarCategory() {
     this.filteredCategory = this.listCategory.filter((categoria: any) =>
       categoria.name.toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -39,7 +38,6 @@ export class ListCategoryComponent {
 
   loadCategories() {
     const tenantId = this.tokenValidationService.getTenantIdFromToken();
-    
 
     if (tenantId) {
       this.categoryService.showCategories(tenantId).subscribe(
@@ -61,7 +59,10 @@ export class ListCategoryComponent {
     if (tenantId) {
       this.categoryService.deleteCategory(id, tenantId).subscribe(
         () => {
-          this.toastr.success('La categoría fue eliminada con éxito.', 'Categoría eliminada');
+          this.toastr.success(
+            'La categoría fue eliminada con éxito.',
+            'Categoría eliminada'
+          );
           this.loadCategories();
         },
         (error) => {
@@ -84,7 +85,9 @@ export class ListCategoryComponent {
   }
 
   openModal() {
-    const modalRef = this.modalService.open(FormCategoryComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(FormCategoryComponent, {
+      size: 'lg',
+    });
     modalRef.result.then(
       () => {
         this.loadCategories();
@@ -101,7 +104,9 @@ export class ListCategoryComponent {
 
   openEditModal(categoryId: string | undefined) {
     if (categoryId) {
-      const modalRef = this.modalService.open(EditCategoryComponent, { size: 'lg' });
+      const modalRef = this.modalService.open(EditCategoryComponent, {
+        size: 'lg',
+      });
       modalRef.componentInstance.mode = 'edit';
       modalRef.componentInstance.categoryId = categoryId;
       modalRef.result.then(
@@ -109,7 +114,10 @@ export class ListCategoryComponent {
           this.loadCategories();
         },
         (reason) => {
-          this.toastr.info('Consulta guardada sin cambios.', 'Consulta editada');
+          this.toastr.info(
+            'Consulta guardada sin cambios.',
+            'Consulta editada'
+          );
         }
       );
     }

@@ -97,7 +97,8 @@ export class EditSubcategoryComponent {
 
       this.SService.editSubcategory(
         this.subcategoryId,
-        updatedSubcategory, tenantId
+        updatedSubcategory,
+        tenantId
       ).subscribe(
         (data) => {
           this.toastr.info(

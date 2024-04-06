@@ -25,29 +25,27 @@ export class ListQueriesComponent {
   public searchTermReferencia: string = '';
 
   ngOnInit() {
-   this.loadQueries()
+    this.loadQueries();
   }
 
   loadQueries() {
     const tenantId = this.tokenValidationService.getTenantIdFromToken();
-    
+
     if (tenantId) {
-      
       this.QService.showQueries(tenantId).subscribe((lista) => {
         this.listQuery = lista;
         this.filtrarQuery();
         this.ordenarLista();
       });
-    }else {
+    } else {
       console.error('No se pudo obtener el tenantId.');
     }
   }
-  
+
   eliminarQuery(id: any) {
     const tenantId = this.tokenValidationService.getTenantIdFromToken();
 
     if (tenantId) {
-      
       this.QService.deleteQuery(id, tenantId).subscribe(
         (data) => {
           this.toastr.error(
@@ -60,7 +58,7 @@ export class ListQueriesComponent {
           console.error('Error al eliminar la consulta:', error);
         }
       );
-    }else {
+    } else {
       console.error('No se pudo obtener el tenantId.');
     }
   }
@@ -82,14 +80,12 @@ export class ListQueriesComponent {
   reloadQueries() {
     const tenantId = this.tokenValidationService.getTenantIdFromToken();
 
-
     if (tenantId) {
-      
       this.QService.showQueries(tenantId).subscribe((lista) => {
         this.listQuery = lista;
         this.filteredQuery = lista;
       });
-    }else {
+    } else {
       console.error('No se pudo obtener el tenantId.');
     }
   }
@@ -129,5 +125,4 @@ export class ListQueriesComponent {
       }
     );
   }
-
 }

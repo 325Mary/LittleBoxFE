@@ -6,7 +6,7 @@ import { TokenValidationService } from '../token-validation-service.service';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
   private apiUrl: string;
@@ -15,63 +15,78 @@ export class CategoryService {
     deleteCategory: 'deleteCategory',
     saveCategory: 'saveCategory',
     getCategory: 'category',
-    updateCategory: 'editCategory'
+    updateCategory: 'editCategory',
   };
 
   constructor(
     private http: HttpClient,
-    private tokenValidationService: TokenValidationService,
-    ) { this.apiUrl = environment.apiUrl}
+    private tokenValidationService: TokenValidationService
+  ) {
+    this.apiUrl = environment.apiUrl;
+  }
 
-  showCategories ( tenantId: string): Observable<any>{
+  showCategories(tenantId: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
-    const headers = new HttpHeaders({ 'Authorization': `${token}` });
+    const headers = new HttpHeaders({ Authorization: `${token}` });
     return this.http.get<any>(`${this.apiUrl}${this.endpoints.getCategories}`, {
       params: { tenantId },
-      headers: headers
+      headers: headers,
     });
   }
 
   deleteCategory(id: string, tenantId: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
-    const headers = new HttpHeaders({ 'Authorization': `${token}` });
-    return this.http.delete<any>(`${this.apiUrl}${this.endpoints.deleteCategory}/${id}`,  {
-      params: { tenantId },
-      headers: headers
-    });
+    const headers = new HttpHeaders({ Authorization: `${token}` });
+    return this.http.delete<any>(
+      `${this.apiUrl}${this.endpoints.deleteCategory}/${id}`,
+      {
+        params: { tenantId },
+        headers: headers,
+      }
+    );
   }
 
-  saveCategory (category: Category, tenantId: string): Observable <any>{
+  saveCategory(category: Category, tenantId: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
-    const headers = new HttpHeaders({ 'Authorization': `${token}` });
+    const headers = new HttpHeaders({ Authorization: `${token}` });
 
-    return this.http.post<void>(`${this.apiUrl}${this.endpoints.saveCategory}`, category, {
-      params: { tenantId },
-      headers: headers
-    });
-    }
+    return this.http.post<void>(
+      `${this.apiUrl}${this.endpoints.saveCategory}`,
+      category,
+      {
+        params: { tenantId },
+        headers: headers,
+      }
+    );
+  }
 
-  getACategory(id: string,tenantId: string): Observable <any>{
+  getACategory(id: string, tenantId: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
-    const headers = new HttpHeaders({ 'Authorization': `${token}` });
+    const headers = new HttpHeaders({ Authorization: `${token}` });
     return this.http.get<any>(
       `${this.apiUrl}${this.endpoints.getCategory}/${id}`,
       {
         params: { tenantId },
-        headers: headers
-      },
+        headers: headers,
+      }
     );
   }
 
-
-  editCategory(id:string, category:Category, tenantId:string): Observable <any>{
+  editCategory(
+    id: string,
+    category: Category,
+    tenantId: string
+  ): Observable<any> {
     const token = this.tokenValidationService.getToken();
-    const headers = new HttpHeaders({ 'Authorization': `${token}` });
+    const headers = new HttpHeaders({ Authorization: `${token}` });
 
-    return this.http.put<void>(`${this.apiUrl}${this.endpoints.updateCategory}/${id}`, category,{
-      params: { tenantId },
-      headers: headers
-    })
-    
+    return this.http.put<void>(
+      `${this.apiUrl}${this.endpoints.updateCategory}/${id}`,
+      category,
+      {
+        params: { tenantId },
+        headers: headers,
+      }
+    );
   }
 }

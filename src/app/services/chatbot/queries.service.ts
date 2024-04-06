@@ -26,70 +26,89 @@ export class QueriesService {
     this.apiUrl = environment.apiUrl;
   }
 
-  showQueries(tenantId:string): Observable<any> {
+  showQueries(tenantId: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ Authorization: `${token}` });
     return this.http.get<any>(`${this.apiUrl}${this.endpoints.getQueries}`, {
       params: { tenantId },
-      headers: headers
-    })
+      headers: headers,
+    });
   }
 
   deleteQuery(id: string, tenantId: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ Authorization: `${token}` });
-    return this.http.delete<void>(`${this.apiUrl}${this.endpoints.deleteQuery}/${id}`,{
-      params: { tenantId },
-      headers: headers
-    })
+    return this.http.delete<void>(
+      `${this.apiUrl}${this.endpoints.deleteQuery}/${id}`,
+      {
+        params: { tenantId },
+        headers: headers,
+      }
+    );
   }
 
-  saveQuery(Query: Query, tenantId:string): Observable<any> {
+  saveQuery(Query: Query, tenantId: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ Authorization: `${token}` });
-    return this.http.post<void>(`${this.apiUrl}${this.endpoints.saveQuery}`, Query ,{
-      params: { tenantId },
-      headers: headers
-    })
+    return this.http.post<void>(
+      `${this.apiUrl}${this.endpoints.saveQuery}`,
+      Query,
+      {
+        params: { tenantId },
+        headers: headers,
+      }
+    );
   }
 
   getAQuery(id: string, tenantId: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ Authorization: `${token}` });
-    return this.http.get<any>(`${this.apiUrl}${this.endpoints.getQuery}/${id}`,{
-      params: { tenantId },
-      headers: headers
-    })
+    return this.http.get<any>(
+      `${this.apiUrl}${this.endpoints.getQuery}/${id}`,
+      {
+        params: { tenantId },
+        headers: headers,
+      }
+    );
   }
 
   editQuery(id: string, query: Query, tenantId: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ Authorization: `${token}` });
-    return this.http.put<void>(`${this.apiUrl}${this.endpoints.updateQuery}/${id}`, query, {
-      params: { tenantId },
-      headers: headers
-    })
+    return this.http.put<void>(
+      `${this.apiUrl}${this.endpoints.updateQuery}/${id}`,
+      query,
+      {
+        params: { tenantId },
+        headers: headers,
+      }
+    );
   }
 
   getQueryIdentifier(identifier: string, tenantId: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ Authorization: `${token}` });
-    return this.http
-      .get<any>(`${this.apiUrl}${this.endpoints.getQueryWNumero}/${identifier}`, {
+    return this.http.get<any>(
+      `${this.apiUrl}${this.endpoints.getQueryWNumero}/${identifier}`,
+      {
         params: { tenantId },
-        headers: headers
-      })
+        headers: headers,
+      }
+    );
   }
 
-  getQueriesBySubcategory(identifierSubcategory: string, tenantId: string): Observable<any> {
+  getQueriesBySubcategory(
+    identifierSubcategory: string,
+    tenantId: string
+  ): Observable<any> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ Authorization: `${token}` });
-    return this.http
-      .get<any>(
-        `${this.apiUrl}${this.endpoints.getQueriesByScategory}/${identifierSubcategory}`,{
-          params: { tenantId },
-        headers: headers
-        }
-      )
+    return this.http.get<any>(
+      `${this.apiUrl}${this.endpoints.getQueriesByScategory}/${identifierSubcategory}`,
+      {
+        params: { tenantId },
+        headers: headers,
+      }
+    );
   }
 }
