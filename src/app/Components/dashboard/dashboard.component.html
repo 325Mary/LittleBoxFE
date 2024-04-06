@@ -1,0 +1,119 @@
+<div class="container">
+    <div class="row">
+        <!-- Columna Izquierda: Tarjetas -->
+        <div class="col-md-6">
+            <!-- Tarjeta de notificaciones -->
+            <div class="card notification-card">
+                <h2 class="card-title text-center">
+                    <p-header>
+                        <i class="pi pi-bell"></i> Notificaciones
+                    </p-header>
+                </h2>
+                <ul>
+                    <li *ngFor="let notification of visibleNotifications" [ngClass]="{ 'unread': !notification.read }">
+                        <div (click)="handleClickNotification(notification._id)">
+                            <a *ngIf="notification.url" [routerLink]="notification.url">{{ notification.message }}</a>
+                        </div>
+                        <ng-container *ngIf="!notification.url">{{ notification.message }}</ng-container>
+                    </li>
+                    <p *ngIf="showLoadMoreLink && notifications.length > visibleNotifications.length" class="load-more" (click)="loadMoreNotifications()">Mostrar más>>></p>
+                </ul>
+            </div>
+
+            <!-- Lista de terceros -->
+            <div class="card">
+                <h2 class="card-title text-center">
+                    <p-header>
+                        <i class="pi pi-list"></i> Terceros mas Relevantes
+                    </p-header>
+                </h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Nombre del Tercero</th>
+                            <th class="text-center">Veces usadas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let tercero of terceros">
+                            <td class="text-center">{{ tercero.terceroNombre }}</td>
+                            <td class="text-center">{{ tercero.count }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Gráfico de terceros -->
+            <div class="card">
+                <h2 class="card-title text-center">
+                    <p-header>
+                        <i class="pi pi-chart-line"></i> Terceros
+                    </p-header>
+                </h2>
+                <canvas #tercerosChart></canvas>
+            </div>
+
+            <!-- Lista de categorías -->
+            <div class="card">
+                <h2 class="card-title text-center">
+                    <p-header>
+                        <i class="pi pi-list"></i> Categorias relevantes
+                    </p-header>
+                </h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Nombre de la Categoría</th>
+                            <th class="text-center">Veces usadas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let categoria of categorias">
+                            <td class="text-center">{{ categoria.categoriaNombre }}</td>
+                            <td class="text-center">{{ categoria.count }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Gráfico de categorías -->
+            <div class="card">
+                <h2 class="card-title text-center">
+                    <p-header>
+                        <i class="pi pi-chart-line"></i> Categorias
+                    </p-header>
+                </h2>
+                <canvas #categoriasChart></canvas>
+            </div>
+        </div>
+
+        <!-- Columna Derecha: Solicitudes -->
+        <div class="col-md-6">
+            <!-- Lista de solicitudes -->
+            <div class="card request-card">
+                <h2 class="card-title text-center">
+                    <p-header>
+                        <i class="pi pi-list"></i> Solicitudes pendientes
+                    </p-header>
+                </h2>
+                <div class="row">
+                    <div class="col-md-12 col-lg-6 mb-4" *ngFor="let solicitud of listSolicitudes">
+                        <ng-container *ngIf="solicitud.estado?.nombre === 'pendiente'">
+                        <div class="card request-item">
+                            <div class="card-body">
+                                <i [class]="getIconByCategory(solicitud.categoria?.nombre)"></i>
+                                <h5 class="card-title">Solicitud #{{ solicitud.solicitudId }}</h5>
+                                <p class="card-text">Fecha: {{ solicitud.fecha | date: 'dd-MM-yyyy' }}</p>
+                                <p class="card-text">Estado: <span [style.backgroundColor]="getColorByEstado(solicitud.estado?.nombre)" class="badge">{{ solicitud.estado?.nombre }}</span></p>
+                                <p class="card-text">Detalle: {{ solicitud.detalle }}</p>
+                                <p class="card-text">Valor: {{ solicitud.valor | currency }}</p>
+                            </div>
+                        </div>
+                        </ng-container>
+                    </div>
+                    <div *ngIf="listSolicitudes.length === 0" class="col-md-12 text-center">No hay solicitudes pendientes.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

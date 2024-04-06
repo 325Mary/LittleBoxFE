@@ -6,6 +6,9 @@ import { SafePipe } from './pipes/safe.pipe'; // Importa tu tubería personaliza
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TableModule } from 'primeng/table';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 
 import { HomeComponent } from '../app/Components/home/home.component';
@@ -74,6 +77,8 @@ import {ButtonModule} from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
+import { GastoComponent } from './Components/gasto/gasto.component';
+import { DashboardComponent } from './Components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -120,6 +125,8 @@ import { AvatarModule } from 'primeng/avatar';
     TerceroModalComponent,
     SolicitudModalComponent,
     CaducidadTokenComponent,
+    GastoComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -136,6 +143,8 @@ import { AvatarModule } from 'primeng/avatar';
     MenubarModule,
     MenuModule,
     AvatarModule,
+    CommonModule,
+    TableModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -153,6 +162,7 @@ import { AvatarModule } from 'primeng/avatar';
       }
     })
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], 
   providers: [SignInUpService,{ provide: environment, useValue: environment }, EgresosService, CompanyService, InformesService, provideAnimationsAsync(), TokenInterceptorService],
   bootstrap: [AppComponent]
 })
