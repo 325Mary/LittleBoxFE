@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../../../services/chatbot/category.service';
+import { TokenValidationService } from '../../../services/token-validation-service.service';
 
 
 @Component({
@@ -18,7 +19,8 @@ export class EditCategoryComponent {
     constructor(
         private toastr: ToastrService,
         private categoryService: CategoryService,
-        public activeModal: NgbActiveModal
+        public activeModal: NgbActiveModal,
+        private tokenValidationService: TokenValidationService
     ) {}
 
     cerrarModal() {
@@ -32,15 +34,21 @@ export class EditCategoryComponent {
     }
 
     loadCategoryDetails(id: string) {
-        this.categoryService.getACategory(id).subscribe(
-            (data: any) => {
-                this.name = data.name;
-                this.description = data.description;
-            },
-            (error) => {
-                console.error('Error al cargar los detalles de la categoría:', error);
-            }
-        );
+    const tenantId = this.tokenValidationService.getTenantIdFromToken();
+        if (tenantId) {
+            
+            this.categoryService.getACategory(id, tenantId).subscribe(
+                (data: any) => {
+                    this.name = data.name;
+                    this.description = data.description;
+                },
+                (error) => {
+                    console.error('Error al cargar los detalles de la categoría:', error);
+                }
+            );
+        }else {
+            console.error('No se pudo obtener el tenantId.');
+          }
     }
 
     updateCategory() {
@@ -48,6 +56,12 @@ export class EditCategoryComponent {
             this.toastr.error('Por favor, completa todos los campos.');
             return;
         }
+        const tenantId = this.tokenValidationService.getTenantIdFromToken();
+        if (!tenantId) {
+            console.error('No se pudo obtener el tenantId.');
+            return;
+        }
+
 
         if (this.categoryId) {
             const updatedCategory = {
@@ -55,7 +69,7 @@ export class EditCategoryComponent {
                 description: this.description
             };
 
-            this.categoryService.editCategory(this.categoryId, updatedCategory).subscribe(
+            this.categoryService.editCategory(this.categoryId, updatedCategory, tenantId).subscribe(
                 () => {
                     this.toastr.info('La categoría se ha actualizado con éxito.', 'Se ha actualizado con éxito:');
                     this.activeModal.close('Modal cerrada');

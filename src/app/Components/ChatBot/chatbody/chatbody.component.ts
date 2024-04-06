@@ -4,6 +4,7 @@ import { MenuComponent } from '../menu/menu.component';
 import { QueriesService } from '../../../services/chatbot/queries.service';
 import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
 import { CategoryService } from '../../../services/chatbot/category.service';
+import { TokenValidationService } from '../../../services/token-validation-service.service';
 
 interface Message {
   profilePicture?: string;
@@ -34,7 +35,8 @@ export class ChatbodyComponent {
     public activeModal: NgbActiveModal,
     private QService: QueriesService,
     private SService: SubcategoryService,
-    private CService: CategoryService
+    private CService: CategoryService,
+    private tokenValidationService: TokenValidationService
   ) {}
 
   ngOnInit(): void {
@@ -46,25 +48,34 @@ export class ChatbodyComponent {
   }
 
   obtenerCategorias() {
-    this.CService.showCategories().subscribe(
-      (data) => {
-        this.categories = data;
-      },
-      (error) => {
-        console.error('Error obteniendo categorías:', error);
-      }
-    );
+    const tenantId = this.tokenValidationService.getTenantIdFromToken();
+    if (tenantId) {
+      
+      this.CService.showCategories(tenantId).subscribe(
+        (data) => {
+          this.categories = data;
+        },
+        (error) => {
+          console.error('Error obteniendo categorías:', error);
+        }
+      );
+    }else {
+      console.error('No se pudo obtener el tenantId.');
+    }
   }
 
   obtenerSubcategoriasPorCategoria(categoriaId: string) {
-    this.SService.getSubcategoryByCategory(categoriaId).subscribe(
-      (data) => {
-        this.subcategories = data;
-      },
-      (error) => {
-        console.error('Error obteniendo subcategorías:', error);
-      }
-    );
+    const tenantId = this.tokenValidationService.getTenantIdFromToken()
+
+    if(tenantId){
+      this.SService.getSubcategoryByCategory(categoriaId, tenantId).subscribe(
+        (data) => {
+          this.subcategories = data;
+        }
+      );
+    }else {
+      console.error('No se pudo obtener el tenantId.');
+    }
   }
 
   onCategoryChange() {
@@ -73,14 +84,20 @@ export class ChatbodyComponent {
   }
 
   onSubcategoryChange() {
-    this.QService.getQueriesBySubcategory(this.subcategory).subscribe(
-      (data) => {
-        this.queries = data;
-      },
-      (error) => {
-        console.error('Error obteniendo consultas:', error);
-      }
-    );
+    const tenantId = this.tokenValidationService.getTenantIdFromToken()
+
+    if (tenantId) {
+      this.QService.getQueriesBySubcategory( this.subcategory, tenantId).subscribe(
+        (data) => {
+          this.queries = data;
+        },
+        (error) => {
+          console.error('Error obteniendo consultas:', error);
+        }
+      );
+    }else {
+      console.error('No se pudo obtener el tenantId.');
+    }
   }
 
   showWelcomeMessage() {
@@ -121,8 +138,15 @@ export class ChatbodyComponent {
 
   getQuery() {
     const userInputLower = this.userInput.toLowerCase();
+    const tenantId = this.tokenValidationService.getTenantIdFromToken()
+    if (!tenantId) {
+      console.error('No se pudo obtener el tenantId.');
+      return
+    }
 
-    this.QService.getQueryIdentifier(userInputLower).subscribe(
+    
+
+    this.QService.getQueryIdentifier(userInputLower, tenantId).subscribe(
       (response) => {
         if (response.status === 200) {
           const query = response.data;

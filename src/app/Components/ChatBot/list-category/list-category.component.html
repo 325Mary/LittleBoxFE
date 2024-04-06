@@ -24,8 +24,9 @@
               <td>{{ category.name }}</td>
               <td>{{ category.description }}</td>
               <td>
-                <img (click)="openEditModal(category._id)" class="img-icon" src="../../../assets/boligrafo.png">
-                <img (click)="deleteCategory(category._id)" class="img-icon" src="../../../../assets/boton-x.png" >
+                <img *ngIf="category._id" (click)="openEditModal(category._id.toString())" class="img-icon" src="../../../assets/boligrafo.png">
+                <img *ngIf="category._id" (click)="deleteCategory(category._id.toString())" class="img-icon" src="../../../../assets/boton-x.png">
+              </td>      
             </tr>
           </tbody>
         </table>

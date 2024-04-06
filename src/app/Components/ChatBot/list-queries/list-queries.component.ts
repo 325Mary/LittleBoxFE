@@ -4,6 +4,7 @@ import { FormQueriesComponent } from '../form-queries/form-queries.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditQueriesComponent } from '../edit-queries/edit-queries.component';
 import { QueriesService } from '../../../services/chatbot/queries.service';
+import { TokenValidationService } from '../../../services/token-validation-service.service';
 
 @Component({
   selector: 'app-list-queries',
@@ -15,7 +16,8 @@ export class ListQueriesComponent {
     private QService: QueriesService,
     private toastr: ToastrService,
     public activeModal: NgbActiveModal,
-    public modalService: NgbModal
+    public modalService: NgbModal,
+    private tokenValidationService: TokenValidationService
   ) {}
 
   public listQuery: any[] = [];
@@ -23,30 +25,44 @@ export class ListQueriesComponent {
   public searchTermReferencia: string = '';
 
   ngOnInit() {
-    this.loadQueries();
+   this.loadQueries()
   }
 
   loadQueries() {
-    this.QService.showQueries().subscribe((lista) => {
-      this.listQuery = lista;
-      this.filtrarQuery();
-      this.ordenarLista();
-    });
+    const tenantId = this.tokenValidationService.getTenantIdFromToken();
+    
+    if (tenantId) {
+      
+      this.QService.showQueries(tenantId).subscribe((lista) => {
+        this.listQuery = lista;
+        this.filtrarQuery();
+        this.ordenarLista();
+      });
+    }else {
+      console.error('No se pudo obtener el tenantId.');
+    }
   }
-
+  
   eliminarQuery(id: any) {
-    this.QService.deleteQuery(id).subscribe(
-      (data) => {
-        this.toastr.error(
-          'La consulta fue eliminada con éxito.',
-          'Consulta eliminada:'
-        );
-        this.loadQueries();
-      },
-      (error) => {
-        console.error('Error al eliminar la consulta:', error);
-      }
-    );
+    const tenantId = this.tokenValidationService.getTenantIdFromToken();
+
+    if (tenantId) {
+      
+      this.QService.deleteQuery(id, tenantId).subscribe(
+        (data) => {
+          this.toastr.error(
+            'La consulta fue eliminada con éxito.',
+            'Consulta eliminada:'
+          );
+          this.loadQueries();
+        },
+        (error) => {
+          console.error('Error al eliminar la consulta:', error);
+        }
+      );
+    }else {
+      console.error('No se pudo obtener el tenantId.');
+    }
   }
 
   ordenarLista() {
@@ -64,11 +80,18 @@ export class ListQueriesComponent {
   }
 
   reloadQueries() {
-    this.QService.showQueries().subscribe((lista) => {
-      this.listQuery = lista;
-      this.filteredQuery = lista;
-      this.ordenarLista();
-    });
+    const tenantId = this.tokenValidationService.getTenantIdFromToken();
+
+
+    if (tenantId) {
+      
+      this.QService.showQueries(tenantId).subscribe((lista) => {
+        this.listQuery = lista;
+        this.filteredQuery = lista;
+      });
+    }else {
+      console.error('No se pudo obtener el tenantId.');
+    }
   }
 
   openEditModal(queryId: any) {
@@ -106,4 +129,5 @@ export class ListQueriesComponent {
       }
     );
   }
+
 }

@@ -5,6 +5,8 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormCategoryComponent } from '../form-category/form-category.component';
 import { EditCategoryComponent } from '../edit-category/edit-category.component';
 import { CategoryService } from '../../../services/chatbot/category.service';
+import { TokenValidationService } from '../../../services/token-validation-service.service';
+import { Category } from '../../../Models/category';
 
 @Component({
   selector: 'app-list-category',
@@ -12,62 +14,80 @@ import { CategoryService } from '../../../services/chatbot/category.service';
   styleUrls: ['./list-category.component.scss'],
 })
 export class ListCategoryComponent {
+  public searchTerm: string = '';
+  public listCategory: Category[] = [];
+  public filteredCategory: Category[] = [];
+
   constructor(
-    private CaService: CategoryService,
+    private categoryService: CategoryService,
     private toastr: ToastrService,
-    public activeModal: NgbActiveModal,
-    public modalService: NgbModal
+    private modalService: NgbModal,
+    private tokenValidationService: TokenValidationService,
+    public activeModal: NgbActiveModal
   ) {}
 
-  //Modal:
-  cerrarModal() {
-    this.activeModal.close('Modal cerrada');
-  }
-
-  public searchTerm: string = '';
-  public listCategory: any[] = [];
-  public filteredCategory: any[] = [];
-
   ngOnInit() {
-    this.CaService.showCategories().subscribe((lista) => {
-      this.listCategory = lista;
-      this.filteredCategory = lista;
-      this.ordenarLista();
-    });
+    this.loadCategories();
   }
 
-  deleteCategory(id: any) {
-    this.CaService.deleteCategory(id).subscribe(
-      (data) => {
-        this.toastr.error(
-          'La categoria fue eliminada con exito.',
-          'Categoria eliminada: '
-        );
-        this.reloadCategories();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  ordenarLista() {
-    this.listCategory.sort((a, b) => a.referencia - b.referencia);
-  }
-
+  
   filtrarCategory() {
     this.filteredCategory = this.listCategory.filter((categoria: any) =>
       categoria.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
+  loadCategories() {
+    const tenantId = this.tokenValidationService.getTenantIdFromToken();
+    
+
+    if (tenantId) {
+      this.categoryService.showCategories(tenantId).subscribe(
+        (categories) => {
+          this.listCategory = categories;
+          this.filteredCategory = categories;
+          this.orderList();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  deleteCategory(id: string) {
+    const tenantId = this.tokenValidationService.getTenantIdFromToken();
+
+    if (tenantId) {
+      this.categoryService.deleteCategory(id, tenantId).subscribe(
+        () => {
+          this.toastr.success('La categoría fue eliminada con éxito.', 'Categoría eliminada');
+          this.loadCategories();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      console.log('No se pudo obtener el ID del inquilino.');
+    }
+  }
+
+  orderList() {
+    this.listCategory.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  filterCategory() {
+    this.filteredCategory = this.listCategory.filter((category) =>
+      category.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
   openModal() {
-    const modalRef = this.modalService.open(FormCategoryComponent, {
-      size: 'lg',
-    });
+    const modalRef = this.modalService.open(FormCategoryComponent, { size: 'lg' });
     modalRef.result.then(
-      (result) => {
-        this.reloadCategories();
+      () => {
+        this.loadCategories();
       },
       (reason) => {
         console.log('Modal cerrada sin guardar cambios.');
@@ -75,30 +95,23 @@ export class ListCategoryComponent {
     );
   }
 
-  reloadCategories() {
-    this.CaService.showCategories().subscribe((lista) => {
-      this.listCategory = lista;
-      this.filteredCategory = lista;
-      this.ordenarLista();
-    });
+  cerrarModal() {
+    this.activeModal.close('Modal cerrada');
   }
 
-  openEditModal(categoryId: any) {
-    const modalRef = this.modalService.open(EditCategoryComponent, {
-      size: 'lg',
-    });
-    modalRef.componentInstance.mode = 'edit';
-    modalRef.componentInstance.categoryId = categoryId;
-    modalRef.result.then(
-      () => {
-        this.reloadCategories();
-      },
-      (reason) => {
-        this.toastr.info(
-          'Consulta guardada sin cambios.',
-          'Consulta editada: '
-        );
-      }
-    );
+  openEditModal(categoryId: string | undefined) {
+    if (categoryId) {
+      const modalRef = this.modalService.open(EditCategoryComponent, { size: 'lg' });
+      modalRef.componentInstance.mode = 'edit';
+      modalRef.componentInstance.categoryId = categoryId;
+      modalRef.result.then(
+        () => {
+          this.loadCategories();
+        },
+        (reason) => {
+          this.toastr.info('Consulta guardada sin cambios.', 'Consulta editada');
+        }
+      );
+    }
   }
 }

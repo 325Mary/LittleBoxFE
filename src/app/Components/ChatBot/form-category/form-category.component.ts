@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryService } from '../../../services/chatbot/category.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 @Component({
@@ -14,18 +15,41 @@ export class FormCategoryComponent {
     
     name: string = '';
     description: string = '';
+    tenantId: string = '';
 
     constructor(
         private toastr: ToastrService,
         private categoryService: CategoryService,
-        public activeModal: NgbActiveModal
-    ) {}
+        public activeModal: NgbActiveModal,
+        private jwtHelper: JwtHelperService ,
+    ) {
+       
+    }
+
+    ngOnInit(): void {
+        
+        const token = localStorage.getItem('token');
+    
+        if (token !== null) {
+          
+          const decodedToken: any = this.jwtHelper.decodeToken(token);
+          this.tenantId = decodedToken.tenantId;
+        } else {
+          console.error('No se encontró ningún token en el almacenamiento local.');
+        }
+      }
+    
 
     cerrarModal() {
         this.activeModal.close('Modal cerrada');
     }
 
     addCategory() {
+        if (!this.tenantId) {
+            console.error('No se pudo obtener el tenantId.');
+            return;
+        }
+
         if (!this.name || !this.description) {
             this.toastr.error('Por favor, completa todos los campos.');
             return;
@@ -33,10 +57,11 @@ export class FormCategoryComponent {
 
         const newCategory = {
             name: this.name,
-            description: this.description
+            description: this.description,
+            tenant: this.tenantId
         };
 
-        this.categoryService.saveCategory(newCategory).subscribe(
+        this.categoryService.saveCategory(newCategory, this.tenantId).subscribe(
             () => {
                 this.toastr.success('La categoría fue registrada con éxito.', 'Categoría registrada:');
                 this.activeModal.close('Modal cerrada');

@@ -1,90 +1,95 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { Query } from '../../Models/queries';
+import { TokenValidationService } from '../token-validation-service.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QueriesService {
-  constructor(private http: HttpClient) {}
-
-  showQueries(): Observable<any> {
-    return this.http.get('http://localhost:4000/showQueries').pipe(
-      catchError((err) => {
-        console.log(err);
-        return err;
-      })
-    );
+  private apiUrl: string;
+  private endpoints = {
+    getQueries: 'showQueries',
+    deleteQuery: 'deleteQuery',
+    saveQuery: 'saveQuery',
+    getQuery: 'getAQuery',
+    updateQuery: 'editQuery',
+    getQueryWNumero: 'getQueryByNumber',
+    getQueriesByScategory: 'getQueriesBySubcategory',
+  };
+  constructor(
+    private http: HttpClient,
+    private tokenValidationService: TokenValidationService
+  ) {
+    this.apiUrl = environment.apiUrl;
   }
 
-  deleteQuery(id: string): Observable<any> {
-    return this.http.delete('http://localhost:4000/deleteQuery/' + id).pipe(
-      catchError((er) => {
-        console.log(er);
-        return er;
-      })
-    );
+  showQueries(tenantId:string): Observable<any> {
+    const token = this.tokenValidationService.getToken();
+    const headers = new HttpHeaders({ Authorization: `${token}` });
+    return this.http.get<any>(`${this.apiUrl}${this.endpoints.getQueries}`, {
+      params: { tenantId },
+      headers: headers
+    })
   }
 
-  saveQuery(Query: Query): Observable<any> {
-    return this.http.post('http://localhost:4000/saveQuery', Query).pipe(
-      catchError((er) => {
-        console.log(er);
-        return er;
-      })
-    );
+  deleteQuery(id: string, tenantId: string): Observable<any> {
+    const token = this.tokenValidationService.getToken();
+    const headers = new HttpHeaders({ Authorization: `${token}` });
+    return this.http.delete<void>(`${this.apiUrl}${this.endpoints.deleteQuery}/${id}`,{
+      params: { tenantId },
+      headers: headers
+    })
   }
 
-  getAQuery(id: string): Observable<any> {
-    return this.http.get('http://localhost:4000/getAQuery/' + id).pipe(
-      catchError((er) => {
-        console.log(er);
-        return er;
-      })
-    );
+  saveQuery(Query: Query, tenantId:string): Observable<any> {
+    const token = this.tokenValidationService.getToken();
+    const headers = new HttpHeaders({ Authorization: `${token}` });
+    return this.http.post<void>(`${this.apiUrl}${this.endpoints.saveQuery}`, Query ,{
+      params: { tenantId },
+      headers: headers
+    })
   }
 
-  editQuery(id: string, query: Query): Observable<any> {
-    return this.http.put('http://localhost:4000/editQuery/' + id, query).pipe(
-      catchError((er) => {
-        console.log(er);
-        return er;
-      })
-    );
+  getAQuery(id: string, tenantId: string): Observable<any> {
+    const token = this.tokenValidationService.getToken();
+    const headers = new HttpHeaders({ Authorization: `${token}` });
+    return this.http.get<any>(`${this.apiUrl}${this.endpoints.getQuery}/${id}`,{
+      params: { tenantId },
+      headers: headers
+    })
   }
 
-  getQueryIdentifier(identifier: string): Observable<any> {
+  editQuery(id: string, query: Query, tenantId: string): Observable<any> {
+    const token = this.tokenValidationService.getToken();
+    const headers = new HttpHeaders({ Authorization: `${token}` });
+    return this.http.put<void>(`${this.apiUrl}${this.endpoints.updateQuery}/${id}`, query, {
+      params: { tenantId },
+      headers: headers
+    })
+  }
+
+  getQueryIdentifier(identifier: string, tenantId: string): Observable<any> {
+    const token = this.tokenValidationService.getToken();
+    const headers = new HttpHeaders({ Authorization: `${token}` });
     return this.http
-      .get(`http://localhost:4000/getConsultationIdentifier/${identifier}`)
-      .pipe(
-        catchError((error) => {
-          console.log(error);
-          return error;
-        })
-      );
+      .get<any>(`${this.apiUrl}${this.endpoints.getQueryWNumero}/${identifier}`, {
+        params: { tenantId },
+        headers: headers
+      })
   }
 
-  // validarReferenciaExistente(referencia: number): Observable<any> {
-  //   return this.http.get(`http://localhost:4000/validar-referencia/${referencia}`)
-  //     .pipe(
-  //       catchError(er => {
-  //         console.log(er);
-  //         return er;
-  //       })
-  //     );
-  // }
-
-  getQueriesBySubcategory(identifierSubcategory: string): Observable<any> {
+  getQueriesBySubcategory(identifierSubcategory: string, tenantId: string): Observable<any> {
+    const token = this.tokenValidationService.getToken();
+    const headers = new HttpHeaders({ Authorization: `${token}` });
     return this.http
-      .get(
-        `http://localhost:4000/getQueriesBySubcategory/${identifierSubcategory}`
+      .get<any>(
+        `${this.apiUrl}${this.endpoints.getQueriesByScategory}/${identifierSubcategory}`,{
+          params: { tenantId },
+        headers: headers
+        }
       )
-      .pipe(
-        catchError((error) => {
-          console.log(error);
-          return error;
-        })
-      );
   }
 }
