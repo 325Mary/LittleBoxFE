@@ -48,7 +48,7 @@
         <td>{{ solicitud.valor | currency }}</td>
         <td>
           <div class="checkbox-container">
-            <input *ngIf="rolUsuario !== 'Colaborador'" type="checkbox" (change)="seleccionarSolicitud(solicitud?._id)">
+            <input *ngIf="rolUsuario !== 'Colaborador'&& solicitud.estado?.nombre !== 'finalizado'" type="checkbox" (change)="seleccionarSolicitud(solicitud?._id)">
           </div>
         </td>
         <td>

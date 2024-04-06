@@ -74,6 +74,7 @@ import {ButtonModule} from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
 
 @NgModule({
   declarations: [
@@ -136,6 +137,7 @@ import { AvatarModule } from 'primeng/avatar';
     MenubarModule,
     MenuModule,
     AvatarModule,
+    BadgeModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
