@@ -25,7 +25,7 @@
 <div class="container"> <!-- Agregamos la clase mt-5 para añadir un margen top -->
   <div class="row justify-content-center"> <!-- Centramos el contenido horizontalmente -->
     <div class="col-md-10"> <!-- Establecemos el ancho máximo de la tabla -->
-      <p-table [value]="usuarios">
+      <p-table [value]="usuarios" [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="header">
           <tr>
             <th>Nombre de usuario</th>
