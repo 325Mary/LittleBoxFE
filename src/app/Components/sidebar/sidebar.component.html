@@ -1,18 +1,39 @@
-<a routerLink="/" ><img class="logo" src="../../assets/logo_little_box.png" height="50px" class="mr-2"></a>
-<h3 style="color: white;">Menú</h3>
-<ul class="sidebar-menu">
-  <li *ngIf="isLoggedIn"><a routerLink="/home/"><i class="pi pi-home"></i> Inicio</a></li>
-  <li *ngIf="isLoggedIn && isGerente"><a routerLink="/employees/"><i class="pi pi-users"></i> Empleados</a></li>
-  <li><a routerLink="/personalization/"><i class="pi pi-cog"></i> Personalización</a></li>
-  <li *ngIf="isLoggedIn && (isSuperUsuario )"><a routerLink="/listDeSoliDeEmpresas/"><i class="pi pi-briefcase"></i> Solicitudes de empresas</a></li>
-  <li *ngIf="isLoggedIn && isGerente"><a routerLink="/crearUserAdmin/"><i class="pi pi-user-plus"></i> Crear Administrador</a></li>
-  <li *ngIf="isLoggedIn && (isSuperUsuario)"><a routerLink="/listCompaniesAproved/"><i class="pi pi-list"></i> Lista de empresas</a></li>
-  <li *ngIf="isLoggedIn && isAdministrador"><a routerLink="/SoliColaboradores/"><i class="pi pi-clone"></i> Solicitudes de Colaboradores</a></li>
-  <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/crearTercero/"><i class="pi pi-id-card"></i> Crear Tercero</a></li>
-  <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/crearCategoria/"><i class="pi pi-tags"></i> Crear Categoría</a></li>
-  <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listTerceros/"><i class="pi pi-list-alt"></i> Listar Terceros</a></li>
-  <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listCatgorias/"><i class="pi pi-th-large"></i> Listar Categorías</a></li>
-  <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listEgresos/"><i class="pi pi-arrow-circle-down"></i> Listar Egresos</a></li>
-  <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listIngresos/"><i class="pi pi-arrow-circle-up"></i> Listar Ingresos</a></li>
-  
-</ul>
+
+  <div class="flex flex-column h-full">
+    <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
+      <span class="inline-flex align-items-center gap-2">
+        <a routerLink="/"><img class="logo" src="../../assets/logo_little_box.png" height="50px" class="mr-2"></a>
+      </span>
+      <span>
+          <!-- <p-button type="button" (click)="closeCallback($event)" icon="pi pi-times" rounded="true" outlined="true" styleClass="h-2rem w-2rem"></p-button> -->
+      </span>
+  </div>
+    <!-- <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0"> -->
+    
+    <h3 style="color: white;">Menú</h3>
+    <ul class="sidebar-menu">
+      <li *ngIf="isLoggedIn"><a routerLink="/home/"><i class="pi pi-home"></i> Inicio</a></li>
+      <li *ngIf="isLoggedIn && isGerente"><a routerLink="/employees/"><i class="pi pi-users"></i> Empleados</a></li>
+      <li><a routerLink="/personalization/"><i class="pi pi-cog"></i> Personalización</a></li>
+      <li *ngIf="isLoggedIn && (isSuperUsuario || isAdministrador)"><a routerLink="/listDeSoliDeEmpresas/"><i
+            class="pi pi-briefcase"></i> Solicitudes de empresas</a></li>
+      <li *ngIf="isLoggedIn && isGerente"><a routerLink="/crearUserAdmin/"><i class="pi pi-user-plus"></i> Crear
+          Administrador</a></li>
+      <li *ngIf="isLoggedIn && (isSuperUsuario)"><a routerLink="/listCompaniesAproved/"><i
+            class="pi pi-list"></i> Lista de empresas</a></li>
+      <li *ngIf="isLoggedIn && isAdministrador"><a routerLink="/SoliColaboradores/"><i class="pi pi-clone"></i>
+          Solicitudes de Colaboradores</a></li>
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/crearTercero/"><i
+            class="pi pi-id-card"></i> Crear Tercero</a></li>
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/crearCategoria/"><i
+            class="pi pi-tags"></i> Crear Categoría</a></li>
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listTerceros/"><i
+            class="pi pi-list-alt"></i> Listar Terceros</a></li>
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listCatgorias/"><i
+            class="pi pi-th-large"></i> Listar Categorías</a></li>
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listEgresos/"><i
+            class="pi pi-arrow-circle-down"></i> Listar Egresos</a></li>
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listIngresos/"><i
+            class="pi pi-arrow-circle-up"></i> Listar Ingresos</a></li>
+    </ul>
+  </div>

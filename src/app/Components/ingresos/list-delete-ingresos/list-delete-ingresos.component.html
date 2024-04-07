@@ -8,8 +8,8 @@
       <input type="date" id="fechaFin" [(ngModel)]="fechaFin">
       <button type="button" class="btn btn-primary" (click)="filtrarIngresos()">Filtrar</button>
     </div>
-    <div class="estado-ingresos-container">
-      <button type="button" class="btn btn-success" routerLink="/addIngreso">Agregar Ingreso</button>
+    <div  class="estado-ingresos-container">
+      <button *ngIf="rolUsuario !== 'Administrador' && rolUsuario !== 'Colaborador'" type="button" class="btn btn-success" routerLink="/addIngreso">Agregar Ingreso</button>
     </div>
   </div>
   

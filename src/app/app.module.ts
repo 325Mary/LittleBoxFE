@@ -77,6 +77,7 @@ import {ButtonModule} from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
 import { GastoComponent } from './Components/gasto/gasto.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 
@@ -143,6 +144,7 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
     MenubarModule,
     MenuModule,
     AvatarModule,
+    BadgeModule,
     CommonModule,
     TableModule,
     JwtModule.forRoot({

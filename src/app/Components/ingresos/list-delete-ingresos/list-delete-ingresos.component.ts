@@ -6,6 +6,7 @@ import { IngresosService } from '../../../services/ingresos/ingresos.service';
 import { SweetAlertService } from '../../../services/sweet-alert.service';
 import { TokenValidationService } from '../../../services/token-validation-service.service';
 import spanish from '../../../../assets/i18n/spanish.json';
+import { SignInUpService } from "../../../services/sign-in-up.service";
 
 @Component({
   selector: 'app-list-delete-ingresos',
@@ -21,7 +22,8 @@ export class ListDeleteIngresosComponent {
   loading: boolean = false;
   tenantId: string = '';
   id: string | null;
-
+  addIngreso:boolean = false;
+  rolUsuario: string = ''; // Variable que almacena el rol del usuario
   // fechaInicio = new Date();
   // fechaFin = new Date();
 
@@ -33,10 +35,12 @@ export class ListDeleteIngresosComponent {
     private sweetAlertService: SweetAlertService,
     private tokenValidationService: TokenValidationService,
     private aRouter: ActivatedRoute,
+    private signInUpService: SignInUpService,
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
   }
   ngOnInit(): void {
+    this.getRolUser();
     const token = localStorage.getItem('token');
     if (token) {
       const tenantId = this.tokenValidationService.getTenantIdFromToken();
@@ -51,7 +55,6 @@ export class ListDeleteIngresosComponent {
     } else {
       console.error('No se encontró ningún token en el almacenamiento local');
     }
-
     this.languageOptions = spanish;
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -59,6 +62,17 @@ export class ListDeleteIngresosComponent {
     };
     // this.getListIngresos();
     this.filtrarIngresos();
+  }
+
+  getRolUser(): void {
+    const userRole = this.signInUpService.getUserRole(); // Obtener el rol del usuario
+    if (userRole !== null) {
+      this.rolUsuario = userRole; // Establecer el rol del usuario solo si no es null
+      console.log("rol del usuario: ",this.rolUsuario);
+      
+    } else {
+      console.error('No se pudo obtener el rol del usuario');
+    }
   }
 
   getListIngresos(): void {

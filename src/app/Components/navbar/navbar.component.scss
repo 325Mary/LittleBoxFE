@@ -118,3 +118,22 @@ div {
 .custom-menubar .p-menuitem {
   margin-bottom: 0;
 }
+
+.cont-notifi-singIn-quit{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+  .cont-notification{
+    margin-right: 2rem;
+  }
+  // .cont-notification button.btn-bell {
+  //   font-size: 24px; /* Tamaño del icono */
+  // }
+
+  
+  
+  .cont-notification button.btn-bell:hover {
+    transform: scale(1.2); /* Ajusta el tamaño del icono al hacer hover */
+  }
