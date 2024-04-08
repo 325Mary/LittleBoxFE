@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef , ChangeDetectorRef, viewChild} from '@angular/core';
 import {InformesService} from "../../services/informes.service";
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { forkJoin } from 'rxjs';
@@ -6,9 +6,12 @@ import Chart from 'chart.js/auto';
 import { Solicitud } from '../../interfaces/solicitud';
 import { filter } from 'rxjs/operators';
 import { Subscription, interval } from 'rxjs';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
-
+import{CompanyService} from '../../services/company.service'
+import { TokenValidationService } from '../../services/token-validation-service.service';
+import { SignInUpService } from "../../services/sign-in-up.service";
+import { Router, NavigationStart } from '@angular/router';
 
 
 interface Column {
@@ -23,12 +26,14 @@ interface Column {
 })
 export class DashboardComponent implements OnInit {
   terceros: any[] = [];
+  companies: any = [];
   categorias: any[] = [];
   cols: Column[] = [];
   filtroSeleccionado: string = 'mes'; // Valor predeterminado para el filtro
   valorFiltro: any; // Valor seleccionado por el usuario para el filtro
   @ViewChild('tercerosChart') private chartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('categoriasChart') private categoriasChartRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('companiesChartRef') private companiesChartRef!: ElementRef<HTMLCanvasElement>;
 
   fechaInicio = new Date();
   fechaFin = new Date();
@@ -36,7 +41,12 @@ export class DashboardComponent implements OnInit {
   tenantId: string = '';
   documento = ""
   saldoCaja: number = 0;
-
+  isGerente = false;
+  isSuperUsuario = false;
+  isAdministrador = false;
+  isColaborador = false;
+  isLoggedIn = false;
+  userData: any;
 
   notifications: any[] = [];
   previousNotifications: any[] = [];
@@ -44,36 +54,75 @@ export class DashboardComponent implements OnInit {
   initialNotificationCount = 10; // Define el número inicial de notificaciones a mostrar
   visibleNotifications: any[] = [];
   showLoadMoreLink: boolean = true; // Variable de control para mostrar u ocultar el enlace "Mostrar más"
+  loginStatusSubscription!: Subscription;
 
   subscription: Subscription = new Subscription();
   routerSubscription: Subscription = new Subscription();
 
   private chart: any;
+  ListUsuarios: any = [];
+  compniesTotales: any = []
 
   constructor(private informesService: InformesService,
     private solicitudesService: SolicitudesService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
-    private router: Router
-    ) { }
+    private router: Router,
+    private companyService: CompanyService,
+    private tokenValidationService: TokenValidationService,
+    private cdr: ChangeDetectorRef,
+    private authService: SignInUpService,    ) { }
 
-  ngOnInit(): void {
-//notificacion
-this.refreshNotifications();
-this.subscription = interval(30000).subscribe(() => {
-  this.refreshNotifications();
-});
-     // Obtener la fecha actual
-  const today = new Date();
-  // Establecer la fecha de inicio como el primer día del mes actual
-  this.fechaInicio = new Date(today.getFullYear(), today.getMonth(), 1);
-  // Establecer la fecha de fin como la fecha actual
-  this.fechaFin = new Date();
+    ngOnInit(): void {
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationStart) {
+          this.checkAuthentication(); // Verificar autenticación al cambiar de ruta
+        }
+      });
+      // Obtener la fecha actual
+      const today = new Date();
+      // Establecer la fecha de inicio como el primer día del mes actual
+      this.fechaInicio = new Date(today.getFullYear(), today.getMonth(), 1);
+      // Establecer la fecha de fin como la fecha actual
+      this.fechaFin = new Date();
   
-    this.obtenerTercerosMasUtilizados()
-    this.obtenerCategroiasMasUtilizados()
-    this.getListSolicitudes()
-  }
+      // Obtener información de usuarios y empresas al cargar la página
+      this.obtenerUsuariosYEmpresas();
+      // Refresh notifications
+      this.refreshNotifications();
+      this.subscription = interval(5000).subscribe(() => {
+        this.refreshNotifications();
+        this.listCompanies();
+        this.obtenerCompanies()
+        this.obtenerTercerosMasUtilizados()
+        this. obtenerCategroiasMasUtilizados()
+        this. getListSolicitudes()
+      });
+
+      this.checkAuthentication(); // Verificar autenticación al cargar el componente
+
+    this.loginStatusSubscription = this.authService.loginStatusChanged.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+      if (isLoggedIn) {
+      } else {
+        this.updateUserRoles()
+        this.resetUserRoles(); // Restablecer roles después de cerrar sesión
+      }
+    });
+    }
+  
+    obtenerUsuariosYEmpresas(): void {
+      // Obtener usuarios
+      this.obtenerUsuariosU();
+      // Obtener empresas
+      this.listCompanies();
+    }
+
+    updateUserRoles() {
+      throw new Error('Method not implemented.');
+    }
+
+
 
   obtenerTercerosMasUtilizados(): void {
     this.informesService.getTerceros('tenantId').subscribe(
@@ -100,6 +149,7 @@ this.subscription = interval(30000).subscribe(() => {
     }
   );
   }
+
 
 
   createLineChartTer(): void {
@@ -283,6 +333,127 @@ this.subscription = interval(30000).subscribe(() => {
       return 'pi pi-question-circle'; // Ícono predeterminado para categorías indefinidas
     }
   }
+  
+  async checkAuthentication() {
+    try {
+      const token = localStorage.getItem('token');
+      if (token && await this.tokenValidationService.isValidToken(token)) {
+        this.isLoggedIn = true;
+        this.userData = await this.tokenValidationService.getUserData(token);
+        this.setUserRoles(this.userData.rol); // Establecer los roles del usuario
+        this.cdr.detectChanges(); // Realizar detección de cambios para reflejar los roles en la plantilla
+      } else {
+        this.isLoggedIn = false; // Actualizar estado de autenticación si no hay token válido
+        this.resetUserRoles(); // Restablecer roles si no hay token válido
+      }
+    } catch (error) {
+      console.error('Error al verificar la autenticación:', error);
+    }
+  }
+  
+  setUserRoles(rol: string) {
+    if (rol) {
+      this.isGerente = rol === 'Gerente';
+      this.isSuperUsuario = rol === 'SuperUsuario';
+      this.isAdministrador = rol === 'Administrador';
+      this.isColaborador = rol === 'Colaborador';
+      // console.log('Roles del usuario:', { isGerente: this.isGerente, isSuperUsuario: this.isSuperUsuario, isAdministrador: this.isAdministrador, isColaborador: this.isColaborador });
+    }
+  }
+  
+
+  resetUserRoles() {
+    this.isGerente = false;
+    this.isSuperUsuario = false;
+    this.isAdministrador = false;
+    this.isColaborador = false;
+  }
+
+  listCompanies() {
+    this.companyService.listCompanySuperU().subscribe(companies => {
+      this.companies = companies.length;
+      console.log('empresas:', this.companies)
+    });
+  }
+  
+
+  obtenerUsuariosU() {
+    const token = localStorage.getItem('token'); // Obtener el token del localStorage
+    if (!token) {
+      console.error('No se proporcionó un token válido.');
+      return;
+    }
+    this.authService.getUserSuperU(token).subscribe( // Pasar el token como argumento
+      (usuarios: any[]) => {
+        console.log(usuarios)
+        this.ListUsuarios = usuarios.length;
+      },
+      (error) => {
+        console.error('Error al obtener usuarios:', error);
+      }
+    );
+  }
+
+  obtenerCompanies(): void {
+    this.companyService.listTodasCompanies().subscribe((comaniesList:any) => {
+      this.compniesTotales = comaniesList;
+      console.log('list:', this.compniesTotales)
+      this.createLineChartCompanies()
+    },
+    error => {
+      console.error('Error al obtener todas las empresas:', error);
+      // Manejo de errores
+    }
+  );
+  }
+
+
+  createLineChartCompanies(): void {
+    const canvas: HTMLCanvasElement = this.companiesChartRef.nativeElement;
+    const ctx = canvas.getContext('2d');
+
+    if (!ctx) {
+      console.error('No se pudo obtener el contexto del lienzo');
+      return;
+    }
+
+    // Agrupar las empresas por mes y año
+    const companiesByMonth = this.compniesTotales.reduce((acc: any, company: any) => {
+        const date = new Date(company.fecha);
+        const monthYear = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`; // Obtener el año y el mes
+        if (!acc[monthYear]) {
+            acc[monthYear] = 0; // Inicializar el contador para el mes y año actual
+        }
+        acc[monthYear]++; // Incrementar el contador para el mes y año actual
+        return acc;
+    }, {});
+
+    // Obtener las etiquetas (meses) y los datos (cantidad de empresas por mes)
+    const labels = Object.keys(companiesByMonth);
+    const data = Object.values(companiesByMonth);
+
+    this.chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Cantidad de empresas',
+          data: data,
+          borderColor: 'green',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+}
+
+
   
   
 }

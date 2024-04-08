@@ -36,6 +36,7 @@ import { TerceroModalComponent } from '../app/Components/modals/tercero-modal/te
 import { CaducidadTokenComponent } from "../app/Components/caducidad-token/caducidad-token.component";
 import { GastoComponent } from "../app/Components/gasto/gasto.component";
 import {DashboardComponent} from "../app/Components/dashboard/dashboard.component";
+import { CrearSuperUsuarioComponent } from "../app/Components/crear-super-usuario/crear-super-usuario.component";
 
 
 const routes: Routes = [
@@ -81,6 +82,7 @@ const routes: Routes = [
   { path: 'notificaciones/:notificationId', component: NotificationsComponent },
   { path: 'exit', component: CaducidadTokenComponent},
   { path: 'gastoActual', component: GastoComponent},
+  { path: 'crearSuperU', component: CrearSuperUsuarioComponent},
   { path: '**', component: NotFoundComponent }
 ];
 

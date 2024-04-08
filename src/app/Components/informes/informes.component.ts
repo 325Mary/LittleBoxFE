@@ -10,8 +10,8 @@ import { ExcelService } from "../../services/excel.service";
   styleUrls: ['./informes.component.scss']
 })
 export class InformesComponent {
-  fechaInicio: string = '';
-  fechaFin: string = '';
+  fechaInicio: string = ''; // Se actualizará automáticamente
+  fechaFin: string = ''; // Se actualizará automáticamente
   movimientosDeCaja: any[] = [];
   categoria: any[] = [];
   tercero: any[] = [];
@@ -29,7 +29,10 @@ export class InformesComponent {
   ngOnInit(): void {
     this.obtenerCategorias();
     this.obtenerTercerosPorTenantId();
+    this.establecerFechasMesActual(); // Llamar a la función para establecer las fechas del mes actual
+    this.obtenerMovimientoDeC(); // Llamar a la función para obtener los movimientos del mes actual
   }
+
 
   obtenerCategorias(): void {
     this.categoriasService.obtenerTodasLasCategorias().subscribe(
@@ -61,7 +64,7 @@ export class InformesComponent {
 
   obtenerMovimientoDeC() {
     const datos: any = {};
-  
+
     // Verificar si las fechas están definidas antes de agregarlas a los filtros
     if (this.fechaInicio) {
       datos.fechaInicio = this.formatoFecha(new Date(this.fechaInicio));
@@ -69,7 +72,7 @@ export class InformesComponent {
     if (this.fechaFin) {
       datos.fechaFin = this.formatoFecha(new Date(this.fechaFin));
     }
-  
+
     // Agregar filtros de categoría y tercero si están seleccionados
     if (this.categoriaSeleccionada) {
       datos.categoria = this.categoriaSeleccionada;
@@ -77,7 +80,7 @@ export class InformesComponent {
     if (this.terceroSeleccionado) {
       datos.tercero = this.terceroSeleccionado;
     }
-  
+
     // Llamar al servicio para obtener los egresos con las fechas y filtros especificados
     this.informesService.obtenerMovimientoCaja(datos).subscribe(
       (response) => {
@@ -113,8 +116,18 @@ export class InformesComponent {
     const totalPages = Math.ceil(this.totalMovimientosDeCaja / this.itemsPerPage);
     return Array(totalPages).fill(0).map((x, i) => i + 1);
   }
+
   exportarExcel(): void {
     this.excelService.exportToExcel(this.movimientosDeCaja, 'informe_movimientos');
   }
 
+  establecerFechasMesActual(): void {
+    const fechaActual = new Date();
+    const primerDiaMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), 1);
+    const ultimoDiaMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0);
+
+    // Formatear las fechas
+    this.fechaInicio = this.formatoFecha(primerDiaMes);
+    this.fechaFin = this.formatoFecha(ultimoDiaMes);
+  }
 }

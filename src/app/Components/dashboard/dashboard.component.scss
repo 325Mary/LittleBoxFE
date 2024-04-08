@@ -89,3 +89,24 @@ h2{
   background-color: #6fa2ff;
   border-radius: 4px;
 }
+
+.cardCount {
+  width: 150px; /* Ancho fijo para la tarjeta */
+  height: 150px; /* Altura fija para la tarjeta */
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  margin: 10px; /* Margen igual para todos los lados */
+  padding: 20px; /* Espaciado interno igual para todos los lados */
+  margin-top: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+}
+
+
+.card-grafic{
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+
+}
+

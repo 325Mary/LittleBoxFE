@@ -80,6 +80,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { GastoComponent } from './Components/gasto/gasto.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
+import { CrearSuperUsuarioComponent } from './Components/crear-super-usuario/crear-super-usuario.component';
 
 @NgModule({
   declarations: [
@@ -128,6 +129,7 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
     CaducidadTokenComponent,
     GastoComponent,
     DashboardComponent,
+    CrearSuperUsuarioComponent,
   ],
   imports: [
     BrowserModule,

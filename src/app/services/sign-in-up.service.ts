@@ -186,6 +186,13 @@ getUserById(userId: string): Observable<any> {
   return this.httpClient.get<any>(`${this.baseUrl}/getId/${userId}`);
 }
 
+getUserSuperU(token: string): Observable<any> {
+  const headers = new HttpHeaders().set('Authorization', `${token}`);
+
+  return this.httpClient.get<any>(`${this.baseUrl}/getUsersSuperU`, {headers});
+}
+
+
 // Función para editar datos de usuario
 editUser(userId: string, newData: any): Observable<any> {
   const url = `${this.baseUrl}/editUser/${userId}`; // Endpoint para editar datos de usuario
