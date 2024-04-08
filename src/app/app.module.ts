@@ -77,6 +77,8 @@ import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { TableModule } from 'primeng/table';
 import { ListboxModule } from 'primeng/listbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @NgModule({
   declarations: [
@@ -142,6 +144,8 @@ import { ListboxModule } from 'primeng/listbox';
     BadgeModule,
     TableModule,
     ListboxModule,
+    InputTextModule,
+    SplitButtonModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
