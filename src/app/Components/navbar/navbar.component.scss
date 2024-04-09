@@ -128,12 +128,98 @@ div {
   .cont-notification{
     margin-right: 2rem;
   }
-  // .cont-notification button.btn-bell {
-  //   font-size: 24px; /* Tamaño del icono */
-  // }
-
   
+
+  .btn-bell {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none; /* Elimina el contorno del botón */
+    border-radius: 50px;
+}
+
+
+/* Estilos para el icono dentro del botón */
+.btn-bell .pi {
+    color: #356CDD;
+    font-size: 22px; /* Tamaño del icono */
+    outline: none; /* Elimina cualquier contorno al hacer clic en el icono */
+    border: none;
+}
+
   
   .cont-notification button.btn-bell:hover {
     transform: scale(1.2); /* Ajusta el tamaño del icono al hacer hover */
   }
+
+  .btn-bell .pi:hover{
+    color: #356CDD;
+  }
+  .notification-menu {
+    max-width: 90%; /* Ancho máximo del contenedor de notificaciones */
+    margin: 0 auto; /* Centrar el contenedor */
+    max-height: 80vh; /* Altura máxima del contenedor, 80% del alto de la ventana */
+    overflow-y: auto; /* Agregar barra de desplazamiento vertical si es necesario */
+    position: fixed; /* Establecer posición fija */
+    top: 10%; /* Alinear arriba */
+    left: 70%; /* Alinear a la izquierda */
+    right: 2%;
+    transform: translateX(-20%, 0); /* Centrar horizontalmente */
+    padding: 0.5rem; /* Espaciado interno */
+    background-color: #fff; /* Color de fondo */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    border-radius: 10px;
+    z-index: 9999; /* Z-index para asegurar que esté por encima de otros elementos */
+  }
+
+  /* Media query para pantallas más pequeñas, como dispositivos móviles */
+@media (max-width: 768px) {
+  .notification-menu {
+    width: 70%;
+    max-width: 90%; /* Ancho máximo del contenedor reducido para dispositivos móviles */
+    left: 50%; /* Alinear a la mitad del ancho de la pantalla */
+    top: 10%; /* Alinear arriba */
+    transform: translateX(-50%); /* Centrar horizontalmente */
+  }
+}
+  
+  
+  // .notification-container ul {
+  //   list-style-type: none; /* Quitar viñetas de la lista */
+  //   padding: 0; /* Eliminar relleno */
+  //   margin: 0; /* Eliminar margen */
+  // }
+  
+  // .notification-container li {
+  //   border-bottom: 1px solid #ddd; /* Línea divisoria entre notificaciones */
+  //   padding: 10px; /* Espaciado interno */
+  //   transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
+  // }
+  
+  // .notification-container li:hover {
+  //   background-color: #f6f7f8; /* Cambio de color de fondo al pasar el mouse */
+  // }
+  
+  // .notification-container ul::-webkit-scrollbar-track {
+  //   background: #f1f0f0; /* Color de fondo de la barra de desplazamiento */
+  // }
+  
+  // .notification-container ul::-webkit-scrollbar-thumb {
+  //   background: #121111; /* Color del pulgar de la barra de desplazamiento */
+  //   border-radius: 5px; /* Radio de borde del pulgar */
+  // }
+  
+  // .notification-container ul::-webkit-scrollbar-thumb:hover {
+  //   background: #555; /* Cambio de color al pasar el mouse sobre el pulgar */
+  // }
+  
+  // .notification-container li {
+  //   border-bottom: 1px solid #121111; /* Añadimos una línea divisora en la parte inferior */
+  // }
+  
+  // .notification-container li.unread {
+  //   background-color: #045ceb; /* Color oscuro para notificaciones no leídas */
+  //   color: rgb(251, 252, 255);
+  // }
+  

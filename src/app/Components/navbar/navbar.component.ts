@@ -128,10 +128,7 @@ sidebarVisible: boolean = false;
 
   updateMenuItems() {
     this.items = [
-      { label: 'Gráficos', icon: 'pi pi-chart-bar', routerLink: '/graficos', style: { 'color': 'white' }, visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
-      {
-        separator: true
-      },
+      { label: 'Gráficos', icon: 'pi pi-chart-bar', routerLink: '/graficos',  visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
       { label: 'Informes', icon: 'pi pi-file', routerLink: '/Informes', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
       { label: 'Ingresos', icon: 'pi pi-arrow-up', routerLink: '/obtenerTodosLosIngresos', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
       { label: 'Crear Egreso', icon: 'pi pi-arrow-down', routerLink: '/crearEgreso', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },

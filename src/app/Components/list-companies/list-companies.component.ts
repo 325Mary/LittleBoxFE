@@ -13,7 +13,9 @@ import { Router } from '@angular/router';
 })
 export class ListCompaniesComponent  implements OnInit {
   companies: any = [];
-
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalCompanies: number = 0
   constructor(private companyService: CompanyService, private modalService: NgbModal,  private router: Router
     ) { }
 
@@ -21,9 +23,14 @@ export class ListCompaniesComponent  implements OnInit {
     this.loadCompanies();
   }
 
+  getPages(): number[] {
+    const totalPages = Math.ceil(this.totalCompanies / this.itemsPerPage);
+    return Array(totalPages).fill(0).map((x, i) => i + 1);
+  }
   loadCompanies() {
     this.companyService.listCompanySuperU().subscribe(companies => {
       this.companies = companies;
+      this.totalCompanies= companies.length
     });
   }
 

@@ -1,69 +1,60 @@
+
+
 .notification-container {
-  position: absolute;
-  top: 50px; /* Ajusta esto según la altura de tu barra de navegación */
-  right: 120px;
-  width: 250px; /* Ajusta el ancho según sea necesario */
-  background-color: rgb(240, 241, 243);
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 0 10px rgba(20, 23, 227, 0.9);
-  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  max-width: 500px; /* Ancho máximo del contenedor de notificaciones */
+  margin: 0 auto; /* Centrar el contenedor */
 }
 
-.notification-container a {
-  text-decoration: none; /* Esto elimina la subrayado de los enlaces */
-  color: inherit; /* Esto hace que los enlaces tengan el mismo color que el texto normal */
-  cursor: default; /* Esto evita que el cursor se convierta en una mano cuando pasas sobre los enlaces */
+.notification-content {
+  padding: 10px; /* Espaciado interno */
+  cursor: pointer;
+  border-bottom: 1px solid #ddd; /* Línea divisoria entre notificaciones */
+  transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
 }
 
-.notification-container ul {
-  text-align: center;
-  list-style-type: none; /* Quitamos los estilos de la lista */
-  padding: 0; /* Quitamos el padding para que no haya espacio extra */
-  max-height: 200px; /* Altura máxima de la lista */
-  overflow-y: auto; /* Agregamos una barra de desplazamiento vertical */
+.notification-content:hover {
+  background-color: #eff0f1; /* Cambio de color de fondo al pasar el mouse */
+}
+
+.unread .notification-content {
+  font-weight: bold;
+  color: #fff;
+  
   border-radius: 5px;
 }
 
-.notification-container ul::-webkit-scrollbar {
-  width: 5px; /* Ancho de la barra de desplazamiento */
+.unread .notification-content a {
+  background-color: rgba(24, 119, 242, 0.5); /* Color de fondo para notificaciones no leídas con transparencia */
+  // color: #fff;
+  border-radius: 5px;
+  padding: 5px;
 }
 
-.notification-container ul::-webkit-scrollbar-track {
-  background: #f1f0f0; /* Color de fondo de la barra de desplazamiento */
+.unread .notification-content a:hover{
+  background-color: #1877f2; /* Cambio de color de fondo al pasar el mouse */
+  color: #fff;
 }
 
-.notification-container ul::-webkit-scrollbar-thumb {
-  background: #121111; /* Color del pulgar de la barra de desplazamiento */
-  border-radius: 5px; /* Radio de borde del pulgar */
-}
-
-.notification-container ul::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Cambio de color al pasar el mouse sobre el pulgar */
-}
-
-.notification-container li {
-  border-bottom: 1px solid #121111; /* Añadimos una línea divisora en la parte inferior */
-  // padding-bottom: 2px; /* Espacio entre cada elemento y la línea divisora */
-  // margin-bottom: 2px; /* Espacio entre cada elemento */
-}
-
-// .notification-container li:last-child {
-//   border-bottom: none; /* Quitamos la línea divisora del último elemento */
+// .unread .notification-content:hover {
+//   background-color: #1877f2; /* Cambio de color de fondo al pasar el mouse */
 // }
 
-.notification-container li.unread {
-  background-color: #045ceb; /* Color oscuro para notificaciones no leídas */
-  color: rgb(251, 252, 255);
+.notification-link {
+  text-decoration: none; /* Eliminar subrayado */
+  color: #000; /* Color de texto */
+  display: block; /* Para que el enlace ocupe todo el espacio disponible */
+}
+
+// .notification-link:hover {
+//   text-decoration: underline; /* Subrayado al pasar el mouse */
+// }
+
+.notification-message {
+  color: #000; /* Color de texto */
+  display: block; /* Para que el mensaje ocupe todo el espacio disponible */
 }
 
 .load-more {
-  color: blue; /* Color del texto */
-  cursor: pointer; /* Cambia el cursor al pasar el mouse */
+  cursor: pointer;
+  color: #1877f2; /* Color del enlace "Mostrar más" */
 }
-
-.load-more:hover {
-  color: darkblue; /* Cambia el color del texto al pasar el mouse */
-}
-
-

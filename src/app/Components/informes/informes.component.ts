@@ -3,6 +3,7 @@ import { InformesService } from "../../services/informes.service";
 import { CategoriasService } from "../../services/categoria.service";
 import { TercerosService } from "../../services/terceros.service";
 import { ExcelService } from "../../services/excel.service";
+import spanish from '../../../assets/i18n/spanish.json';
 
 @Component({
   selector: 'app-informes',
@@ -10,6 +11,9 @@ import { ExcelService } from "../../services/excel.service";
   styleUrls: ['./informes.component.scss']
 })
 export class InformesComponent {
+  dtOptions: DataTables.Settings = {};
+  languageOptions: any;
+
   fechaInicio: string = ''; // Se actualizará automáticamente
   fechaFin: string = ''; // Se actualizará automáticamente
   movimientosDeCaja: any[] = [];
@@ -31,6 +35,11 @@ export class InformesComponent {
     this.obtenerTercerosPorTenantId();
     this.establecerFechasMesActual(); // Llamar a la función para establecer las fechas del mes actual
     this.obtenerMovimientoDeC(); // Llamar a la función para obtener los movimientos del mes actual
+    this.languageOptions = spanish;
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: this.languageOptions
+    };
   }
 
 

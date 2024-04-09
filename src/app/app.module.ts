@@ -81,6 +81,7 @@ import { BadgeModule } from 'primeng/badge';
 import { GastoComponent } from './Components/gasto/gasto.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { CrearSuperUsuarioComponent } from './Components/crear-super-usuario/crear-super-usuario.component';
+import { ListboxModule } from 'primeng/listbox';
 
 @NgModule({
   declarations: [
@@ -149,6 +150,7 @@ import { CrearSuperUsuarioComponent } from './Components/crear-super-usuario/cre
     BadgeModule,
     CommonModule,
     TableModule,
+    ListboxModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

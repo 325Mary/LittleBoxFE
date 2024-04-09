@@ -14,11 +14,12 @@
   <ng-template pTemplate="end">
     <div class="cont-notifi-singIn-quit ">
       <div *ngIf="isLoggedIn" class="cont-notification">
-        <button pButton type="button" (click)="openNotifications()" iconPos="left"  class="p-button-text p-button-outlined btn-bell" [ngClass]="{'p-button-focus': showNotifications}">
-          <i class="pi pi-bell" style="font-size: 22px"></i> <!-- Aquí se usa la etiqueta <i> -->
+        <button pButton type="button" (click)="openNotifications()"  class="btn-bell">
+          <i class="pi pi-bell"></i> 
+          <!-- <img class="img-Bell" src="../../assets/bell.svg"> -->
         </button>
-        <p-badge [value]="miValorComoString" severity="danger" [style]="{ 'margin-left': '-8px' }"></p-badge>
-        <div *ngIf="showNotifications" class="notification-container p-shadow-4">
+        <p-badge [value]="miValorComoString" severity="danger" [style]="{ 'margin-left': '4px' }"></p-badge>
+        <div *ngIf="showNotifications" class="notification-menu p-shadow-4">
           <app-notifications></app-notifications>
         </div>
       </div>
