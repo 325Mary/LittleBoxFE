@@ -1,0 +1,40 @@
+
+<div class="row">
+    <div class="col-lg-11 ">
+      <div class="card border-dark mb-3" style="background-color: rgba(220, 216, 216, 0.362);">
+        <div class="card-body text-center">
+          <div class="subtitulo1">
+              <span class="titulo">LISTA DE CATEGORIA</span>
+              <button (click)="openModal()" class="btn btn-success border-dark float-end" >NUEVO</button>
+              <button (click)="cerrarModal()" class="btn btn-secondary  border-dark float-start">VOLVER</button>
+          </div>
+          
+          
+          <br>
+  
+          <div class="input-group mb-3 ">
+            <input type="text" class="form-control custom-input" placeholder="Buscar por nombre" [(ngModel)]="searchTerm" (ngModelChange)="filtrarCategory()" />
+          </div>
+  
+          
+          <div style="overflow-y: auto; max-height: 150px;"> 
+          <table *ngIf="filteredCategory.length > 0" class="table table-bordered table-light table-hover border-dark mt-3">
+            <tbody>
+              <tr *ngFor="let category of filteredCategory">
+                <td>{{ category.name }}</td>
+                <td>{{ category.description }}</td>
+                <td>
+                  <img (click)="openEditModal(category._id)" class="img-icon" src="../../../assets/boligrafo.png">
+                  <img (click)="deleteCategory(category._id)" class="img-icon" src="../../../../assets/boton-x.png" >
+              </tr>
+            </tbody>
+          </table>
+  
+          <h6 style="text-align: start; margin-top: 5px" *ngIf="filteredCategory.length === 0">No hay productos para mostrar. </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  

@@ -1,0 +1,143 @@
+.image-container img {
+    max-width: 35px;
+    height: auto;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 7px;
+  }
+  
+  
+  .mensaje {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  
+  .mensaje-usuario {
+    justify-content: flex-end;
+    align-self: flex-end;
+  }
+  
+  .mensaje-bot {
+    justify-content: flex-start;
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .avatar-large {
+    width: 100px; 
+    height: auto;
+  }
+  
+  .avatar-left {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    float: left;
+  }
+  
+  .message-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .message-content .answer {
+    order: 1;
+  }
+  
+  .message-content .question {
+    order: 2;
+  }
+  
+  .message-text {
+    margin-left: 50px; 
+  }
+  
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 400px;
+    overflow-y: auto;
+  }
+  
+  .answer {
+    background-color: #d9edf7; /* Color de fondo para respuestas */
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .question {
+    background-color: #dff0d8; /* Color de fondo para preguntas */
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .custom-input {
+    width: 70%; 
+    padding: 8px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    background-color: #ffffff60;
+    color: #000000;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  .custom-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(1, 13, 25, 0.25);
+  }
+  
+  .wrapper {
+    display: flex;
+    border: solid 1px;
+    align-items: center; 
+    text-align: center;
+    padding: 5px;
+  }
+  
+  .container {
+    max-width: 80%; 
+    margin: 7px;
+    float: left;
+  }
+  
+  .results table {
+    width: 100%; 
+    overflow-x: auto; 
+  }
+  
+  .tn1 {
+    margin: 3px;
+  }
+  
+  .results {
+    margin-top: 20px;
+  }
+  
+  table {
+    width: 80%;
+    border-collapse: collapse;
+  }
+  
+  table th,
+  table td {
+    border: 1px solid #ddd;
+    padding: 6px;
+  }
+  
+  table th {
+    background-color: #f2f2f2;
+  }
+  
+  .modal-content {
+    margin: 30px auto; 
+  }
+  

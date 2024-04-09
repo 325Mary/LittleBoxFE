@@ -18,6 +18,11 @@ export class EditQueriesComponent {
   subcategories: Subcategory[] = [];
   subcategory: string = '';
 
+
+  answer: string = '';
+  question: string = '';
+ 
+
   constructor(
     private toastr: ToastrService,
     private queriesService: QueriesService,
@@ -28,7 +33,30 @@ export class EditQueriesComponent {
     this.loadSubcategories();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { 
+    if (this.queryId) {
+      this.loadCategoryDetails(this.queryId)
+    }
+  }
+
+  
+  loadCategoryDetails(id: string) {
+    const tenantId = this.tokenValidationService.getTenantIdFromToken();
+    if (tenantId) {
+      this.queriesService.getAQuery(id, tenantId).subscribe(
+        (data: any) => {
+          this.answer = data.answer;
+          this.question = data.question;
+          this.subcategory = data.subcategory;
+        },
+        (error) => {
+          console.error('Error al cargar los detalles de la categoría:', error);
+        }
+      );
+    } else {
+      console.error('No se pudo obtener el tenantId.');
+    }
+  }
 
   loadSubcategories() {
     const tenantId = this.tokenValidationService.getTenantIdFromToken();

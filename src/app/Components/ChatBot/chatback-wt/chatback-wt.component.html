@@ -1,0 +1,77 @@
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="wrapper">
+        <!-- Contenedor de la izquierda -->
+        <div class="container mt-3 float-left" style="width: 30%;">
+          <button (click)="cerrarModal()" class="tn1 btn btn-secondary rpg border-dark float-start" style="position: absolute; top: 0; left: 0;">X</button>
+          <h2 style="font-size: smaller;">Primero, selecciona una categoría:</h2>
+          <select [(ngModel)]="category" name="category" class="form-control custom-input" (ngModelChange)="onCategoryChange()">
+            <option value="" disabled selected>Selecciona una categoría</option> 
+            <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}</option>
+          </select>
+          
+          <h2 style="font-size: smaller;">A continuación, selecciona una subcategoría:</h2>
+          <select [(ngModel)]="subcategory" name="subcategory" class="form-control custom-input" (ngModelChange)="onSubcategoryChange()" [disabled]="!category">
+            <option value="" disabled selected>Selecciona una subcategoría</option>
+            <option *ngFor="let subcategory of subcategories" [value]="subcategory._id">{{ subcategory.name }}</option>
+          </select>
+          
+          <div *ngIf="queries.length > 0" class="results" style="margin-top: 5px;">
+            <h2 style="font-size: smaller;">Resultados:</h2>
+            
+            <div style="overflow-y: auto; max-height: 300px;"> 
+              <table style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Pregunta</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let query of queries">
+                    <td>{{ query.identifier }}</td>
+                    <td>{{ query.question }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <div *ngIf="queries.length === 0 && subcategory" class="no-results" style="margin-top: 20px;">
+            No hay consultas disponibles para esta subcategoría.
+          </div>
+          <h6 style="font-size: smaller; color:red"><strong>Consulta "bloque" para más información.</strong></h6>
+        </div>
+        
+        <div class="container mt-3 float-left" style="width: 70%;">
+
+          <!-- Contenido del chatbot -->
+          <div class="card border-dark mb-3" style="background-color: rgba(220, 216, 216, 0.362);">
+            <div class="card-body chat-container" #chatContainer>
+              <div *ngFor="let mensaje of chatHistory" class="mensaje" [ngClass]="{ 'mensaje-usuario': mensaje.origen === 'usuario', 'mensaje-bot': mensaje.origen === 'bot' }">
+                <div class="message-content">
+                  <div class="message-text">
+                    <!-- Mensaje del bot -->
+                    <div *ngIf="mensaje.origen === 'bot'" class="mensaje-bot">
+                      <img *ngIf="mensaje.profilePicture" [src]="mensaje.profilePicture" alt="Foto de perfil" class="avatar" />
+                      <div class="answer">{{ mensaje.respuesta }}</div>
+                      <div class="question" [innerHTML]="mensaje.pregunta"></div>
+                    </div>
+                    <!-- Mensaje del usuario -->
+                    <div *ngIf="mensaje.origen === 'usuario'" class="mensaje-usuario">
+                      <div class="question float-end">{{ mensaje.pregunta }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+          </div>
+          <!-- Input para enviar mensajes -->
+          <div class="input-group w-250 p-3">
+            <input [(ngModel)]="userInput" class="form-control custom-input" placeholder="Ingrese el número de referencia" (keyup.enter)="sendMessage()" />
+            <button class="btn btn-secondary border-dark" (click)="sendMessage()">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

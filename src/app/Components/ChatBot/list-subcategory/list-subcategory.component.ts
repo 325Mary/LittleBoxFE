@@ -6,6 +6,7 @@ import { FormSubcategoryComponent } from '../form-subcategory/form-subcategory.c
 import { EditSubcategoryComponent } from '../edit-subcategory/edit-subcategory.component';
 import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
 import { TokenValidationService } from '../../../services/token-validation-service.service';
+import { SignInUpService } from '../../../services/sign-in-up.service';
 
 @Component({
   selector: 'app-list-subcategory',
@@ -32,6 +33,7 @@ export class ListSubcategoryComponent {
     );
   }
 
+  rolUsuario: string = '';
   public listSubcategory: any[] = [];
   public filteredSubcategory: any[] = [];
   public searchTerm: string = '';
@@ -41,8 +43,9 @@ export class ListSubcategoryComponent {
     private toastr: ToastrService,
     public activeModal: NgbActiveModal,
     public modalService: NgbModal,
-    private tokenValidationService: TokenValidationService
-  ) {}
+    private tokenValidationService: TokenValidationService,
+    private authService: SignInUpService
+  ) { this.getRolUser()}
 
   ngOnInit() {
     const tenantId = this.tokenValidationService.getTenantIdFromToken();
@@ -55,6 +58,16 @@ export class ListSubcategoryComponent {
       });
     } else {
       console.error('No se pudo obtener el tenantId.');
+    }
+  }
+
+  getRolUser(): void {
+    const userRol = this.authService.getUserRole();
+    if (userRol !== null) {
+      this.rolUsuario = userRol;
+      console.log('Rol del usuario', this.rolUsuario);
+    } else {
+      console.error('No se puedo obtener el rol de usuario');
     }
   }
 

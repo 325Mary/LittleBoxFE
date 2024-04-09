@@ -1,0 +1,25 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card border-dark mb-3" style="background-color: rgba(220, 216, 216, 0.362);">
+                <div class="card-body text-center">
+                    <div class="card-title">
+                        <span class="titulo">CONFIGURACIONES - WT</span>
+                    </div>
+                    <button class="btn btn-secondary border-info float-start" (click)="showContent('consultas')">CONSULTAS</button>
+                    <button class="btn btn-secondary border-info float-end" (click)="showContent('subcategoria')">SUBCATEGORÍA</button>
+                    <button class="btn btn-secondary border-info text-center" (click)="showContent('categoria')">CATEGORÍA</button>
+                </div>
+            </div>
+            <div *ngIf="selectedOption === 'consultas'" class="content-container large-component">
+                <app-list-que-wt></app-list-que-wt>
+            </div>
+            <div *ngIf="selectedOption === 'categoria'" class="content-container large-component">
+                <app-list-cat-wt></app-list-cat-wt>
+            </div>
+            <div *ngIf="selectedOption === 'subcategoria'" class="content-container large-component">
+                <app-list-subca-wt></app-list-subca-wt>
+            </div>
+        </div>
+    </div>
+</div>

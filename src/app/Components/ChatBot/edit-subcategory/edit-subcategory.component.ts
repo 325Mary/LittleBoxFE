@@ -15,6 +15,7 @@ export class EditSubcategoryComponent {
   @Input() subcategoryId: string | null = null;
 
   name: string = '';
+  description: string = '';
   category: string = '';
   categories: any[] = [];
 
@@ -61,6 +62,7 @@ export class EditSubcategoryComponent {
       this.SService.getASubcategory(id, tenantId).subscribe(
         (data: any) => {
           this.name = data.name;
+          this.description = data.description
           this.category = data.category;
         },
         (error) => {
@@ -89,6 +91,7 @@ export class EditSubcategoryComponent {
     if (this.subcategoryId) {
       const updatedSubcategory = {
         name: this.name,
+        description: this.description,
         category: {
           _id: this.category,
           name: '',

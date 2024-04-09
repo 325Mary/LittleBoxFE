@@ -6,6 +6,9 @@ import { SubcategoryService } from '../../../services/chatbot/subcategory.servic
 import { CategoryService } from '../../../services/chatbot/category.service';
 import { TokenValidationService } from '../../../services/token-validation-service.service';
 
+import { SignInUpService } from '../../../services/sign-in-up.service';
+import { SeleccionarUsersComponent } from '../seleccionar-users/seleccionar-users.component';
+
 interface Message {
   profilePicture?: string;
   pregunta: string;
@@ -20,6 +23,8 @@ interface Message {
 })
 export class ChatbodyComponent {
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
+
+  rolUsuario: string = '';
 
   userInput: string = '';
   chatHistory: Message[] = [];
@@ -36,15 +41,28 @@ export class ChatbodyComponent {
     private QService: QueriesService,
     private SService: SubcategoryService,
     private CService: CategoryService,
-    private tokenValidationService: TokenValidationService
+    private tokenValidationService: TokenValidationService,
+    private authService: SignInUpService
   ) {}
 
   ngOnInit(): void {
+    this.getRolUser();
     this.obtenerCategorias();
     if (this.categories.length > 0) {
       this.obtenerSubcategoriasPorCategoria(this.categories[0]._id);
     }
     this.showWelcomeMessage();
+  }
+
+  //ROles:
+  getRolUser(): void {
+    const userRol = this.authService.getUserRole();
+    if (userRol !== null) {
+      this.rolUsuario = userRol;
+      console.log('Rol del usuario', this.rolUsuario);
+    } else {
+      console.error('No se puedo obtener el rol de usuario');
+    }
   }
 
   obtenerCategorias() {
@@ -105,7 +123,7 @@ export class ChatbodyComponent {
   showWelcomeMessage() {
     this.chatHistory.push({
       pregunta:
-        '¡Hola! ¿En qué puedo ayudarte hoy? Escribe "Ayuda" para poder explicarte.?',
+        '¡Hola! ¿En qué puedo ayudarte hoy? Escribe "ayuda" para poder explicarte.?',
       respuesta: '',
       profilePicture: 'assets/bot.png',
       origen: 'bot',
@@ -114,24 +132,42 @@ export class ChatbodyComponent {
   }
 
   sendMessage() {
-    if (this.userInput.toLowerCase() === 'bloque') {
+    if (this.userInput.toLowerCase() === 'ayuda') {
+      if (this.rolUsuario === 'Colaborador') {
+        this.chatHistory.push({
+          profilePicture: 'assets/bot.png',
+          pregunta: 'Con gusto te ayudo, como primera instancia tenemos un chatbot en donde puedes consultar tus dudas mediante números. ¿Cómo saber qué número necesitas?\nEn la parte izquierda se aprecia una secuencia, en donde seleccionas la categoría que es como el tema principal de la pregunta. Después, seleccionas una subcategoría que es como el tema de caracterización, es decir, si la pregunta está relacionada con la funcionalidad de la secuancia de la izquierda o una instrucción para consultar en el chatbot. Como último paso, se mostrará una tabla con todas las preguntas disponibles. Para saber su respuesta, solo pon el # en mi barra de búsqueda, y yo con gusto te responderé. Si tienes otra duda no dudes en consultar. :D',
+          respuesta: '¿Como funciona el chatbot en base a funcionamiento y itulidad?',
+          origen: 'bot',
+        });
+      } else if (this.rolUsuario === 'Gerente' || this.rolUsuario === 'Administrador') {
+        this.chatHistory.push({
+          profilePicture: 'assets/bot.png',
+          pregunta: 'Con gusto te ayudo, como primera instancia tenemos un chatbot en donde puedes consultar tus dudas mediante números. ¿Cómo saber qué número necesitas?\nEn la parte izquierda se aprecia una secuencia, en donde seleccionas la categoría que es como el tema principal de la pregunta. Después, seleccionas una subcategoría que es como el tema de caracterización, es decir, si la pregunta está relacionada con la funcionalidad de algo o una instrucción para hacer algo. Como último paso, se mostrará una tabla con todas las preguntas disponibles. Para saber su respuesta, solo pon el # en mi barra de búsqueda, y yo con gusto te responderé.\n\nAdemás de eso, en la parte superior derecha estará una tuerca de configuración. ¿Para qué me sirve eso? Te sirve para poder modificar, eliminar o agregar subcategorías y consultas que soporten tu empresa, como temas importantes que para los colaboradores nuevos es indispensable. Se mostrará como entrada un menú y solo debes seleccionar qué deseas configurar, si la consulta o la subcategoría. Te saldrá una tabla y una barra de búsqueda para buscar tu categoría deseada. En la tabla misma encontrarás botones que uno es para borrar y el otro es para editar, y por último, en la parte de arriba derecha encontrarás un botón que dice: "Nuevo", es para crear una nueva consulta o subcategoría. Si tienes otra duda no dudes en consultar. :D',
+          respuesta: '¿Como funciona el chatbot en base a funcionamiento y itulidad?',
+          origen: 'bot',
+        });
+      }
+      this.scrollToBottom();
+      this.userInput = '';
+    } else if (this.userInput.toLowerCase() === 'bloque') {
       this.chatHistory.push({
         profilePicture: 'assets/bot.png',
-        pregunta:
-          'Con gusto te explico, el bloque es un camino para encontrar la respuesta deseada. Como inicio, tendrás que seleccionar una categoría, que es el tema principal. Luego, seleccionas la subcategoría, que es el tema central para identificar si la pregunta se refiere a un funcionamiento, explicación u otra funcionalidad. Finalmente, se muestran las preguntas relacionadas a lo seleccionado, donde encontrarás el identificador y la pregunta. Solo busca la pregunta de tu agrado y pon su identificador en la barra de búsqueda del chatbot, y el chatbot te responderá exitosamente.',
+        pregunta: 'Con gusto te explico, el bloque es un camino para encontrar la respuesta deseada. Como inicio, tendrás que seleccionar una categoría, que es el tema principal. Luego, seleccionas la subcategoría, que es el tema central para identificar si la pregunta se refiere a un funcionamiento, explicación u otra funcionalidad. Finalmente, se muestran las preguntas relacionadas a lo seleccionado, donde encontrarás el identificador y la pregunta. Solo busca la pregunta de tu agrado y pon su identificador en la barra de búsqueda del chatbot, y el chatbot te responderá exitosamente.',
         respuesta: '¿Para qué sirve el bloque?',
         origen: 'bot',
       });
       this.scrollToBottom();
       this.userInput = '';
     } else {
+  
       this.chatHistory.push({
         profilePicture: '',
         pregunta: this.userInput,
         respuesta: '',
         origen: 'usuario',
       });
-
+  
       this.getQuery();
       this.userInput = '';
     }
@@ -190,7 +226,11 @@ export class ChatbodyComponent {
   }
 
   openModal() {
-    const modalRef = this.modalService.open(MenuComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(SeleccionarUsersComponent, { size: 'lg' });
+  }
+
+  openModalSupe(){
+    const modalRef = this.modalService.open(SeleccionarUsersComponent, { size: 'lg' });
   }
 
   cerrarModal() {

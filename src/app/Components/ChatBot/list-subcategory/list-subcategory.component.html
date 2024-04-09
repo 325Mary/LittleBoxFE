@@ -18,6 +18,7 @@
           <thead>
             <tr>
               <th scope="col">Nombre</th>
+              <th scope="col">Descripción</th>
               <th scope="col">Categoria</th>
               <th scope="col"></th>
             </tr>
@@ -25,11 +26,12 @@
           <tbody>
             <tr *ngFor="let subcategory of filteredSubcategory">
               <td>{{ subcategory.name }}</td>
+              <td>{{ subcategory.description }}</td>
               <td>{{ subcategory.category.name }}</td>
-              <td>
-                <img (click)="openEditModal(subcategory._id)" class="img-icon" src="../../../assets/boligrafo.png">
-                <img (click)="eliminarSubcategory(subcategory._id)" class="img-icon" src="../../../../assets/boton-x.png">
-              </td>
+                <td>
+                  <img *ngIf="rolUsuario === 'SuperUsuario' || subcategory.category._id !== '66142acae59265aeb5525a37'" (click)="openEditModal(subcategory._id)" class="img-icon" src="../../../assets/boligrafo.png">
+                  <img *ngIf="rolUsuario === 'SuperUsuario' || subcategory.category._id !== '66142acae59265aeb5525a37'" (click)="eliminarSubcategory(subcategory._id)" class="img-icon" src="../../../../assets/boton-x.png">
+                </td>
             </tr>
           </tbody>
         </table>

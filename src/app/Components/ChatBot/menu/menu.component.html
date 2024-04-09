@@ -7,7 +7,7 @@
                         <span class="titulo">CONFIGURACIONES</span>
                     </div>
                     <button class="btn btn-secondary border-info float-start" (click)="showContent('consultas')">CONSULTAS</button>
-                    <button class="btn btn-secondary border-info text-center" (click)="showContent('categoria')">CATEGORÍA</button>
+                    <button *ngIf="rolUsuario === 'SuperUsuario'" class="btn btn-secondary border-info text-center" (click)="showContent('categoria')">CATEGORÍA</button>
                     <button class="btn btn-secondary border-info float-end" (click)="showContent('subcategoria')">SUBCATEGORÍA</button>
                 </div>
             </div>

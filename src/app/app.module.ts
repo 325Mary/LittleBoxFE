@@ -9,7 +9,7 @@ import { SidebarComponent } from '../app/Components/sidebar/sidebar.component';
 import { FooterComponent } from '../app/Components/footer/footer.component';
 import { NavbarComponent } from '../app/Components/navbar/navbar.component';
 import { IndexComponent } from '../app/Components/index/index.component';
-import {  PreRegistroComponent} from "../app/Components/pre-registro/pre-registro.component";
+import { PreRegistroComponent } from '../app/Components/pre-registro/pre-registro.component';
 import { RegistroEmpresaComponent } from '../app/Components/registro-empresa/registro-empresa.component';
 import { RegistroEmpleadoComponent } from '../app/Components/registro-empleado/registro-empleado.component';
 import { EmployeesComponent } from '../app/Components/employees/employees.component';
@@ -19,7 +19,7 @@ import { SignInUpService } from './services/sign-in-up.service';
 
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -33,7 +33,6 @@ import { FormQueriesComponent } from './Components/ChatBot/form-queries/form-que
 import { MenuComponent } from './Components/ChatBot/menu/menu.component';
 
 import { JwtModule } from '@auth0/angular-jwt';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,13 +55,13 @@ import { CrearCategoriaComponent } from './Components/crear-categoria/crear-cate
 import { ListTercerosComponent } from './Components/list-terceros/list-terceros.component';
 import { ListCategoriasComponent } from './Components/list-categorias/list-categorias.component';
 import { ListEgresosComponent } from './Components/list-egresos/list-egresos.component';
-import {  EgresosService} from "../app/services/egresos.service";
-import { ModalEgresoComponent } from "./Components/modal-egreso/modal-egreso.component";
+import { EgresosService } from '../app/services/egresos.service';
+import { ModalEgresoComponent } from './Components/modal-egreso/modal-egreso.component';
 import { ModalTerceroComponent } from './Components/modal-tercero/modal-tercero.component';
-import { CompanyService } from "./services/company.service";
+import { CompanyService } from './services/company.service';
 import { ModalCompanySolicitudComponent } from './Components/modal-company-solicitud/modal-company-solicitud.component';
 import { InformesComponent } from './Components/informes/informes.component';
-import {InformesService  } from "./services/informes.service";
+import { InformesService } from './services/informes.service';
 import { GraficosComponent } from './Components/graficos/graficos.component';
 
 // import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
@@ -71,6 +70,20 @@ import { AddEditIngresoComponent } from './Components/ingresos/add-edit-ingreso/
 import { EditSubcategoryComponent } from './Components/ChatBot/edit-subcategory/edit-subcategory.component';
 import { EditQueriesComponent } from './Components/ChatBot/edit-queries/edit-queries.component';
 import { EditCategoryComponent } from './Components/ChatBot/edit-category/edit-category.component';
+
+//Chatback
+import { FormSubcWtComponent } from './Components/ChatBot/form-subc-wt/form-subc-wt.component';
+import { FormCatWtComponent } from './Components/ChatBot/form-cat-wt/form-cat-wt.component';
+import { FormQueWtComponent } from './Components/ChatBot/form-que-wt/form-que-wt.component';
+import { EditQueWtComponent } from './Components/ChatBot/edit-que-wt/edit-que-wt.component';
+import { EditSubcaWtComponent } from './Components/ChatBot/edit-subca-wt/edit-subca-wt.component';
+import { EditCatWtComponent } from './Components/ChatBot/edit-cat-wt/edit-cat-wt.component';
+import { ChatbackWtComponent } from './Components/ChatBot/chatback-wt/chatback-wt.component';
+import { ListCatWtComponent } from './Components/ChatBot/list-cat-wt/list-cat-wt.component';
+import { ListSubcaWtComponent } from './Components/ChatBot/list-subca-wt/list-subca-wt.component';
+import { ListQueWtComponent } from './Components/ChatBot/list-que-wt/list-que-wt.component';
+import { SeleccionarUsersComponent } from './Components/ChatBot/seleccionar-users/seleccionar-users.component';
+import { WTMenuComponent } from './Components/ChatBot/wtmenu/wtmenu.component';
 
 @NgModule({
   declarations: [
@@ -125,6 +138,18 @@ import { EditCategoryComponent } from './Components/ChatBot/edit-category/edit-c
     // DataUserComponent,
     ListDeleteIngresosComponent,
     AddEditIngresoComponent,
+    FormSubcWtComponent,
+    FormCatWtComponent,
+    FormQueWtComponent,
+    EditQueWtComponent,
+    EditSubcaWtComponent,
+    EditCatWtComponent,
+    ChatbackWtComponent,
+    ListCatWtComponent,
+    ListSubcaWtComponent,
+    ListQueWtComponent,
+    WTMenuComponent,
+    SeleccionarUsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -140,11 +165,17 @@ import { EditCategoryComponent } from './Components/ChatBot/edit-category/edit-c
       config: {
         tokenGetter: () => {
           return localStorage.getItem('token');
-        }
-      }
+        },
+      },
     }),
   ],
-  providers: [SignInUpService,{ provide: environment, useValue: environment }, EgresosService, CompanyService, InformesService],
-  bootstrap: [AppComponent]
+  providers: [
+    SignInUpService,
+    { provide: environment, useValue: environment },
+    EgresosService,
+    CompanyService,
+    InformesService,
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

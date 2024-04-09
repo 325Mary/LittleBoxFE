@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-lg-12"> 
+      <div class="card border-dark mb-3" style="background-color: rgba(220, 216, 216, 0.362);">
+        <div class="card-body text-center">
+          <div>
+            <span class="titulo">LISTA DE SUBCATEGORIAS</span>
+            <button class="btn btn-success border-dark float-end" (click)="openModal()">NUEVO</button>
+            <button (click)="cerrarModal()" class="btn btn-secondary border-dark float-start">VOLVER</button>
+          </div>
+          <br>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control custom-input" placeholder="Buscar por nombre" [(ngModel)]="searchTermReferencia" (ngModelChange)="filtrarQuery()" />
+          </div>
+  
+          <div class="table-responsive">
+            <div style="overflow-y: auto; max-height: 150px;"> 
+            <table *ngIf="filteredQuery.length > 0" class="table table-bordered table-light table-hover border-dark mt-3" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th scope="col">Identificador</th>
+                  <th scope="col">Pregunta</th>
+                  <th scope="col">Respuesta</th>
+                  <th scope="col">Subcategoria</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let query of filteredQuery">
+                  <td>{{ query.identifier }}</td>
+                  <td>{{ query.question }}</td>
+                  <td>{{ query.answer}}</td>
+                  <td>{{ query.subcategory.name }}</td>
+                  <td>
+                    <img (click)="openEditModal(query._id)" class="img-icon" src="../../../assets/boligrafo.png">
+                    <img (click)="eliminarQuery(query._id)" class="img-icon" src="../../../../assets/boton-x.png">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+          <h6 style="text-align: start; margin-top: 10px" *ngIf="filteredQuery.length === 0">No hay productos para mostrar.</h6>
+  
+        </div>
+      </div>
+    </div>
+  </div>

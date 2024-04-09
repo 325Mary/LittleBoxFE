@@ -89,19 +89,6 @@ const routes: Routes = [
   { path: 'graficos', component: GraficosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
   { path: '**', component: NotFoundComponent },
 
-
-  { path: 'edit-query/:id', component: FormQueriesComponent},
-  { path: 'edit-category/:id', component: FormCategoryComponent},
-  { path: 'edit-subcategory/:id', component: FormSubcategoryComponent, outlet: 'modalOutlet'},
-
-  {path: 'formQuery', component: FormQueriesComponent },
-  {path: 'formCategory', component: FormCategoryComponent },
-  {path: 'formSubcategory', component: FormSubcategoryComponent },
-
-
-  {path: 'chatbot', component: ChatbodyComponent},
-  { path: 'menu', component: MenuComponent },
-
 ];
 
 @NgModule({
