@@ -1,11 +1,132 @@
-.contenedor{
-    padding: 5rem 0 0 0;
+// .additional-background {
+//     background-color: #0fbad8;
+//     padding: 20px;
+//     width: 100%;
+//     margin: 0 auto;
+// }
+// .contenedor-container {
+//     align-items: center;
+//     justify-items: auto;
+//     background-color: #003cff;
+//     padding: 1%;
+//     margin: auto;
+//     width: 50%;
+//     border-radius: 10px;
+// }
+// .filtro-fechas {
+//     width: min-content;
+//     margin: 10px;
+//     padding: 10px;
+// }
+// .estado-solicitudes-container {
+//     width: min-content;
+//     margin: 1%;
+//     padding: 1%;
+//     size: 10%;
+// }
+// .list-container {
+//     border-radius: 10px;
+//     background-color: #003cff;
+//     width: auto;
+//     margin: 1%;
+//     padding: 1%;
+//     size: 10%;
+// }
+// .form-control {
+//     border-radius: 10px;
+//     // width: min-content;
+//     margin: 10px;
+//     // padding: 1%;
+//     // size: 10%;
+// }
+// .table-active {
+//     border-radius: 10px;
+// }
+// .checkbox-container {
+//     border-radius: 10px;
+//     display: flex;
+//     justify-content: center;
+//     /* Centrar horizontalmente */
+//     align-items: center;
+//     /* Centrar verticalmente */
+//     height: 100%;
+//     /* Ajustar la altura para centrar verticalmente */
+// }
+
+/* Base colors (consider using a separate file for global colors) */
+
+$primary-color: #003cff;
+$secondary-color: #0fbad8;
+$text-color: white; // Assuming white text color for elements
+
+/* Background styles */
+
+.additional-background,
+.contenedor-container,
+.list-container {
+    background-color: $primary-color;
+    padding: 1%;
+    margin: auto;
+    border-radius: 10px;
 }
 
+.additional-background {
+    width: 100%;
+}
+
+.contenedor-container {
+    width: 50%;
+    /* Assuming specific width is intended */
+    justify-content: center;
+    /* Assuming horizontal centering is intended */
+}
+
+
+/* Remove unnecessary class nesting (.contenedor-container) */
+
+
+/* Filter styles */
+
+.filtro-fechas {
+    width: min-content;
+    padding: 10px;
+    margin: 10px;
+}
+
+
+/* Estado de solicitudes container styles */
+
+.estado-solicitudes-container {
+    width: min-content;
+    padding: 1%;
+    margin: 1%;
+}
+
+
+/* Form control styles */
+
+.form-control {
+    border-radius: 10px;
+    margin: 10px;
+    /* Assuming consistent margin is intended */
+    /* Consider removing unused properties (width, padding, size) */
+}
+
+
+/* Table row styles */
+
+.table-active {
+    border-radius: 10px;
+}
+
+
+/* Checkbox container styles */
+
 .checkbox-container {
+    border-radius: 10px;
     display: flex;
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center; /* Centrar verticalmente */
-    height: 100%; /* Ajustar la altura para centrar verticalmente */
-  }
-  
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    /* Might be specific to your layout */
+}

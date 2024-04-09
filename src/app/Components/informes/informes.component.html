@@ -1,69 +1,122 @@
-<div class="additional-background">
-  <div class="container">
-    <h2>INFORMES</h2>
+<div class="additional-background ">
+    <div class="container  ">
+        <h2>INFORMES</h2>
 
-    <!-- Filtros -->
-    <div class="filters">
-      <label for="fechaInicio">Fecha de inicio:</label>
-      <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio">
-      
-      <label for="fechaFin">Fecha de fin:</label>
-      <input type="date" id="fechaFin" [(ngModel)]="fechaFin">
+        <!-- <div class="filters">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="fechaInicio">Fecha de inicio:</label>
+                    <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio">
 
-      <label for="categoria">Categoría:</label>
-      <select id="categoria" [(ngModel)]="categoriaSeleccionada">
-        <option value="">-- sin seleccionar --</option>
-        <option *ngFor="let cat of categoria" [value]="cat._id">{{ cat.nombre }}</option>
-      </select>
+                    <label for="fechaFin">Fecha de fin:</label>
+                    <input type="date" id="fechaFin" [(ngModel)]="fechaFin">
+                </div>
+            </div>
 
-      <label for="tercero">Tercero:</label>
-      <select id="tercero" [(ngModel)]="terceroSeleccionado">
-        <option value="">-- sin seleccionar --</option>
-        <option *ngFor="let ter of tercero" [value]="ter._id">{{ ter.nombreTercero }}</option>
-      </select>
+            <div class="grid grid-cols-2 gap-4 mt-4">
+                <div>
+                    <label for="categoria">Categoría:</label>
+                    <select id="categoria" [(ngModel)]="categoriaSeleccionada">
+            <option value="">-- sin seleccionar --</option>
+            <option *ngFor="let cat of categoria" [value]="cat._id">{{ cat.nombre }}</option>
+          </select>
 
-      <button (click)="obtenerMovimientoDeC()">Filtrar</button>
+                    <label for="tercero">Tercero:</label>
+                    <select id="tercero" [(ngModel)]="terceroSeleccionado">
+            <option value="">-- sin seleccionar --</option>
+            <option *ngFor="let ter of tercero" [value]="ter._id">{{ ter.nombreTercero }}</option>
+          </select>
+                </div>
+            </div>
+
+            <button (click)="obtenerMovimientoDeC()">Filtrar</button>
+        </div> -->
+
+
+        <div class=" filters form-group ">
+            <div class="col">
+                <div class="grid grid-cols-2 gap-4 flex flex-col justify-items-center ">
+                    <div class="form-group flex flex-col items-center">
+                        <label for="fechaInicio">Fecha de inicio:</label>
+                        <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio">
+
+                        <label for="fechaFin">Fecha de fin:</label>
+                        <input type="date" id="fechaFin" [(ngModel)]="fechaFin">
+                    </div>
+                </div>
+
+                <div class="form-group grid grid-cols-2 gap-4 mt-4  flex flex-col justify-items-center">
+                    <div class="flex flex-col items-center">
+                        <label for="categoria">Categoría:</label>
+                        <select id="categoria" [(ngModel)]="categoriaSeleccionada">
+                <option value="">-- sin seleccionar --</option>
+                <option *ngFor="let cat of categoria" [value]="cat._id">{{ cat.nombre }}</option>
+              </select>
+
+                        <label for="tercero">Tercero:</label>
+                        <select id="tercero" [(ngModel)]="terceroSeleccionado">
+                <option value="">-- sin seleccionar --</option>
+                <option *ngFor="let ter of tercero" [value]="ter._id">{{ ter.nombreTercero }}</option>
+              </select>
+                    </div>
+                </div>
+
+                <button (click)="obtenerMovimientoDeC()">Filtrar</button>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Listado de egresos -->
+
+        <div class="no-informes col-lg-6 grid grid-cols-2 gap-4 flex flex-col justify-item-center " *ngIf="movimientosDeCaja.length === 0">
+            <p>No se encontraron Informes con los filtros seleccionados.</p>
+        </div>
+
+        <!-- <div class="container "> -->
+        <div class="form-group movimiento-list " *ngIf="movimientosDeCaja.length > 0">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Fecha</th>
+                        <th>Detalle</th>
+                        <th>Ingreso</th>
+                        <th>Egreso</th>
+                        <th>Saldo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let movimientoDeCaja of movimientosDeCaja | slice: ((currentPage - 1) * itemsPerPage) : ((currentPage - 1) * itemsPerPage + itemsPerPage)">
+                        <td>{{ movimientoDeCaja.numeroDocumento }}</td>
+                        <td>{{ movimientoDeCaja.fecha }}</td>
+                        <td>{{ movimientoDeCaja.detalle }}</td>
+                        <td *ngIf="movimientoDeCaja.tipoMovimiento === 'Ingreso'">{{ movimientoDeCaja.valor }}</td>
+                        <td *ngIf="movimientoDeCaja.tipoMovimiento === 'Egreso'">-</td>
+                        <td *ngIf="movimientoDeCaja.tipoMovimiento === 'Egreso'">{{ movimientoDeCaja.valor }}</td>
+                        <td>{{ movimientoDeCaja.saldo }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination-controls">
+
+                <ul>
+                    <li *ngFor="let page of getPages()" [class.active]="currentPage === page">
+                        <a (click)="currentPage = page">{{ page }}</a>
+                    </li>
+                    <button (click)="exportarExcel()">Exportar a Excel</button>
+                </ul>
+
+            </div>
+
+        </div>
+
+        <!-- </div> -->
+
+
+
     </div>
-
-    <!-- Listado de egresos -->
-    <div class="movimiento-list" *ngIf="movimientosDeCaja.length > 0">
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Fecha</th>
-            <th>Detalle</th>
-            <th>Ingreso</th>
-            <th>Egreso</th>
-            <th>Saldo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let movimientoDeCaja of movimientosDeCaja | slice: ((currentPage - 1) * itemsPerPage) : ((currentPage - 1) * itemsPerPage + itemsPerPage)">
-            <td>{{ movimientoDeCaja.numeroDocumento }}</td>
-            <td>{{ movimientoDeCaja.fecha }}</td>
-            <td>{{ movimientoDeCaja.detalle }}</td>
-            <td *ngIf="movimientoDeCaja.tipoMovimiento === 'Ingreso'">{{ movimientoDeCaja.valor }}</td>
-            <td *ngIf="movimientoDeCaja.tipoMovimiento === 'Egreso'">-</td>
-            <td *ngIf="movimientoDeCaja.tipoMovimiento === 'Egreso'">{{ movimientoDeCaja.valor }}</td>
-            <td>{{ movimientoDeCaja.saldo }}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="pagination-controls">
-        <ul>
-          <li *ngFor="let page of getPages()" [class.active]="currentPage === page">
-            <a (click)="currentPage = page">{{ page }}</a>
-          </li>
-        </ul>
-      </div>
-
-      <button (click)="exportarExcel()">Exportar a Excel</button>
-    </div>
-    
-    <div class="no-informes" *ngIf="movimientosDeCaja.length === 0">
-      <p>No se encontraron Informes con los filtros seleccionados.</p>
-    </div>
-  </div>
 </div>

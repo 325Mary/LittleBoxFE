@@ -1,18 +1,52 @@
+// .container {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     height: 100vh;
+//   }
+//   .text-description {
+//     font-size: 16px;
+//     text-align: center;
+//     margin-bottom: 20px;
+//   }
+//   .btn-redirect {
+//     padding: 10px 20px;
+//     font-size: 16px;
+//     border: 1px solid #ccc;
+//     border-radius: 5px;
+//     cursor: pointer;
+//     background-color: #fff;
+//     color: #000;
+//     text-decoration: none;
+//   }
+//   .btn-redirect:hover {
+//     background-color: #ddd;
+//   }
+
+/* Container styles */
+
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-  }
-  
-  .text-description {
+}
+
+
+/* Text description styles */
+
+.text-description {
     font-size: 16px;
     text-align: center;
     margin-bottom: 20px;
-  }
-  
-  .btn-redirect {
+}
+
+
+/* Button styles */
+
+.btn-redirect {
     padding: 10px 20px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -21,9 +55,8 @@
     background-color: #fff;
     color: #000;
     text-decoration: none;
-  }
-  
-  .btn-redirect:hover {
+}
+
+.btn-redirect:hover {
     background-color: #ddd;
-  }
-  
+}

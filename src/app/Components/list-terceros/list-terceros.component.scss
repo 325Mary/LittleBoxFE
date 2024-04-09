@@ -1,24 +1,43 @@
+// .custom-container {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 100vh;
+//     background-image: linear-gradient(to bottom, #79cbe7, #a29b9b); /* Desde azul claro hasta blanco */
+//   }
+//   button {
+//     background-color: #007bff;
+//     color: white;
+//     border: none;
+//     border-radius: 5px;
+//     cursor: pointer;
+//     margin-left: 10px;
+//   }
+//   button:hover {
+//     background-color: #0056b3;
+//   }
+// Assuming the background image is in the same directory
 .custom-container {
-    
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: linear-gradient(to bottom, #79cbe7, #a29b9b); /* Desde azul claro hasta blanco */
+    background-image: linear-gradient(to bottom, #79cbe7, #a29b9b);
+    /* Light blue to light gray */
+}
 
-  }
-  
- 
-  button {
+button {
     background-color: #007bff;
+    /* Primary blue */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-left: 10px;
-  }
-  
-  button:hover {
+    /* Consider using a utility class for consistent margin */
+}
+
+button:hover {
     background-color: #0056b3;
-  }
-  
+    /* Darker blue on hover */
+}

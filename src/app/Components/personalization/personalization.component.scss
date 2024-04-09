@@ -1,40 +1,81 @@
+// .profile-settings {
+//   font-family: Arial, sans-serif;
+//   border: 2px solid #ccc;
+//   border-radius: 5px;
+//   padding: 20px;
+//   max-width: 800px;
+//   width: 50%;
+//   margin: 50px auto;
+//   background-color: #f9f9f9;
+//   height: 500px;
+// }
+// h2 {
+//   color: #333;
+//   font-size: 24px;
+//   margin-bottom: 20px;
+// }
+// ul {
+//   list-style-type: none;
+//   padding: 0;
+// }
+// li {
+//   padding: 10px;
+//   background-color: #fff;
+//   border-bottom: 1px solid #ccc;
+//   cursor: pointer;
+//   transition: background-color 0.3s ease;
+// }
+// li:hover {
+//   background-color: #f0f0f0;
+// }
+// ul a{
+//   text-decoration: none;
+// }
 
+/* Base colors (consider using a separate file for global colors) */
 
+$primary-color: #333; // Text color
+$secondary-color: #ccc; // Border color
+$background-color: #f9f9f9; // Background color
+$list-background: #fff; // List item background
+$hover-background: #f0f0f0; // List item hover background
 .profile-settings {
-  font-family: Arial, sans-serif;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  max-width: 800px;
-  width: 50%;
-  margin: 50px auto;
-  background-color: #f9f9f9;
-  height: 500px;
+    font-family: Arial, sans-serif;
+    border: 2px solid $secondary-color;
+    border-radius: 5px;
+    padding: 20px;
+    max-width: 800px;
+    /* Adjust as needed */
+    width: 50%;
+    margin: 50px auto;
+    background-color: $background-color;
+    height: 500px;
+    /* Adjust as needed */
 }
 
 h2 {
-  color: #333;
-  font-size: 24px;
-  margin-bottom: 20px;
+    color: $primary-color;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
 ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
 
 li {
-  padding: 10px;
-  background-color: #fff;
-  border-bottom: 1px solid #ccc;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    padding: 10px;
+    background-color: $list-background;
+    border-bottom: 1px solid $secondary-color;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 li:hover {
-  background-color: #f0f0f0;
+    background-color: $hover-background;
 }
 
-ul a{
-  text-decoration: none;
+ul a {
+    text-decoration: none;
 }

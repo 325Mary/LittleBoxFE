@@ -1,0 +1,150 @@
+// // @import '../../../../node_modules/primeng/resources/themes/saga-blue/theme.css';
+// .container {
+//     background-color: #003cff;
+// }
+// .additional-background {
+//     background-color: #0fbad8;
+//     padding: 20px;
+//     width: 100%;
+//     margin: 0 auto;
+// }
+// .row.mt-4.justify-content-center {
+//     display: flex;
+//     justify-content: center;
+//     margin-top: 20px;
+//     background-color: #003cff;
+// }
+// .col-lg-6 {
+//     width: 50%;
+//     background-color: #003cff;
+// }
+// .card.text-white.bg-secondary {
+//     background-color: #003cff;
+//     /* Adjust as needed (matches form background) */
+//     border-color: #ccc;
+//     border-radius: 10px;
+//     /* Consistent with previous styles */
+// }
+// .card-header.text-center {
+//     color: #fff;
+//     /* Matches text color from card background */
+//     background-color: #003cff;
+//     /* Adjust as needed (matches form background) */
+//     border-bottom: 1px solid #ccc;
+//     border-radius: 10px 10px 0 0;
+//     /* Top-left & top-right rounded corners */
+// }
+// .form-group label {
+//     background-color: #003cff;
+//     color: #fff;
+//     /* Matches text color from card background */
+// }
+// .form-control {
+//     background-color: #003cff;
+//     // background-color: rgba(0, 0, 0, 0.05);
+//     /* Slight transparency for inputs */
+//     border-color: #ccc;
+//     border-radius: 5px;
+//     /* Consistent with previous styles */
+//     color: #fff;
+//     /* Matches text color from card background */
+// }
+// .text-danger {
+//     color: #dc3545;
+//     /* Error message color */
+// }
+// .btn.btn-danger.btn-block {
+//     background-color: #dc3545;
+//     /* Adjust as needed (matches danger button) */
+//     border-color: #dc3545;
+//     /* Adjust as needed (matches danger button) */
+//     color: #fff;
+//     /* Matches text color from card background */
+//     border-radius: 5px;
+//     /* Consistent with previous styles */
+// }
+// .btn.btn-success.btn-block {
+//     background-color: #28a745;
+//     /* Adjust as needed (matches success button) */
+//     border-color: #28a745;
+//     /* Adjust as needed (matches success button) */
+//     color: #fff;
+//     /* Matches text color from card background */
+//     border-radius: 5px;
+//     /* Consistent with previous styles */
+// }
+// Assuming PrimeNG styles are imported elsewhere
+
+/* Base colors (consider using a separate file for global colors) */
+
+$primary-color: #003cff;
+$secondary-color: #0fbad8;
+$error-color: #dc3545;
+$success-color: #28a745;
+$light-gray: #ccc;
+$text-white: #fff;
+
+/* Background styles */
+
+.container,
+.row.mt-4.justify-content-center,
+.col-lg-6,
+.card {
+    background-color: $primary-color;
+}
+
+.additional-background {
+    background-color: $secondary-color;
+    padding: 20px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+/* Card styles */
+
+.card {
+    border-color: $light-gray;
+    border-radius: 10px;
+}
+
+.card-header {
+    color: $text-white;
+    background-color: $primary-color;
+    border-bottom: 1px solid $light-gray;
+    border-radius: 10px 10px 0 0;
+}
+
+
+/* Form styles */
+
+.form-group label,
+.form-control {
+    color: $text-white;
+}
+
+.form-control {
+    // background-color: rgba(0, 0, 0, 0.05); /* Optional transparency */
+    border-color: $light-gray;
+    border-radius: 5px;
+}
+
+
+/* Text styles */
+
+.text-danger {
+    color: $error-color;
+}
+
+
+/* Button styles */
+
+.btn.btn-danger,
+.btn.btn-success {
+    background-color: respective;
+    /* Use respective keyword for dynamic color */
+    border-color: respective;
+    /* Use respective keyword for dynamic color */
+    color: $text-white;
+    border-radius: 5px;
+}

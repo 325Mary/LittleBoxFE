@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { EgresosService } from "../../services/egresos.service";
 import { CategoriasService } from "../../services/categoria.service";
 import { TercerosService } from "../../services/terceros.service";
@@ -6,7 +6,7 @@ import { TokenValidationService } from "../../services/token-validation-service.
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-crear-egreso',
@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./crear-egreso.component.scss']
 })
 export class CrearEgresoComponent {
+  @ViewChild('egresoForm') egresoForm!: NgForm;
   selectedCategoria: any;
   selectedTercero: any;
   egreso: any = {};

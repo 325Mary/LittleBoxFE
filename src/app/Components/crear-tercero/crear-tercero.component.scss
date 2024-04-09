@@ -1,54 +1,141 @@
-body{
-  margin: 0;
-  padding: 0;
+// body{
+//   margin: 0;
+//   padding: 0;
+// }
+// .custom-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 120vh;
+//   background-image: linear-gradient(to bottom, #79cbe7, #a29b9b); /* Desde azul claro hasta blanco */
+// }
+// .form {
+//   width: 30%;
+//   margin: 90px auto;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   background-image: linear-gradient(to bottom, #79cbe7, #a29b9b); /* Desde azul claro hasta blanco */
+//   padding: 20px;
+//   box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Sombra suave */
+// }
+// button {
+//   background-color: #007bff;
+//   color: white;
+//   padding: 10px 20px;
+//   border: none;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   width: 100%; /* Ajustar el ancho del botón al 100% del contenedor */
+// }
+// button:hover {
+//   background-color: #0056b3;
+// }
+// /* Estilos adicionales para los input */
+// input[type="text"],
+// input[type="email"] {
+//   width: calc(100% - 24px); /* Ajustar el ancho de los input al 100% del contenedor menos el padding */
+//   padding: 10px;
+//   margin-bottom: 10px; /* Espaciado entre inputs */
+//   border: 1px solid #ccc; /* Borde gris */
+//   border-radius: 5px; /* Bordes redondeados */
+// }
+// input[type="text"]:focus,
+// input[type="email"]:focus {
+//   outline: none; /* Eliminar el contorno de enfoque */
+//   border-color: #007bff; /* Cambiar el color del borde al enfocar */
+// }
+
+/* Global styles */
+
+body {
+    margin: 0;
+    padding: 0;
 }
+
+
+/* Custom container styles */
 
 .custom-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 120vh;
-  background-image: linear-gradient(to bottom, #79cbe7, #a29b9b); /* Desde azul claro hasta blanco */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+    background-image: linear-gradient(to bottom, #79cbe7, #a29b9b);
+    /* Gradient from light blue to dark blue */
 }
+
+
+/* Form styles */
 
 .form {
-  width: 30%;
-  margin: 90px auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-image: linear-gradient(to bottom, #79cbe7, #a29b9b); /* Desde azul claro hasta blanco */
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Sombra suave */
+    width: 30%;
+    margin: 90px auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: linear-gradient(to bottom, #79cbe7, #a29b9b);
+    /* Gradient from light blue to dark blue */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    /* Soft shadow */
 }
 
+
+/* Button styles */
+
 button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%; /* Ajustar el ancho del botón al 100% del contenedor */
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    /* Full width of the container */
 }
 
 button:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
+    /* Darker blue on hover */
 }
 
-/* Estilos adicionales para los input */
+
+/* Input styles */
+
 input[type="text"],
 input[type="email"] {
-  width: calc(100% - 24px); /* Ajustar el ancho de los input al 100% del contenedor menos el padding */
-  padding: 10px;
-  margin-bottom: 10px; /* Espaciado entre inputs */
-  border: 1px solid #ccc; /* Borde gris */
-  border-radius: 5px; /* Bordes redondeados */
+    width: calc(100% - 24px);
+    /* Adjust width for padding */
+    padding: 10px;
+    margin-bottom: 10px;
+    /* Spacing between inputs */
+    border: 1px solid #ccc;
+    /* Gray border */
+    border-radius: 5px;
+    /* Rounded corners */
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus {
-  outline: none; /* Eliminar el contorno de enfoque */
-  border-color: #007bff; /* Cambiar el color del borde al enfocar */
+    outline: none;
+    /* Remove outline on focus */
+    border-color: #007bff;
+    /* Blue border on focus */
+}
+
+
+/* Validation feedback styles (assuming you're using them) */
+
+.invalid-feedback {
+    display: block;
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.form-control.ng-invalid {
+    border-color: red;
 }

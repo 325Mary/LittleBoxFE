@@ -1,35 +1,72 @@
-.custom-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: linear-gradient(to bottom, #79cbe7, #a29b9b); /* Desde azul claro hasta blanco */
-  }
-
-.table {
-  width: 30%;
-  margin: 30px auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-image: linear-gradient(to bottom, #79cbe7, #a29b9b); /* Desde azul claro hasta blanco */
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Sombra suave */
-   
+// .custom-container {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 100vh;
+//     background-image: linear-gradient(to bottom, #79cbe7, #a29b9b);
+//     /* Desde azul claro hasta blanco */
+// }
+// .table {
+//     width: 30%;
+//     margin: 30px auto;
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     background-image: linear-gradient(to bottom, #79cbe7, #a29b9b);
+//     /* Desde azul claro hasta blanco */
+//     padding: 20px;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+//     /* Sombra suave */
+// }
+// button {
+//     background-color: #007bff;
+//     color: white;
+//     padding: 10px 20px;
+//     border: none;
+//     border-radius: 5px;
+//     cursor: pointer;
+//     margin-left: 180px;
+// }
+.btn-margin-left {
+    margin-left: 180px;
 }
 
-  button {
+button {
     background-color: #007bff;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 180px;
-  }
-  
-  button:hover {
+    /* Use the utility class for margin */
+    @extend .btn-margin-left;
+}
+
+button:hover {
     background-color: #0056b3;
-  }
- 
+}
+
+@mixin gradient-background {
+    background-image: linear-gradient(to bottom, #79cbe7, #a29b9b);
+}
+
+.custom-container {
+    @include gradient-background;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.table {
+    @include gradient-background;
+    width: 30%;
+    margin: 30px auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}

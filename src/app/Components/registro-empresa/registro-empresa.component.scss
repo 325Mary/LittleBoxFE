@@ -1,47 +1,177 @@
-/* Estilos para los títulos del formulario */
+// /* Estilos para los títulos del formulario */
+// h2 {
+//     margin-top: 60px;
+//     /* Reducir el espacio superior para los títulos */
+//     color: #333;
+//     /* Color de texto más oscuro */
+// }
+// /* Estilos generales del formulario */
+// .form-content {
+//     background-image: linear-gradient(to bottom, #f7f7f7, #e0e0e0);
+//     /* Degradado de gris claro */
+// }
+// /* Estilos para el contenedor del formulario */
+// .form-content form {
+//     background-color: #fff;
+//     /* Fondo blanco */
+//     padding: 30px;
+//     /* Espaciado interno reducido */
+//     border-radius: 8px;
+//     /* Bordes redondeados */
+//     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+//     /* Sombra más suave */
+// }
+// label {
+//     font-size: 16px;
+//     /* Tamaño de fuente reducido */
+//     color: #555;
+//     /* Color de texto más oscuro */
+//     margin-bottom: 8px;
+//     /* Espacio inferior reducido */
+// }
+// input {
+//     padding: 10px;
+//     /* Aumentar el relleno */
+//     background-color: #f2f2f2;
+//     /* Fondo gris claro */
+//     font-size: 16px;
+//     color: #333;
+//     /* Color de texto más oscuro */
+//     margin-bottom: 16px;
+//     /* Espacio inferior aumentado */
+//     border-radius: 6px;
+//     /* Bordes redondeados */
+//     width: 100%;
+//     /* Ancho completo */
+// }
+// .btn {
+//     cursor: pointer;
+//     background-color: #4CAF50;
+//     /* Color de fondo verde */
+//     color: white;
+//     /* Color de texto blanco */
+//     border: none;
+//     /* Sin borde */
+//     border-radius: 4px;
+//     /* Bordes redondeados */
+//     padding: 10px 20px;
+//     /* Relleno aumentado */
+//     text-align: center;
+//     text-decoration: none;
+//     display: inline-block;
+//     font-size: 16px;
+//     transition-duration: 0.4s;
+// }
+// .btn:hover {
+//     background-color: #45a049;
+//     /* Cambio de color al pasar el ratón */
+// }
+// .invalid-feedback {
+//     color: #dc3545;
+//     /* Color rojo para mensajes de error */
+//     display: none;
+//     /* Ocultar mensaje de error por defecto */
+// }
+// input:invalid {
+//     border: 1px solid #dc3545;
+//     /* Borde rojo para campos inválidos */
+// }
+
+/* Base colors (consider using a separate file for global colors) */
+
+$primary-color: #333; // Text color
+$secondary-color: #e0e0e0; // Light gray color
+$error-color: #dc3545; // Red color
+$button-color: #4CAF50; // Green color
+$button-hover-color: #45a049; // Darker green color
+$input-background: #f2f2f2; // Light gray background
+$input-border: #ccc; // Light gray border
+
+/* Title Styles */
+
 h2 {
-    margin-top: 60px; /* Reducir el espacio superior para los títulos */
-    color: #333; /* Color de texto más oscuro */
+    margin-top: 60px;
+    /* Reduced top margin */
+    color: $primary-color;
+    /* Darker text color */
 }
-  
-  
-/* Estilos generales del formulario */
+
+
+/* General Form Styles */
+
 .form-content {
-    background-image: linear-gradient(to bottom, #f7f7f7, #e0e0e0); /* Degradado de gris claro */
+    background-image: linear-gradient(to bottom, $secondary-color, #f7f7f7);
+    /* Light gray gradient */
 }
 
 
-/* Estilos para el contenedor del formulario */
+/* Form Container Styles */
+
 .form-content form {
-    background-color: #fff; /* Fondo blanco */
-    padding: 30px; /* Espaciado interno reducido */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6); /* Sombra más suave */
+    background-color: #fff;
+    /* White background */
+    padding: 20px;
+    /* Reduced internal spacing */
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    /* Softer shadow */
 }
 
 label {
-    font-size: 16px; /* Tamaño de fuente reducido */
-    color: #555; /* Color de texto más oscuro */
-    margin-bottom: 8px; /* Espacio inferior reducido */
+    font-size: 14px;
+    /* Reduced font size */
+    color: $primary-color;
+    /* Darker text color */
+    margin-bottom: 5px;
+    /* Reduced bottom margin */
+}
+
+.invalid-feedback {
+    color: $error-color;
+    /* Red error color */
+    display: none;
+    /* Hide error message by default */
+}
+
+input:invalid {
+    border: 1px solid $error-color;
+    /* Red border for invalid fields */
 }
 
 input {
-    padding: 10px; /* Aumentar el relleno */
-    background-color: #f2f2f2; /* Fondo gris claro */
-    font-size: 16px;
-    color: #333; /* Color de texto más oscuro */
-    margin-bottom: 16px; /* Espacio inferior aumentado */
-    border-radius: 6px; /* Bordes redondeados */
-    width: 100%; /* Ancho completo */
+    padding: 8px;
+    /* Increased padding */
+    background-color: $input-background;
+    /* Light gray background */
+    font-size: 14px;
+    /* Reduced font size */
+    color: $primary-color;
+    /* Darker text color */
+    margin-bottom: 10px;
+    /* Increased bottom margin */
+    border-radius: 4px;
+    /* Rounded corners */
+    width: 100%;
+    /* Full width */
+    border: 1px solid $input-border;
+    /* Light gray border */
+    height: 36px;
+    /* Consistent input height */
 }
 
 .btn {
     cursor: pointer;
-    background-color: #4CAF50; /* Color de fondo verde */
-    color: white; /* Color de texto blanco */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Bordes redondeados */
-    padding: 10px 20px; /* Relleno aumentado */
+    background-color: $button-color;
+    /* Green background */
+    color: white;
+    /* White text color */
+    border: none;
+    /* No border */
+    border-radius: 4px;
+    /* Rounded corners */
+    padding: 10px 20px;
+    /* Increased padding */
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -50,5 +180,6 @@ input {
 }
 
 .btn:hover {
-    background-color: #45a049; /* Cambio de color al pasar el ratón */
+    background-color: $button-hover-color;
+    /* Darker green on hover */
 }

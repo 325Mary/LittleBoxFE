@@ -1,83 +1,202 @@
-/* Estilos para el formulario */
+// /* Estilos para el formulario */
+// .additional-background {
+//     background-color: #0fbad8;
+//     padding: 20px;
+//     width: auto;
+//     margin: 20px;
+// }
+// .form-container {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 120vh;
+//     // background-image: linear-gradient(to bottom, #b9bec0, #918e8e);
+//     /* Desde azul claro hasta blanco */
+// }
+// .form-group {
+//     padding: auto;
+//     margin: auto;
+//     width: 10px auto;
+// }
+// .form {
+//     width: 50%;
+//     margin: 90px auto;
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     background-color: #007bff;
+//     // background-image: linear-gradient(to bottom, #b9bec0, #918e8e);
+//     /* Desde azul claro hasta blanco */
+//     padding: 20px;
+//     // box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+//     /* Sombra suave */
+// }
+// .form-label {
+//     width: auto;
+//     margin: auto;
+//     padding: auto;
+//     margin-bottom: 5px;
+//     display: block;
+// }
+// .form-input {
+//     width: 100%;
+//     padding: 8px;
+//     margin-bottom: 10px;
+//     border: 1px solid #ccc;
+//     border-radius: 5px;
+//     box-sizing: border-box;
+// }
+// .form-select {
+//     width: 100%;
+//     padding: 8px;
+//     margin-bottom: 10px;
+//     border: 1px solid #ccc;
+//     border-radius: 5px;
+//     box-sizing: border-box;
+// }
+// button {
+//     background-color: #fdfdfd;
+//     color: rgb(8, 8, 8);
+//     border: none;
+//     border-radius: 5px;
+//     cursor: pointer;
+//     width: 20%;
+//     /* Hacer que el botón ocupe todo el ancho disponible */
+//     margin-left: 35%;
+//     /* Establecer margen izquierdo automático */
+//     margin-right: 50%;
+//     /* Establecer margen derecho automático */
+//     display: block;
+//     /* Asegurar que el botón sea un bloque para aplicar márgenes automáticamente */
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+//     /* Sombra suave */
+// }
+// .form-button:hover {
+//     background-color: #0056b3;
+// }
+// /* Estilos para la tabla */
+// .table-container {
+//     margin: 20px;
+// }
+// .table {
+//     width: 100%;
+//     border-collapse: collapse;
+// }
+// .table th,
+// .table td {
+//     padding: 8px;
+//     border-bottom: 1px solid #ddd;
+// }
+// .table th {
+//     background-color: #007bff;
+//     color: white;
+// }
+// .invalid-feedback {
+//     color: red;
+//     /* Color de texto rojo */
+//     font-size: 14px;
+//     /* Tamaño de fuente más pequeño */
+//     margin-top: 4px;
+//     /* Espacio superior reducido */
+// }
+
+/* Form styles */
+
+.additional-background {
+    background-color: #0fbad8;
+    padding: 20px;
+    width: auto;
+    margin: 20px;
+}
+
 .form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 120vh;
-  background-image: linear-gradient(to bottom, #b9bec0, #918e8e); /* Desde azul claro hasta blanco */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
 }
 
 .form {
-  width: 50%;
-  margin: 90px auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-image: linear-gradient(to bottom, #b9bec0, #918e8e); /* Desde azul claro hasta blanco */
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Sombra suave */
-}
-  
-  .form-label {
-    margin-bottom: 5px;
-    display: block;
-  }
-  
-  .form-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
-  
-  .form-select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
-  
-  button  {
+    width: 50%;
+    margin: 0 auto;
+    /* Center the form horizontally */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #007bff;
-    color: white;
+    padding: 20px;
+    /* Consider adding a soft box-shadow for depth */
+}
+
+.form-group {
+    margin-bottom: 15px;
+    /* Consistent spacing between form groups */
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #fdfdfd;
+    color: #080808;
+    /* Use a darker gray for better contrast */
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 20%; /* Hacer que el botón ocupe todo el ancho disponible */
-    margin-left: 35%; /* Establecer margen izquierdo automático */
-    margin-right: 50%; /* Establecer margen derecho automático */
-    display: block; /* Asegurar que el botón sea un bloque para aplicar márgenes automáticamente */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Sombra suave */
+    width: 20%;
+    /* Adjust button width based on layout needs */
+    margin: 0 auto;
+    /* Center the button horizontally */
+    display: block;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    /* Lighter shadow for a modern look */
+}
 
-  }
-  
-  .form-button:hover {
+button:hover {
     background-color: #0056b3;
-  }
-  
-  /* Estilos para la tabla */
-  .table-container {
+}
+
+
+/* Table styles */
+
+.table-container {
     margin: 20px;
-  }
-  
-  .table {
+}
+
+.table {
     width: 100%;
     border-collapse: collapse;
-  }
-  
-  .table th,
-  .table td {
+}
+
+.table th,
+.table td {
     padding: 8px;
     border-bottom: 1px solid #ddd;
-  }
-  
-  .table th {
+}
+
+.table th {
     background-color: #007bff;
     color: white;
-  }
-  
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 0.8rem;
+    /* Consistent font size with other validation styles */
+    margin-top: 5px;
+    /* Consistent spacing with other validation styles */
+}

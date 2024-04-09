@@ -50,105 +50,61 @@
     </div>
   </div> -->
 
-  <div *ngIf="!loading" class="row mt-4 justify-content-center">
-    <div class="col-lg-6">
-      <div class="card text-white bg-secondary">
-        <div class="card-header text-center">{{ operacion }} Ingreso</div>
-        <div class="card-body">
-          <form (ngSubmit)="addIngreso()">
-            <div>
-              <div class="form-group">
-                <label for="ingresoIdInput">Número de Ingreso:</label>
-                <input
-                  [(ngModel)]="formulario.ingresoId"
-                  name="ingresoId"
-                  type="text"
-                  class="form-control"
-                  id="ingresodIdInput"
-                  readonly
-                />
-              </div>
-              <div class="form-group">
-                <label for="fechaInput">Fecha:</label>
-                <input
-                  [(ngModel)]="formulario.fecha"
-                  name="fecha"
-                  type="date"
-                  class="form-control"
-                  id="fechaInput"
-                  required
-                  #fechaInput="ngModel"
-                />
-                <div
-                  *ngIf="fechaInput.touched && fechaInput.invalid"
-                  class="text-danger"
-                >
-                  El campo fecha es requerido
-                </div>
-                <div *ngIf="formulario.fecha">
-                  <label>Fecha seleccionada:</label>
-                  <input
-                    [value]="formulario.fecha | date:'dd/MM/yyyy'"
-                    class="form-control"
-                    readonly
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="detalleInput">Detalle:</label>
-                <input
-                  [(ngModel)]="formulario.detalle"
-                  name="detalle"
-                  type="text"
-                  class="form-control"
-                  id="detalleInput"
-                  required
-                  #detalleInput="ngModel"
-                />
-                <div
-                  *ngIf="detalleInput.touched && detalleInput.invalid"
-                  class="text-danger"
-                >
-                  El campo detalle es requerido
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="valorInput">Valor:</label>
-                <input
-                  [(ngModel)]="formulario.valor"
-                  name="valor"
-                  type="number"
-                  class="form-control"
-                  id="valorInput"
-                  required
-                  #valorInput="ngModel"
-                />
-                <div
-                  *ngIf="valorInput.touched && valorInput.invalid"
-                  class="text-danger"
-                >
-                  El campo valor es requerido
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-lg-6">
-                  <a
-                    routerLink="/obtenerTodosLosIngresos"
-                    class="btn btn-danger btn-block"
-                  >
+<div class="additional-background">
+    <div class="container">
+        <div *ngIf="!loading" class="row mt-4 justify-content-center">
+            <div class="col-lg-6">
+                <div class="card text-white bg-secondary">
+                    <div class="card-header text-center">{{ operacion }} Ingreso</div>
+                    <div class="card-body">
+                        <form (ngSubmit)="addIngreso()">
+                            <div>
+                                <div class="form-group">
+                                    <label for="ingresoIdInput">Número de Ingreso:</label>
+                                    <input [(ngModel)]="formulario.ingresoId" name="ingresoId" type="text" class="form-control" id="ingresodIdInput" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label for="fechaInput">Fecha:</label>
+                                    <input [(ngModel)]="formulario.fecha" name="fecha" type="date" class="form-control" id="fechaInput" required #fechaInput="ngModel" />
+                                    <div *ngIf="fechaInput.touched && fechaInput.invalid" class="text-danger">
+                                        El campo fecha es requerido
+                                    </div>
+                                    <div *ngIf="formulario.fecha">
+                                        <label>Fecha seleccionada:</label>
+                                        <input [value]="formulario.fecha | date:'dd/MM/yyyy'" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="detalleInput">Detalle:</label>
+                                    <input [(ngModel)]="formulario.detalle" name="detalle" type="text" class="form-control" id="detalleInput" required #detalleInput="ngModel" />
+                                    <div *ngIf="detalleInput.touched && detalleInput.invalid" class="text-danger">
+                                        El campo detalle es requerido
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="valorInput">Valor:</label>
+                                    <input [(ngModel)]="formulario.valor" name="valor" type="number" class="form-control" id="valorInput" required #valorInput="ngModel" />
+                                    <div *ngIf="valorInput.touched && valorInput.invalid" class="text-danger">
+                                        El campo valor es requerido
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-lg-6">
+                                        <a routerLink="/obtenerTodosLosIngresos" class="btn btn-danger btn-block">
                     Volver
                   </a>
-                </div>
-                <div class="col-lg-6">
-                  <button type="submit" class="btn btn-success btn-block">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <button type="submit" class="btn btn-success btn-block">
                     Aceptar
                   </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-              </div>
             </div>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
-  
+</div>

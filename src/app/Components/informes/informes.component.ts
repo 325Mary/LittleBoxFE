@@ -3,7 +3,7 @@ import { InformesService } from "../../services/informes.service";
 import { CategoriasService } from "../../services/categoria.service";
 import { TercerosService } from "../../services/terceros.service";
 import { ExcelService } from "../../services/excel.service";
-
+import { CardModule } from 'primeng/card';
 @Component({
   selector: 'app-informes',
   templateUrl: './informes.component.html',

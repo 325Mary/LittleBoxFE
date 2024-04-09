@@ -1,43 +1,104 @@
+// .container {
+//   background-color: #f2f2f2;
+//   padding: 20px;
+//   width: 70%;
+//   margin: 50px auto;}
+// .filters {
+//   background-color: rgba(213, 206, 206, 0.8);
+//   padding: 20px;
+//   margin-bottom: 20px;
+//   border: 1px solid #c6bdbd; 
+//   border-radius: 10px; 
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9); /* Agrega sombra al contenedor */
+// }
+// .filters label, .filters input, .filters select, .filters button {
+//   margin-right: 10px;
+// }
+// .egresos-list table {
+//   width: 100%;
+//   border-collapse: collapse;
+//   border-radius: 10px; 
+// }
+// .egresos-list th, .egresos-list td {
+//   padding: 10px;
+//   border: 1px solid #ddd;
+// }
+// .no-egresos {
+//   background-color: rgba(255, 255, 255, 0.8);
+//   padding: 20px;
+// }
+// .additional-background {
+//   background-color: #ddd;
+//   padding: 20px;
+//   width: 100%;
+//   margin: 0
+//    auto;
+// }
+
+/* Base colors (consider using a separate file for global colors) */
+
+$primary-color: #f2f2f2; // Light Gray
+$secondary-color: rgba(213, 206, 206, 0.8); // Light Gray with opacity
+$tertiary-color: #ddd; // Light Gray for borders
+$text-color: #333; // Assuming black text color
+
+/* Container styles */
+
 .container {
-  background-color: #f2f2f2;
-  padding: 20px;
-  width: 70%;
-  margin: 50px auto;}
+    background-color: $primary-color;
+    padding: 20px;
+    width: 70%;
+    margin: 50px auto;
+}
+
+
+/* Filter styles */
 
 .filters {
-  background-color: rgba(213, 206, 206, 0.8);
-  padding: 20px;
-  margin-bottom: 20px;
-  border: 1px solid #c6bdbd; 
-  border-radius: 10px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9); /* Agrega sombra al contenedor */
+    background-color: $secondary-color;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid $tertiary-color;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
 }
 
-.filters label, .filters input, .filters select, .filters button {
-  margin-right: 10px;
+.filters label,
+.filters input,
+.filters select,
+.filters button {
+    margin-right: 10px;
 }
+
+
+/* Egresos list table styles */
 
 .egresos-list table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 10px; 
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
 }
 
-.egresos-list th, .egresos-list td {
-  padding: 10px;
-  border: 1px solid #ddd;
+.egresos-list th,
+.egresos-list td {
+    padding: 10px;
+    border: 1px solid $tertiary-color;
 }
+
+
+/* No egresos styles */
 
 .no-egresos {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
 }
+
+
+/* Additional background styles */
 
 .additional-background {
-  background-color: #ddd;
-  padding: 20px;
-  width: 100%;
-  margin: 0
-   auto;
+    background-color: $tertiary-color;
+    padding: 20px;
+    width: 100%;
+    margin: 0 auto;
 }
-
