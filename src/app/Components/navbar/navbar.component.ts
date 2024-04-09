@@ -9,6 +9,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { Sidebar } from 'primeng/sidebar';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from "../../services/notification.service";
+import { SaldoCajaService } from "../../services/saldo-caja.service";
 
 @Component({
   selector: 'app-navbar',
@@ -33,6 +34,7 @@ export class NavbarComponent implements OnInit {
   currentRoute = '';
   notificationsCount = 0;
   miValorComoString: string = ""
+  saldoCaja: any;
 
   constructor(
     private router: Router,
@@ -40,12 +42,24 @@ export class NavbarComponent implements OnInit {
     private tokenValidationService: TokenValidationService,
     private cdr: ChangeDetectorRef,
     private notificationService: NotificationService,
+    private saldoDeCaja: SaldoCajaService,
   ) { 
     this.router.events.subscribe((val) => {
       this.currentRoute = this.router.url;
     });
   }
 
+  ActualizarSaldoCaja(): void {
+    this.saldoDeCaja.getSaldoDeCaja().subscribe((Data: any) => {
+      if (Data) {
+        this.saldoCaja = Data.data;
+        console.log("saldo caja = ",this.saldoCaja);
+      }else{
+        console.error("Error al obtener el saldo de caja ");
+        
+      }
+    });
+  }
   showNotifications: boolean = false;
 
   closeNotifications(): void {
@@ -79,6 +93,7 @@ export class NavbarComponent implements OnInit {
       }
     });
     this.refreshNotifications(); // Actualizar el contador de notificaciones al iniciar el componente
+    this.ActualizarSaldoCaja()
   }
 
   async refreshNotifications(): Promise<void> {

@@ -1,16 +1,20 @@
 <p-menubar [model]="items" [style.width.%]="100" class="menu-contain" styleClass="custom-menubar">
 
   <ng-template pTemplate="start">
-    <div class="p-d-flex p-flex-row p-align-center">
-      <a routerLink="/" *ngIf="!isLoggedIn"><img class="logo" src="../../assets/logo_little_box.png" height="40"
-          class="mr-2"></a>
-      <button pButton type="button" (click)="sidebarVisible = true" icon="pi pi-bars"
-        class="p-button-rounded p-button-outlined p-ml-auto mr-2" heigth="40" *ngIf="isLoggedIn"></button>
+    <div class="p-d-flex p-flex-row p-align-center cont-logo">
+     <a routerLink="/" *ngIf="!isLoggedIn"><img src="../../assets/logo_little_box.png" height="50px"
+       class="logo" style="background-color: #0289ED; padding: 5px; border: 2px solid #007bff; border-radius: 5px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);" alt="Logo"></a>
+     <button pButton type="button" (click)="sidebarVisible = true" icon="pi pi-bars"
+      class="p-button-rounded p-button-outlined p-ml-auto mr-2" height="40" *ngIf="isLoggedIn"></button>
     </div>
   </ng-template>
+  
  
   <ng-template pTemplate="end">
     <div class="cont-notifi-singIn-quit ">
+      <div class="saldo-caja" [ngClass]="{'positivo': saldoCaja >= 0, 'negativo': saldoCaja < 0}">
+        <h3>Saldo de Caja: {{ saldoCaja | currency:'COL' }}</h3>
+      </div>
       <div *ngIf="isLoggedIn" class="cont-notification">
         <button pButton type="button" (click)="openNotifications()"  class="btn-bell">
           <i class="pi pi-bell"></i> 
