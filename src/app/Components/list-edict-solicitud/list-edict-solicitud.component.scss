@@ -55,20 +55,22 @@
 
 /* Base colors (consider using a separate file for global colors) */
 
-$primary-color: #003cff;
-$secondary-color: #0fbad8;
-$text-color: white; // Assuming white text color for elements
+$primary-color: #79cbe7; // Tomado de la base
+$secondary-color: #a29b9b; // Tomado de la base
+$text-color: white;
 
-/* Background styles */
+/* Background styles, aplicando gradiente de fondo */
 
 .additional-background,
-.contenedor-container,
 .list-container {
-    background-color: $primary-color;
+    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
     padding: 1%;
     margin: auto;
     border-radius: 10px;
 }
+
+
+/* Ajustes a width y centrado horizontal */
 
 .additional-background {
     width: 100%;
@@ -76,13 +78,17 @@ $text-color: white; // Assuming white text color for elements
 
 .contenedor-container {
     width: 50%;
-    /* Assuming specific width is intended */
+    display: flex;
+    /* Centrado horizontal sin propiedad adicional */
     justify-content: center;
-    /* Assuming horizontal centering is intended */
 }
 
 
-/* Remove unnecessary class nesting (.contenedor-container) */
+/* Eliminando clase redundante */
+
+.contenedor-container>* {
+    @extend .additional-background;
+}
 
 
 /* Filter styles */
@@ -103,24 +109,22 @@ $text-color: white; // Assuming white text color for elements
 }
 
 
-/* Form control styles */
+/* Form control styles: sin observaciones */
 
 .form-control {
     border-radius: 10px;
     margin: 10px;
-    /* Assuming consistent margin is intended */
-    /* Consider removing unused properties (width, padding, size) */
 }
 
 
-/* Table row styles */
+/* Table row styles: sin observaciones */
 
 .table-active {
     border-radius: 10px;
 }
 
 
-/* Checkbox container styles */
+/* Checkbox container styles: sin observaciones */
 
 .checkbox-container {
     border-radius: 10px;
@@ -128,5 +132,4 @@ $text-color: white; // Assuming white text color for elements
     justify-content: center;
     align-items: center;
     height: 100%;
-    /* Might be specific to your layout */
 }

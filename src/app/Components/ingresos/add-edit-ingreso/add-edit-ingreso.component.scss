@@ -77,27 +77,31 @@
 
 /* Base colors (consider using a separate file for global colors) */
 
-$primary-color: #003cff;
-$secondary-color: #0fbad8;
+$primary-color: #79cbe7; // Color azul claro (actualizado)
+$secondary-color: #a29b9b; // Gris azulado (actualizado)
 $error-color: #dc3545;
 $success-color: #28a745;
-$light-gray: #ccc;
+$light-gray: #ddd; // Definido localmente (eliminada la importación)
 $text-white: #fff;
 
 /* Background styles */
+
+body {
+    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
+}
+
+.additional-background {
+    background-color: inherit; // Hereda del fondo de la página
+    padding: 20px;
+    width: 100%;
+    margin: 0 auto;
+}
 
 .container,
 .row.mt-4.justify-content-center,
 .col-lg-6,
 .card {
-    background-color: $primary-color;
-}
-
-.additional-background {
-    background-color: $secondary-color;
-    padding: 20px;
-    width: 100%;
-    margin: 0 auto;
+    background-color: transparent; // Asume transparencia
 }
 
 
@@ -124,7 +128,7 @@ $text-white: #fff;
 }
 
 .form-control {
-    // background-color: rgba(0, 0, 0, 0.05); /* Optional transparency */
+    // background-color: rgba(0, 0, 0, 0.05); /* Opcional: transparencia */
     border-color: $light-gray;
     border-radius: 5px;
 }
@@ -142,9 +146,7 @@ $text-white: #fff;
 .btn.btn-danger,
 .btn.btn-success {
     background-color: respective;
-    /* Use respective keyword for dynamic color */
     border-color: respective;
-    /* Use respective keyword for dynamic color */
     color: $text-white;
     border-radius: 5px;
 }

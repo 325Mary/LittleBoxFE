@@ -103,11 +103,16 @@
 
 /* Form styles */
 
-.additional-background {
-    background-color: #0fbad8;
+// Variables de color
+$primary-color: #79cbe7; // Tomado de la base
+$secondary-color: #a29b9b; // Tomado de la base
+.additional-background,
+.form {
+    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
     padding: 20px;
     width: auto;
     margin: 20px;
+    border-radius: 10px; // Añadido para consistencia
 }
 
 .form-container {
@@ -119,20 +124,12 @@
 
 .form {
     width: 50%;
-    margin: 0 auto;
-    /* Center the form horizontally */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #007bff;
-    padding: 20px;
-    /* Consider adding a soft box-shadow for depth */
+    margin: 0 auto; // Centrado horizontalmente sin propiedades adicionales
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); // Sombra más suave
 }
 
 .form-group {
     margin-bottom: 15px;
-    /* Consistent spacing between form groups */
 }
 
 .form-label {
@@ -152,22 +149,18 @@
 
 button {
     background-color: #fdfdfd;
-    color: #080808;
-    /* Use a darker gray for better contrast */
+    color: #333; // Texto más oscuro para mejor contraste
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 20%;
-    /* Adjust button width based on layout needs */
-    margin: 0 auto;
-    /* Center the button horizontally */
+    width: 20%; // Ajustar según necesidades del diseño
+    margin: 0 auto; // Centrado horizontal sin propiedades adicionales
     display: block;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    /* Lighter shadow for a modern look */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); // Sombra más sutil
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #007bff;
 }
 
 
@@ -189,14 +182,12 @@ button:hover {
 }
 
 .table th {
-    background-color: #007bff;
+    background-color: #79cbe7; // Color primario
     color: white;
 }
 
 .invalid-feedback {
     color: red;
     font-size: 0.8rem;
-    /* Consistent font size with other validation styles */
     margin-top: 5px;
-    /* Consistent spacing with other validation styles */
 }

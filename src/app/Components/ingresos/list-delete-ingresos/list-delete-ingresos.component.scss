@@ -116,35 +116,28 @@
 //     border-color: #f5f8f8;
 //     color: #fff;
 // }
-
-/* Base colors (consider using a separate file for global colors) */
-
-$primary-color: #003cff;
-$secondary-color: #0fbad8;
+$primary-color: #79cbe7; // Color azul claro (actualizado)
+$secondary-color: #a29b9b; // Gris azulado (actualizado)
 $success-color: #28a745;
 $info-color: #17a2b8;
 $error-color: #dc3545;
-$light-gray: #c6bdbd;
+$light-gray: #ddd; // Definido localmente (eliminada la importación)
 $text-color: #333;
 
 /* Background styles */
 
-.additional-background,
-.filtro-fechas {
-    background-color: $primary-color;
-    padding: 20px;
-    width: auto;
-    /* Assuming auto width is intended */
-    margin: 20px;
-    border-radius: 10px;
+body {
+    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
 }
 
+.additional-background,
+.filtro-fechas,
 .container {
+    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
+    /* Hereda del cuerpo */
+    padding: 20px;
     width: auto;
-    /* Assuming auto width is intended */
-    padding: 5px;
-    margin: 20px auto;
-    background-color: $primary-color;
+    margin: 20px;
     border-radius: 10px;
 }
 
@@ -191,10 +184,9 @@ table {
     width: 100%;
     padding: 10px;
     margin: auto;
-    background-color: $primary-color;
+    background: none;
+    /* Hereda del cuerpo */
     border-radius: 10px;
-    border: 1px solid transparent;
-    /* Removed unnecessary border */
 }
 
 .table-primary th {
@@ -203,28 +195,16 @@ table {
     padding: 3px;
     margin-bottom: 10px;
     border: 1px solid $secondary-color;
-    border-top: 8px solid transparent;
-    /* Removed unnecessary border-top */
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
     background-color: $secondary-color;
 }
 
-.table-hover tbody tr:hover {
-    width: auto;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid $light-gray;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
-    background-color: $primary-color;
-}
-
+.table-hover tbody tr:hover,
 .table-active {
     width: auto;
-    background-color: $primary-color;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid $light-gray;
-    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
 }
 
@@ -234,10 +214,10 @@ table {
 .btn-info,
 .btn-danger {
     border-radius: 5px;
-    padding: auto;
-    /* Assuming consistent padding is intended */
-    margin: auto;
-    /* Assuming consistent margin is intended */
+    padding: 10px 15px;
+    /* Valores consistentes */
+    margin: 5px;
+    /* Valores consistentes */
 }
 
 .btn-info {

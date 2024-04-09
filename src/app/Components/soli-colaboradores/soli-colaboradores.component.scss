@@ -37,39 +37,57 @@
 
 /* Consider using a separate file for base colors */
 
-$primary-color: #333; // Text color
-$secondary-color: #fff; // White color
-$tertiary-color: #f2f2f2; // Light gray color
-$border-color: #ddd; // Table border color
-$button-color: #007bff; // Button background color
-$button-hover-color: #0056b3; // Button hover color
+$primary-color: #79cbe7; // Color azul claro (tomado de la base)
+$secondary-color: #a29b9b; // Gris azulado (tomado de la base)
+$text-color: #333;
+$light-gray: #ddd;
+$border-color: $light-gray; // Alineado con la variable existente
+$button-color: #007bff;
+$button-hover-color: #0056b3;
 
-/* General table styles */
+/* General table styles, aplicando gradiente de fondo */
 
 .table {
     width: 50%;
     margin: 65px auto;
     border-collapse: collapse;
     border-spacing: 0;
+    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
 }
 
 
 /* Table header styles */
 
 .table thead th {
-    background-color: $primary-color;
-    color: $secondary-color;
+    color: $text-color; // Usando la variable de texto
     padding: 10px;
     text-align: left;
 }
 
 
-/* Table cell padding */
+/* Eliminando clase redundante */
 
-.table-cell {
+// Añade esta clase intermedia
+.table-cell-base {
     padding: 10px;
+    border: 1px solid $border-color;
 }
 
+// Asigna la clase intermedia a los selectores originales
+.table td,
+.table th {
+    @extend .table-cell-base;
+}
+
+// Extiende únicamente la clase intermedia
+.table-cell {
+    @extend .table-cell-base;
+}
+
+// .table-cell {
+//     @extend .table td,
+//     .table th;
+// }
 
 /* Table cell and header styles */
 
@@ -82,11 +100,11 @@ $button-hover-color: #0056b3; // Button hover color
 /* Alternate row color (optional) */
 
 .table tbody tr:nth-child(even) {
-    background-color: $tertiary-color;
+    background-color: #f2f2f2; // Usando el valor directo
 }
 
 
-/* Action button styles */
+/* Action button styles: sin observaciones */
 
 .table .btn {
     padding: 5px 10px;
