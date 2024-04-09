@@ -51,7 +51,7 @@
         <input type="date" id="fechaFin" class="form-control" [(ngModel)]="fechaFin">
       </div>
       <div class="col-md-3 mb-2">
-        <button type="button" class="btn btn-primary mt-2">Filtrar</button>
+        <button type="button" class="btn btn-primary mt-2" (click)="filtrarIngresos()">Filtrar</button>
       </div>
       <div class="col-md-3 text-md-end mb-2">
         <button *ngIf="rolUsuario !== 'Administrador' && rolUsuario !== 'Colaborador'" type="button" class="btn btn-success" routerLink="/addIngreso">Agregar Ingreso</button>
@@ -70,15 +70,16 @@
             [rowsPerPageOptions]="[10, 25, 50]"
             currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
             [loading]="loading"
-            [globalFilterFields]="['nombre', 'fecha', 'detalle', 'valor']"
+            [globalFilterFields]="['ingreso#', 'fecha', 'detalle', 'valor']"
             [style]="{marginTop: '20px'}"
+            [tableStyle]="{'min-width': '60rem'}"
           >
             <ng-template pTemplate="caption">
               <div class="cont-search">
                 <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
                 <span class="p-input-icon-left">
                   <i class="pi pi-search"></i>
-                  <input pInputText type="text" (input)="filterData($event)" placeholder="Search keyword" />
+                  <input pInputText type="text" (input)="filterData($event)" placeholder="Buscar por palabra clave" />
                 </span>
               </div>
             </ng-template>

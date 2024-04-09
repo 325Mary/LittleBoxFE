@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Solicitud } from '../../interfaces/solicitud';
@@ -11,6 +11,7 @@ import { SolicitudModalComponent } from "../../Components/modals/solicitud-modal
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import spanish from '../../../assets/i18n/spanish.json';
+import { Table } from 'primeng/table';
 
 
 
@@ -20,6 +21,8 @@ import spanish from '../../../assets/i18n/spanish.json';
   styleUrl: './list-edict-solicitud.component.scss',
 })
 export class ListEdictSolicitudComponent implements OnInit{
+
+  @ViewChild('dt1') dt1!: Table;
 
   dtOptions: DataTables.Settings = {};
   languageOptions: any;
@@ -91,13 +94,13 @@ export class ListEdictSolicitudComponent implements OnInit{
   getColorByEstado(estado: string | undefined): string {
     switch (estado) {
       case 'pendiente':
-        return 'orange'; // color naranja
+        return '#F9A70C'; // color naranja
       case 'aprobado':
-        return 'blue'; // color azul
+        return '#0B6AD0'; // color azul
       case 'finalizado':
-        return 'green'; // color verde
+        return '#1CBF32'; // color verde
       case 'rechazado':
-        return 'red'; // color rojo
+        return '#C43619'; // color rojo
       default:
         return ''; // color predeterminado o ninguno
     }
@@ -211,7 +214,7 @@ export class ListEdictSolicitudComponent implements OnInit{
 
 
 
-  seleccionarSolicitud(solicitudId: string) {
+    seleccionarSolicitud(solicitudId: string) {
     console.log("Este es la solicitudId de seleccionar solicitud: ", solicitudId);
 
     if (this.solicitudesSeleccionadas.includes(solicitudId)) {
@@ -228,4 +231,15 @@ export class ListEdictSolicitudComponent implements OnInit{
     const modalRef = this.modalService.open(SolicitudModalComponent);
     modalRef.componentInstance.solicitud = solicitud;
   }
+
+  clear(table: Table) {
+    table.clear();
+  }
+
+  filterData(event: any) {
+    if (event && event.target && this.dt1) {
+      this.dt1.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
+}
+
 }

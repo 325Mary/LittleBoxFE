@@ -1,43 +1,57 @@
 .container {
-  background-color: #f2f2f2;
-  padding: 20px;
-  width: 70%;
-  margin: 50px auto;}
-
-.filters {
-  background-color: rgba(213, 206, 206, 0.8);
-  padding: 20px;
+  background-color: #F8F9F9;
+  padding: 30px;
+  width: 90%;
+  margin-top: 100px;
   margin-bottom: 20px;
-  border: 1px solid #c6bdbd; 
-  border-radius: 10px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9); /* Agrega sombra al contenedor */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
 }
 
-.filters label, .filters input, .filters select, .filters button {
-  margin-right: 10px;
+.cont-table{
+  margin-top: 10px;
+  padding: 2px;
+  background-color: white;
 }
 
-.egresos-list table {
+.form-cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
+}
+
+.items-form {
+  flex: 0 0 calc(26% - 20px); /* Ancho del 50% menos el margen */
+  margin-bottom: 20px;
+}
+
+.items-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.items-form select,
+.items-form input {
   width: 100%;
-  border-collapse: collapse;
-  border-radius: 10px; 
+  height: 40px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
-.egresos-list th, .egresos-list td {
-  padding: 10px;
-  border: 1px solid #ddd;
+.cont-form-booton {
+  flex: 0 0 100%; /* El botón ocupa todo el ancho */
+  text-align: center;
 }
 
-.no-egresos {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-}
-
-.additional-background {
-  background-color: #ddd;
-  padding: 20px;
-  width: 100%;
-  margin: 0
-   auto;
-}
-
+.cont-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .cont-search button {
+    margin-right: 10px;
+  }

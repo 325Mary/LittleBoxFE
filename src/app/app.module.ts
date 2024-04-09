@@ -79,6 +79,9 @@ import { TableModule } from 'primeng/table';
 import { ListboxModule } from 'primeng/listbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -146,6 +149,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     ListboxModule,
     InputTextModule,
     SplitButtonModule,
+    CheckboxModule,
+    DropdownModule,
+    CalendarModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
