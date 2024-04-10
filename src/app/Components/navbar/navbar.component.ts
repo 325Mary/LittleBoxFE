@@ -90,6 +90,7 @@ export class NavbarComponent implements OnInit {
       this.updateMenuItems();
       if (isLoggedIn) {
         this.refreshNotifications(); // Actualizar el contador de notificaciones al iniciar sesión
+        this.ActualizarSaldoCaja()
       }
     });
     this.refreshNotifications(); // Actualizar el contador de notificaciones al iniciar el componente

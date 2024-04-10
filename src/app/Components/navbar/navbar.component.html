@@ -12,7 +12,7 @@
  
   <ng-template pTemplate="end">
     <div class="cont-notifi-singIn-quit ">
-      <div class="saldo-caja" [ngClass]="{'positivo': saldoCaja >= 0, 'negativo': saldoCaja < 0}">
+      <div *ngIf="isLoggedIn" class="saldo-caja" [ngClass]="{'positivo': saldoCaja >= 0, 'negativo': saldoCaja < 0}">
         <h3>Saldo de Caja: {{ saldoCaja | currency:'COL' }}</h3>
       </div>
       <div *ngIf="isLoggedIn" class="cont-notification">

@@ -186,13 +186,6 @@ div {
   }
 }
 
-.saldo-caja {
- 
-  padding-top: 8px;
-  margin-right: 30px;
-  border-radius: 5px;
-  text-align: center;
-}
 
 .positivo {
   color: green; /* Color verde para saldos positivos */
@@ -202,6 +195,27 @@ div {
   color: red; /* Color rojo para saldos negativos */
 }
 
+.saldo-caja {
+  overflow: hidden; /* Oculta el contenido que se desborde del contenedor */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  padding-top: 8px;
+  margin-right: 30px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.saldo-caja h3 {
+  animation: moveBalance 12s linear infinite; /* Aplica la animación al elemento h3 */
+}
+
+@keyframes moveBalance {
+  0% {
+    transform: translateX(-100%); /* Mueve el texto hacia la derecha */
+  }
+  100% {
+    transform: translateX(100%); /* Devuelve el texto al inicio (izquierda) */
+  }
+}
   
   
   // .notification-container ul {
