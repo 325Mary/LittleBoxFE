@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute,Router } from '@angular/router';
 import { Ingreso } from '../../../interfaces/ingreso';
@@ -7,6 +7,7 @@ import { SweetAlertService } from '../../../services/sweet-alert.service';
 import { TokenValidationService } from '../../../services/token-validation-service.service';
 import spanish from '../../../../assets/i18n/spanish.json';
 import { SignInUpService } from "../../../services/sign-in-up.service";
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-list-delete-ingresos',
@@ -14,6 +15,8 @@ import { SignInUpService } from "../../../services/sign-in-up.service";
   styleUrl: './list-delete-ingresos.component.scss'
 })
 export class ListDeleteIngresosComponent {
+
+  @ViewChild('dt1') dt1!: Table;
 
   dtOptions: DataTables.Settings = {};
   languageOptions: any;
@@ -132,6 +135,16 @@ export class ListDeleteIngresosComponent {
     }
   }
 
+  clear(table: Table) {
+    table.clear();
+  }
 
+  filterData(event: any) {
+    if (event && event.target && this.dt1) {
+      this.dt1.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
+}
+
+  
   
 }

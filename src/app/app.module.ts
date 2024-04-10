@@ -82,6 +82,12 @@ import { GastoComponent } from './Components/gasto/gasto.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { CrearSuperUsuarioComponent } from './Components/crear-super-usuario/crear-super-usuario.component';
 import { ListboxModule } from 'primeng/listbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+
 
 @NgModule({
   declarations: [
@@ -151,6 +157,11 @@ import { ListboxModule } from 'primeng/listbox';
     CommonModule,
     TableModule,
     ListboxModule,
+    InputTextModule,
+    SplitButtonModule,
+    CheckboxModule,
+    DropdownModule,
+    CalendarModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

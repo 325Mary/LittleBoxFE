@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { EgresosService } from "../../services/egresos.service";
 import { CategoriasService } from "../../services/categoria.service";
 import { TercerosService } from "../../services/terceros.service";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalEgresoComponent } from "../modal-egreso/modal-egreso.component";
+import { Table } from 'primeng/table';
+
 import spanish from '../../../assets/i18n/spanish.json';
 
 @Component({
@@ -12,12 +14,16 @@ import spanish from '../../../assets/i18n/spanish.json';
   styleUrls: ['./list-egresos.component.scss']
 })
 export class ListEgresosComponent implements OnInit {
+   
+  @ViewChild('dt1') dt1!: Table;
+
   dtOptions: DataTables.Settings = {};
   languageOptions: any;
 
   egresos: any[] = [];
   categoria: any[] = [];
   tercero: any[] = [];
+  loading: boolean = false;
   categoriaSeleccionada: any;
   terceroSeleccionado: any;
   fechaInicio: string = ''; // Se actualizará automáticamente
@@ -54,6 +60,7 @@ export class ListEgresosComponent implements OnInit {
         this.categoria = response.data;
         if (this.categoria.length > 0) {
           this.categoriaSeleccionada = this.categoria[0]._id;
+          console.log("obtener categorias: ",this.categoriaSeleccionada);
         }
       },
       (error) => {
@@ -68,6 +75,8 @@ export class ListEgresosComponent implements OnInit {
         this.tercero = response.data;
         if (this.tercero.length > 0) {
           this.terceroSeleccionado = this.tercero[0]._id;
+          console.log("obtener terceros: ",this.terceroSeleccionado);
+          
         }
       },
       (error) => {
@@ -120,6 +129,9 @@ export class ListEgresosComponent implements OnInit {
     modalRef.componentInstance.egreso = egreso;
   }
 
+  clear(table: Table) {
+    table.clear();
+  }
   establecerFechasMesActual(): void {
     const fechaActual = new Date();
     const primerDiaMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), 1);
@@ -134,5 +146,10 @@ export class ListEgresosComponent implements OnInit {
     const totalPages = Math.ceil(this.egresos.length / this.itemsPerPage);
     return Array(totalPages).fill(0).map((x, i) => i + 1);
   }
-  
+
+  filterData(event: any) {
+    if (event && event.target && this.dt1) {
+      this.dt1.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
+}
 }
