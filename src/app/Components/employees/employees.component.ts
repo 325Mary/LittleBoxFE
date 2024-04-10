@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { Observable } from 'rxjs';
+import { SweetAlertService } from "../../services/sweet-alert.service";
 
 @Component({
   selector: 'app-employees',
@@ -9,9 +10,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./employees.component.scss']
 })
 export class EmployeesComponent  implements OnInit {
+
+
   usuarios: any[] = [];
 
-  constructor(private signInUpService: SignInUpService) { }
+  constructor(private signInUpService: SignInUpService, private sweetAlert:SweetAlertService) { }
 
   ngOnInit(): void {
     this.obtenerUsuariosPorTenantId();
@@ -41,7 +44,8 @@ export class EmployeesComponent  implements OnInit {
         console.log('Usuario activado:', response);
         // Actualizar la lista de usuarios después de activar uno
         this.obtenerUsuariosPorTenantId();
-        alert('Usuario Activo')
+        // alert('Usuario Activo')
+        this.sweetAlert.showSuccessToast("El Usuario ha sido activado correctamente!")
       },
       error => {
         console.error('Error al activar el usuario:', error);
@@ -61,7 +65,8 @@ export class EmployeesComponent  implements OnInit {
         console.log('Usuario inactivado:', response);
         // Actualizar la lista de usuarios después de inactivar uno
         this.obtenerUsuariosPorTenantId();
-        alert('Usuario Inactivo')
+        // alert('Usuario Inactivo')
+        this.sweetAlert.showSuccessToast("El Usuario ha sido activado correctamente!")
       },
       error => {
         console.error('Error al inactivar el usuario:', error);

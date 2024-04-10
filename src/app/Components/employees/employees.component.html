@@ -1,4 +1,4 @@
-<table class="table">
+<!-- <table class="table">
   <thead>
     <tr>
       <th>Nombre de usuario</th>
@@ -11,12 +11,44 @@
     <tr *ngFor="let usuario of usuarios">
       <td>{{ usuario.username }}</td>
       <td>{{ usuario.rol }}</td>
-      <td [ngStyle]="{ 'border-color': usuario.status === 'activo' ? 'green' : 'red', 'border-style': 'solid', 'border-width': '3px' }">
+      <td
+        [ngStyle]="{ 'border-color': usuario.status === 'activo' ? 'green' : 'red'}">
         {{ usuario.status }}
-        <td>
+      <td>
         <button (click)="activarUsuario(usuario._id)">Activar</button>
-  <button (click)="inactivarUsuario(usuario._id)">Inactivar</button>
+        <button (click)="inactivarUsuario(usuario._id)">Inactivar</button>
       </td>
     </tr>
   </tbody>
-</table>
+</table> -->
+
+<div class="container"> <!-- Agregamos la clase mt-5 para añadir un margen top -->
+  <div class="row justify-content-center"> <!-- Centramos el contenido horizontalmente -->
+    <div class="col-md-10"> <!-- Establecemos el ancho máximo de la tabla -->
+      <p-table [value]="usuarios" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nombre de usuario</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usuario>
+          <tr>
+            <td>{{ usuario.username }}</td>
+            <td>{{ usuario.rol }}</td>
+            <td [style.color]="usuario.status === 'activo' ? 'green' : 'red'">
+              {{ usuario.status }}
+            </td>
+            <td>
+              <p-button label="Activar" [text]="true" [raised]="true" severity="Primary" (click)="activarUsuario(usuario._id)"></p-button>
+              <p-button label="Inactivar" [text]="true" [raised]="true" severity="danger" (click)="inactivarUsuario(usuario._id)"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+

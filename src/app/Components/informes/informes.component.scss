@@ -122,12 +122,13 @@ body {
 /* Filters styles */
 
 .filters {
-    background-color: rgba($primary-color, 0.8); // Usa el color primario con opacidad
+    background-color: rgba(233, 227, 227, 0.8);
     padding: 20px;
     margin-bottom: 20px;
-    border: 1px solid $border-color;
+    border: 1px solid #c6bdbd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+    /* Agrega sombra al contenedor */
 }
 
 .filters label,
@@ -135,6 +136,7 @@ body {
 .filters select,
 .filters button {
     margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 
@@ -193,23 +195,10 @@ body {
     padding: 5px 10px;
     border: 1px solid $border-color;
     border-radius: 3px;
-    background-color: $secondary-color; // Usa el color secundario
-    color: #333;
+    background-color: #217be2;
+    color: white;
 }
 
-.pagination-controls a:hover {
-    padding: 5px;
-    background-color: #e9e9e9; // Mantiene este color como un tono claro
-}
-
-
-/* Button styles */
-
-button {
-    background-color: $primary-color; // Usa el color primario
-    color: #fff; // Texto blanco para contraste
-    border: none;
-    padding: 8px 15px; // Ajusta el padding
-    border-radius: 5px;
-    cursor: pointer;
+a:hover {
+    background-color: #0863db;
 }

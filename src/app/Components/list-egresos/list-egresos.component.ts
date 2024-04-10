@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { EgresosService } from "../../services/egresos.service";
 import { CategoriasService } from "../../services/categoria.service";
 import { TercerosService } from "../../services/terceros.service";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalEgresoComponent } from "../modal-egreso/modal-egreso.component";
+import { Table } from 'primeng/table';
+
 
 @Component({
   selector: 'app-list-egresos',
@@ -11,9 +13,13 @@ import { ModalEgresoComponent } from "../modal-egreso/modal-egreso.component";
   styleUrls: ['./list-egresos.component.scss']
 })
 export class ListEgresosComponent implements OnInit {
+   
+  @ViewChild('dt1') dt1!: Table;
+
   egresos: any[] = [];
   categoria: any[] = [];
   tercero: any[] = [];
+  loading: boolean = false;
   categoriaSeleccionada: any;
   terceroSeleccionado: any;
   fechaInicio: string = '';
@@ -39,6 +45,7 @@ export class ListEgresosComponent implements OnInit {
         this.categoria = response.data;
         if (this.categoria.length > 0) {
           this.categoriaSeleccionada = this.categoria[0]._id;
+          console.log("obtener categorias: ",this.categoriaSeleccionada);
         }
       },
       (error) => {
@@ -53,6 +60,8 @@ export class ListEgresosComponent implements OnInit {
         this.tercero = response.data;
         if (this.tercero.length > 0) {
           this.terceroSeleccionado = this.tercero[0]._id;
+          console.log("obtener terceros: ",this.terceroSeleccionado);
+          
         }
       },
       (error) => {
@@ -109,5 +118,13 @@ export class ListEgresosComponent implements OnInit {
     modalRef.componentInstance.egreso = egreso;
   }
 
-  
+  clear(table: Table) {
+    table.clear();
+  }
+
+  filterData(event: any) {
+    if (event && event.target && this.dt1) {
+      this.dt1.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
+}
 }

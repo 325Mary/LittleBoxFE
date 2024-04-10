@@ -3,13 +3,17 @@ import { InformesService } from "../../services/informes.service";
 import { CategoriasService } from "../../services/categoria.service";
 import { TercerosService } from "../../services/terceros.service";
 import { ExcelService } from "../../services/excel.service";
-import { CardModule } from 'primeng/card';
+import spanish from '../../../assets/i18n/spanish.json';
+
 @Component({
   selector: 'app-informes',
   templateUrl: './informes.component.html',
   styleUrls: ['./informes.component.scss']
 })
 export class InformesComponent {
+  dtOptions: DataTables.Settings = {};
+  languageOptions: any;
+
   fechaInicio: string = '';
   fechaFin: string = '';
   movimientosDeCaja: any[] = [];
@@ -29,6 +33,11 @@ export class InformesComponent {
   ngOnInit(): void {
     this.obtenerCategorias();
     this.obtenerTercerosPorTenantId();
+    this.languageOptions = spanish;
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: this.languageOptions
+    };
   }
 
   obtenerCategorias(): void {

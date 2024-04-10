@@ -7,6 +7,9 @@ import { MenuItem } from 'primeng/api';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 // import { SidebarService } from '../../services/sidebar.service';
 import { Sidebar } from 'primeng/sidebar';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationService } from "../../services/notification.service";
+import { SaldoCajaService } from "../../services/saldo-caja.service";
 
 @Component({
   selector: 'app-navbar',
@@ -29,27 +32,84 @@ export class NavbarComponent implements OnInit {
   isAdministrador = false;
   isColaborador = false;
   currentRoute = '';
+  notificationsCount = 0;
+  miValorComoString: string = ""
+  saldoCaja: any;
 
   constructor(
     private router: Router,
     private authService: SignInUpService,
     private tokenValidationService: TokenValidationService,
     private cdr: ChangeDetectorRef,
-  ) { }
+    private notificationService: NotificationService,
+    private saldoDeCaja: SaldoCajaService,
+  ) { 
+    this.router.events.subscribe((val) => {
+      this.currentRoute = this.router.url;
+    });
+  }
 
+  ActualizarSaldoCaja(): void {
+    this.saldoDeCaja.getSaldoDeCaja().subscribe((Data: any) => {
+      if (Data) {
+        this.saldoCaja = Data.data;
+        console.log("saldo caja = ",this.saldoCaja);
+      }else{
+        console.error("Error al obtener el saldo de caja ");
+        
+      }
+    });
+  }
+  showNotifications: boolean = false;
+
+  closeNotifications(): void {
+    this.showNotifications = false;
+  }
+
+  openNotifications(): void {
+    this.showNotifications = !this.showNotifications;
+    this.miValorComoString = this.notificationsCount.toString();
+    if (this.showNotifications) {
+      this.refreshNotifications(); // Actualizar el contador de notificaciones al abrir las notificaciones
+    }
+  }
+
+  
   ngOnInit(): void {
     this.checkAuthentication();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.currentRoute = this.router.url;
         this.closeModal();
+        this.checkAuthentication();
       }
     });
 
     this.loginStatusSubscription = this.authService.loginStatusChanged.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
       this.updateMenuItems();
+      if (isLoggedIn) {
+        this.refreshNotifications(); // Actualizar el contador de notificaciones al iniciar sesión
+        this.ActualizarSaldoCaja()
+      }
     });
+    this.refreshNotifications(); // Actualizar el contador de notificaciones al iniciar el componente
+    this.ActualizarSaldoCaja()
+  }
+
+  async refreshNotifications(): Promise<void> {
+    try {
+      const notifications = await this.notificationService.getNotificationsByUserId().toPromise();
+
+      // Verificar si notifications no es undefined antes de acceder a la propiedad length
+      if (notifications !== undefined) {
+        // Contar las notificaciones no leídas
+        this.notificationsCount = notifications.filter(notification => !notification.read).length;
+        this.miValorComoString = this.notificationsCount.toString(); // Actualizar el contador de notificaciones
+      }
+    } catch (error) {
+      console.error('Error al obtener las notificaciones:', error);
+    }
   }
 
   closeCallback(e:any): void {
@@ -66,6 +126,7 @@ sidebarVisible: boolean = false;
         this.userData = await this.tokenValidationService.getUserData(token);
         this.setUserRoles(this.userData.rol);
         this.updateMenuItems();
+        this.cdr.detectChanges(); // Realizar detección de cambios
       }
     } catch (error) {
       console.error('Error al verificar la autenticación:', error);
@@ -83,10 +144,7 @@ sidebarVisible: boolean = false;
 
   updateMenuItems() {
     this.items = [
-      { label: 'Gráficos', icon: 'pi pi-chart-bar', routerLink: '/graficos', style: { 'color': 'white' }, visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
-      {
-        separator: true
-      },
+      { label: 'Gráficos', icon: 'pi pi-chart-bar', routerLink: '/graficos',  visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
       { label: 'Informes', icon: 'pi pi-file', routerLink: '/Informes', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
       { label: 'Ingresos', icon: 'pi pi-arrow-up', routerLink: '/obtenerTodosLosIngresos', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
       { label: 'Crear Egreso', icon: 'pi pi-arrow-down', routerLink: '/crearEgreso', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
@@ -97,8 +155,12 @@ sidebarVisible: boolean = false;
 
   @HostListener('document:click', ['$event'])
   handleClick(event: Event) {
-    if (this.isMenuOpen && !(event.target as Element)?.closest('.menu-container') && !(event.target as Element)?.closest('.contenedor-img')) {
+    if (this.isMenuOpen && (event.target as Element)?.closest('.menu-container') == null && (event.target as Element)?.closest('.contenedor-img') == null) {
       this.isMenuOpen = false;
+    }
+    const target = event.target as HTMLElement;
+    if (!target.closest('.notification-container') && !target.closest('button[pButton]')) {
+      this.closeNotifications();
     }
   }
 

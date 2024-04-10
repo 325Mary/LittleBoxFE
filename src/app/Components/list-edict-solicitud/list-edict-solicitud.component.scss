@@ -1,135 +1,67 @@
-// .additional-background {
-//     background-color: #0fbad8;
-//     padding: 20px;
-//     width: 100%;
-//     margin: 0 auto;
-// }
-// .contenedor-container {
-//     align-items: center;
-//     justify-items: auto;
-//     background-color: #003cff;
-//     padding: 1%;
-//     margin: auto;
-//     width: 50%;
-//     border-radius: 10px;
-// }
-// .filtro-fechas {
-//     width: min-content;
-//     margin: 10px;
-//     padding: 10px;
-// }
-// .estado-solicitudes-container {
-//     width: min-content;
-//     margin: 1%;
-//     padding: 1%;
-//     size: 10%;
-// }
-// .list-container {
-//     border-radius: 10px;
-//     background-color: #003cff;
-//     width: auto;
-//     margin: 1%;
-//     padding: 1%;
-//     size: 10%;
-// }
-// .form-control {
-//     border-radius: 10px;
-//     // width: min-content;
-//     margin: 10px;
-//     // padding: 1%;
-//     // size: 10%;
-// }
-// .table-active {
-//     border-radius: 10px;
-// }
-// .checkbox-container {
-//     border-radius: 10px;
-//     display: flex;
-//     justify-content: center;
-//     /* Centrar horizontalmente */
-//     align-items: center;
-//     /* Centrar verticalmente */
-//     height: 100%;
-//     /* Ajustar la altura para centrar verticalmente */
-// }
-
-/* Base colors (consider using a separate file for global colors) */
-
-$primary-color: #79cbe7; // Tomado de la base
-$secondary-color: #a29b9b; // Tomado de la base
-$text-color: white;
-
-/* Background styles, aplicando gradiente de fondo */
-
-.additional-background,
-.list-container {
-    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
-    padding: 1%;
-    margin: auto;
-    border-radius: 10px;
-}
-
-
-/* Ajustes a width y centrado horizontal */
-
-.additional-background {
-    width: 100%;
-}
-
-.contenedor-container {
-    width: 50%;
-    display: flex;
-    /* Centrado horizontal sin propiedad adicional */
-    justify-content: center;
-}
-
-
-/* Eliminando clase redundante */
-
-.contenedor-container>* {
-    @extend .additional-background;
-}
-
-
-/* Filter styles */
-
-.filtro-fechas {
-    width: min-content;
-    padding: 10px;
-    margin: 10px;
-}
-
-
-/* Estado de solicitudes container styles */
-
-.estado-solicitudes-container {
-    width: min-content;
-    padding: 1%;
-    margin: 1%;
-}
-
-
-/* Form control styles: sin observaciones */
-
-.form-control {
-    border-radius: 10px;
-    margin: 10px;
-}
-
-
-/* Table row styles: sin observaciones */
-
-.table-active {
-    border-radius: 10px;
-}
-
-
-/* Checkbox container styles: sin observaciones */
-
 .checkbox-container {
-    border-radius: 10px;
     display: flex;
     justify-content: center;
+    /* Centrar horizontalmente */
     align-items: center;
+    /* Centrar verticalmente */
     height: 100%;
+    /* Ajustar la altura para centrar verticalmente */
+}
+
+.contenedor {
+    padding: 5rem 0;
+}
+
+.table th,
+.table td,
+.table label,
+.table input[type="date"],
+.table button {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #555;
+}
+
+.table {
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.cont-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cont-search button {
+    margin-right: 10px;
+}
+
+// .contenedor-header{
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// }
+
+/* Estilo para los botones dentro de la celda de la tabla */
+
+.table-actions {
+    white-space: nowrap;
+    /* Evita que los elementos se envuelvan en varias líneas */
+}
+
+
+/* Estilo para los botones dentro de la celda de la tabla */
+
+.table-actions button {
+    margin-right: 5px;
+    /* Espacio entre los botones */
+}
+
+.fecha-input {
+    height: 3rem;
+}
+
+.contenedor-header {
+    margin: 3rem 0;
 }

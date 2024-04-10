@@ -1,233 +1,28 @@
-// .additional-background {
-//     background-color: #0fbad8;
-//     padding: 20px;
-//     width: auto;
-//     margin: 20px;
-// }
-// .container {
-//     width: auto;
-//     padding: 5px;
-//     margin: 20px auto;
-//     background-color: #003cff;
-//     border-radius: 10px;
-// }
-// .contenedor.container {
-//     background-color: #003cff;
-//     padding: 10px;
-//     width: auto;
-//     margin: 20px auto;
-//     border-radius: 10px;
-// }
-// .title {
-//     font-size: large;
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//     margin-bottom: 20px;
-// }
-// .title h4 {
-//     width: 25%;
-//     font-size: xx-large;
-//     color: #333;
-// }
-// .filtro-fechas {
-//     display: flex;
-//     align-items: center;
-//     gap: 10px;
-//     background-color: #003cff;
-//     padding: 20px;
-//     width: 75%;
-//     margin: 10px;
-//     border-radius: 10px;
-// }
-// .filtro-fechas label {
-//     width: auto;
-//     color: #333;
-//     margin-right: 5px;
-// }
-// .filtro-fechas button {
-//     width: auto;
-//     background-color: #007bff;
-//     border-color: #f7f9fa;
-//     color: #fff;
-//     border-radius: 5px;
-// }
-// .estado-ingresos-container {
-//     text-align: right;
-// }
-// .estado-ingresos-container button {
-//     background-color: #28a745;
-//     border-color: #ffffff;
-//     color: #fff;
-//     border-radius: 5px;
-// }
-// table {
-//     width: 100%;
-//     padding: 10px;
-//     margin: auto;
-//     background-color: #003cff;
-//     border-radius: 10px;
-//     border: 1px solid #c6bdbd00;
-// }
-// .table-primary th {
-//     width: auto;
-//     margin: 3px;
-//     padding: 3px;
-//     margin-bottom: 10px;
-//     border: 1px solid #0fbad8;
-//     border-top: 8px;
-//     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
-//     background-color: #0fbad8;
-// }
-// .table-hover tbody tr:hover {
-//     width: auto;
-//     padding: 10px;
-//     margin-bottom: 10px;
-//     border: 1px solid #c6bdbd;
-//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
-//     background-color: #003cff;
-// }
-// .table-active {
-//     width: auto;
-//     background-color: #003cff;
-//     padding: 10px;
-//     margin-bottom: 10px;
-//     border: 1px solid #c6bdbd;
-//     border-radius: 10px;
-//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
-// }
-// .btn-info,
-// .btn-danger {
-//     border-radius: 5px;
-// }
-// .btn-info {
-//     background-color: #17a2b8;
-//     border-color: #f9fafa;
-//     color: #fff;
-//     width: auto;
-//     padding: auto;
-//     margin: auto;
-// }
-// .btn-danger {
-//     margin: auto;
-//     padding: auto;
-//     width: auto;
-//     background-color: #dc3545;
-//     border-color: #f5f8f8;
-//     color: #fff;
-// }
-$primary-color: #79cbe7; // Color azul claro (actualizado)
-$secondary-color: #a29b9b; // Gris azulado (actualizado)
-$success-color: #28a745;
-$info-color: #17a2b8;
-$error-color: #dc3545;
-$light-gray: #ddd; // Definido localmente (eliminada la importación)
-$text-color: #333;
-
-/* Background styles */
-
-body {
-    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
+.contenedor {
+    padding: 5rem 0;
 }
 
-.additional-background,
-.filtro-fechas,
-.container {
-    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
-    /* Hereda del cuerpo */
-    padding: 20px;
-    width: auto;
-    margin: 20px;
-    border-radius: 10px;
+.table th,
+.table td,
+.table label,
+.table input[type="date"],
+.table button {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #555;
 }
 
+.table {
+    font-size: 16px;
+    margin-bottom: 0;
+}
 
-/* Remove redundant class nesting (.contenedor.container) */
-
-.title {
-    font-size: large;
+.cont-search {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    justify-content: space-between;
 }
 
-.title h4 {
-    width: 25%;
-    font-size: xx-large;
-    color: $text-color;
-}
-
-.filtro-fechas label {
-    color: $text-color;
-    margin-right: 5px;
-}
-
-.filtro-fechas button {
-    background-color: #007bff;
-    border-color: #f7f9fa;
-    color: #fff;
-    border-radius: 5px;
-}
-
-.estado-ingresos-container button {
-    background-color: $success-color;
-    border-color: #ffffff;
-    color: #fff;
-    border-radius: 5px;
-}
-
-
-/* Table styles */
-
-table {
-    width: 100%;
-    padding: 10px;
-    margin: auto;
-    background: none;
-    /* Hereda del cuerpo */
-    border-radius: 10px;
-}
-
-.table-primary th {
-    width: auto;
-    margin: 3px;
-    padding: 3px;
-    margin-bottom: 10px;
-    border: 1px solid $secondary-color;
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
-    background-color: $secondary-color;
-}
-
-.table-hover tbody tr:hover,
-.table-active {
-    width: auto;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid $light-gray;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
-}
-
-
-/* Button styles */
-
-.btn-info,
-.btn-danger {
-    border-radius: 5px;
-    padding: 10px 15px;
-    /* Valores consistentes */
-    margin: 5px;
-    /* Valores consistentes */
-}
-
-.btn-info {
-    background-color: $info-color;
-    border-color: #f9fafa;
-    color: #fff;
-}
-
-.btn-danger {
-    background-color: $error-color;
-    border-color: #f5f8f8;
-    color: #fff;
+.cont-search button {
+    margin-right: 10px;
 }
