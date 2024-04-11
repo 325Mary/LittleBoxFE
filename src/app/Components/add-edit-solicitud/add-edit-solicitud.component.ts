@@ -14,6 +14,7 @@ import { ModalService } from '../../services/modal.service';
 import { FacturaService } from '../../services/factura.service';
 import { TerceroModalComponent } from "../../Components/modals/tercero-modal/tercero-modal.component";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-add-edit-solicitud',
@@ -43,6 +44,8 @@ export class AddEditSolicitudComponent {
   selectedTerceroId: string = '';
   facturaSeleccionada: File | null = null;
 
+  fechaSinHora: string = '';
+
   extension: string = '';
 
   solicitud: any = {};
@@ -68,8 +71,8 @@ export class AddEditSolicitudComponent {
     private aRouter: ActivatedRoute,
     private tokenValidationService: TokenValidationService,
     private sweetAlertService: SweetAlertService,
-    private modalService2:ModalService,
-    private facturaService:FacturaService,
+    private modalService2: ModalService,
+    private facturaService: FacturaService,
     private modalService: NgbModal
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
@@ -86,19 +89,20 @@ export class AddEditSolicitudComponent {
       console.error('No se encontró ningún token en el almacenamiento local');
     }
     console.log(this.tenantId);
+
   }
 
-  
+   
 
   // onFileSelected(event: any) {
   //   console.log("Evento de cambio:", event);
-  
+
   //   if (event.target.files.length === 0) {
   //     return;
   //   }
-  
+
   //   const file = event.target.files[0];
-  
+
   //   // Validar tipo de archivo
   //   const allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
   //   const extension = file.name.split('.').pop()?.toLowerCase();
@@ -107,9 +111,9 @@ export class AddEditSolicitudComponent {
   //     this.sweetAlertService.showErrorAlert('El archivo seleccionado no es compatible. Solo se admiten archivos JPG, JPEG, PNG y PDF.');
   //     return;
   //   }
-  
+
   //   this.facturaSeleccionada = file;
-  
+
   //   // Obtener la URL del archivo
   //   const reader = new FileReader();
   //   reader.onload = () => {
@@ -122,34 +126,34 @@ export class AddEditSolicitudComponent {
   // }else{
   //   console.error('No se ha seleccionado ningun archivo.');
   // }
-   
+
   // }
 
   onFileSelected(event: any) {
     const selectedFile = event.target.files[0]; // Obtener el archivo seleccionado
     const fileReader = new FileReader();
-    
+
     fileReader.onload = () => {
       // Cuando la lectura del archivo esté completa
       // Asignar el contenido del archivo (sin prefijo de ruta) a company.pdfRunt
       this.formulario.facturaUrl = fileReader.result as string; // Esto asume que pdfRunt es de tipo string
     };
-    
+
     // Leer el contenido del archivo como una URL de datos (data URL)
     fileReader.readAsDataURL(selectedFile);
   }
-  
+
 
   openFacturaModal() {
     console.log("Abriendo modal de factura");
     this.showModal = true;
-  
+
     // Verificar si la facturaUrl está definida y no es nula
     if (!this.formulario.facturaUrl) {
       console.log("No se ha adjuntado ninguna factura");
       return;
     }
-  
+
     // Verificar si se está creando una nueva solicitud o modificando una existente
     if (!this.id) {
       // Si no hay ID, significa que se está creando una nueva solicitud
@@ -170,18 +174,18 @@ export class AddEditSolicitudComponent {
       });
     }
   }
-  
+
   verificarTipoArchivo(url: string | undefined) {
-    console.log("estaes la url completa...",url);
-    
+    console.log("estaes la url completa...", url);
+
     if (!url) {
       console.error('La URL de la factura es indefinida.');
       // Tratar el caso en el que la URL es indefinida
       return;
     }
-  
+
     const extension = url.split('.').pop()?.toLowerCase()!; // <- Añadimos el operador de aserción !
-  
+
     if (['jpg', 'jpeg', 'png'].includes(extension)) {
       this.isImage = true;
       this.isPdf = false;
@@ -195,9 +199,9 @@ export class AddEditSolicitudComponent {
       this.sweetAlertService.showErrorAlert('El tipo de archivo de la factura no es compatible. Solo se admiten imágenes JPG, JPEG, PNG y archivos PDF.');
     }
   }
-  
 
-  
+
+
   closeFacturaModal() {
     this.showModal = false;
   }
@@ -205,27 +209,27 @@ export class AddEditSolicitudComponent {
   removeFactura(): void {
     // Verificar si se está creando una nueva solicitud o modificando una existente
     if (!this.id) {
-    // Si no hay ID, significa que se está creando una nueva solicitud
-    // Limpiar la URL de la factura adjunta
-    this.formulario.facturaUrl = '';
-    this.facturaFile = null;
-    // Opcional: mostrar un mensaje de éxito al usuario
-    this.sweetAlertService.showSuccessAlert('La factura se ha eliminado correctamente.');
+      // Si no hay ID, significa que se está creando una nueva solicitud
+      // Limpiar la URL de la factura adjunta
+      this.formulario.facturaUrl = '';
+      this.facturaFile = null;
+      // Opcional: mostrar un mensaje de éxito al usuario
+      this.sweetAlertService.showSuccessAlert('La factura se ha eliminado correctamente.');
     } else {
-    // Si hay un ID, significa que se está modificando una solicitud existente
-    // Llamar al servicio de factura para eliminar la factura de la base de datos
-    this.facturaService.removeFactura(this.id, this.tenantId).subscribe(() => {
-    // Limpiar la URL de la factura adjunta
-    this.formulario.facturaUrl = '';
-    this.facturaFile = null;
-    // Mostrar un mensaje de éxito al usuario
-    this.sweetAlertService.showSuccessAlert('La factura se ha eliminado correctamente.');
-    });
+      // Si hay un ID, significa que se está modificando una solicitud existente
+      // Llamar al servicio de factura para eliminar la factura de la base de datos
+      this.facturaService.removeFactura(this.id, this.tenantId).subscribe(() => {
+        // Limpiar la URL de la factura adjunta
+        this.formulario.facturaUrl = '';
+        this.facturaFile = null;
+        // Mostrar un mensaje de éxito al usuario
+        this.sweetAlertService.showSuccessAlert('La factura se ha eliminado correctamente.');
+      });
     }
-    }
+  }
 
 
-  
+
   ngOnInit() {
     //this.tenantService.setTenant('123456789')
     this.getCategorias();
@@ -238,8 +242,11 @@ export class AddEditSolicitudComponent {
       this.selectedCategoriaId = '';
       this.selectedTerceroId = '';
     }
+      
+
   }
 
+  
   getCategorias(): void {
     this.categoriasService.getListaCategorias(this.tenantId).subscribe((Data: any) => {
       this.categorias = [...Data.data];
@@ -314,60 +321,60 @@ export class AddEditSolicitudComponent {
     }
   }
 
-  
+
   realizarActualizacion() {
     if (this.formulario.estado?.nombre !== "finalizado") {
-          // Verifica si hay un archivo de factura seleccionado
-    if (this.facturaSeleccionada) {
-      
-      // Verifica si this.id no es null antes de llamar a la función updateSolicitud
-      if (this.id !== null) {
-        console.log("datos nuevos del formulario: ", this.formulario);
-        
-        this.solicitudesService
-          .updateSolicitud(
-            this.id,
-            this.formulario,
-            this.tenantId,
-            this.facturaSeleccionada
-          )
-          .subscribe(() => {
-            // Muestra una alerta de éxito
-            const categoriaNombre = this.formulario.categoria?.nombre;
-            this.sweetAlertService.showSuccessAlert(
-              `La solicitud ${categoriaNombre} fue actualizada con éxito`
-            );
-            // Redirige a la lista de solicitudes
-            this.router.navigate(['/obtenerTodasLasSolicitudes']);
-          });
+      // Verifica si hay un archivo de factura seleccionado
+      if (this.facturaSeleccionada) {
+
+        // Verifica si this.id no es null antes de llamar a la función updateSolicitud
+        if (this.id !== null) {
+          console.log("datos nuevos del formulario: ", this.formulario);
+
+          this.solicitudesService
+            .updateSolicitud(
+              this.id,
+              this.formulario,
+              this.tenantId,
+              this.facturaSeleccionada
+            )
+            .subscribe(() => {
+              // Muestra una alerta de éxito
+              const categoriaNombre = this.formulario.categoria?.nombre;
+              this.sweetAlertService.showSuccessAlert(
+                `La solicitud ${categoriaNombre} fue actualizada con éxito`
+              );
+              // Redirige a la lista de solicitudes
+              this.router.navigate(['/obtenerTodasLasSolicitudes']);
+            });
+        } else {
+          console.error('El ID de la solicitud es null.');
+        }
       } else {
-        console.error('El ID de la solicitud es null.');
+        // Si no hay archivo de factura seleccionado, realiza la actualización sin la factura
+        if (this.id !== null) {
+          this.solicitudesService
+            .updateSolicitud(
+              this.id,
+              this.formulario,
+              this.tenantId,
+              null // Pasar null como archivo de factura
+            )
+            .subscribe(() => {
+              // Muestra una alerta de éxito
+              const categoriaNombre = this.formulario.categoria?.nombre;
+              this.sweetAlertService.showSuccessAlert(
+                `La solicitud ${categoriaNombre} fue actualizada con éxito`
+              );
+              // Redirige a la lista de solicitudes
+              this.router.navigate(['/obtenerTodasLasSolicitudes']);
+            });
+        } else {
+          console.error('El ID de la solicitud es null.');
+        }
       }
     } else {
-      // Si no hay archivo de factura seleccionado, realiza la actualización sin la factura
-      if (this.id !== null) {
-        this.solicitudesService
-          .updateSolicitud(
-            this.id,
-            this.formulario,
-            this.tenantId,
-            null // Pasar null como archivo de factura
-          )
-          .subscribe(() => {
-            // Muestra una alerta de éxito
-            const categoriaNombre = this.formulario.categoria?.nombre;
-            this.sweetAlertService.showSuccessAlert(
-              `La solicitud ${categoriaNombre} fue actualizada con éxito`
-            );
-            // Redirige a la lista de solicitudes
-            this.router.navigate(['/obtenerTodasLasSolicitudes']);
-          });
-      } else {
-        console.error('El ID de la solicitud es null.');
-      }
-    }    
-    } else {
-      const alerta =  `El estado de la solicitud es ${this.formulario.estado.nombre}, no puede ser modificada`;
+      const alerta = `El estado de la solicitud es ${this.formulario.estado.nombre}, no puede ser modificada`;
       this.sweetAlertService.showErrorAlert(alerta)
     }
   }
@@ -376,8 +383,8 @@ export class AddEditSolicitudComponent {
   realizarInsercion() {
     console.log('este es el formulario con los datos en saveSolicitud= ', this.formulario, " esta es la url de la factura guardada: ", this.facturaSeleccionada);
     this.solicitudesService.savesolicitud(this.formulario).subscribe(() => {
-      console.log("estos son los datos al intentar guardar el formulario: ",this.formulario, " esta es la url de la factura guardada: ", this.facturaSeleccionada);
-      
+      console.log("estos son los datos al intentar guardar el formulario: ", this.formulario, " esta es la url de la factura guardada: ", this.facturaSeleccionada);
+
       // Muestra la alerta de éxito con SweetAlert2
       this.sweetAlertService.showSuccessToast('Solicitud guardada exitosamente');
 
@@ -391,8 +398,8 @@ export class AddEditSolicitudComponent {
 
   openModal() {
     const modalRef = this.modalService.open(TerceroModalComponent); // Abre el modal
-  //   modalRef.componentInstance.tercero = tercero; // Pasa el tercero seleccionado al modal
-  // }
+    //   modalRef.componentInstance.tercero = tercero; // Pasa el tercero seleccionado al modal
+    // }
   }
-  
+
 }

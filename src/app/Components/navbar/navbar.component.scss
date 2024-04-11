@@ -210,10 +210,10 @@ div {
 
 @keyframes moveBalance {
   0% {
-    transform: translateX(-100%); /* Mueve el texto hacia la derecha */
+    transform: translateX(100%); /* Mueve el texto hacia la derecha */
   }
   100% {
-    transform: translateX(100%); /* Devuelve el texto al inicio (izquierda) */
+    transform: translateX(-100%); /* Devuelve el texto al inicio (izquierda) */
   }
 }
   
