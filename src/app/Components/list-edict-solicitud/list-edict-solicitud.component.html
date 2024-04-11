@@ -53,7 +53,7 @@
           <p-table #dt1 [value]="listSolicitudes" [rows]="10" [paginator]="true" [showCurrentPageReport]="true"
           [rowsPerPageOptions]="[10, 25, 50]"
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [loading]="loading"
-          [globalFilterFields]="['selec', 'solicitud#', 'fecha', 'proveedor','estado', 'detalle', 'valor','acciones',]"
+          [globalFilterFields]="['selec', 'solicitud#', 'fecha', 'proveedor','estado.nombre', 'detalle', 'valor','acciones']"
           [style]="{marginTop: '20px'}" [tableStyle]="{'min-width': '60rem'}">
             <ng-template pTemplate="caption">
               <div class="cont-search">
