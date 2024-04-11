@@ -1,8 +1,10 @@
 // employees.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { Observable } from 'rxjs';
 import { SweetAlertService } from "../../services/sweet-alert.service";
+import { TokenValidationService } from '../../services/token-validation-service.service';
+
 
 @Component({
   selector: 'app-employees',
@@ -13,11 +15,19 @@ export class EmployeesComponent  implements OnInit {
 
 
   usuarios: any[] = [];
+  ListUsuarios: any[] = [];
+  isSuperUsuario = false;
+  isLoggedIn = false;
+  userData: any;
 
-  constructor(private signInUpService: SignInUpService, private sweetAlert:SweetAlertService) { }
+  constructor(private signInUpService: SignInUpService, private sweetAlert:SweetAlertService,
+    private tokenValidationService: TokenValidationService,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.obtenerUsuariosPorTenantId();
+    this.obtenerUsuariosU();
+    this.checkAuthentication(); // Llamar a la función para verificar la autenticación
   }
 
   obtenerUsuariosPorTenantId() {
@@ -73,5 +83,41 @@ export class EmployeesComponent  implements OnInit {
       }
     );
   }
-}
 
+  obtenerUsuariosU() {
+    const token = localStorage.getItem('token'); // Obtener el token del localStorage
+    if (!token) {
+      console.error('No se proporcionó un token válido.');
+      return;
+    }
+    this.signInUpService.getUserSuperU(token).subscribe( // Pasar el token como argumento
+      (usuarios: any[]) => {
+        console.log(usuarios)
+        this.ListUsuarios = usuarios;
+      },
+      (error) => {
+        console.error('Error al obtener usuarios:', error);
+      }
+    );
+  }
+
+  async checkAuthentication() {
+    try {
+      const token = localStorage.getItem('token');
+      if (token && await this.tokenValidationService.isValidToken(token)) {
+        this.isLoggedIn = true;
+        this.userData = await this.tokenValidationService.getUserData(token);
+        this.setUserRoles(this.userData.rol);
+        this.cdr.detectChanges(); // Realizar detección de cambios
+      }
+    } catch (error) {
+      console.error('Error al verificar la autenticación:', error);
+    }
+  }
+
+  setUserRoles(rol: string) {
+    if (rol) {
+      this.isSuperUsuario = rol === 'SuperUsuario';
+    }
+  }
+}

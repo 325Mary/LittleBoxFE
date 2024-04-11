@@ -14,7 +14,7 @@
     <h3 style="color: white;">Menú</h3>
     <ul class="sidebar-menu">
       <li *ngIf="isLoggedIn"><a routerLink="/home/"><i class="pi pi-home"></i> Inicio</a></li>
-      <li *ngIf="isLoggedIn && isGerente"><a routerLink="/employees/"><i class="pi pi-users"></i> Empleados</a></li>
+      <li *ngIf="isLoggedIn && isGerente || isSuperUsuario "><a routerLink="/employees/"><i class="pi pi-users"></i> Empleados</a></li>
       <li><a routerLink="/personalization/"><i class="pi pi-cog"></i> Personalización</a></li>
       <li *ngIf="isLoggedIn && (isSuperUsuario || isGerente)"><a routerLink="/listDeSoliDeEmpresas/"><i
             class="pi pi-briefcase"></i> Solicitudes de empresas</a></li>

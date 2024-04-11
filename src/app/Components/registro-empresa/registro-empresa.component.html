@@ -10,9 +10,7 @@
       <div class="mb-3">
         <label for="nameCompany" class="form-label">Nombre:</label>
         <input type="text"  [(ngModel)]="company.nameCompany" class="form-control" id="nameCompany" name="nameCompany"  placeholder="Nombre de empresa" required>
-        <div class="invalid-feedback">
-          nombre de la empresa es requierido
-        </div>
+        
       </div>
 
       <!-- <div class="mb-3">
@@ -23,33 +21,25 @@
       <div class="mb-3">
         <label for="telephoneCompany" class="form-label">Telefono:</label>
         <input type="text"  [(ngModel)]="company.telephoneCompany" class="form-control" id="telephoneCompany" name="telephoneCompany"  placeholder="Telefono de contacto" required>
-        <div class="invalid-feedback">
-          telefono es requierido
-        </div>
+       
       </div>
 
       <div class="mb-3">
         <label for="pdfRunt" class="form-label">Rut(pdf):</label>
         <input type="file" (change)="onFileSelected($event)" class="form-control" id="pdfRunt" name="pdfRunt" placeholder="PDF del Runt" required>
-        <div class="invalid-feedback">
-          pdf es requierido
-        </div>
+       
       </div>
 
       <div class="mb-3">
         <label for="directionCompany" class="form-label">Direccion:</label>
         <input type="text" [(ngModel)]="company.directionCompany"  class="form-control" id="directionCompany" name="directionCompany" placeholder="Dirección de la empresa" required>
-        <div class="invalid-feedback">
-          direccion de la empresa es requerida
-        </div>
+        
       </div>
 
       <div class="mb-3">
         <label for="tenantId" class="form-label">Nit:</label>
         <input type="text"  [(ngModel)]="company.tenantId" class="form-control" id="tenantId" name="tenantId" placeholder="Nit de la empresa" required>
-        <div class="invalid-feedback">
-          Nit es requierido
-        </div>
+       
       </div>
     </div>
 

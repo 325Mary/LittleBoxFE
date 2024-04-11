@@ -16,6 +16,7 @@ export class RestorePasswordComponent {
 
   constructor(private authService: SignInUpService, private router: Router) {}
 
+  
   solicitarRestablecimiento() {
     this.authService.enviarCodigoRestablecimiento(this.email).subscribe(
       response => {

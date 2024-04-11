@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-pre-registro',
   templateUrl: './pre-registro.component.html',

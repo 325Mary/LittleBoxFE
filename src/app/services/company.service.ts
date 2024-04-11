@@ -44,12 +44,17 @@ export class CompanyService {
   }
 
   listCompanies(): Observable<any[]> {
-    const url = `${this.baseUrl}/getAllCompanis`;
+    const url = `${this.baseUrl}/getAllCompanies`;
     return this.httpClient.get<any[]>(url, { headers: this.getHeaders() });
   }
 
   disableCompany(companyId: string): Observable<any> {
     const url = `${this.baseUrl}/disable/${companyId}`;
     return this.httpClient.put<any>(url, {}, { headers: this.getHeaders() });
+  }
+
+  listTodasCompanies(): Observable<any[]> {
+    const url = `${this.baseUrl}/getAllCompanis`;
+    return this.httpClient.get<any[]>(url, { headers: this.getHeaders() });
   }
 }
