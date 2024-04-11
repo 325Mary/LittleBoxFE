@@ -1,42 +1,69 @@
-/* Estilos generales de la tabla */
-.table {
-    width: 50%;
-    margin: 65px auto;
-     border-collapse: collapse;
-    border-spacing: 0;
+.table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 70px;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.table-wrapper {
+  width: 50%;
+  overflow: hidden;
+}
+
+table {
+  width: 50%;
+  border-collapse: collapse;
+  border: transparent;
+  border-radius: 5px;
+
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.table th {
+  background-color: #dfdfdf;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table tbody tr:hover {
+  background-color: #ddd;
+}
+
+
+.pagination-controls {
+  ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
   }
-  
-  /* Estilos para el encabezado de la tabla */
-  .table thead th {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: left;
+
+  li {
+    margin-right: 5px; /* Espacio entre cada número de página */
   }
-  
-  /* Estilos para las filas pares */
-  .table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  /* Estilos para las celdas */
-  .table td, .table th {
-    padding: 10px;
-    border: 1px solid #ddd;
-  }
-  
-  /* Estilos para los botones de acciones */
-  .table .btn {
+
+  a {
+    text-decoration: none;
     padding: 5px 10px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #217be2;
+    color: white;
   }
-  
-  .table .btn:hover {
-    background-color: #0056b3;
+
+  a:hover {
+    background-color: #0863db;
   }
-  
+}

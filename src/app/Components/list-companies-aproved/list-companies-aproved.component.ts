@@ -13,7 +13,9 @@ import Swal from 'sweetalert2';
 export class ListCompaniesAprovedComponent implements OnInit {
   companies: any = [];
   selectedCompany: any;
-
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalList : number =0
   constructor(private companyService: CompanyService) { }
 
   ngOnInit(): void {
@@ -23,8 +25,13 @@ export class ListCompaniesAprovedComponent implements OnInit {
   listCompanies() {
     this.companyService.listCompanies().subscribe(companies => {
       this.companies = companies;
+      this.totalList =companies.length
     }
     );
+  }
+  getPages(): number[] {
+    const totalPages = Math.ceil(this.totalList / this.itemsPerPage);
+    return Array(totalPages).fill(0).map((x, i) => i + 1);
   }
 
   activeCompany(companyId: string) {

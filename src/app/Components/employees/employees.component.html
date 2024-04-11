@@ -1,4 +1,6 @@
-<table class="table">
+<div class="table-container" *ngIf="isLoggedIn && !isSuperUsuario">
+<h1>Lista de empleado </h1>
+<table  class="table">
   <thead>
     <tr>
       <th>Nombre de usuario</th>
@@ -11,6 +13,34 @@
     <tr *ngFor="let usuario of usuarios">
       <td>{{ usuario.username }}</td>
       <td>{{ usuario.rol }}</td>
+      <td
+        [ngStyle]="{ 'border-color': usuario.status === 'activo' ? 'green' : 'red'}">
+        {{ usuario.status }}
+      <td>
+        <button (click)="activarUsuario(usuario._id)">Activar</button>
+        <button (click)="inactivarUsuario(usuario._id)">Inactivar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<div class="table-container">
+<h1>Lista de todos los Usuarios</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nombre de usuario</th>
+      <th>Rol</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usuario of ListUsuarios">
+      <td>{{ usuario.username }}</td>
+      <td>{{ usuario.rol }}</td>
       <td [ngStyle]="{ 'border-color': usuario.status === 'activo' ? 'green' : 'red', 'border-style': 'solid', 'border-width': '3px' }">
         {{ usuario.status }}
         <td>
@@ -20,3 +50,4 @@
     </tr>
   </tbody>
 </table>
+</div>
