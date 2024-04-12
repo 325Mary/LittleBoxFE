@@ -31,13 +31,13 @@ export class SolicitudesService {
   //   });
   // }
 
-  getListaSolicitudes(tenantId: string, fechaInicio: Date, fechaFin: Date, documento: string): Observable<Solicitud[]> {
+  getListaSolicitudes(tenantId: string, fechaInicio: any, fechaFin: any, documento: string): Observable<Solicitud[]> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
     const params = {
       tenantId,
-      fechaInicio: fechaInicio.toISOString(),
-      fechaFin: fechaFin.toISOString(),
+      fechaInicio,
+      fechaFin,
       documento: documento
     };
     return this.http.get<Solicitud[]>(`${this.myAppUrl}${this.urlGet}`, {
@@ -122,7 +122,7 @@ export class SolicitudesService {
   
     formData.append('solicitudId', nuevosDatos.solicitudId.toString()); 
     formData.append('tercero', nuevosDatos.tercero?._id);
-    formData.append('fecha', nuevosDatos.fecha.toISOString());
+    formData.append('fecha', nuevosDatos.fecha);
     formData.append('detalle', nuevosDatos.detalle);
     formData.append('valor', nuevosDatos.valor.toString()); // Convertir valor a cadena
     formData.append('categoria', nuevosDatos.categoria?._id);

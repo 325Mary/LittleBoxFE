@@ -8,7 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 
 import { HomeComponent } from '../app/Components/home/home.component';
@@ -89,6 +89,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -155,6 +156,7 @@ import { CalendarModule } from 'primeng/calendar';
     AvatarModule,
     BadgeModule,
     CommonModule,
+    DatePipe,
     TableModule,
     ListboxModule,
     InputTextModule,

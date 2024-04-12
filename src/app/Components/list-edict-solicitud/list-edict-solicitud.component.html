@@ -90,7 +90,7 @@
                   </div>
                 </td>
                 <td>{{ solicitud.solicitudId }}</td>
-                <td>{{ solicitud.fecha | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ solicitud.fecha }}</td>
                 <td>{{ solicitud.tercero?.nombreTercero }}</td>
                 <td [style.Color]="getColorByEstado(solicitud.estado?.nombre)">
                   {{ solicitud.estado?.nombre }}

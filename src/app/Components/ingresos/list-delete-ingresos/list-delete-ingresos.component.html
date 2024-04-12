@@ -95,7 +95,7 @@
             <ng-template pTemplate="body" let-ingreso>
               <tr>
                 <td>{{ ingreso.ingresoId }}</td>
-                <td>{{ ingreso.fecha | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ ingreso.fecha }}</td>
                 <td>{{ ingreso.detalle }}</td>
                 <td>{{ ingreso.valor | currency }}</td>
                 <td>

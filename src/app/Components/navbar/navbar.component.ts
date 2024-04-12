@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
  
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
 
+  items2: MenuItem[] | undefined;
   items: MenuItem[] = [];
   modalOpen = false;
   isMenuOpen = false;
@@ -147,12 +148,12 @@ sidebarVisible: boolean = false;
       { label: 'Gráficos', icon: 'pi pi-chart-bar', routerLink: '/graficos',  visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
       { label: 'Informes', icon: 'pi pi-file', routerLink: '/Informes', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
       { label: 'Ingresos', icon: 'pi pi-arrow-up', routerLink: '/obtenerTodosLosIngresos', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
-      { label: 'Crear Egreso', icon: 'pi pi-arrow-down', routerLink: '/crearEgreso', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
-      { label: 'Solicitudes', icon: 'pi pi-list', routerLink: '/obtenerTodasLasSolicitudes', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente || this.isColaborador) },
+      { label: 'Egresos', icon: 'pi pi-arrow-down', routerLink: '/crearEgreso', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente) },
+      { label: 'Solicitudes', icon: 'pi pi-list', routerLink: '/obtenerTodasLasSolicitudes', styleClass: 'custom-menu-item', visible: this.isLoggedIn && (this.isAdministrador || this.isGerente || this.isColaborador), items:[{label: 'Crear Solicitud', icon: 'pi pi-plus', routerLink: '/obtenerTodasLasSolicitudes'}] },
     ];
   }
- 
 
+  
   @HostListener('document:click', ['$event'])
   handleClick(event: Event) {
     if (this.isMenuOpen && (event.target as Element)?.closest('.menu-container') == null && (event.target as Element)?.closest('.contenedor-img') == null) {

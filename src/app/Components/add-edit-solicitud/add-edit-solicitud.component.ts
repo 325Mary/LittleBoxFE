@@ -48,13 +48,15 @@ export class AddEditSolicitudComponent {
 
   extension: string = '';
 
+  fechaFormateada: string = "";
+
   solicitud: any = {};
 
   formulario: Solicitud = {
     solicitudId: 0,
     tenantId: '',
     tercero: null,
-    fecha: new Date(),
+    fecha: "",
     detalle: '',
     categoria: null,
     valor: 0,
@@ -92,7 +94,7 @@ export class AddEditSolicitudComponent {
 
   }
 
-   
+
 
   // onFileSelected(event: any) {
   //   console.log("Evento de cambio:", event);
@@ -242,11 +244,11 @@ export class AddEditSolicitudComponent {
       this.selectedCategoriaId = '';
       this.selectedTerceroId = '';
     }
-      
+
 
   }
 
-  
+
   getCategorias(): void {
     this.categoriasService.getListaCategorias(this.tenantId).subscribe((Data: any) => {
       this.categorias = [...Data.data];
@@ -264,12 +266,14 @@ export class AddEditSolicitudComponent {
     this.solicitudesService.getSolicitud(id, this.tenantId).subscribe((response: any) => {
       this.loading = false;
       const data = response.data; // Extraer la propiedad 'data' de la respuesta
+      data.fecha = this.formatoFecha(new Date(data.fecha));
+    
       console.log('Datos obtenidos:', data);
 
       this.formulario = {
         solicitudId: data.solicitudId,
         tenantId: data.tenantId,
-        fecha: new Date(data.fecha),
+        fecha: data.fecha,
         detalle: data.detalle,
         valor: data.valor,
         categoria: data.categoria?.nombre,
@@ -339,8 +343,10 @@ export class AddEditSolicitudComponent {
               this.facturaSeleccionada
             )
             .subscribe(() => {
+              this.formulario.fecha = this.formatoFecha(new Date(this.formulario.fecha))
               // Muestra una alerta de éxito
               const categoriaNombre = this.formulario.categoria?.nombre;
+              // Asignar la fecha formateada de vuelta al formulario
               this.sweetAlertService.showSuccessAlert(
                 `La solicitud ${categoriaNombre} fue actualizada con éxito`
               );
@@ -381,6 +387,10 @@ export class AddEditSolicitudComponent {
 
 
   realizarInsercion() {
+
+    // Asignar la fecha formateada de vuelta al formulario
+    this.formulario.fecha = this.formatoFecha(new Date(this.formulario.fecha));
+
     console.log('este es el formulario con los datos en saveSolicitud= ', this.formulario, " esta es la url de la factura guardada: ", this.facturaSeleccionada);
     this.solicitudesService.savesolicitud(this.formulario).subscribe(() => {
       console.log("estos son los datos al intentar guardar el formulario: ", this.formulario, " esta es la url de la factura guardada: ", this.facturaSeleccionada);
@@ -395,6 +405,15 @@ export class AddEditSolicitudComponent {
       }, 1500);
     });
   }
+
+  formatoFecha(fecha: Date): string {
+    const fechaUTCString = fecha.toUTCString(); // Obtener la fecha en formato UTC
+    const isoString = fecha.toISOString(); // Obtener la fecha en formato ISO 8601 (UTC)
+    console.log('Fecha en formato UTC:', fechaUTCString);
+    console.log('Fecha en formato ISO 8601 (UTC):', isoString);
+    return isoString.substring(0, 10); // Recortar solo la parte de la fecha (YYYY-MM-DD)
+  }
+  
 
   openModal() {
     const modalRef = this.modalService.open(TerceroModalComponent); // Abre el modal
