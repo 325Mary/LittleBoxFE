@@ -131,7 +131,7 @@ export class DashboardComponent implements OnInit {
       this.createLineChartTer();
     },
     error => {
-      console.error('Error al obtener terceros:', error);
+      // console.error('Error al obtener terceros:', error);
       // Manejo de errores
     }
   );
@@ -144,7 +144,7 @@ export class DashboardComponent implements OnInit {
       this.createLineChartCate();
     },
     error => {
-      console.error('Error al obtener categorias:', error);
+      // console.error('Error al obtener categorias:', error);
       // Manejo de errores
     }
   );
@@ -228,8 +228,8 @@ export class DashboardComponent implements OnInit {
         console.log('fechast',this.fechaInicio,this.fechaFin)
         this.listSolicitudes = [...data.data];
         // this.loading = false;
-        console.log("estado: ", this.listSolicitudes);
-        console.log("Datos de las solicitudes: ", this.listSolicitudes);
+        // console.log("estado: ", this.listSolicitudes);
+        // console.log("Datos de las solicitudes: ", this.listSolicitudes);
       });
   }
   getColorByEstado(estado: string | undefined): string {
@@ -263,7 +263,7 @@ export class DashboardComponent implements OnInit {
         this.showLoadMoreLink = unreadNotifications.length > 5;
       },
       (error) => {
-        console.error('Error al obtener las notificaciones:', error);
+        // console.error('Error al obtener las notificaciones:', error);
       }
     );
   }
@@ -289,7 +289,7 @@ export class DashboardComponent implements OnInit {
       .subscribe(() => {
         // Realiza alguna acción adicional si es necesario, como actualizar la lista de notificaciones
       }, error => {
-        console.error('Error al marcar la notificación como leída:', error);
+        // console.error('Error al marcar la notificación como leída:', error);
       });
   }
  
@@ -306,7 +306,7 @@ export class DashboardComponent implements OnInit {
         console.log('saldo:', this.saldoCaja)
       },
       (error: any) => {
-        console.error('Error al obtener el saldo de caja:', error);
+        // console.error('Error al obtener el saldo de caja:', error);
         // Manejo de errores
       }
     );
@@ -372,7 +372,7 @@ export class DashboardComponent implements OnInit {
   listCompanies() {
     this.companyService.listCompanySuperU().subscribe(companies => {
       this.companies = companies.length;
-      console.log('empresas:', this.companies)
+      // console.log('empresas:', this.companies)
     });
   }
   
@@ -380,7 +380,7 @@ export class DashboardComponent implements OnInit {
   obtenerUsuariosU() {
     const token = localStorage.getItem('token'); // Obtener el token del localStorage
     if (!token) {
-      console.error('No se proporcionó un token válido.');
+      // console.error('No se proporcionó un token válido.');
       return;
     }
     this.authService.getUserSuperU(token).subscribe( // Pasar el token como argumento
@@ -389,7 +389,7 @@ export class DashboardComponent implements OnInit {
         this.ListUsuarios = usuarios.length;
       },
       (error) => {
-        console.error('Error al obtener usuarios:', error);
+        // console.error('Error al obtener usuarios:', error);
       }
     );
   }
@@ -401,7 +401,7 @@ export class DashboardComponent implements OnInit {
       this.createLineChartCompanies()
     },
     error => {
-      console.error('Error al obtener todas las empresas:', error);
+      // console.error('Error al obtener todas las empresas:', error);
       // Manejo de errores
     }
   );
@@ -413,7 +413,7 @@ export class DashboardComponent implements OnInit {
     const ctx = canvas.getContext('2d');
 
     if (!ctx) {
-      console.error('No se pudo obtener el contexto del lienzo');
+      // console.error('No se pudo obtener el contexto del lienzo');
       return;
     }
 
