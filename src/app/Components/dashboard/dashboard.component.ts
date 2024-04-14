@@ -157,7 +157,7 @@ export class DashboardComponent implements OnInit {
     const ctx = canvas.getContext('2d');
   
     if (!ctx) {
-      console.error('No se pudo obtener el contexto del lienzo');
+      // console.error('No se pudo obtener el contexto del lienzo');
       return;
     }
   
@@ -188,7 +188,7 @@ export class DashboardComponent implements OnInit {
     const ctx = canvas.getContext('2d');
   
     if (!ctx) {
-      console.error('No se pudo obtener el contexto del lienzo');
+      // console.error('No se pudo obtener el contexto del lienzo');
       return;
     }
   
