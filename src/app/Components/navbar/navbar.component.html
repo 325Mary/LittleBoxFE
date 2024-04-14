@@ -1,4 +1,4 @@
-<p-menubar [model]="items" [style.width.%]="100" class="menu-contain" styleClass="custom-menubar">
+<p-menubar [model]="items" [style.width.%]="100" class="menu-contain" styleClass="custom-menubar" *ngIf="mostrarNavbar">
 
   <ng-template pTemplate="start">
     <div class="p-d-flex p-flex-row p-align-center cont-logo">
@@ -12,7 +12,7 @@
  
   <ng-template pTemplate="end">
     <div class="cont-notifi-singIn-quit ">
-      <div *ngIf="isLoggedIn" class="saldo-caja" [ngClass]="{'positivo': saldoCaja >= 0, 'negativo': saldoCaja < 0}">
+      <div *ngIf="isLoggedIn && !isSuperUsuario" class="saldo-caja" [ngClass]="{'positivo': saldoCaja >= 0, 'negativo': saldoCaja < 0}">
         <h3>Saldo de Caja: {{ saldoCaja | currency:'COL' }}</h3>
       </div>
       <div *ngIf="isLoggedIn" class="cont-notification">

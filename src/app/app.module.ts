@@ -87,6 +87,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { ModalLegalComponent } from './Components/modal-legal/modal-legal.component'
 
 
 @NgModule({
@@ -137,6 +138,7 @@ import { CalendarModule } from 'primeng/calendar';
     GastoComponent,
     DashboardComponent,
     CrearSuperUsuarioComponent,
+    ModalLegalComponent,
   ],
   imports: [
     BrowserModule,

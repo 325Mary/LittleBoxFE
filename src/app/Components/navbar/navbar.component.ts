@@ -18,7 +18,7 @@ import { SaldoCajaService } from "../../services/saldo-caja.service";
 })
 export class NavbarComponent implements OnInit {
 
- 
+  mostrarNavbar = true;
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
 
   items: MenuItem[] = [];
@@ -84,7 +84,9 @@ export class NavbarComponent implements OnInit {
         this.checkAuthentication();
       }
     });
-
+    this.authService.mostrarNavbar.subscribe(mostrar => {
+      this.mostrarNavbar = mostrar;
+    });
     this.loginStatusSubscription = this.authService.loginStatusChanged.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
       this.updateMenuItems();

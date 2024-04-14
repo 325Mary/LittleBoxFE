@@ -258,9 +258,9 @@ export class DashboardComponent implements OnInit {
       (notifications) => {
         const unreadNotifications = notifications.filter(notification => !notification.read);
         // Mostrar solo las primeras 5 notificaciones no leídas
-        this.visibleNotifications = unreadNotifications.slice(0, 5);
+        this.visibleNotifications = unreadNotifications.slice(0, 3);
         // Determinar si se deben mostrar más notificaciones
-        this.showLoadMoreLink = unreadNotifications.length > 5;
+        this.showLoadMoreLink = unreadNotifications.length > 3;
       },
       (error) => {
         // console.error('Error al obtener las notificaciones:', error);
@@ -317,7 +317,7 @@ export class DashboardComponent implements OnInit {
       // Aquí puedes asignar un ícono específico para cada categoría
       switch (nombre) {
         case 'Cafetería':
-          return 'pi pi-coffee'; // Ejemplo: ícono de una taza de café de PrimeNG
+          return 'pi pi-building'; 
         case 'Restaurante':
           return 'pi pi-cutlery'; // Ejemplo: ícono de cubiertos de PrimeNG
         case 'Transporte':
@@ -370,7 +370,7 @@ export class DashboardComponent implements OnInit {
   }
 
   listCompanies() {
-    this.companyService.listCompanySuperU().subscribe(companies => {
+    this.companyService.listTodasCompanies().subscribe(companies => {
       this.companies = companies.length;
       // console.log('empresas:', this.companies)
     });
