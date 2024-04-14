@@ -44,7 +44,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: DashboardComponent },
   { path: 'listIngresos', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
-  { path: 'obtenerTodosLosIngresos', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario', 'Administrador'] } },
+  { path: 'obtenerTodosLosIngresos', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente','Administrador'] } },
   { path: 'addIngreso', component: AddEditIngresoComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'editIngreso/:id', component: AddEditIngresoComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'sidebar', component: SidebarComponent },

@@ -1,23 +1,122 @@
-<p-menubar [model]="items" [style.width.%]="100" class="menu-contain" >
 
-  <ng-template pTemplate="start">
-    <div class="p-d-flex p-flex-row p-align-center cont-logo">
-     <a routerLink="/" *ngIf="!isLoggedIn"><img src="../../assets/logo_little_box.png" height="50px"
-       class="logo" style="background-color: #0289ED; padding: 5px; border: 2px solid #007bff; border-radius: 5px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);" alt="Logo"></a>
-     <button pButton type="button" (click)="sidebarVisible = true" icon="pi pi-bars"
-      class="p-button-rounded p-button-outlined p-ml-auto mr-2" height="40" *ngIf="isLoggedIn"></button>
-    </div>
-  </ng-template>
-  
- 
-  <ng-template pTemplate="end">
-    <div class="cont-notifi-singIn-quit ">
-      <div *ngIf="isLoggedIn" class="saldo-caja" [ngClass]="{'positivo': saldoCaja >= 0, 'negativo': saldoCaja < 0}">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fs-6 menu-contain">
+   <!-- Botón de hamburguesa -->
+   <button *ngIf="isLoggedIn" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+   aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+ </button>
+
+ <!-- Logo -->
+ <a *ngIf="!isLoggedIn" class="navbar-brand mx-3" routerLink="/">
+   <img class="logo" src="../../assets/logo_little_box.png" alt="Logo">
+ </a>
+
+ <button *ngIf="isLoggedIn" id="toggle-btn" class="btn btn-primary mx-3" (click)="sidebarVisible = true">
+   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-fill"
+     viewBox="0 0 16 16">
+     <path fill-rule="evenodd"
+       d="M15.528 2.973a.75.75 0 0 1 .472.696v8.662a.75.75 0 0 1-.472.696l-7.25 2.9a.75.75 0 0 1-.557 0l-7.25-2.9A.75.75 0 0 1 0 12.331V3.669a.75.75 0 0 1 .471-.696L7.443.184l.004-.001.274-.11a.75.75 0 0 1 .558 0l.274.11.004.001zm-1.374.527L8 5.962 1.846 3.5 1 3.839v.4l6.5 2.6v7.922l.5.2.5-.2V6.84l6.5-2.6v-.4l-.846-.339Z" />
+   </svg>
+ </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li *ngIf="isLoggedIn && isAdministrador || isGerente " class="nav-item mx-3">
+        <a class="nav-link" routerLink="/graficos">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            class="bi bi-file-bar-graph-fill" viewBox="0 0 16 16">
+            <path
+              d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m-2 11.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5m-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z" />
+          </svg>
+          Gráficos
+        </a>
+      </li>
+      <li *ngIf="isLoggedIn && isAdministrador || isGerente" class="nav-item mx-3">
+        <a class="nav-link" routerLink="/Informes">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+            <path
+              d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1z" />
+          </svg>
+          Informes
+        </a>
+      </li>
+      <li *ngIf="isLoggedIn && isAdministrador || isGerente " class="nav-item mx-3 dropdown">
+        <a class="nav-link dropdown-toggle" id="submenuIngresos" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
+            <path
+              d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0" />
+          </svg>
+          Ingresos
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="submenuIngresos">
+          <li *ngIf="isLoggedIn && isGerente "><a class="dropdown-item" href="/addIngreso"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path
+                  d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
+              </svg>   Crear</a></li>
+          <li><a class="dropdown-item" routerLink="/obtenerTodosLosIngresos"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
+          </svg>   Listar</a></li>
+        </ul>
+      </li>
+
+
+      <li *ngIf="isLoggedIn && isAdministrador || isGerente " class="nav-item mx-3 dropdown">
+        <a class="nav-link dropdown-toggle"  id="submenuEgresos" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+            <path
+              d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0" />
+          </svg>
+          Egresos
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="submenuEgresos">
+          <li><a class="dropdown-item" href="/crearEgreso"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path
+                  d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
+              </svg>   Crear</a></li>
+          <li><a class="dropdown-item" routerLink="/listEgresos"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
+          </svg>   Listar</a></li>
+        </ul>
+      </li>
+      <li *ngIf="isLoggedIn && isAdministrador || isGerente || isColaborador" class="nav-item mx-3 dropdown">
+        <a class="nav-link dropdown-toggle" id="submenuSolicitudes" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-stack"
+            viewBox="0 0 16 16">
+            <path
+              d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.6.6 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.6.6 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.6.6 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535z" />
+            <path
+              d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.6.6 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0z" />
+          </svg>
+          Solicitudes
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="submenuSolicitudes">
+          <li *ngIf="isLoggedIn && !isAdministrador"><a class="dropdown-item" href="/add"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path
+                  d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
+              </svg>   Crear</a></li>
+          <li><a class="dropdown-item" routerLink="/obtenerTodasLasSolicitudes"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
+          </svg>   Listar</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="navbar-nav d-flex align-items-center mx-3">
+
+    <div class="navbar-nav d-flex align-items-center">
+      <div *ngIf="isLoggedIn && isAdministrador || isGerente" class="saldo-caja" [ngClass]="{'positivo': saldoCaja >= 0, 'negativo': saldoCaja < 0}">
         <h3>Saldo de Caja: {{ saldoCaja | currency:'COL' }}</h3>
       </div>
-      <div *ngIf="isLoggedIn" class="cont-notification">
-        <button pButton type="button" (click)="openNotifications()"  class="btn-bell">
-          <i class="pi pi-bell"></i> 
+      
+      <div *ngIf="isLoggedIn" class="cont-notification" style="margin-right: -5px;">
+        <button pButton type="button" (click)="openNotifications()"class="btn-bell">
+          <i class="pi pi-bell"></i>
           <!-- <img class="img-Bell" src="../../assets/bell.svg"> -->
         </button>
         <p-badge [value]="miValorComoString" severity="danger" [style]="{ 'margin-left': '4px' }"></p-badge>
@@ -25,35 +124,68 @@
           <app-notifications></app-notifications>
         </div>
       </div>
-      <div class="p-d-flex p-flex-row-reverse p-align-center">
-        <button *ngIf="isLoggedIn" pButton type="button" (click)="logout()" icon="pi pi-power-off"
-          class="p-button-rounded p-button-outlined" height="40" class="mr-2">Quit</button>
-        <button *ngIf="!isLoggedIn" pButton type="button" (click)="openModal()" icon="pi pi-user-plus"
-          class="p-button-rounded p-button-outlined" height="40" class="mr-2">SignIn/Up</button>
+      
+      <div *ngIf="isLoggedIn && userData" class="d-flex align-items-center mx-3" style="width: 150px;">
+        <div class="col-6 d-flex justify-content-center align-items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-fill"
+          viewBox="0 0 16 16">
+          <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+        </svg>
+        </div>
+        <div class="col-6 d-flex flex-column  lh-1" style="font-size: 12px;">
+          <span class="text-primary">{{ userData.username }}</span>
+          <span class="text-primary">{{ userData.rol }}</span>
+        </div>
       </div>
     </div>
     
-  </ng-template>
-
-  <!-- <ng-template pTemplate="content" styleClass="custom-menu-content">
-    <div class="p-d-flex p-flex-row p-align-center p-mx-auto">
-      <ng-container *ngFor="let item of items">
-        <a pMenuItem [routerLink]="item.routerLink" class="menu-item" *ngIf="item.visible" styleClass="custom-menuitem">
-          <span class="p-menuitem-text">{{ item.label }}</span>
-          <i [class]="item.icon"></i>
-        </a>
-      </ng-container>
+    
+    <div class="d-flex flex-row-reverse align-items-center">
+      <button *ngIf="isLoggedIn" type="button" (click)="logout()" class="btn btn-primary btn-rounded mr-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0z" />
+          <path fill-rule="evenodd"
+            d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708z" />
+        </svg>
+        Cerrar Sesión
+      </button>
+      <button *ngIf="!isLoggedIn" type="button" (click)="openModal()" class="btn btn-primary btn-rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+          <path fill-rule="evenodd"
+            d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+        </svg>
+        Iniciar Sesión
+      </button>
+      <button *ngIf="!isLoggedIn" type="button" (click)="openModal()"
+        class="btn btn-outline-primary btn-rounded mx-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-fill-add"
+          viewBox="0 0 16 16">
+          <path
+            d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+          <path
+            d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
+        </svg>
+        Registrarse
+      </button>
     </div>
-  </ng-template> -->
+  </div>
 
-</p-menubar>
+</nav>
+
+
+
 
 <div class="card flex justify-content-center">
   <p-sidebar #sidebarRef [(visible)]="sidebarVisible">
     <ng-template pTemplate="headless">
-    <app-sidebar></app-sidebar>
-    <!-- <p-button type="button" (click)="closeCallback($event)" icon="pi pi-times" [rounded]="true" [outlined]="true" styleClass="h-2rem w-2rem"></p-button> -->
-  </ng-template>
+      <app-sidebar></app-sidebar>
+      <!-- <p-button type="button" (click)="closeCallback($event)" icon="pi pi-times" [rounded]="true" [outlined]="true" styleClass="h-2rem w-2rem"></p-button> -->
+    </ng-template>
   </p-sidebar>
 </div>
 
@@ -64,5 +196,3 @@
     <app-pre-registro></app-pre-registro>
   </div>
 </div>
-
-
