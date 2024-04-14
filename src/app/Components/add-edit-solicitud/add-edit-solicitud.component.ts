@@ -57,7 +57,7 @@ export class AddEditSolicitudComponent {
     fecha: new Date(),
     detalle: '',
     categoria: null,
-    valor: 0,
+    valor:0,
     estado: { _id: '65d6a34bc04706dd1cdafd6c', nombre: 'pendiente' }, // Valor por defecto para el estado
     facturaUrl: '',
   };

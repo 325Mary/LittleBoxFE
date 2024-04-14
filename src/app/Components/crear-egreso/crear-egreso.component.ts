@@ -6,6 +6,9 @@ import { TokenValidationService } from "../../services/token-validation-service.
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalService } from '../../services/modal.service';
+import { TerceroModalComponent } from "../../Components/modals/tercero-modal/tercero-modal.component";
 
 
 @Component({
@@ -19,14 +22,20 @@ export class CrearEgresoComponent {
   egreso: any = {};
   categoria: any[] = [];
   tercero: any[] = [];
-tenantId: string= ''
+tenantId: string= '';
+showModal: boolean = false;
+
   constructor(
     private egresoService: EgresosService,
     private categoriasService: CategoriasService,
     private tercerosService: TercerosService,
     private tokenService: TokenValidationService,
     private jwtHelper: JwtHelperService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal,
+    private modalService2: ModalService,
+
+
 
   ) {
     
@@ -115,4 +124,10 @@ tenantId: string= ''
     fileReader.readAsDataURL(selectedFile);
   }
  
+  openModal() {
+    const modalRef = this.modalService.open(TerceroModalComponent); // Abre el modal
+    //   modalRef.componentInstance.tercero = tercero; // Pasa el tercero seleccionado al modal
+    // }
+  }
+
 }

@@ -1,16 +1,45 @@
-<div class="modal-header">
-    <h4 class="modal-title">Editar Tercero</h4>
-  </div>
-  <div class="modal-body">
-    <!-- Aquí puedes colocar los campos para editar el tercero -->
-    <p>Nombre: <input [(ngModel)]="tercero.nombreTercero" [disabled]="true"></p>
-    <p>Documento: <input [(ngModel)]="tercero.documentoTercero" [disabled]="true"></p>
-    <p>Dirección: <input [(ngModel)]="tercero.direccionTercero"></p>
-    <p>Teléfono: <input [(ngModel)]="tercero.telefonoTercero"></p>
-    <p>Email: <input [(ngModel)]="tercero.emailTercero"></p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="saveChanges()">Guardar Cambios</button>
-    <button type="button" class="btn btn-secondary" (click)="cancelChanges()">Cancelar</button>
-  </div>
-  
+<!-- <div class=" needs-validation mt-5 mb-2" novalidate> -->
+
+
+<div class="card d-flex justify-content-center" style="width: 40rem;">
+
+    <div class="card-header g-2 p-6">
+        <h4 class="text-center">Editar proveedor</h4>
+
+    </div>
+
+    <div class="card-body  ">
+        <form class="row g-2 p-3 ">
+            <!-- <div class="col-md-12 mb-3"> -->
+            <!-- Aquí puedes colocar los campos para editar el tercero -->
+            <div class=" col-md-6">
+                <label class="form-label">Nombre: <input class="form-control" [(ngModel)]="tercero.nombreTercero" [disabled]="true"></label>
+            </div>
+            <div class=" col-md-6">
+
+                <label class="form-label">Documento: <input class="form-control" [(ngModel)]="tercero.documentoTercero" [disabled]="true"></label>
+            </div>
+            <div class=" col-md-6">
+
+                <label class="form-label">Dirección: <input class="form-control" [(ngModel)]="tercero.direccionTercero"></label>
+            </div>
+            <div class="  col-md-6">
+
+                <label class="form-label">Teléfono: <input class="form-control" [(ngModel)]="tercero.telefonoTercero"></label>
+            </div>
+            <div class=" col-md-6">
+
+                <label class="form-label">Email: <input class="form-control" [(ngModel)]="tercero.emailTercero"></label>
+
+            </div>
+            <!-- </div> -->
+        </form>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary mx-auto" (click)="cancelChanges()">Cancelar</button>
+        <button type="submit" class="btn btn-primary mx-auto" (click)="saveChanges()">Guardar Cambios</button>
+    </div>
+</div>
+<!-- </div> -->
