@@ -110,7 +110,10 @@
   <div class="navbar-nav d-flex align-items-center mx-3">
 
     <div class="navbar-nav d-flex align-items-center">
-      <div *ngIf="isLoggedIn && isAdministrador || isGerente" class="saldo-caja" [ngClass]="{'positivo': saldoCaja >= 0, 'negativo': saldoCaja < 0}">
+      <!-- <div *ngIf="isLoggedIn && isAdministrador || isGerente" class="saldo-caja" [ngClass]="{'positivo': saldoCaja >= 0, 'negativo': saldoCaja < 0}">
+        <h3>Saldo de Caja: {{ saldoCaja | currency:'COL' }}</h3>
+      </div> -->
+      <div *ngIf="isLoggedIn && !isSuperUsuario" class="saldo-caja" [ngClass]="{'positivo': saldoCaja >= 0, 'negativo': saldoCaja < 0}">
         <h3>Saldo de Caja: {{ saldoCaja | currency:'COL' }}</h3>
       </div>
       
