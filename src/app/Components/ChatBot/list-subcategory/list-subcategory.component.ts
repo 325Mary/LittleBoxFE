@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormSubcategoryComponent } from '../form-subcategory/form-subcategory.component';
@@ -75,14 +76,43 @@ export class ListSubcategoryComponent {
     const tenantId = this.tokenValidationService.getTenantIdFromToken();
 
     if (tenantId) {
-      this.SService.deleteSubcategories(id, tenantId).subscribe((data) => {
-        this.toastr.error(
-          'La subclase fue eliminada con exito.',
-          'Subclase eliminada: '
-        );
-        this.filtrarSubcategory();
-        this.reloadSubcategories();
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
       });
+      swalWithBootstrapButtons.fire({
+        title: "¿Estas seguro?",
+        text: "Estas seguro de borrar esta subcategoria!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Eliminar!",
+        cancelButtonText: "Cancelar!",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire({
+            title: "Eliminado!",
+            text: "La subcategoria se ha eliminado con exito.",
+            icon: "success"
+          });
+          this.SService.deleteSubcategories(id, tenantId).subscribe((data) => {
+            this.filtrarSubcategory();
+            this.reloadSubcategories();
+          });
+        } else if (
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelada",
+            text: "La subcategoria se ha salvado :)",
+            icon: "error"
+          });
+        }
+      });
+      
     } else {
       console.error('No se pudo obtener el tenantId.');
     }

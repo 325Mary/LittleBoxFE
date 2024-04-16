@@ -31,16 +31,17 @@ export class EditQueriesComponent {
     private tokenValidationService: TokenValidationService
   ) {
     this.loadSubcategories();
+    
   }
 
   ngOnInit(): void { 
     if (this.queryId) {
-      this.loadCategoryDetails(this.queryId)
+      this.loadQueryDetails(this.queryId)
     }
   }
 
   
-  loadCategoryDetails(id: string) {
+  loadQueryDetails(id: string) {
     const tenantId = this.tokenValidationService.getTenantIdFromToken();
     if (tenantId) {
       this.queriesService.getAQuery(id, tenantId).subscribe(

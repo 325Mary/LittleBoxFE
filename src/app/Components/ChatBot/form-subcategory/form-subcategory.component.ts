@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { SignInUpService } from '../../../services/sign-in-up.service';
+import Swal from 'sweetalert2';
+import 'sweetalert2/src/sweetalert2.scss';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SubcategoryService } from '../../../services/chatbot/subcategory.service';
@@ -19,10 +21,9 @@ export class FormSubcategoryComponent {
   rolUsuario: string = '';
 
   name: string = '';
-  description: string= '';
+  description: string = '';
   category: string = '';
   categories: any[] = [];
-
 
   constructor(
     private toastr: ToastrService,
@@ -83,18 +84,21 @@ export class FormSubcategoryComponent {
 
       this.SService.saveSubcategory(newSubcategory, tenantId).subscribe(
         () => {
-          this.toastr.success(
-            'La subcategoría fue registrada con éxito.',
-            'Subcategoría registrada:'
-          );
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "La subcategoria se ha guardado con exito!",
+            showConfirmButton: false,
+            timer: 1500
+          });
           this.activeModal.close('Modal cerrada');
         },
         (error) => {
-          console.error('Error al registrar la subcategoría:', error);
-          this.toastr.error(
-            'Error al registrar la subcategoría. Por favor, inténtalo de nuevo.',
-            'Error'
-          );
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No se ha guardado la subcategoria!",
+          });
           this.activeModal.close('Modal cerrada');
         }
       );

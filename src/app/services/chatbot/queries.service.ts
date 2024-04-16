@@ -98,13 +98,13 @@ export class QueriesService {
   }
 
   getQueriesBySubcategory(
-    identifierSubcategory: string,
+    nameSubcategory: string,
     tenantId: string
   ): Observable<any> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ Authorization: `${token}` });
     return this.http.get<any>(
-      `${this.apiUrl}${this.endpoints.getQueriesByScategory}/${identifierSubcategory}`,
+      `${this.apiUrl}${this.endpoints.getQueriesByScategory}/${nameSubcategory}`,
       {
         params: { tenantId },
         headers: headers,
