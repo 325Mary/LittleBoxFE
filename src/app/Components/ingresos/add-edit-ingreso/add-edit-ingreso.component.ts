@@ -20,7 +20,7 @@ export class AddEditIngresoComponent {
   formulario: Ingreso = {
     ingresoId: 0,
     tenantId: '',
-    fecha: new Date(),
+    fecha: "",
     detalle: '',
     valor: 0,
   };
@@ -68,12 +68,13 @@ export class AddEditIngresoComponent {
     this.ingrsosService.getIngreso(id, this.tenantId).subscribe((response: any) => {
       this.loading = false;
       const data = response.data; // Extraer la propiedad 'data' de la respuesta
+      data.fecha = this.formatoFecha(new Date(data.fecha));
       console.log('Datos obtenidos:', data);
 
       this.formulario = {
         ingresoId: data.ingresoId,
         tenantId: this.tenantId,
-        fecha: new Date(data.fecha),
+        fecha: data.fecha,
         detalle: data.detalle,
         valor: data.valor,
       };
@@ -140,4 +141,11 @@ export class AddEditIngresoComponent {
     });
   }
 
+  formatoFecha(fecha: Date): string {
+    const fechaUTCString = fecha.toUTCString(); // Obtener la fecha en formato UTC
+    const isoString = fecha.toISOString(); // Obtener la fecha en formato ISO 8601 (UTC)
+    console.log('Fecha en formato UTC:', fechaUTCString);
+    console.log('Fecha en formato ISO 8601 (UTC):', isoString);
+    return isoString.substring(0, 10); // Recortar solo la parte de la fecha (YYYY-MM-DD)
+  }
 }

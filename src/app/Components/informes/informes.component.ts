@@ -24,7 +24,7 @@ export class InformesComponent {
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalMovimientosDeCaja: number = 0;
-
+  page: number = 1;
   constructor(private informesService: InformesService,
     private categoriasService: CategoriasService,
     private tercerosService: TercerosService,

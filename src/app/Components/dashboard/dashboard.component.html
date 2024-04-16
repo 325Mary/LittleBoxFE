@@ -90,60 +90,66 @@
         <!-- Columna Derecha: Solicitudes -->
         <div  class="col-md-6" *ngIf="isLoggedIn && !isSuperUsuario">
             <!-- Lista de solicitudes -->
-            <div class="card request-card">
-                <h2 class="card-title text-center">
-                    <p-header>
-                        <i class="pi pi-list"></i> Solicitudes pendientes
-                    </p-header>
-                </h2>
-                <div class="row">
-                    <div class="col-md-12 col-lg-6 mb-4" *ngFor="let solicitud of listSolicitudes">
-                        <ng-container *ngIf="solicitud.estado?.nombre === 'pendiente'">
-                        <div class="card request-item">
-                            <div class="card-body">
-                                <i [class]="getIconByCategory(solicitud.categoria?.nombre)"></i>
-                                <h5 class="card-title">Solicitud #{{ solicitud.solicitudId }}</h5>
-                                <p class="card-text">Fecha: {{ solicitud.fecha | date: 'dd-MM-yyyy' }}</p>
-                                <p class="card-text">Estado: <span [style.backgroundColor]="getColorByEstado(solicitud.estado?.nombre)" class="badge">{{ solicitud.estado?.nombre }}</span></p>
-                                <p class="card-text">Detalle: {{ solicitud.detalle }}</p>
-                                <p class="card-text">Valor: {{ solicitud.valor | currency }}</p>
-                            </div>
-                        </div>
-                        </ng-container>
+            <!-- Lista de solicitudes -->
+<div class="card request-card">
+    <h2 class="card-title text-center">
+        <p-header>
+            <i class="pi pi-list"></i> Solicitudes pendientes
+        </p-header>
+    </h2>
+    <div class="row">
+        <ng-container *ngFor="let solicitud of listSolicitudes; let i = index">
+            <div class="col-md-6 col-lg-6" *ngIf="solicitud.estado?.nombre === 'pendiente'">
+                <div class="card request-item mb-3">
+                    <div class="card-body">
+                        <i [class]="getIconByCategory(solicitud.categoria?.nombre)"></i>
+                        <h5 class="card-title">Solicitud #{{ solicitud.solicitudId }}</h5>
+                        <p class="card-text">Fecha: {{ solicitud.fecha | date: 'dd-MM-yyyy' }}</p>
+                        <p class="card-text">Estado: <span [style.backgroundColor]="getColorByEstado(solicitud.estado?.nombre)" class="badge">{{ solicitud.estado?.nombre }}</span></p>
+                        <p class="card-text">Detalle: {{ solicitud.detalle }}</p>
+                        <p class="card-text">Valor: {{ solicitud.valor | currency }}</p>
                     </div>
-                    <div *ngIf="listSolicitudes.length === 0" class="col-md-12 text-center">No hay solicitudes pendientes.</div>
                 </div>
             </div>
-        </div>
+            <!-- Si es el último elemento y la cantidad de solicitudes es impar, agregamos un espacio en blanco -->
+            <div class="col-md-6 col-lg-6" *ngIf="listSolicitudes.length % 2 !== 0 && i === listSolicitudes.length - 1"></div>
+        </ng-container>
+        <div *ngIf="listSolicitudes.length === 0" class="col-md-12 text-center">No hay solicitudes pendientes.</div>
+    </div>
+</div>
+
          <!-- Lista de empresas -->
-         <div class="cardCount" *ngIf="isLoggedIn && isSuperUsuario">
-            <p class="card-title text-center">
-                <p-header>
-                    <i class="pi pi-list"></i>  # solicitudes de empresas 
-                </p-header>
-            </p>
-            <p class="card-text text-center">{{ companies }}</p>
-        </div>
-         <!-- Lista de empleados -->
-         <div class="cardCount"  *ngIf="isLoggedIn && isSuperUsuario">
-            <p class="card-title text-center">
-                <p-header>
-                    <i class="pi pi-users"></i>  # usuarios totales 
-                </p-header>
-            </p>
-            <p class="card-text text-center">{{ ListUsuarios }}</p>
-        </div>
-         <!-- crear SuperU -->
-         <div class="cardCount" [routerLink]="['/crearSuperU']" *ngIf="isLoggedIn && isSuperUsuario">
-            <p class="card-title text-center">
-              <p-header>
-                <i class="pi pi-user-plus"></i> CREAR SUPERUSUARIO
-              </p-header>
-            </p>
-            <div class="d-flex justify-content-center align-items-center">
-              <p class="pi pi-plus"></p>
-            </div>
-          </div>
+<div class="cardCount border-primary" *ngIf="isLoggedIn && isSuperUsuario">
+    <p class="card-title text-center">
+        <p-header>
+            <i class="pi pi-list" [ngStyle]="{'color': isLoggedIn && isSuperUsuario ? 'blue' : ''}"></i> <span class="text-lg"></span> # solicitudes de empresas 
+        </p-header>
+    </p>
+    <p class="card-text text-center fs-4">{{ companies }}</p>
+</div>
+
+<!-- Lista de empleados -->
+<div class="cardCount border-danger" *ngIf="isLoggedIn && isSuperUsuario">
+    <p class="card-title text-center">
+        <p-header>
+            <i class="pi pi-users" [ngStyle]="{'color': isLoggedIn && isSuperUsuario ? 'red' : ''}"></i> <span class="text-lg"></span> # usuarios totales 
+        </p-header>
+    </p>
+    <p class="card-text text-center fs-4">{{ ListUsuarios }}</p>
+</div>
+
+<!-- Crear SuperU -->
+<div class="cardCount border-success" [routerLink]="['/crearSuperU']" *ngIf="isLoggedIn && isSuperUsuario">
+    <p class="card-title text-center">
+        <p-header>
+            <i class="pi pi-user-plus" [ngStyle]="{'color': isLoggedIn && isSuperUsuario ? 'green' : ''}"></i> CREAR SUPERUSUARIO
+        </p-header>
+    </p>
+    <div class="d-flex justify-content-center align-items-center">
+        <p class="pi pi-plus"></p>
+    </div>
+</div>
+
           
           
            <!-- Gráfico de companies -->

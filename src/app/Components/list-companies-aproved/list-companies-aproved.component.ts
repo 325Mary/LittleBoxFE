@@ -15,7 +15,8 @@ export class ListCompaniesAprovedComponent implements OnInit {
   selectedCompany: any;
   currentPage: number = 1;
   itemsPerPage: number = 10;
-  totalList : number =0
+  totalList : number =0;
+  pagedCompanies: any = [];
   constructor(private companyService: CompanyService) { }
 
   ngOnInit(): void {

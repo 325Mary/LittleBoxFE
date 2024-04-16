@@ -90,7 +90,7 @@
                   </div>
                 </td>
                 <td>{{ solicitud.solicitudId }}</td>
-                <td>{{ solicitud.fecha | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ solicitud.fecha }}</td>
                 <td>{{ solicitud.tercero?.nombreTercero }}</td>
                 <td [style.Color]="getColorByEstado(solicitud.estado?.nombre)">
                   {{ solicitud.estado?.nombre }}
@@ -101,7 +101,7 @@
                   <button [routerLink]="['/edit', solicitud._id]" type="button"
                     class="btn btn-primary btn-sm">Editar</button>
                   <button (click)="verDetalle(solicitud)" type="button" class="btn btn-info btn-sm ms-2">Ver</button>
-                  <button *ngIf="rolUsuario !== 'Colaborador'" (click)="deleteSolicitud(solicitud._id)" type="button"
+                  <button *ngIf="rolUsuario !== 'Administrador'" (click)="deleteSolicitud(solicitud._id)" type="button"
                     class="btn btn-danger btn-sm ms-2">Eliminar</button>
                 </td>
               </tr>

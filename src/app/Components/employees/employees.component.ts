@@ -4,6 +4,7 @@ import { SignInUpService } from "../../services/sign-in-up.service";
 import { Observable } from 'rxjs';
 import { SweetAlertService } from "../../services/sweet-alert.service";
 import { TokenValidationService } from '../../services/token-validation-service.service';
+import { Router } from '@angular/router'; // Importar el Router de Angular
 
 
 @Component({
@@ -22,7 +23,7 @@ export class EmployeesComponent  implements OnInit {
 
   constructor(private signInUpService: SignInUpService, private sweetAlert:SweetAlertService,
     private tokenValidationService: TokenValidationService,
-    private cdr: ChangeDetectorRef) { }
+    private cdr: ChangeDetectorRef, private router: Router) { }
 
   ngOnInit(): void {
     this.obtenerUsuariosPorTenantId();
@@ -56,6 +57,7 @@ export class EmployeesComponent  implements OnInit {
         this.obtenerUsuariosPorTenantId();
         // alert('Usuario Activo')
         this.sweetAlert.showSuccessToast("El Usuario ha sido activado correctamente!")
+        this.router.navigate(['/employees']);
       },
       error => {
         console.error('Error al activar el usuario:', error);

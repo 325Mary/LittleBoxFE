@@ -17,7 +17,8 @@ import { SaldoCajaService } from "../../services/saldo-caja.service";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
+  
+  scrolled: boolean = false;
  
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
 
@@ -49,6 +50,15 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (window.scrollY > 50) {
+      this.scrolled = true;
+    } else {
+      this.scrolled = false;
+    }
+  }
+
   ActualizarSaldoCaja(): void {
     this.saldoDeCaja.getSaldoDeCaja().subscribe((Data: any) => {
       if (Data) {
@@ -66,10 +76,13 @@ export class NavbarComponent implements OnInit {
     this.showNotifications = false;
   }
 
+  
   openNotifications(): void {
     this.showNotifications = !this.showNotifications;
     this.miValorComoString = this.notificationsCount.toString();
     if (this.showNotifications) {
+      console.log("notificaciones abiertas: ",this.showNotifications);
+      
       this.refreshNotifications(); // Actualizar el contador de notificaciones al abrir las notificaciones
     }
   }
@@ -84,6 +97,8 @@ export class NavbarComponent implements OnInit {
         this.checkAuthentication();
       }
     });
+
+    
 
     this.loginStatusSubscription = this.authService.loginStatusChanged.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
@@ -164,11 +179,12 @@ sidebarVisible: boolean = false;
     }
   }
 
-  logout() {
+  logout(): void {
     try {
       this.authService.logout();
       this.isLoggedIn = false;
       this.router.navigate(['/']);
+      this.cdr.detectChanges();
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
@@ -181,4 +197,9 @@ sidebarVisible: boolean = false;
   closeModal() {
     this.modalOpen = false;
   }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+  
 }

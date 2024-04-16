@@ -58,3 +58,4 @@ export class CompanyService {
     return this.httpClient.get<any[]>(url, { headers: this.getHeaders() });
   }
 }
+

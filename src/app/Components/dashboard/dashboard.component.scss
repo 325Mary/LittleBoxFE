@@ -1,9 +1,9 @@
 .container {
   max-width: 100%;
-  margin: 0 auto;
+  margin: 0 ;
   padding: 20px;
   margin-top: 40px;
-  background: linear-gradient(to bottom, rgb(220, 230, 240), rgb(231, 242, 250)); /* Degradado de arriba hacia abajo */
+  // background: linear-gradient(to bottom, rgb(220, 230, 240), rgb(231, 242, 250)); /* Degradado de arriba hacia abajo */
 }
 
 .notification-section,
@@ -11,8 +11,18 @@
   display: flex;
   flex-direction: row;
   gap: 20px;
+  
 }
 
+.notification-card li{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2)
+
+}
+
+.notification-card li:hover{
+  background-color: rgba(9, 48, 245, 1); /* Cambia el color de fondo al pasar el mouse */
+  color: #f5f5f5;
+}
 .card {
   flex: 1;
   border: transparent;
@@ -98,12 +108,12 @@ h2{
   margin: 10px; /* Margen igual para todos los lados */
   padding: 20px; /* Espaciado interno igual para todos los lados */
   margin-top: 40px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-
+  border: 2px solid rgb(93, 93, 250);
 }
 
 
 .card-grafic{
+  margin-top: 50px;
   width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 
