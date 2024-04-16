@@ -33,32 +33,34 @@ div {
   left: 0;
 }
 
-  /* Modal styles */
-  .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 300vh; /* Ocupa toda la altura de la pantalla */
-    overflow: hidden; /* Elimina la barra de desplazamiento */
-    background-color: rgba(0, 0, 0, 0.2)
-  }
-  
-  .modal-content {
-    // background: linear-gradient(to bottom right, #3661ff, #000000);
-    background-color: transparent; 
-    margin: 7% auto;
-    padding: 10px;
-    border: 1px solid #cdc8c8;
-    width: 30%;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 0 10px rgba(19, 18, 19, 3); /* Sombra */
-    backdrop-filter: blur(55px)
+    /* Modal styles */
+  /* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000; /* Asegura que el modal esté por encima de otros elementos */
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow-x: hidden;
+  overflow-y: auto; /* Permite el desplazamiento vertical si el contenido del modal es demasiado largo */
+}
 
-
-  }
+/* Estilos para el contenido del modal */
+.modal-content {
+  background-color: white; 
+  margin: 7% auto;
+  padding: 10px; 
+  border: 1px solid #cdc8c8;
+  width: 90%; /* Ancho del modal */
+  max-width: 500px; /* Ancho máximo del modal */
+  max-height: 90%; /* Altura máxima del modal */
+  overflow-y: auto; /* Habilita el desplazamiento vertical si el contenido excede el tamaño del modal */
+  box-shadow: 0 0 10px rgba(19, 18, 19, 0.3); /* Sombra */
+  border-radius: 10px; /* Bordes redondeados */
+}
   
   .close {
     color: #0e0e0e;
@@ -81,8 +83,9 @@ div {
 
 .logo{
   width: 100%;
-  height: 60px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important; 
+  height: 50px;
+  
+  
 
 }
 
@@ -249,5 +252,3 @@ div {
 .btn-custom:hover svg {
   fill: white; /* Cambio de color del icono al pasar el mouse */
 }
-
-

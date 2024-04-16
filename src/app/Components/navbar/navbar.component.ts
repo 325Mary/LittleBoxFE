@@ -11,7 +11,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from "../../services/notification.service";
 import { SaldoCajaService } from "../../services/saldo-caja.service";
 
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -19,7 +18,8 @@ import { SaldoCajaService } from "../../services/saldo-caja.service";
 })
 export class NavbarComponent implements OnInit {
   
-  mostrarNavbar = true;
+  scrolled: boolean = false;
+ 
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
 
   items: MenuItem[] = [];
@@ -48,6 +48,15 @@ export class NavbarComponent implements OnInit {
     this.router.events.subscribe((val) => {
       this.currentRoute = this.router.url;
     });
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (window.scrollY > 50) {
+      this.scrolled = true;
+    } else {
+      this.scrolled = false;
+    }
   }
 
   ActualizarSaldoCaja(): void {
@@ -89,9 +98,7 @@ export class NavbarComponent implements OnInit {
       }
     });
 
-    // this.authService.mostrarNavbar.subscribe(mostrar => {
-    //   this.mostrarNavbar = mostrar;
-    // });
+    
 
     this.loginStatusSubscription = this.authService.loginStatusChanged.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
@@ -172,11 +179,12 @@ sidebarVisible: boolean = false;
     }
   }
 
-  logout() {
+  logout(): void {
     try {
       this.authService.logout();
       this.isLoggedIn = false;
       this.router.navigate(['/']);
+      this.cdr.detectChanges();
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }

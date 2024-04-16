@@ -1,4 +1,4 @@
-<div class="container d-flex justify-content-center needs-validation mt-5 mb-2" novalidate>
+<div class="container d-flex justify-content-center needs-validation mb-2" style="margin-top: 80px; margin-bottom: 20px;" novalidate>
   <div class="card" style="width: 40rem;">
     <div class="card-header fs-5 text-center">{{ operacion }} Solicitud <label *ngIf="id" class="form-label" for="solicitudIdInput">
         #:</label>
@@ -9,15 +9,6 @@
         <div class="col-md-6">
           <label class="form-label" for="fecha">Fecha de Solicitud</label>
           <input [(ngModel)]="formulario.fecha" name="fecha" class="form-control" type="date" id="fecha" required #fecha="ngModel" />
-          <!-- <input name="fecha" 
-          class="form-control" 
-          type="date" 
-          id="fecha" 
-          required 
-          #fecha="ngModel" 
-          [value]="formulario.fecha | date: 'yyyy-MM-dd'"
-          [(ngModel)]="formulario.fecha"/> -->
-
           <div class="valid-feedback">
             Looks good!
           </div>

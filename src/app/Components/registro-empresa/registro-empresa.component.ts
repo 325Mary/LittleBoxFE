@@ -54,7 +54,7 @@ export class RegistroEmpresaComponent {
       this.send();
       Swal.fire({
         title: "¡Felicidades!",
-        text: "Tus datos fueron enviados correctamente, Este pendiente a su correo",
+        text: "Tus datos fueron registrados correctamente, a asu correo llegara la respuesta.",
         icon: "success"
       });
       this.router.navigate(['/']);
