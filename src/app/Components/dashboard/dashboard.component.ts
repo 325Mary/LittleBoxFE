@@ -166,7 +166,7 @@ export class DashboardComponent implements OnInit {
       data: {
         labels: this.terceros.map(tercero => tercero.terceroNombre),
         datasets: [{
-          label: 'Cantidad de Terceros',
+          label: 'Cantidad de Proveedores',
           data: this.terceros.map(tercero => tercero.count),
           backgroundColor: 'rgba(0, 0, 139, 0.2)',
           borderColor: 'green', // Cambiar el color a verde

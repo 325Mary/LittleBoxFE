@@ -1,5 +1,6 @@
 <!-- Para la tabla de Lista de empleado -->
-<div class="table-container" *ngIf="isLoggedIn && !isSuperUsuario">
+<div class="table-responsive" *ngIf="isLoggedIn && !isSuperUsuario">
+  <div class="table-container">
     <h1>Lista de empleado</h1>
     <p-table [value]="usuarios" [paginator]="true" [rows]="10">
       <!-- Table Header -->
@@ -27,9 +28,11 @@
       </ng-template>
     </p-table>
   </div>
-  
-  <!-- Para la tabla de Lista de todos los Usuarios -->
-  <div class="table-container" *ngIf="isLoggedIn && isSuperUsuario">
+</div>
+
+<!-- Para la tabla de Lista de todos los Usuarios -->
+<div class="table-responsive" *ngIf="isLoggedIn && isSuperUsuario">
+  <div class="table-container">
     <h1>Lista de todos los Usuarios</h1>
     <p-table [value]="ListUsuarios" [paginator]="true" [rows]="10">
       <!-- Table Header -->
@@ -57,4 +60,4 @@
       </ng-template>
     </p-table>
   </div>
-  
+</div>

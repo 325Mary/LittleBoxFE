@@ -13,14 +13,13 @@ export class GraficosComponent implements OnInit, OnChanges {
   fechaFin: string = '';
   movimientosDeCaja: any[] = [];
   grafico: any;
-  // filtro: string = '';
   graficoTorta:any
 
   constructor(private informesService: InformesService) { }
 
   ngOnInit(): void {
     // Llamar al método para obtener los movimientos de caja al inicializar el componente
-    this.obtenerMovimientoDeC();
+    // this.obtenerMovimientoDeC();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -53,7 +52,7 @@ export class GraficosComponent implements OnInit, OnChanges {
           // Generar el gráfico después de obtener los movimientos de caja
           this.generarGrafico();
           this.generarGraficoTorta();
-                  } else {
+        } else {
           // Manejar el caso donde la lista de movimientos no está presente en la respuesta
           console.error('La lista de movimientos no está presente en la respuesta');
         }
@@ -66,56 +65,50 @@ export class GraficosComponent implements OnInit, OnChanges {
   }
   
   generarGrafico() {
-    // Verificar si ya existe un gráfico y destruirlo si es necesario
-    if (this.grafico) {
-      this.grafico.destroy();
-    }
-  
     // Filtrar los movimientos de caja por tipo de movimiento (egreso)
     const movimientosEgreso = this.movimientosDeCaja.filter((movimiento: any) => movimiento.tipoMovimiento === 'Egreso');
-  
+
     console.log('Movimientos de egreso:', movimientosEgreso);
-  
-    // Obtener los nombres de categoría o tercero dependiendo del filtro seleccionado
+
+    // Obtener los nombres de categoría o tercero independientemente del filtro
     let nombres: string[] = [];
-    if (this.filtro === 'categoria') {
-      nombres = movimientosEgreso.map((movimiento: any) => movimiento.categoria || 'Sin categoría');
-    } else if (this.filtro === 'tercero') {
-      nombres = movimientosEgreso.map((movimiento: any) => movimiento.tercero || 'Sin tercero');
-    }
-  
+    nombres = movimientosEgreso.map((movimiento: any) => this.filtro === 'categoria' ? movimiento.categoria || 'Sin categoría' : movimiento.tercero || 'Sin tercero');
+
     console.log('Nombres obtenidos:', nombres);
-  
+
     // Contar la cantidad de cada nombre y sumar sus valores correspondientes
     const contadorNombres = this.contarNombres(nombres);
-  
+
     console.log('Contador de nombres:', contadorNombres);
-  
+
     // Convertir el objeto de contador a un arreglo de pares clave-valor
     const data = Object.entries(contadorNombres).map(([nombre, valor]) => ({ nombre, valor }));
-  
+
     // Ordenar los datos por valor descendente
     data.sort((a, b) => b.valor - a.valor);
-  
+
     // Extraer los nombres y valores ordenados
     const nombresOrdenados = data.map(entry => entry.nombre);
     const valoresOrdenados = data.map(entry => entry.valor);
-  
+
     // Calcular el total de movimientos de caja
     const totalMovimientos = movimientosEgreso.length;
-  
+
     console.log('Total de movimientos de egreso:', totalMovimientos);
-  
+
     // Calcular los porcentajes de cada nombre
     const porcentajes = valoresOrdenados.map((valor: number) => (valor / totalMovimientos) * 100);
-  
+
     console.log('Porcentajes:', porcentajes);
-  
+
     // Generar el gráfico
     const canvas = document.getElementById('myChart') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
-  
+
     if (ctx) {
+      if (this.grafico) {
+        this.grafico.destroy(); // Destruir el gráfico anterior si existe
+      }
       this.grafico = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -152,42 +145,40 @@ export class GraficosComponent implements OnInit, OnChanges {
   }
 
   generarGraficoTorta() {
-    
     // Filtrar los movimientos de caja por tipo de movimiento (egreso)
     const movimientosEgreso = this.movimientosDeCaja.filter((movimiento: any) => movimiento.tipoMovimiento === 'Egreso');
-  
+
     console.log('Movimientos de egreso:', movimientosEgreso);
-  
-    // Obtener los nombres de categoría o tercero dependiendo del filtro seleccionado
+
+    // Obtener los nombres de categoría o tercero independientemente del filtro
     let nombres: string[] = [];
-    if (this.filtro === 'categoria') {
-      nombres = movimientosEgreso.map((movimiento: any) => movimiento.categoria || 'Sin categoría');
-    } else if (this.filtro === 'tercero') {
-      nombres = movimientosEgreso.map((movimiento: any) => movimiento.tercero || 'Sin tercero');
-    }
-  
+    nombres = movimientosEgreso.map((movimiento: any) => this.filtro === 'categoria' ? movimiento.categoria || 'Sin categoría' : movimiento.tercero || 'Sin tercero');
+
     console.log('Nombres obtenidos:', nombres);
-  
+
     // Contar la cantidad de cada nombre y sumar sus valores correspondientes
     const contadorNombres = this.contarNombres(nombres);
-  
+
     console.log('Contador de nombres:', contadorNombres);
-  
+
     // Convertir el objeto de contador a un arreglo de pares clave-valor
     const data = Object.entries(contadorNombres).map(([nombre, valor]) => ({ nombre, valor }));
-  
+
     // Ordenar los datos por valor descendente
     data.sort((a, b) => b.valor - a.valor);
-  
+
     // Extraer los nombres y valores ordenados
     const nombresOrdenados = data.map(entry => entry.nombre);
     const valoresOrdenados = data.map(entry => entry.valor);
-  
+
     // Generar el gráfico de torta
     const canvasTorta = document.getElementById('myChartTorta') as HTMLCanvasElement;
     const ctxTorta = canvasTorta.getContext('2d');
-  
+
     if (ctxTorta) {
+      if (this.graficoTorta) {
+        this.graficoTorta.destroy(); // Destruir el gráfico anterior si existe
+      }
       this.graficoTorta = new Chart(ctxTorta, {
         type: 'pie',
         data: {
@@ -222,7 +213,6 @@ export class GraficosComponent implements OnInit, OnChanges {
     }
   }
   
-  
   formatoFecha(fecha: Date): string {
     if (!fecha || isNaN(fecha.getTime())) {
       // Manejar casos de fecha nula o inválida
@@ -241,7 +231,5 @@ export class GraficosComponent implements OnInit, OnChanges {
     });
 
     return contador;
-  }
-
-  
+  }  
 }

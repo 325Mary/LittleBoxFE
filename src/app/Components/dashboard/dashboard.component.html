@@ -24,13 +24,13 @@
             <div  class="card"  *ngIf="isLoggedIn && !isSuperUsuario">
                 <h2 class="card-title text-center">
                     <p-header>
-                        <i class="pi pi-list"></i> Terceros mas Relevantes
+                        <i class="pi pi-list"></i> Proveedores mas Relevantes
                     </p-header>
                 </h2>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="text-center">Nombre del Tercero</th>
+                            <th class="text-center">Nombres de los Proveedores</th>
                             <th class="text-center">Veces usadas</th>
                         </tr>
                     </thead>
@@ -47,7 +47,7 @@
             <div  class="card"  *ngIf="isLoggedIn && !isSuperUsuario">
                 <h2 class="card-title text-center">
                     <p-header>
-                        <i class="pi pi-chart-line"></i> Terceros
+                        <i class="pi pi-chart-line"></i> Proveedores
                     </p-header>
                 </h2>
                 <canvas #tercerosChart></canvas>
@@ -117,7 +117,7 @@
         <div *ngIf="listSolicitudes.length === 0" class="col-md-12 text-center">No hay solicitudes pendientes.</div>
     </div>
 </div>
-
+        </div>
          <!-- Lista de empresas -->
 <div class="cardCount border-primary" *ngIf="isLoggedIn && isSuperUsuario">
     <p class="card-title text-center">
@@ -153,7 +153,7 @@
           
           
            <!-- Gráfico de companies -->
-           <div class="card-grafic" *ngIf="isLoggedIn && isSuperUsuario">
+           <div class="card-grafic" >
             <h2 class="card-title text-center">
               <p-header>
                 <i class="pi pi-chart-line"></i> Mes destacados por Solicitudes de empresas

@@ -17,7 +17,7 @@ import { SaldoCajaService } from "../../services/saldo-caja.service";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  
+  mostrarNavbar = true;
   scrolled: boolean = false;
  
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
@@ -95,9 +95,12 @@ export class NavbarComponent implements OnInit {
         this.currentRoute = this.router.url;
         this.closeModal();
         this.checkAuthentication();
+        
       }
     });
-
+    this.authService.mostrarNavbar.subscribe(mostrar => {
+      this.mostrarNavbar = mostrar;
+    });
     
 
     this.loginStatusSubscription = this.authService.loginStatusChanged.subscribe(isLoggedIn => {
