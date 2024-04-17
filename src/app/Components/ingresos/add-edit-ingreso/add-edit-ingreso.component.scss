@@ -77,76 +77,39 @@
 
 /* Base colors (consider using a separate file for global colors) */
 
-$primary-color: #79cbe7; // Color azul claro (actualizado)
-$secondary-color: #a29b9b; // Gris azulado (actualizado)
-$error-color: #dc3545;
-$success-color: #28a745;
-$light-gray: #ddd; // Definido localmente (eliminada la importación)
-$text-white: #fff;
-
-/* Background styles */
-
-body {
-    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
+.container {
+    background-color: none;
 }
 
-.additional-background {
-    background-color: inherit; // Hereda del fondo de la página
+.cont-component {
+    position: relative;
+    height: 100vh;
+}
+
+.cont-principal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
     padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.card {
     width: 100%;
-    margin: 0 auto;
 }
 
-.container,
-.row.mt-4.justify-content-center,
-.col-lg-6,
-.card {
-    background-color: transparent; // Asume transparencia
+.btn-block {
+    width: 100%;
 }
 
-
-/* Card styles */
-
-.card {
-    border-color: $light-gray;
-    border-radius: 10px;
-}
-
-.card-header {
-    color: $text-white;
-    background-color: $primary-color;
-    border-bottom: 1px solid $light-gray;
-    border-radius: 10px 10px 0 0;
-}
-
-
-/* Form styles */
-
-.form-group label,
-.form-control {
-    color: $text-white;
-}
-
-.form-control {
-    // background-color: rgba(0, 0, 0, 0.05); /* Opcional: transparencia */
-    border-color: $light-gray;
-    border-radius: 5px;
-}
-
-
-/* Text styles */
-
-.text-danger {
-    color: $error-color;
-}
-
-
-/* Button styles */
-
-.btn.btn-danger,
-.btn.btn-success {
-    background-color: respective;
-    border-color: respective;
-    color: $text-white;
-    border-radius: 5px;
+@media (max-width: 768px) {
+    .cont-principal {
+        max-width: 100%;
+    }
 }

@@ -104,90 +104,102 @@
 /* Form styles */
 
 // Variables de color
-$primary-color: #79cbe7; // Tomado de la base
-$secondary-color: #a29b9b; // Tomado de la base
-.additional-background,
-.form {
-    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
-    padding: 20px;
-    width: auto;
-    margin: 20px;
-    border-radius: 10px; // Añadido para consistencia
+.cont-component {
+    position: relative;
+    height: 100vh;
 }
 
-.form-container {
+.cont-principal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.card {
+    width: 100%;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .cont-principal {
+        max-width: 100%;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.custom-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 120vh;
+    background-image: linear-gradient(to bottom, #79cbe7, #a29b9b);
+    /* Desde azul claro hasta blanco */
 }
 
 .form {
-    width: 50%;
-    margin: 0 auto; // Centrado horizontalmente sin propiedades adicionales
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); // Sombra más suave
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.form-input,
-.form-select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
+    width: 30%;
+    margin: 90px auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: linear-gradient(to bottom, #79cbe7, #a29b9b);
+    /* Desde azul claro hasta blanco */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    /* Sombra suave */
 }
 
 button {
-    background-color: #fdfdfd;
-    color: #333; // Texto más oscuro para mejor contraste
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 20%; // Ajustar según necesidades del diseño
-    margin: 0 auto; // Centrado horizontal sin propiedades adicionales
-    display: block;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); // Sombra más sutil
+    width: 100%;
+    /* Ajustar el ancho del botón al 100% del contenedor */
 }
 
 button:hover {
-    background-color: #007bff;
+    background-color: #0056b3;
 }
 
 
-/* Table styles */
+/* Estilos adicionales para los input */
 
-.table-container {
-    margin: 20px;
+input[type="text"],
+input[type="email"] {
+    width: calc(100% - 24px);
+    /* Ajustar el ancho de los input al 100% del contenedor menos el padding */
+    padding: 10px;
+    margin-bottom: 10px;
+    /* Espaciado entre inputs */
+    border: 1px solid #ccc;
+    /* Borde gris */
+    border-radius: 5px;
+    /* Bordes redondeados */
 }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table th,
-.table td {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-}
-
-.table th {
-    background-color: #79cbe7; // Color primario
-    color: white;
-}
-
-.invalid-feedback {
-    // color: red;
-    font-size: 0.8rem;
-    margin-top: 5px;
+input[type="text"]:focus,
+input[type="email"]:focus {
+    outline: none;
+    /* Eliminar el contorno de enfoque */
+    border-color: #007bff;
+    /* Cambiar el color del borde al enfocar */
 }

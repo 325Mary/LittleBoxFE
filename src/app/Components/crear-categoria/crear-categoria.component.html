@@ -1,4 +1,4 @@
-<div class="custom-container">
+<!-- <div class="custom-container">
   <div class="form">
         <form (ngSubmit)="guardarCategoria()"  >
           <h1>Registrar un nueva Categoria </h1>
@@ -11,4 +11,28 @@
           <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
     </div>
-  </div>
+  </div> -->
+<div class="container d-flex justify-content-center needs-validation mt-5 mb-2" novalidate>
+    <div class="card" style="width: 40rem;">
+        <div class="card-header">
+
+            <h1>Registrar Nueva Categoria </h1>
+
+        </div>
+
+        <div class="card-body">
+            <form (ngSubmit)="guardarCategoria()" class="row g-3 p-4 ">
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre de la Categoria:</label>
+                    <input type="text" [(ngModel)]="categoria.nombre" name="nombre" class="form-control" required>
+                </div>
+                <div *ngIf="categoria.nombre.control.touched && categoria.nombre.control.invalid" class="text-danger">
+                    El campo Nombre de la Categoria es requerido
+                </div>
+
+                <button type="submit" class="btn btn-primary mx-auto justify-content-center col-md-2">Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>
