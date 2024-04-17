@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-pre-registro',
   templateUrl: './pre-registro.component.html',
@@ -37,13 +38,12 @@ export class PreRegistroComponent implements OnInit {
         } else {
           // Verificar si la respuesta contiene el userId y firstLogin es true
           if (response.userId && response.token && response.firstLogin) {
-            // Guardar userId y token en localStorage
             localStorage.setItem('userId', response.userId);
             localStorage.setItem('token', response.token);
             // Mostrar alerta y navegar al componente ChangePasswordComponent
-            if (confirm('Por favor, cambie su contraseña.')) {
-              this.router.navigate(['/changePassword', response.userId]);  
-                      }
+            if (confirm('Aceptar Términos y condiciones.')) {
+                this.router.navigate(['TratamientoDeDatos', response.userId]);  
+            }
           } else {
             // Si no es el primer inicio de sesión, redirigir al home
             this.router.navigate(['home']);

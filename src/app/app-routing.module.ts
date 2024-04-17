@@ -34,14 +34,18 @@ import {  GraficosComponent} from "../app/Components/graficos/graficos.component
 import {  NotificationsComponent} from "../app/Components/notifications/notifications.component";
 import { TerceroModalComponent } from '../app/Components/modals/tercero-modal/tercero-modal.component';
 import { CaducidadTokenComponent } from "../app/Components/caducidad-token/caducidad-token.component";
+import { GastoComponent } from "../app/Components/gasto/gasto.component";
+import {DashboardComponent} from "../app/Components/dashboard/dashboard.component";
+import { CrearSuperUsuarioComponent } from "../app/Components/crear-super-usuario/crear-super-usuario.component";
+import { ModalLegalComponent } from '../app/Components/modal-legal/modal-legal.component'
 
 
 const routes: Routes = [
-  { path: '', component: IndexComponent },
-  { path: 'home', component: HomeComponent },
-  // { path: 'home', component: ListEdictSolicitudComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
+  // { path: '', component: IndexComponent },
+  { path: '', component: HomeComponent },
+  { path: 'home', component: DashboardComponent },
   { path: 'listIngresos', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
-  { path: 'obtenerTodosLosIngresos', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario', 'Administrador'] } },
+  { path: 'obtenerTodosLosIngresos', component: ListDeleteIngresosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente','Administrador'] } },
   { path: 'addIngreso', component: AddEditIngresoComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'editIngreso/:id', component: AddEditIngresoComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
   { path: 'sidebar', component: SidebarComponent },
@@ -78,6 +82,9 @@ const routes: Routes = [
   { path: 'graficos', component: GraficosComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador'] }},
   { path: 'notificaciones/:notificationId', component: NotificationsComponent },
   { path: 'exit', component: CaducidadTokenComponent},
+  { path: 'gastoActual', component: GastoComponent},
+  { path: 'crearSuperU', component: CrearSuperUsuarioComponent},
+  { path: 'TratamientoDeDatos/:userId', component: ModalLegalComponent},
   { path: '**', component: NotFoundComponent }
 ];
 

@@ -23,21 +23,27 @@
     align-items: center;
     height: 100vh;
     background-image: linear-gradient(to bottom, #79cbe7, #a29b9b);
-    /* Light blue to light gray */
+    /* Desde azul claro hasta blanco */
 }
 
-button {
-    background-color: #007bff;
-    /* Primary blue */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-    /* Consider using a utility class for consistent margin */
-}
-
+// button {
+//   background-color: #007bff;
+//   color: white;
+//   border: none;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   margin-left: 10px;
+// }
 button:hover {
     background-color: #0056b3;
-    /* Darker blue on hover */
+}
+
+.cont-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cont-search button {
+    margin-right: 10px;
 }

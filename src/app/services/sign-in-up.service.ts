@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { TokenValidationService } from "../services/token-validation-service.service";
-
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,7 @@ export class SignInUpService {
   private baseUrl: string;
   loginStatusChanged = new EventEmitter<boolean>();
 
+  mostrarNavbar = new BehaviorSubject<boolean>(true);
 
   
   constructor(private httpClient: HttpClient, private jwtHelper: JwtHelperService, private router: Router, private tokenValidationService: TokenValidationService) {
@@ -36,9 +37,7 @@ export class SignInUpService {
           
           // Verificar si es el primer inicio de sesión
           if (response.firstLogin) {
-            if (confirm('Por favor, cambie su contraseña.')) {
               this.router.navigate(['/changePassword', { userId: response.userId }]);
-            }
           } else {
             // Emitir el evento solo si no es el primer inicio de sesión
             this.loginStatusChanged.emit(true);
@@ -185,6 +184,13 @@ getUserById(userId: string): Observable<any> {
   console.log(userId)
   return this.httpClient.get<any>(`${this.baseUrl}/getId/${userId}`);
 }
+
+getUserSuperU(token: string): Observable<any> {
+  const headers = new HttpHeaders().set('Authorization', `${token}`);
+
+  return this.httpClient.get<any>(`${this.baseUrl}/getUsersSuperU`, {headers});
+}
+
 
 // Función para editar datos de usuario
 editUser(userId: string, newData: any): Observable<any> {

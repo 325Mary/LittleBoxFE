@@ -14,27 +14,27 @@
     <h3 style="color: white;">Menú</h3>
     <ul class="sidebar-menu">
       <li *ngIf="isLoggedIn"><a routerLink="/home/"><i class="pi pi-home"></i> Inicio</a></li>
-      <li *ngIf="isLoggedIn && isGerente"><a routerLink="/employees/"><i class="pi pi-users"></i> Empleados</a></li>
-      <li><a routerLink="/personalization/"><i class="pi pi-cog"></i> Personalización</a></li>
-      <li *ngIf="isLoggedIn && (isSuperUsuario || isGerente)"><a routerLink="/listDeSoliDeEmpresas/"><i
+      <li *ngIf="isLoggedIn && isGerente || isSuperUsuario "  class="mb-2"><a routerLink="/employees/"><i class="pi pi-users"></i> Empleados</a></li>
+      <li><a routerLink="/personalization/" class="mb-2"><i class="pi pi-cog"></i> Personalización</a></li>
+      <li *ngIf="isLoggedIn && (isSuperUsuario )"  class="mb-2"><a routerLink="/listDeSoliDeEmpresas/"><i
             class="pi pi-briefcase"></i> Solicitudes de empresas</a></li>
-      <li *ngIf="isLoggedIn && isGerente"><a routerLink="/crearUserAdmin/"><i class="pi pi-user-plus"></i> Crear
+      <li *ngIf="isLoggedIn && isGerente"  class="mb-2"><a routerLink="/crearUserAdmin/"><i class="pi pi-user-plus"></i> Crear
           Administrador</a></li>
-      <li *ngIf="isLoggedIn && (isSuperUsuario)"><a routerLink="/listCompaniesAproved/"><i
+      <li *ngIf="isLoggedIn && (isSuperUsuario)"  class="mb-2"><a routerLink="/listCompaniesAproved/"><i
             class="pi pi-list"></i> Lista de empresas</a></li>
-      <li *ngIf="isLoggedIn && isAdministrador"><a routerLink="/SoliColaboradores/"><i class="pi pi-clone"></i>
+      <li *ngIf="isLoggedIn && isAdministrador"  class="mb-2"><a routerLink="/SoliColaboradores/"><i class="pi pi-user-plus"></i>
           Solicitudes de Colaboradores</a></li>
-      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/crearTercero/"><i
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"  class="mb-2"><a routerLink="/crearTercero/"><i
             class="pi pi-id-card"></i> Crear Tercero</a></li>
-      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/crearCategoria/"><i
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"  class="mb-2"><a routerLink="/crearCategoria/"><i
             class="pi pi-tags"></i> Crear Categoría</a></li>
-      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listTerceros/"><i
-            class="pi pi-list-alt"></i> Listar Terceros</a></li>
-      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listCatgorias/"><i
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"  class="mb-2"><a routerLink="/listTerceros/"><i
+            class="pi pi-th-large"></i> Listar Porveedores</a></li>
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"  class="mb-2"><a routerLink="/listCatgorias/"><i
             class="pi pi-th-large"></i> Listar Categorías</a></li>
-      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listEgresos/"><i
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"  class="mb-2"><a routerLink="/listEgresos/"><i
             class="pi pi-arrow-circle-down"></i> Listar Egresos</a></li>
-      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"><a routerLink="/listIngresos/"><i
+      <li *ngIf="isLoggedIn && (isGerente || isAdministrador)"  class="mb-2"><a routerLink="/listIngresos/"><i
             class="pi pi-arrow-circle-up"></i> Listar Ingresos</a></li>
     </ul>
   </div>

@@ -132,12 +132,12 @@
                         <ng-template pTemplate="body" let-ingreso>
                             <tr>
                                 <td>{{ ingreso.ingresoId }}</td>
-                                <td>{{ ingreso.fecha | date: 'dd-MM-yyyy' }}</td>
+                                <td>{{ ingreso.fecha }}</td>
                                 <td>{{ ingreso.detalle }}</td>
                                 <td>{{ ingreso.valor | currency }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary" [routerLink]="['/editIngreso', ingreso._id]">Editar</button>
-                                    <button type="button" class="btn btn-danger" (click)="deleteIngreso(ingreso._id)">Eliminar</button>
+                                    <button *ngIf="rolUsuario == 'Gerente'" type="button" class="btn btn-primary" [routerLink]="['/editIngreso', ingreso._id]">Editar</button>
+                                    <button *ngIf="rolUsuario == 'Gerente'" type="button" class="btn btn-danger" (click)="deleteIngreso(ingreso._id)">Eliminar</button>
                                 </td>
                             </tr>
                         </ng-template>

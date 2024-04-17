@@ -36,10 +36,11 @@ export class ListEdictSolicitudComponent implements OnInit{
   tenantId: string = '';
   id: string | null;
   rolUsuario: string = ''; // Variable que almacena el rol del usuario
+  cantidadSolicitudes: number = 0
 
   // fechaInicio = new Date('2024-01-01');
-  fechaInicio = new Date();
-  fechaFin = new Date();
+  fechaInicio = "";
+  fechaFin = "";
 
   documento = ""
 
@@ -57,7 +58,23 @@ export class ListEdictSolicitudComponent implements OnInit{
   
   }
 
+  establecerFechasMesActual(): void {
+    const fechaActual = new Date();
+    const primerDiaMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), 1);
+    const ultimoDiaMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0);
+
+    // Formatear las fechas
+    this.fechaInicio = this.formatoFecha(primerDiaMes);
+    this.fechaFin = this.formatoFecha(ultimoDiaMes);
+  }
+
+  formatoFecha(fecha: Date): string {
+    const isoString = fecha.toISOString(); // Obtener la fecha en formato ISO 8601
+    return isoString.substring(0, 10); // Recortar solo la parte de la fecha (YYYY-MM-DD)
+  }
   ngOnInit(): void {
+    this.establecerFechasMesActual();
+    this.filtrarSolicitudes();
     this.getEstadoSolicitud();
     this.getRolUser()
     const token = localStorage.getItem('token');
@@ -79,15 +96,15 @@ export class ListEdictSolicitudComponent implements OnInit{
       pagingType: 'full_numbers',
       language: this.languageOptions
     };
-    // Obtener la fecha actual
-    const today = new Date();
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    this.fechaInicio = firstDayOfMonth;
-    this.fechaFin = lastDayOfMonth;
+    // // Obtener la fecha actual
+    // const today = new Date();
+    // const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    // const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    // this.fechaInicio = firstDayOfMonth;
+    // this.fechaFin = lastDayOfMonth;
 
     // Filtrar las solicitudes al cargar el componente
-    this.filtrarSolicitudes();
+    // this.filtrarSolicitudes();
   }
 
 
@@ -122,6 +139,8 @@ export class ListEdictSolicitudComponent implements OnInit{
     }
   }
 
+  
+ 
   getListSolicitudes(): void {
     
     if (!this.fechaInicio || !this.fechaFin) {
@@ -152,11 +171,15 @@ export class ListEdictSolicitudComponent implements OnInit{
       // Convertir fechas a formato Date
       const fechaInicio = new Date(this.fechaInicio);
       const fechaFin = new Date(this.fechaFin);
-
+       
       this.solicitudesService
         .getListaSolicitudes(this.tenantId, fechaInicio, fechaFin, this.documento)
         .subscribe((data: any) => {
           this.listSolicitudes = [...data.data];
+          
+          this.listSolicitudes.forEach((solicitud: any) => {
+            solicitud.fecha = this.formatoFecha(new Date(solicitud.fecha)); // Suponiendo que 'fecha' es el campo de fecha en cada objeto de solicitud
+          });
           console.log("Datos de las solicitudes: ", this.listSolicitudes);
         });
 

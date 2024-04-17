@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import{CompanyService} from '../../services/company.service'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modal-company-solicitud',
@@ -6,9 +8,13 @@ import { Component, Input } from '@angular/core';
   styleUrl: './modal-company-solicitud.component.scss'
 })
 export class ModalCompanySolicitudComponent {
+
+  
   @Input() company: any;
+  constructor(private companyService: CompanyService,){}
   mostrarModal: boolean = false;
   egresoSeleccionado: any;
+  active: boolean = false
 
 
 
@@ -66,6 +72,25 @@ export class ModalCompanySolicitudComponent {
     }
   }
   
+  approveCompany(companyId: string) {
+    this.companyService.approveCompany(companyId).subscribe(() => {
+      Swal.fire('¡Empresa Aprobada Exitosamente!', 'Los cambios se han guardado correctamente.', 'success');
+      window.location.reload();  // Recargar la página actual    
+    }, error =>{
+      Swal.fire('¡Error al Aprobar Empresa!', 'Los cambios  no se han guardado correctamente.', 'error');
+    });
+  }
+  
+
+  denyCompany(companyId: string) {
+    this.companyService.denyCompany(companyId).subscribe(() => {
+      this.active = true
+      Swal.fire('¡Cambios guardados!', 'Los cambios se han guardado correctamente.', 'success');
+    },
+    error=>{
+      Swal.fire('Error al Denegar Empresa',  'Los cambios no se han guardado correctamente.' ,'error');
+    });
+  }
 }
 
 

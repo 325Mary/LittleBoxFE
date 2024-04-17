@@ -30,8 +30,8 @@ export class ListDeleteIngresosComponent {
   // fechaInicio = new Date();
   // fechaFin = new Date();
 
-  fechaInicio = new Date('2024-01-01');
-  fechaFin = new Date();
+  fechaInicio = "";
+  fechaFin = "";
 
   constructor(
     private ingresosService: IngresosService,
@@ -42,7 +42,24 @@ export class ListDeleteIngresosComponent {
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id');
   }
+
+  establecerFechasMesActual(): void {
+    const fechaActual = new Date();
+    const primerDiaMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), 1);
+    const ultimoDiaMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0);
+
+    // Formatear las fechas
+    this.fechaInicio = this.formatoFecha(primerDiaMes);
+    this.fechaFin = this.formatoFecha(ultimoDiaMes);
+  }
+
+  formatoFecha(fecha: Date): string {
+    const isoString = fecha.toISOString(); // Obtener la fecha en formato ISO 8601
+    return isoString.substring(0, 10); // Recortar solo la parte de la fecha (YYYY-MM-DD)
+  }
   ngOnInit(): void {
+    this.establecerFechasMesActual();
+    this.filtrarIngresos();
     this.getRolUser();
     const token = localStorage.getItem('token');
     if (token) {
@@ -64,7 +81,7 @@ export class ListDeleteIngresosComponent {
       language: this.languageOptions
     };
     // this.getListIngresos();
-    this.filtrarIngresos();
+   
   }
 
   getRolUser(): void {
@@ -79,6 +96,10 @@ export class ListDeleteIngresosComponent {
   }
 
   getListIngresos(): void {
+    if (!this.fechaInicio || !this.fechaFin) {
+      this.sweetAlertService.showErrorAlert('Debes seleccionar ambas fechas para filtrar.');
+      return;
+    }
     // this.loading = true;
     this.ingresosService
       .getListaIngresos(this.tenantId,this.fechaInicio,this.fechaFin)
@@ -107,6 +128,10 @@ export class ListDeleteIngresosComponent {
         .getListaIngresos(this.tenantId, fechaInicio, fechaFin)
         .subscribe((data: any) => {
           this.listIngresos = [...data.data];
+
+          this.listIngresos.forEach((ingreso: any) => {
+            ingreso.fecha = this.formatoFecha(new Date(ingreso.fecha)); // Suponiendo que 'fecha' es el campo de fecha en cada objeto de solicitud
+          });
           console.log("Datos de los ingresos: ", this.listIngresos);
         });
     } else {

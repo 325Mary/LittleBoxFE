@@ -7,7 +7,7 @@ export interface Solicitud {
   solicitudId: number;
   tenantId: string;
   tercero?: Tercero | null; // Cambiar por el tipo correspondiente si tercero es un ObjectId
-  fecha: Date;
+  fecha: any;
   detalle: string;
   categoria?: Categoria | null; // Cambiar por el tipo correspondiente si categoria es un ObjectId
   valor: number;

@@ -1,67 +1,38 @@
 .sidebar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 200px;
+  width: 250px;
   height: 100%;
   background-color: #08090B;
-  z-index: 1000; /* para que el sidebar se superponga a otros elementos */
+  z-index: 1000;
+}
+
+.sidebar-menu li {
+  padding: 10px 20px;
+  list-style-type: none; /* Elimina el punto */
+  transition: background-color 0.4s; /* Agrega transición suave al cambio de color de fondo */
+  margin-right: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2)
+}
+
+.sidebar-menu li + li {
+  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Agrega línea divisoria entre elementos */
+}
+
+.sidebar-menu li:hover {
+  border-radius: 4px;
+  background-color: rgba(9, 48, 245, 1); /* Cambia el color de fondo al pasar el mouse */
+  
+}
+
+.sidebar-menu li a {
+  color: #090909; /* Color de texto predeterminado */
+  text-decoration: none; /* Quita el subrayado */
+}
+
+.sidebar-menu li a:hover {
+  color: #f8f8f9; /* Color de texto al pasar el mouse */
 }
 
 
-  
-ul {
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-}
-  
- ul  li {
-  list-style: none;
-  }
-  
- ul li  a {
-    text-decoration: none;
-    color: #3d3d3d;
-    font-size: 20px;
-    display: block;
-    padding: 10px 15px ;
-    position: relative;
-  }
-  
-
-  ul li a::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #0744be;
-    transform: scale(0);
-    transform-origin: right;
-    transition: all 0.5s;
-  }
-
-
-  ul li a::after{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #3576f7;
-    transform: scale(0);
-    transform-origin: left;
-    transition: all 0.5s;
-  }
-
-  ul li a:hover{
-    color: #3576f7;
-  }
-
-  ul li a:hover::before, ul li a:hover::after{
-    transform: scaleX(1);
-  }

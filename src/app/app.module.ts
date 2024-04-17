@@ -6,6 +6,9 @@ import { SafePipe } from './pipes/safe.pipe'; // Importa tu tubería personaliza
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TableModule } from 'primeng/table';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 
 
 import { HomeComponent } from '../app/Components/home/home.component';
@@ -75,13 +78,18 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
-import { TableModule } from 'primeng/table';
+import { GastoComponent } from './Components/gasto/gasto.component';
+import { DashboardComponent } from './Components/dashboard/dashboard.component';
+import { CrearSuperUsuarioComponent } from './Components/crear-super-usuario/crear-super-usuario.component';
 import { ListboxModule } from 'primeng/listbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { ModalLegalComponent } from './Components/modal-legal/modal-legal.component'
+
+
 
 @NgModule({
   declarations: [
@@ -128,6 +136,10 @@ import { CalendarModule } from 'primeng/calendar';
     TerceroModalComponent,
     SolicitudModalComponent,
     CaducidadTokenComponent,
+    GastoComponent,
+    DashboardComponent,
+    CrearSuperUsuarioComponent,
+    ModalLegalComponent,
   ],
   imports: [
     BrowserModule,
@@ -145,6 +157,8 @@ import { CalendarModule } from 'primeng/calendar';
     MenuModule,
     AvatarModule,
     BadgeModule,
+    CommonModule,
+    DatePipe,
     TableModule,
     ListboxModule,
     InputTextModule,
@@ -169,6 +183,7 @@ import { CalendarModule } from 'primeng/calendar';
       }
     })
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], 
   providers: [SignInUpService,{ provide: environment, useValue: environment }, EgresosService, CompanyService, InformesService, provideAnimationsAsync(), TokenInterceptorService],
   bootstrap: [AppComponent]
 })

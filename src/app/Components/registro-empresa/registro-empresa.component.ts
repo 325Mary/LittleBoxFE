@@ -9,13 +9,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./registro-empresa.component.scss']
 })
 export class RegistroEmpresaComponent {
+  
   company = {
     nameCompany: '',
     telephoneCompany: '',
     tenantId:'',
     emailCompany: '',
     directionCompany:'',
-    pdfRunt: '' 
+    pdfRunt: '' ,
+    fecha:new Date ()
   };
 
   User = {
@@ -45,13 +47,14 @@ export class RegistroEmpresaComponent {
 
     this.User.tenantId = this.company.tenantId;
     this.company.emailCompany = this.User.email;
+    this.company.fecha = new Date();
 
     // Validar los campos antes de enviar los datos
     if (this.formIsValid()) {
       this.send();
       Swal.fire({
         title: "¡Felicidades!",
-        text: "Tus datos fueron enviados correctamente, Este pendiente a su correo",
+        text: "Tus datos fueron registrados correctamente, a asu correo llegara la respuesta.",
         icon: "success"
       });
       this.router.navigate(['/']);

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import{CompanyService} from '../../services/company.service'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {  ModalCompanySolicitudComponent} from "../modal-company-solicitud/modal-company-solicitud.component";
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { Table } from 'primeng/table';
 
 
 @Component({
@@ -12,8 +13,17 @@ import { Router } from '@angular/router';
   styleUrl: './list-companies.component.scss'
 })
 export class ListCompaniesComponent  implements OnInit {
-  companies: any = [];
 
+  @ViewChild('dt1') dt1!: Table;
+
+  loading: boolean = false;
+
+  active: boolean = false
+
+  companies: any = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalCompanies: number = 0
   constructor(private companyService: CompanyService, private modalService: NgbModal,  private router: Router
     ) { }
 
@@ -21,9 +31,14 @@ export class ListCompaniesComponent  implements OnInit {
     this.loadCompanies();
   }
 
+  getPages(): number[] {
+    const totalPages = Math.ceil(this.totalCompanies / this.itemsPerPage);
+    return Array(totalPages).fill(0).map((x, i) => i + 1);
+  }
   loadCompanies() {
     this.companyService.listCompanySuperU().subscribe(companies => {
       this.companies = companies;
+      this.totalCompanies= companies.length
     });
   }
 
@@ -39,6 +54,7 @@ export class ListCompaniesComponent  implements OnInit {
 
   denyCompany(companyId: string) {
     this.companyService.denyCompany(companyId).subscribe(() => {
+      this.active = true
       Swal.fire('¡Cambios guardados!', 'Los cambios se han guardado correctamente.', 'success');
     },
     error=>{
@@ -86,6 +102,16 @@ export class ListCompaniesComponent  implements OnInit {
 verDetalle(company: any) {
   const modalRef = this.modalService.open(ModalCompanySolicitudComponent);
   modalRef.componentInstance.company = company;
+}
+
+clear(table: Table) {
+  table.clear();
+}
+
+filterData(event: any) {
+  if (event && event.target && this.dt1) {
+    this.dt1.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
 }
   
 }
