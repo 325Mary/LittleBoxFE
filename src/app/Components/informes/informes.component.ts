@@ -99,6 +99,7 @@ export class InformesComponent {
           this.movimientosDeCaja = response.data.listaMovimientos.map((movimiento: any) => {
             movimiento.fecha = this.formatoFecha(new Date(movimiento.fecha));
             return movimiento;
+            console.log('este es el movimiento', movimiento)
           });
           this.totalMovimientosDeCaja = this.movimientosDeCaja.length;
         } else {

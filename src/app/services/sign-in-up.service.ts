@@ -25,11 +25,11 @@ export class SignInUpService {
   }
 
   registrarUsuario(formData: FormData, ): Observable<any> {
-    return this.httpClient.post(`${this.baseUrl}/registrer`, formData);
+    return this.httpClient.post(`${this.baseUrl}registrer`, formData);
   }
 
   login(formValue: any) {
-    const url = `${this.baseUrl}/iniciarSesion`;
+    const url = `${this.baseUrl}iniciarSesion`;
     return this.httpClient.post<any>(url, formValue).pipe(
       tap(response => {
         if (response.token) {
@@ -58,7 +58,7 @@ export class SignInUpService {
   
 
   getUsers(): Observable<any[]> {
-    const url=`${this.baseUrl}/getUsers`;
+    const url=`${this.baseUrl}getUsers`;
     return this.httpClient.get<any[]>(url)
   }
 
@@ -71,25 +71,25 @@ export class SignInUpService {
   }
   //rol por id
   getRoleName(roleId: string): Observable<string> {
-    const url = `${this.baseUrl}/getRolName/${roleId}`; // Endpoint para obtener el nombre del rol por ID
+    const url = `${this.baseUrl}getRolName/${roleId}`; // Endpoint para obtener el nombre del rol por ID
     return this.httpClient.get<string>(url);
   }
 
   createCompany(formValue: any): Observable<any> {
-    const url = `${this.baseUrl}/saveNewCompany`;
+    const url = `${this.baseUrl}saveNewCompany`;
     return this.httpClient.post<any>(url, formValue, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
   }
 
   listCompanys(): Observable<any[]> {
-    const url = `${this.baseUrl}/getAllCompanies`;
+    const url = `${this.baseUrl}getAllCompanies`;
 
     return this.httpClient.get<any[]>(url);
   }
 
   listRoles(): Observable<any[]> {
-    const url = `${this.baseUrl}/getRoles`;
+    const url = `${this.baseUrl}getRoles`;
     return this.httpClient.get<any[]>(url);
 
   }
@@ -116,18 +116,18 @@ changePassword(userId: string, newPassword: string): Observable<any> {
   console.log('UserId:', userId);
   console.log('NewPassword:', newPassword);
   
-  const url = `${this.baseUrl}/changePassword/${userId}`;
+  const url = `${this.baseUrl}changePassword/${userId}`;
   const body = { newPassword: newPassword };
   return this.httpClient.put<any>(url, body);
 
 }
 
 enviarCodigoRestablecimiento(email: string) {
-  return this.httpClient.post<any>(`${this.baseUrl}/solicitar-restablecimiento`, { email });
+  return this.httpClient.post<any>(`${this.baseUrl}solicitar-restablecimiento`, { email });
 }
 
 resetPassword(email: string, codigo: string, nuevaContraseña: string) {
-  return this.httpClient.post<any>(`${this.baseUrl}/restablecer-password`, { email, codigo, nuevaContraseña });
+  return this.httpClient.post<any>(`${this.baseUrl}restablecer-password`, { email, codigo, nuevaContraseña });
 }
 
 
@@ -146,7 +146,7 @@ getUsersByTenantId(): Observable<any[]> {
   // Verificar si userTenant.tenantId es una cadena antes de asignarlo a tenantId
   const tenantId = typeof userTenant.tenantId === 'string' ? userTenant.tenantId : '';
   
-  const url = `${this.baseUrl}/getUsers/${tenantId}`;
+  const url = `${this.baseUrl}getUsers/${tenantId}`;
   
   // Configurar las cabeceras con el token de autorización
   const headers = new HttpHeaders({
@@ -166,36 +166,36 @@ getUsersByTenantId(): Observable<any[]> {
 // Método para activar un usuario
 activeUser(userId: string, token: string): Observable<any> {
   const headers = new HttpHeaders().set('Authorization', `${token}`);
-  return this.httpClient.put<any>(`${this.baseUrl}/userActive/${userId}`, null, { headers });
+  return this.httpClient.put<any>(`${this.baseUrl}userActive/${userId}`, null, { headers });
 }
 
 // Método para inactivar un usuario
 inactiveUser(userId: string, token: string): Observable<any> {
   const headers = new HttpHeaders().set('Authorization', `${token}`);
-  return this.httpClient.put<any>(`${this.baseUrl}/userInactive/${userId}`, null, { headers });
+  return this.httpClient.put<any>(`${this.baseUrl}userInactive/${userId}`, null, { headers });
 }
 
 //denegar Usuario
 denyUser(userId: string, token: string): Observable<any> {
   const headers = new HttpHeaders().set('Authorization', `${token}`);
-  return this.httpClient.put<any>(`${this.baseUrl}/userDeny/${userId}`, null, { headers });
+  return this.httpClient.put<any>(`${this.baseUrl}userDeny/${userId}`, null, { headers });
 }
 
 getUserById(userId: string): Observable<any> {
   console.log(userId)
-  return this.httpClient.get<any>(`${this.baseUrl}/getId/${userId}`);
+  return this.httpClient.get<any>(`${this.baseUrl}getId/${userId}`);
 }
 
 getUserSuperU(token: string): Observable<any> {
   const headers = new HttpHeaders().set('Authorization', `${token}`);
 
-  return this.httpClient.get<any>(`${this.baseUrl}/getUsersSuperU`, {headers});
+  return this.httpClient.get<any>(`${this.baseUrl}getUsersSuperU`, {headers});
 }
 
 
 // Función para editar datos de usuario
 editUser(userId: string, newData: any): Observable<any> {
-  const url = `${this.baseUrl}/editUser/${userId}`; // Endpoint para editar datos de usuario
+  const url = `${this.baseUrl}editUser/${userId}`; // Endpoint para editar datos de usuario
   return this.httpClient.put<any>(url, newData);
 }
 

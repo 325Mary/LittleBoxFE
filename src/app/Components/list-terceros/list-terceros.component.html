@@ -27,12 +27,12 @@
   </div>
 </div> -->
 
-<div class="container contenedor mt-5">
+<div class="container contenedor mt-5" >
   <div class="title">
   </div>
   <div class="row">
     <div class="col">
-      <h1 class="col text-center">Listado de Proveedores</h1>
+      <h1 class="col text-center"  style="margin-top: 40px;">Listado de Proveedores</h1>
       <div class="card">
         <p-table #dt1 [value]="terceros" [rows]="10" [paginator]="true" [showCurrentPageReport]="true"
           [rowsPerPageOptions]="[10, 25, 50]"
@@ -71,7 +71,7 @@
           </ng-template>
           <ng-template pTemplate="emptymessage">
             <tr>
-              <td colspan="5">No hay Tserceros para mostrar</td>
+              <td colspan="5">No hay Terceros para mostrar</td>
             </tr>
           </ng-template>
         </p-table>

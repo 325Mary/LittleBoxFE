@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, HostListener, OnInit, ChangeDetectorRef, Output, EventEmitter  } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { TokenValidationService } from '../../services/token-validation-service.service';

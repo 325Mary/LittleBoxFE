@@ -14,6 +14,7 @@ import { environment } from '../../environments/environment';
 })
 export class CategoriasService {
   private baseUrl : string; 
+  
 
   constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) { 
     this.baseUrl = environment.apiUrl;
@@ -40,11 +41,11 @@ export class CategoriasService {
     });
 
     // Devolver la solicitud HTTP con las cabeceras configuradas
-    return this.http.get(`${this.baseUrl}/obtenerTodasLasCategorias`, { headers });
+    return this.http.get(`${this.baseUrl}obtenerTodasLasCategorias`, { headers });
   }
 
   obtenerCategoriaPorId(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/obtenerCategoria/${id}`);
+    return this.http.get(`${this.baseUrl}obtenerCategoria/${id}`);
   }
 
   guardarCategoria(categoria: any): Observable<any> {
@@ -53,14 +54,14 @@ export class CategoriasService {
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
 
     // Realiza la petición HTTP para guardar el tercero
-    return this.http.post<any>(`${this.baseUrl}/guardarCategoria`, categoria, { headers });
+    return this.http.post<any>(`${this.baseUrl}guardarCategoria`, categoria, { headers });
   }
 
   eliminarCategoria(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/eliminarCategoria/${id}`);
+    return this.http.delete(`${this.baseUrl}eliminarCategoria/${id}`);
   }
 
   modificarCategoria(id: string, nuevosDatos: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/modificarCategoria/${id}`, nuevosDatos);
+    return this.http.put(`${this.baseUrl}modificarCategoria/${id}`, nuevosDatos);
   }
 }

@@ -135,7 +135,7 @@ export class GraficosComponent implements OnInit, OnChanges {
             x: {
               title: {
                 display: true,
-                text: this.filtro === 'categoria' ? 'Categoría' : 'Tercero'
+                text: this.filtro === 'categoria' ? 'Categoría' : 'Proveedor'
               }
             }
           }

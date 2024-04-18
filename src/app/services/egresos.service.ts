@@ -27,7 +27,7 @@ export class EgresosService {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
 
-    return this.http.post<any>(`${this.baseUrl}/guardarEgreso`, egreso, { headers });
+    return this.http.post<any>(`${this.baseUrl}guardarEgreso`, egreso, { headers });
   }
 
 
@@ -38,7 +38,7 @@ export class EgresosService {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders().set('Authorization', `${token}`);
   
-    return this.http.post<any>(`${this.baseUrl}/obtenerTodosLosEgresos`, filtros, { headers });
+    return this.http.post<any>(`${this.baseUrl}obtenerTodosLosEgresos`, filtros, { headers });
   }
   
   

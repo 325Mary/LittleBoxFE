@@ -35,12 +35,12 @@ export class NotificationService {
     }
 
     // Utilizamos el userId para hacer la solicitud HTTP y obtener las notificaciones
-    return this.http.get<any[]>(`${this.baseUrl}/notifications/${userId}`);
+    return this.http.get<any[]>(`${this.baseUrl}notifications/${userId}`);
   }
 
 
   markNotificationAsRead(notificationId: string): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/notifications/${notificationId}`, {});
+    return this.http.put<any>(`${this.baseUrl}notifications/${notificationId}`, {});
   }
   
 

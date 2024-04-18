@@ -28,37 +28,37 @@ export class CompanyService {
   }
 
   listCompanySuperU(): Observable<any[]> {
-    const url = `${this.baseUrl}/GetCompaniesSuperU`;
+    const url = `${this.baseUrl}GetCompaniesSuperU`;
     return this.httpClient.get<any[]>(url, { headers: this.getHeaders() }); // Usa los encabezados en la solicitud
   }
 
   approveCompany(companyId: string): Observable<any> {
-    const url = `${this.baseUrl}/companiesAproved/${companyId}`;
+    const url = `${this.baseUrl}companiesAproved/${companyId}`;
     return this.httpClient.put<any>(url, {}, { headers: this.getHeaders() });
   }
 
   activedCompany(companyId: string): Observable<any> {
-    const url = `${this.baseUrl}/companiesActived/${companyId}`;
+    const url = `${this.baseUrl}companiesActived/${companyId}`;
     return this.httpClient.put<any>(url, {}, { headers: this.getHeaders() });
   }
 
   denyCompany(companyId: string): Observable<any> {
-    const url = `${this.baseUrl}/companiesDeny/${companyId}`;
+    const url = `${this.baseUrl}companiesDeny/${companyId}`;
     return this.httpClient.put<any>(url, {}, { headers: this.getHeaders() });
   }
 
   listCompanies(): Observable<any[]> {
-    const url = `${this.baseUrl}/getAllCompanies`;
+    const url = `${this.baseUrl}getAllCompanies`;
     return this.httpClient.get<any[]>(url, { headers: this.getHeaders() });
   }
 
   disableCompany(companyId: string): Observable<any> {
-    const url = `${this.baseUrl}/disable/${companyId}`;
+    const url = `${this.baseUrl}disable/${companyId}`;
     return this.httpClient.put<any>(url, {}, { headers: this.getHeaders() });
   }
 
   listTodasCompanies(): Observable<any[]> {
-    const url = `${this.baseUrl}/getAllCompanis`;
+    const url = `${this.baseUrl}getAllCompanis`;
     return this.httpClient.get<any[]>(url, { headers: this.getHeaders() });
   }
 }

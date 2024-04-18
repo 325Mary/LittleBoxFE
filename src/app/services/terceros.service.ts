@@ -35,7 +35,7 @@ export class TercerosService {
     // Verificar si userTenant.tenantId es una cadena antes de asignarlo a tenantId
     const tenantId = typeof terceroTenant.tenantId === 'string' ? terceroTenant.tenantId : '';
     
-    const url = `${this.baseUrl}/obtenerTodosLosTerceros/`;
+    const url = `${this.baseUrl}obtenerTodosLosTerceros/`;
     
     // Configurar las cabeceras con el token de autorización
     const headers = new HttpHeaders({
@@ -65,7 +65,7 @@ export class TercerosService {
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
 
     // Realiza la petición HTTP para guardar el tercero
-    return this.http.post<any>(`${this.baseUrl}/guardarTercero`, tercero, { headers });
+    return this.http.post<any>(`${this.baseUrl}guardarTercero`, tercero, { headers });
   }
 
 
@@ -73,7 +73,7 @@ export class TercerosService {
   modificarTercero(tercero: any, id: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
-    return this.http.put<any>(`${this.baseUrl}/modificarTercero/${id}`, tercero, { headers });
+    return this.http.put<any>(`${this.baseUrl}modificarTercero/${id}`, tercero, { headers });
   }
 
   eliminarTercero(id: string): Observable<any> {

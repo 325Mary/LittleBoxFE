@@ -21,25 +21,25 @@ constructor(private http: HttpClient, private tokenValidationService:TokenValida
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders().set('Authorization', `${token}`);
   
-    return this.http.post(`${this.baseUrl}/obtenerMovimientoCaja`, datos, {headers});
+    return this.http.post(`${this.baseUrl}obtenerMovimientoCaja`, datos, {headers});
   }
 
   getGastoRealMesActual(tenantId: string): Observable<any[]> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders().set('Authorization', `${token}`);
-    return this.http.get<any[]>(`${this.baseUrl}/gastoActual`, { headers });
+    return this.http.get<any[]>(`${this.baseUrl}gastoActual`, { headers });
   }
 
   getTerceros(tenantId: string): Observable<any[]> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders().set('Authorization', `${token}`);
-    return this.http.get<any[]>(`${this.baseUrl}/tercerosMasUtilizados`, { headers });
+    return this.http.get<any[]>(`${this.baseUrl}tercerosMasUtilizados`, { headers });
   }
 
   getCategorias(tenantId: string): Observable<any[]> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders().set('Authorization', `${token}`);
-    return this.http.get<any[]>(`${this.baseUrl}/categoriasMasUtilizados`, { headers });
+    return this.http.get<any[]>(`${this.baseUrl}categoriasMasUtilizados`, { headers });
   }
 
 }

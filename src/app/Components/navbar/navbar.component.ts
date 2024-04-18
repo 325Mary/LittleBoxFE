@@ -36,6 +36,7 @@ export class NavbarComponent implements OnInit {
   notificationsCount = 0;
   miValorComoString: string = ""
   saldoCaja: any;
+  
 
   constructor(
     private router: Router,
@@ -187,11 +188,13 @@ sidebarVisible: boolean = false;
       this.authService.logout();
       this.isLoggedIn = false;
       this.router.navigate(['/']);
+      this.updateMenuItems(); // Reiniciar los elementos del menú
       this.cdr.detectChanges();
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
   }
+  
 
   openModal() {
     this.modalOpen = true;
