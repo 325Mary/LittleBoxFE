@@ -9,14 +9,13 @@ import { environment } from '../../environments/environment';
 })
 export class CompanyService {
 
-  private baseUrl : string; 
+  baseUrl = '';
 
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenValidationService // Inyecta el servicio de verificación de token
   ) { 
     this.baseUrl = environment.apiUrl;
-
   }
 
   private getHeaders(): HttpHeaders {

@@ -13,15 +13,13 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class CategoriasService {
-  private baseUrl : string; 
-  
 
-  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) { 
+  baseUrl =""
+  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) {
     this.baseUrl = environment.apiUrl;
+   }
 
-  }
-
-
+  
  
   obtenerTodasLasCategorias(): Observable<any> {
     const token = localStorage.getItem('token');

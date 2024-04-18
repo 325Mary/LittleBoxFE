@@ -9,12 +9,11 @@ providedIn: 'root'
 })
 export class InformesService {
 
-  private baseUrl : string; 
+  private baseUrl = ''; // Reemplaza esta URL con la URL de tu backend
 
-constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) {
+constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) { 
   this.baseUrl = environment.apiUrl;
-
- }
+}
 
 
   obtenerMovimientoCaja(datos: any): Observable<any> {

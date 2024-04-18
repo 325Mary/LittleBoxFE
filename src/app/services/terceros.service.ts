@@ -13,13 +13,11 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class TercerosService {
-  
-  private baseUrl : string; 
+  private baseUrl = ''; // Reemplaza esta URL con la URL de tu backend
 
-  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) { 
+  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) {
     this.baseUrl = environment.apiUrl;
-
-  }
+   }
 
   obtenerTerceros():Observable<any[]> {
     const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local

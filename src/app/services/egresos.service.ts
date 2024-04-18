@@ -14,12 +14,11 @@ import { environment } from '../../environments/environment';
 })
 export class EgresosService {
 
-  private baseUrl : string; 
+  private baseUrl = "";
   tenantId: any;
 
   constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) {
     this.baseUrl = environment.apiUrl;
-
    }
 
   

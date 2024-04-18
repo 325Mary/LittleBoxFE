@@ -10,11 +10,10 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class NotificationService {
-  private baseUrl : string; 
+  baseUrl = ''; // Cambia esta URL por la base de tu API
 
   constructor(private http: HttpClient, private tokenService:TokenValidationService  ) {
     this.baseUrl = environment.apiUrl;
-
   }
 
   
