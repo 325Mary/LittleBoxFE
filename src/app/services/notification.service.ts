@@ -4,14 +4,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { TokenValidationService } from "../services/token-validation-service.service";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  private baseUrl = 'http://localhost:4000'; // Cambia esta URL por la base de tu API
+  baseUrl = ''; // Cambia esta URL por la base de tu API
 
-  constructor(private http: HttpClient, private tokenService:TokenValidationService  ) {}
+  constructor(private http: HttpClient, private tokenService:TokenValidationService  ) {
+    this.baseUrl = environment.apiUrl;
+  }
 
   
 
@@ -31,12 +34,12 @@ export class NotificationService {
     }
 
     // Utilizamos el userId para hacer la solicitud HTTP y obtener las notificaciones
-    return this.http.get<any[]>(`${this.baseUrl}/notifications/${userId}`);
+    return this.http.get<any[]>(`${this.baseUrl}notifications/${userId}`);
   }
 
 
   markNotificationAsRead(notificationId: string): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/notifications/${notificationId}`, {});
+    return this.http.put<any>(`${this.baseUrl}notifications/${notificationId}`, {});
   }
   
 

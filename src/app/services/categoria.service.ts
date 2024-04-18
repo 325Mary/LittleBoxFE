@@ -7,16 +7,19 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { TokenValidationService } from "../services/token-validation-service.service";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriasService {
 
-  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) { }
+  baseUrl =""
+  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) {
+    this.baseUrl = environment.apiUrl;
+   }
 
-  baseUrl = "http://127.0.0.1:4000"; // URL base del backend, ajusta según sea necesario
-
+  
  
   obtenerTodasLasCategorias(): Observable<any> {
     const token = localStorage.getItem('token');
@@ -36,11 +39,11 @@ export class CategoriasService {
     });
 
     // Devolver la solicitud HTTP con las cabeceras configuradas
-    return this.http.get(`${this.baseUrl}/obtenerTodasLasCategorias`, { headers });
+    return this.http.get(`${this.baseUrl}obtenerTodasLasCategorias`, { headers });
   }
 
   obtenerCategoriaPorId(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/obtenerCategoria/${id}`);
+    return this.http.get(`${this.baseUrl}obtenerCategoria/${id}`);
   }
 
   guardarCategoria(categoria: any): Observable<any> {
@@ -49,14 +52,14 @@ export class CategoriasService {
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
 
     // Realiza la petición HTTP para guardar el tercero
-    return this.http.post<any>(`${this.baseUrl}/guardarCategoria`, categoria, { headers });
+    return this.http.post<any>(`${this.baseUrl}guardarCategoria`, categoria, { headers });
   }
 
   eliminarCategoria(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/eliminarCategoria/${id}`);
+    return this.http.delete(`${this.baseUrl}eliminarCategoria/${id}`);
   }
 
   modificarCategoria(id: string, nuevosDatos: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/modificarCategoria/${id}`, nuevosDatos);
+    return this.http.put(`${this.baseUrl}modificarCategoria/${id}`, nuevosDatos);
   }
 }
