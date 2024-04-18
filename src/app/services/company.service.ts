@@ -2,18 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders , HttpResponse } from '@angular/common/http';
 import { Observable, Subject  } from 'rxjs';
 import { TokenValidationService } from '../services/token-validation-service.service'; // Asegúrate de importar el servicio de verificación de token
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
 
-  private baseUrl = 'http://127.0.0.1:4000';
+  private baseUrl : string; 
 
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenValidationService // Inyecta el servicio de verificación de token
-  ) { }
+  ) { 
+    this.baseUrl = environment.apiUrl;
+
+  }
 
   private getHeaders(): HttpHeaders {
     const token = this.tokenService.getToken(); // Obtén el token de autenticación

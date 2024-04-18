@@ -4,14 +4,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { TokenValidationService } from "../services/token-validation-service.service";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  private baseUrl = 'http://localhost:4000'; // Cambia esta URL por la base de tu API
+  private baseUrl : string; 
 
-  constructor(private http: HttpClient, private tokenService:TokenValidationService  ) {}
+  constructor(private http: HttpClient, private tokenService:TokenValidationService  ) {
+    this.baseUrl = environment.apiUrl;
+
+  }
 
   
 

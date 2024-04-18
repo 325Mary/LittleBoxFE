@@ -7,15 +7,19 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { TokenValidationService } from "../services/token-validation-service.service";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriasService {
+  private baseUrl : string; 
 
-  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) { }
+  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) { 
+    this.baseUrl = environment.apiUrl;
 
-  baseUrl = "http://127.0.0.1:4000"; // URL base del backend, ajusta según sea necesario
+  }
+
 
  
   obtenerTodasLasCategorias(): Observable<any> {

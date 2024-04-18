@@ -7,16 +7,20 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { TokenValidationService } from "../services/token-validation-service.service";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EgresosService {
 
-  private baseUrl = "http://127.0.0.1:4000";
+  private baseUrl : string; 
   tenantId: any;
 
-  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) { }
+  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) {
+    this.baseUrl = environment.apiUrl;
+
+   }
 
   
   saveEgreso(egreso: any): Observable<any> {

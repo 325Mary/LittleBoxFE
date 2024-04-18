@@ -7,14 +7,19 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { TokenValidationService } from "../services/token-validation-service.service";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TercerosService {
-  private baseUrl = 'http://localhost:4000'; // Reemplaza esta URL con la URL de tu backend
+  
+  private baseUrl : string; 
 
-  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) { }
+  constructor(private http: HttpClient, private tokenValidationService:TokenValidationService) { 
+    this.baseUrl = environment.apiUrl;
+
+  }
 
   obtenerTerceros():Observable<any[]> {
     const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local

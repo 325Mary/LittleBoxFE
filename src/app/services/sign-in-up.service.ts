@@ -8,6 +8,7 @@ import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { TokenValidationService } from "../services/token-validation-service.service";
 import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class SignInUpService {
 
   
   constructor(private httpClient: HttpClient, private jwtHelper: JwtHelperService, private router: Router, private tokenValidationService: TokenValidationService) {
-    this.baseUrl = "http://127.0.0.1:4000";
+    this.baseUrl = environment.apiUrl;
   }
 
   registrarUsuario(formData: FormData, ): Observable<any> {
