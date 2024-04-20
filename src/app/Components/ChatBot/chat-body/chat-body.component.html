@@ -1,0 +1,52 @@
+
+
+      <div class="container mt-3 float-left" style="width: 70%;">
+        <div *ngIf="rolUsuario !== 'Colaborador'" class="image-container" style="margin-bottom: 20px;">
+          <img class="float-end" (click)="openModal()" src="assets/configuraciones.png">
+        </div>
+        
+              <!-- Contenido del chatbot -->
+              <div class="card border-dark mb-3" style="background-color: rgba(126, 126, 126, 0.635);">
+                <div class="card-body chat-container" #chatContainer>
+                  <div *ngFor="let mensaje of chatHistory" class="mensaje" [ngClass]="{ 'mensaje-usuario': mensaje.origen === 'usuario', 'mensaje-bot': mensaje.origen === 'bot' }">
+                    <div class="message-content">
+                      <div class="message-text">
+                        <!-- Mensaje del bot -->
+                        <div *ngIf="mensaje.origen === 'bot'" class="mensaje-bot">
+                          <img *ngIf="mensaje.profilePicture" [src]="mensaje.profilePicture" alt="Foto de perfil" class="avatar" />
+                          <div class="answer">{{ mensaje.respuesta }}</div>
+                        </div>
+                        <!-- Mensaje del usuario -->
+                        <div *ngIf="mensaje.origen === 'usuario'" class="mensaje-usuario">
+                          <div class="question float-end">{{ mensaje.pregunta }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Lista de categorías -->
+                  <div *ngIf="categories.length > 0" class="categories-list">
+                    <h5>Categorías:</h5>
+                    <button *ngFor="let category of categories" class="btn btn-primary" (click)="onCategoryChange(category._id)"> 
+                      {{ category.name }}
+                    </button>
+                  </div>
+                  <!-- Lista de subcategorías -->
+                      <div *ngIf="subcategories.length > 0" class="subcategories-list">
+                        <h5>Subcategorías:</h5>
+                        <ul>
+                          <li *ngFor="let subcategory of subcategories" (click)="getQueriesBySubcategory(subcategory._id)">
+                            {{ subcategory.name }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+  
+        <!-- Input para enviar mensajes -->
+        <div class="input-group w-250 p-3">
+          <input [(ngModel)]="userInput" class="form-control custom-input" placeholder="Ingrese el número de referencia" (keyup.enter)="sendMessage()" />
+          <button class="btn btn-secondary border-dark" (click)="sendMessage()">Enviar</button>
+        </div>
+      </div>
+

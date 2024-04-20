@@ -87,7 +87,20 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
-import { ModalLegalComponent } from './Components/modal-legal/modal-legal.component'
+import { ModalLegalComponent } from './Components/modal-legal/modal-legal.component';
+import { ChatBodyComponent } from './Components/ChatBot/chat-body/chat-body.component';
+import { EditQueryComponent } from './Components/ChatBot/edit-query/edit-query.component';
+import { EditCategoryComponent } from './Components/ChatBot/edit-category/edit-category.component';
+import { EditSubcategoryComponent } from './Components/ChatBot/edit-subcategory/edit-subcategory.component';
+import { FormSubcategoryComponent } from './Components/ChatBot/form-subcategory/form-subcategory.component';
+import { FormCategoryComponent } from './Components/ChatBot/form-category/form-category.component';
+import { FormQueryComponent } from './Components/ChatBot/form-query/form-query.component';
+import { ListQueryComponent } from './Components/ChatBot/list-query/list-query.component';
+import { ListCategoryComponent } from './Components/ChatBot/list-category/list-category.component';
+import { ListSubcategoryComponent } from './Components/ChatBot/list-subcategory/list-subcategory.component';
+import { MenusBotComponent } from './Components/ChatBot/menus-bot/menus-bot.component';
+import { ImgChatbotComponent } from './Components/ChatBot/img-chatbot/img-chatbot.component';
+
 
 
 
@@ -140,6 +153,18 @@ import { ModalLegalComponent } from './Components/modal-legal/modal-legal.compon
     DashboardComponent,
     CrearSuperUsuarioComponent,
     ModalLegalComponent,
+    ChatBodyComponent,
+    EditQueryComponent,
+    EditCategoryComponent,
+    EditSubcategoryComponent,
+    FormSubcategoryComponent,
+    FormCategoryComponent,
+    FormQueryComponent,
+    ListQueryComponent,
+    ListCategoryComponent,
+    ListSubcategoryComponent,
+    MenusBotComponent,
+    ImgChatbotComponent,
   ],
   imports: [
     BrowserModule,

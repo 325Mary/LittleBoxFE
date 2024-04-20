@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,7 +11,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   title = 'LittleBoxFE';
 
-  constructor(private config: PrimeNGConfig,private translateService: TranslateService) {}
+  constructor(private config: PrimeNGConfig,private translateService: TranslateService, ) {}
+
+ 
 
     ngOnInit() {
         this.config.setTranslation({
