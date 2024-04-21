@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./pre-registro.component.scss']
 })
 export class PreRegistroComponent implements OnInit {
-  
+  showPassword: boolean = false; // Propiedad para controlar si se muestra la contraseña o no
   pestanaActual: string = 'valorInicial'; 
   user = {
     email: '',
@@ -17,9 +17,12 @@ export class PreRegistroComponent implements OnInit {
   };
   mensajeError: string = '';
   rutaSeleccionada: any;
+  intentosFallidos: number = 0; // Contador de intentos fallidos
 
   constructor(private userService: SignInUpService, private router: Router) { }
- 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword; // Cambia el estado de la propiedad para mostrar/ocultar la contraseña
+  }
   ngOnInit(): void {
     if (typeof localStorage !== 'undefined') {
       const pestanaGuardada = localStorage.getItem('pestanaActual');
@@ -35,6 +38,10 @@ export class PreRegistroComponent implements OnInit {
         if (response.error) {
           this.mensajeError = 'Error al iniciar sesión';
           console.error('Error de inicio de sesión:', response.error);
+          this.intentosFallidos++; // Incrementa el contador de intentos fallidos
+          if (this.intentosFallidos === 4) {
+            this.router.navigate(['/restorePassword']); // Redirige a la ruta deseada
+          }
         } else {
           // Verificar si la respuesta contiene el userId y firstLogin es true
           if (response.userId && response.token && response.firstLogin) {
@@ -52,12 +59,23 @@ export class PreRegistroComponent implements OnInit {
           console.log('Inicio de sesión exitoso:', response);
         }
       },
-      httpError => {
-        this.mensajeError = 'Error al iniciar sesión';
-        console.error('Error HTTP en inicio de sesión:', httpError);
+      error => {
+        if (error.status === 401 && error.error && error.error.error === 'Credenciales inválidas') {
+          this.mensajeError = 'Error al iniciar sesión';
+          console.error('Error de inicio de sesión:', error.error);
+          this.intentosFallidos++; // Incrementa el contador de intentos fallidos
+          if (this.intentosFallidos === 4) {
+            this.router.navigate(['/restorePassword']); // Redirige a la ruta deseada
+          }
+        } else {
+          this.mensajeError = 'Error al iniciar sesión';
+          console.error('Error HTTP en inicio de sesión:', error);
+        }
       }
     );
   }
+
+
 
   cambiarPestana(pestana: string): void {
     this.pestanaActual = pestana;

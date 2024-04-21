@@ -1,6 +1,19 @@
 <div class="container">
     <div class="row">
-        <!-- Columna Izquierda: Tarjetas -->
+        <!-- Columna única para la tarjeta de saldo -->
+        <div class="col-md-8 offset-md-2" *ngIf="isLoggedIn && isGerente">
+            <div *ngIf="saldoCaja < 10000" class="card tarjeta-ingreso bg-warning shake"  (click)="navegarAIngreso()" style="cursor: pointer;">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                    <h3 class="card-title"><i class="pi pi-exclamation-triangle"></i> Debes realizar un ingreso</h3>
+                    <p class="card-text">HAZ ClICK AQUI</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <div class="row">    <!-- Columna Izquierda: Tarjetas -->
         <div  class="col-md-6">
             <!-- Tarjeta de notificaciones -->
             <div class="card notification-card">

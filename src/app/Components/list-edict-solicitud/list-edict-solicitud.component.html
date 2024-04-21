@@ -99,10 +99,10 @@
                 <td>{{ solicitud.valor | currency }}</td>
                 <td class="table-actions">
                   <button [routerLink]="['/edit', solicitud._id]" type="button"
-                    class="btn btn-primary btn-sm">Editar</button>
-                  <button (click)="verDetalle(solicitud)" type="button" class="btn btn-info btn-sm ms-2">Ver</button>
+                  class="p-button p-button-icon-only p-button-rounded p-button-primary p-button-sm"><i class="pi pi-pencil"></i></button>
+                  <button (click)="verDetalle(solicitud)" type="button" class="p-button p-button-icon-only p-button-rounded p-button-info p-button-sm ms-2"> <i class="pi pi-eye"></i></button>
                   <button *ngIf="rolUsuario !== 'Administrador'" (click)="deleteSolicitud(solicitud._id)" type="button"
-                    class="btn btn-danger btn-sm ms-2">Eliminar</button>
+                  class="p-button p-button-icon-only p-button-rounded p-button-danger p-button-sm ms-2"> <i class="pi pi-trash"></i></button>
                 </td>
               </tr>
             </ng-template>

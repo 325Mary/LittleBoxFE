@@ -12,6 +12,7 @@ import{CompanyService} from '../../services/company.service'
 import { TokenValidationService } from '../../services/token-validation-service.service';
 import { SignInUpService } from "../../services/sign-in-up.service";
 import { Router, NavigationStart } from '@angular/router';
+import { SaldoCajaService } from "../../services/saldo-caja.service";
 
 
 interface Column {
@@ -29,6 +30,7 @@ export class DashboardComponent implements OnInit {
   companies: any = [];
   categorias: any[] = [];
   cols: Column[] = [];
+  saldoCaja: any;
   filtroSeleccionado: string = 'mes'; // Valor predeterminado para el filtro
   valorFiltro: any; // Valor seleccionado por el usuario para el filtro
   @ViewChild('tercerosChart') private chartRef!: ElementRef<HTMLCanvasElement>;
@@ -40,7 +42,6 @@ export class DashboardComponent implements OnInit {
   listSolicitudes: Solicitud[] = [];
   tenantId: string = '';
   documento = ""
-  saldoCaja: number = 0;
   isGerente = false;
   isSuperUsuario = false;
   isAdministrador = false;
@@ -71,8 +72,13 @@ export class DashboardComponent implements OnInit {
     private companyService: CompanyService,
     private tokenValidationService: TokenValidationService,
     private cdr: ChangeDetectorRef,
-    private authService: SignInUpService,    ) { }
+    private authService: SignInUpService, 
+    private saldoDeCaja: SaldoCajaService,
+  ) { }
 
+  navegarAIngreso(): void {
+    this.router.navigate(['/addIngreso']); 
+}
     ngOnInit(): void {
       this.router.events.subscribe(event => {
         if (event instanceof NavigationStart) {
@@ -97,6 +103,7 @@ export class DashboardComponent implements OnInit {
         this.obtenerTercerosMasUtilizados()
         this. obtenerCategroiasMasUtilizados()
         this. getListSolicitudes()
+        this.ActualizarSaldoCaja()
       });
 
       this.checkAuthentication(); // Verificar autenticación al cargar el componente
@@ -188,6 +195,7 @@ export class DashboardComponent implements OnInit {
     const ctx = canvas.getContext('2d');
   
     if (!ctx) {
+      
       // console.error('No se pudo obtener el contexto del lienzo');
       return;
     }
@@ -294,24 +302,7 @@ export class DashboardComponent implements OnInit {
   }
  
 
-  obtenerSaldoCaja(): void {
-    const datos = {
-      // Pasa los datos necesarios para obtener el saldo de caja, si es necesario
-    };
-
-    this.informesService.obtenerMovimientoCaja(datos).subscribe(
-      (response: any) => {
-        // Aquí accedes al saldo final del objeto de respuesta y lo asignas a la propiedad saldoCaja
-        this.saldoCaja = response.saldoFinal;
-        console.log('saldo:', this.saldoCaja)
-      },
-      (error: any) => {
-        // console.error('Error al obtener el saldo de caja:', error);
-        // Manejo de errores
-      }
-    );
-  }
-
+  
   getIconByCategory(nombre: string | undefined): string {
     if (nombre) {
       // Aquí puedes asignar un ícono específico para cada categoría
@@ -453,7 +444,17 @@ export class DashboardComponent implements OnInit {
     });
 }
 
-
+ActualizarSaldoCaja(): void {
+  this.saldoDeCaja.getSaldoDeCaja().subscribe((Data: any) => {
+    if (Data) {
+      this.saldoCaja = Data.data;
+      console.log("saldo caja = ",this.saldoCaja);
+    }else{
+      console.error("Error al obtener el saldo de caja ");
+      
+    }
+  });
+}
   
   
 }

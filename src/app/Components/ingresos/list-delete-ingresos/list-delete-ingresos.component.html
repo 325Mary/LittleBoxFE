@@ -99,8 +99,8 @@
                 <td>{{ ingreso.detalle }}</td>
                 <td>{{ ingreso.valor | currency }}</td>
                 <td>
-                  <button *ngIf="rolUsuario == 'Gerente'" type="button" class="btn btn-primary" [routerLink]="['/editIngreso', ingreso._id]">Editar</button>
-                  <button *ngIf="rolUsuario == 'Gerente'" type="button" class="btn btn-danger" (click)="deleteIngreso(ingreso._id)">Eliminar</button>
+                  <button *ngIf="rolUsuario == 'Gerente'" type="button" class="p-button p-button-icon-only p-button-rounded p-button-primary" [routerLink]="['/editIngreso', ingreso._id]">  <i class="pi pi-pencil"></i></button>
+                  <button *ngIf="rolUsuario == 'Gerente'" type="button"  class="p-button p-button-icon-only p-button-rounded p-button-danger"  (click)="deleteIngreso(ingreso._id)"> <i class="pi pi-trash"></i></button>
                 </td>
               </tr>
             </ng-template>

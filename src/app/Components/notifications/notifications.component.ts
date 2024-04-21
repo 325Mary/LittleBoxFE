@@ -42,6 +42,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         if (newNotifications.length > 0) {
           this.notificationsCount += newNotifications.length;
         }
+        // Ordenar las notificaciones en orden inverso (las más nuevas primero)
+        notifications.reverse();
         this.notifications = notifications;
         this.previousNotifications = notifications;
         // Mostrar solo las primeras 10 notificaciones inicialmente
@@ -54,6 +56,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       }
     );
   }
+  
 
   loadMoreNotifications() {
     // Añadir 10 notificaciones adicionales a las visibles

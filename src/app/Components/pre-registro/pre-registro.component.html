@@ -84,10 +84,16 @@
               <label for="email" class="form-label">Correo</label>
               <input type="text" class="form-control" id="email" [(ngModel)]="user.email" name="email" placeholder="correo@ejemplo.com">
             </div>
-            <div class="mb-3">
+            <div class="mb-3 position-relative">
               <label for="password" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" id="password" [(ngModel)]="user.password" name="password">
+              <div class="input-group">
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control pr-4" id="password" [(ngModel)]="user.password" name="password">
+                <span class="input-group-text" style="cursor: pointer;  border-left: none" (click)="togglePasswordVisibility()">
+                  <i class="pi" [ngClass]="showPassword ? 'pi-eye-slash' : 'pi-eye'"></i> <!-- Icono de ojo -->
+                </span>
+              </div>
             </div>
+            
             <div *ngIf="mensajeError" class="alert alert-danger">{{ mensajeError }}</div>
             <button type="submit" class="btn btn-primary">Ingresar</button>
           </form>
