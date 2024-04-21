@@ -16,6 +16,12 @@ export class RestorePasswordComponent {
 
   constructor(private authService: SignInUpService, private router: Router) {}
 
+  // Función para mostrar solo los primeros caracteres del correo
+  get emailToShow(): string {
+    const firstChars = this.email.substring(0, 5); // Mostrar los primeros 3 caracteres del correo
+    const asterisks = '*'.repeat(this.email.length - 5); // Rellenar con asteriscos el resto del correo
+    return firstChars + asterisks;
+  }
   
   solicitarRestablecimiento() {
     this.authService.enviarCodigoRestablecimiento(this.email).subscribe(
@@ -58,5 +64,26 @@ export class RestorePasswordComponent {
         });
       }
     );
+  }
+  validatePassword(): string {
+    const password = this.newPassword;
+    if (password.length < 8) {
+      return 'Débil';
+    } else if (password.length < 12) {
+      return 'Medio';
+    } else {
+      return 'Fuerte';
+    }
+  }
+
+  passwordStrengthPercentage(): number {
+    const password = this.newPassword;
+    if (password.length < 8) {
+      return (password.length / 8) * 100;
+    } else if (password.length < 12) {
+      return (password.length / 12) * 100;
+    } else {
+      return 100;
+    }
   }
 }

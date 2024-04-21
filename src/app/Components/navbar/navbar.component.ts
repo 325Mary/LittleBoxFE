@@ -185,15 +185,22 @@ sidebarVisible: boolean = false;
 
   logout(): void {
     try {
-      this.authService.logout();
-      this.isLoggedIn = false;
-      this.router.navigate(['/']);
-      this.updateMenuItems(); // Reiniciar los elementos del menú
-      this.cdr.detectChanges();
+      this.authService.logout(); // Limpia la sesión
+      this.isLoggedIn = false; // Actualiza el estado de inicio de sesión
+      this.isGerente = false; // Establece estas variables en false
+      this.isSuperUsuario = false;
+      this.isAdministrador = false;
+      this.isColaborador = false;
+      this.router.navigate(['/']); // Navega de regreso a la página de inicio
+      localStorage.removeItem('isLoggedIn'); // Borra el indicador de inicio de sesión
+      this.checkAuthentication(); // Verifica el estado de inicio de sesión después de cerrar la sesión
+      this.cdr.detectChanges(); // Realiza detección de cambios
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
   }
+  
+
   
 
   openModal() {
