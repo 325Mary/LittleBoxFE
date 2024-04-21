@@ -18,6 +18,7 @@ export class SSubcategoryService {
     getScategory: 'getASubcategory',
     editScategory: 'editSubcategory',
     getScategoryByC: 'getSubcategoriesByCategory',
+    getScategoryByIdentifier: 'getSubcategoryByNumber'
   };
 
   constructor(
@@ -69,6 +70,18 @@ export class SSubcategoryService {
     const headers = new HttpHeaders({ Authorization: `${token}` });
     return this.http.get<any>(
       `${this.apiUrl}${this.endpoints.getScategory}/${id}`,
+      {
+        params: { tenantId },
+        headers: headers,
+      }
+    );
+  }
+
+  getSCByIdentifier(identifier: string, tenantId: string): Observable<any> {
+    const token = this.tokenValidationService.getToken();
+    const headers = new HttpHeaders({ Authorization: `${token}` });
+    return this.http.get<any>(
+      `${this.apiUrl}${this.endpoints.getScategoryByIdentifier}/${identifier}`,
       {
         params: { tenantId },
         headers: headers,

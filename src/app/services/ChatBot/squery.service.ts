@@ -19,6 +19,7 @@ export class SQueryService {
     getQueryWNumero: 'getQueryByNumber',
     getQueriesByScategory: 'getQueriesBySubcategory',
   };
+  
   constructor(
     private http: HttpClient,
     private tokenValidationService: TokenValidationService

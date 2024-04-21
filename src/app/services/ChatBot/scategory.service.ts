@@ -16,6 +16,7 @@ export class SCategoryService {
     saveCategory: 'saveCategory',
     getCategory: 'category',
     updateCategory: 'editCategory',
+    getCategoryByIdentifier: 'getCategoryByNumber'
   };
 
   constructor(
@@ -32,6 +33,17 @@ export class SCategoryService {
       params: { tenantId },
       headers: headers,
     });
+  }
+  getCaByIdentifier(identifier: string, tenantId: string): Observable<any> {
+    const token = this.tokenValidationService.getToken();
+    const headers = new HttpHeaders({ Authorization: `${token}` });
+    return this.http.get<any>(
+      `${this.apiUrl}${this.endpoints.getCategoryByIdentifier}/${identifier}`,
+      {
+        params: { tenantId },
+        headers: headers,
+      }
+    );
   }
 
   deleteCategory(id: string, tenantId: string): Observable<any> {
