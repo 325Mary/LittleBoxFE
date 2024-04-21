@@ -12,6 +12,8 @@ import { SCategoryService } from '../../../services/ChatBot/scategory.service';
   styleUrl: './form-category.component.scss'
 })
 export class FormCategoryComponent {
+
+  identifier: string = ''
   name: string = '';
   description: string = '';
   tenantId: string = '';
@@ -50,6 +52,7 @@ export class FormCategoryComponent {
     }
 
     const newCategory = {
+      identifier: this.identifier,
       name: this.name,
       description: this.description,
       tenant: this.tenantId,

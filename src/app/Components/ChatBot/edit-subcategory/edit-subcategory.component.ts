@@ -14,6 +14,7 @@ export class EditSubcategoryComponent {
   @Input() mode: 'create' | 'edit' = 'create';
   @Input() subcategoryId: string | null = null;
 
+  identifier: string = ''
   name: string = '';
   description: string = '';
   category: string = '';
@@ -90,6 +91,7 @@ export class EditSubcategoryComponent {
 
     if (this.subcategoryId) {
       const updatedSubcategory = {
+        identifier: this.identifier,
         name: this.name,
         description: this.description,
         category: {

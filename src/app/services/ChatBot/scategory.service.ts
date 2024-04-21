@@ -34,6 +34,7 @@ export class SCategoryService {
       headers: headers,
     });
   }
+  
   getCaByIdentifier(identifier: string, tenantId: string): Observable<any> {
     const token = this.tokenValidationService.getToken();
     const headers = new HttpHeaders({ Authorization: `${token}` });

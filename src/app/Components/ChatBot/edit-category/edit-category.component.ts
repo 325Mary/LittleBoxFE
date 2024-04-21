@@ -13,6 +13,7 @@ import { SCategoryService } from '../../../services/ChatBot/scategory.service';
 export class EditCategoryComponent {
   @Input() categoryId: string | null = null;
 
+  identifier: string = ''
   name: string = '';
   description: string = '';
 
@@ -63,6 +64,7 @@ export class EditCategoryComponent {
 
     if (this.categoryId) {
       const updatedCategory = {
+        identifier: this.identifier,
         name: this.name,
         description: this.description,
       };

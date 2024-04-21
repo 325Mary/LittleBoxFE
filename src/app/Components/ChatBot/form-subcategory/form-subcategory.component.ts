@@ -21,6 +21,7 @@ export class FormSubcategoryComponent {
 
   rolUsuario: string = '';
 
+  identifier: string = ''
   name: string = '';
   description: string = '';
   category: string = '';
@@ -75,6 +76,7 @@ export class FormSubcategoryComponent {
       }
 
       const newSubcategory = {
+        identifier: this.identifier,
         name: this.name,
         description: this.description,
         category: {

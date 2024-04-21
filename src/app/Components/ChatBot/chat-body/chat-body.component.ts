@@ -216,26 +216,34 @@ export class ChatBodyComponent {
       return;
     }
   
+    // Verificar si el userInput es un identificador de categoría
+    const category = this.categories.find(cat => cat._id === userInput);
+    if (category) {
+      // Si es un identificador de categoría, mostrar las subcategorías asociadas
+      this.onCategoryChange(userInput); // Llama al método para obtener las subcategorías
+      return;
+    }
+  
+    // Si no es un identificador de categoría, buscar la consulta normalmente
     this.QService.getQueryIdentifier(userInput, tenantId).subscribe(
       (response) => {
         if (response.status === 200) {
           const query = response.data;
-        
+  
           this.chatHistory.push({
             profilePicture: '',
             pregunta: query.question,
             respuesta: '',
             origen: 'usuario',
           });
-          
+  
           this.chatHistory.push({
             profilePicture: 'assets/bot.png',
-            pregunta: ' ', 
+            pregunta: ' ',
             respuesta: query.answer,
             origen: 'bot',
           });
         } else {
-
           this.chatHistory.push({
             profilePicture: 'assets/bot.png',
             pregunta: '',
@@ -247,19 +255,17 @@ export class ChatBodyComponent {
       },
       (error) => {
         console.error(error);
-      
+  
         this.chatHistory.push({
           profilePicture: 'assets/bot.png',
-          pregunta:
-            '',
+          pregunta: '',
           respuesta: 'Ocurrió un error al obtener la consulta. Por favor, inténtelo de nuevo.',
           origen: 'bot',
         });
         this.scrollToBottom();
       }
     );
-  }
-  
+  }  
 
   showUnknownMessage() {
     this.chatHistory.push({
