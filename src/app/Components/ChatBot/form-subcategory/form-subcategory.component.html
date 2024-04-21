@@ -14,16 +14,10 @@
                             <label id="subtitulo" class="form-label mt-3 float-start">Descripción: </label>
                             <input type="text" [(ngModel)]="description" name="description" class="form-control form-control-lg custom-input" placeholder="Requerido">
                         </div>
-                        <div *ngIf="rolUsuario !== 'SuperUsuario'"  class="mb-3">
+                        <div class="mb-3">
                             <label id="subtitulo" class="form-label mt-3 float-start">Categoría: </label>
                             <select [(ngModel)]="category" name="category" class="form-control form-control-lg custom-input">
                                 <option value="66142abbe59265aeb5525a32">Empresa</option>
-                            </select>
-                        </div>
-                        <div *ngIf="rolUsuario === 'SuperUsuario'"  class="mb-3">
-                            <label id="subtitulo" class="form-label mt-3 float-start">Categoría: </label>
-                            <select [(ngModel)]="category" name="category" class="form-control form-control-lg custom-input">
-                                <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}</option>
                             </select>
                         </div>
 

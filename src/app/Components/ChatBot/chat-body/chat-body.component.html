@@ -23,13 +23,6 @@
                       </div>
                     </div>
                   </div>
-                  <!-- Lista de categorías -->
-                  <div *ngIf="categories.length > 0" class="categories-list">
-                    <h5>Categorías:</h5>
-                    <button *ngFor="let category of categories" class="btn btn-primary" (click)="onCategoryChange(category._id)"> 
-                      {{ category.name }}
-                    </button>
-                  </div>
                   <!-- Lista de subcategorías -->
                       <div *ngIf="subcategories.length > 0" class="subcategories-list">
                         <h5>Subcategorías:</h5>

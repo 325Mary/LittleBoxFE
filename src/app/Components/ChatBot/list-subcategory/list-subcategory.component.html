@@ -17,6 +17,7 @@
           <table *ngIf="filteredSubcategory.length > 0" class="table table-bordered table-light table-hover border-dark mt-3">
             <thead>
               <tr>
+                <th scope="col">Identifier</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Descripción</th>
                 <th scope="col">Categoria</th>
@@ -25,12 +26,13 @@
             </thead>
             <tbody>
               <tr *ngFor="let subcategory of filteredSubcategory">
+                <td>{{ subcategory.identifier }}</td>
                 <td>{{ subcategory.name }}</td>
                 <td>{{ subcategory.description }}</td>
                 <td>{{ subcategory.category.name }}</td>
                   <td>
-                    <img *ngIf="rolUsuario === 'SuperUsuario' || subcategory.category._id !== '66142acae59265aeb5525a37'" (click)="openEditModal(subcategory._id)" class="img-icon" src="../../../assets/boligrafo.png">
-                    <img *ngIf="rolUsuario === 'SuperUsuario' || subcategory.category._id !== '66142acae59265aeb5525a37'" (click)="eliminarSubcategory(subcategory._id)" class="img-icon" src="../../../../assets/boton-x.png">
+                    <img  (click)="openEditModal(subcategory._id)" class="img-icon" src="../../../assets/boligrafo.png">
+                    <img  (click)="eliminarSubcategory(subcategory._id)" class="img-icon" src="../../../../assets/boton-x.png">
                   </td>
               </tr>
             </tbody>
