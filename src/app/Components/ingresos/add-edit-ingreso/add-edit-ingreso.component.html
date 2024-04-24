@@ -1,3 +1,4 @@
+<br>
 <div class="container d-flex justify-content-center needs-validation " style="margin-top: 80px; margin-bottom: 20px;" novalidate>
     <div class="card" style="width: 40rem;">
         <div class="card-header fs-5 text-center">{{ operacion }} Ingreso <label *ngIf="id" class="form-label" for="solicitudIdInput">
@@ -15,6 +16,9 @@
                     <div class="invalid-feedback">
                         Debe seleccionar una fecha.
                     </div>
+                    <div *ngIf="fecha.touched && fecha.invalid" class="text-danger">
+                        Ingresa la Fecha
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label" for="valor">Valor solicitado</label>
@@ -24,6 +28,9 @@
                     </div>
                     <div class="invalid-feedback">
                         Debe ingresar un valor numerico.
+                    </div>
+                    <div *ngIf="valor.touched && valor.invalid" class="text-danger">
+                        Ingresa el valor del Ingreso
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -35,10 +42,13 @@
                     <div class="invalid-feedback">
                         Detalle del ingreso de caja.
                     </div>
+                    <div *ngIf="detalle.touched && detalle.invalid" class="text-danger">
+                        Ingresa el detalle del Ingreso.
+                    </div>
                 </div>
-                <div class="col-12 d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary mx-auto">Guardar</button>
+                <div class="col-4 d-flex end">
                     <button type="submit" class="btn btn-secondary mx-auto"><a style="text-decoration: none; color: white;" routerLink="/obtenerTodosLosIngresos" >Volver</a></button>
+                    <button type="submit" class="btn btn-primary mx-auto">Guardar</button>
                 </div>
             </form>
         </div>

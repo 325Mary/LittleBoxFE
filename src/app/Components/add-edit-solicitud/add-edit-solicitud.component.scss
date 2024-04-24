@@ -1,9 +1,14 @@
+.container {
+    margin-top: 20px;
+}
+
 .cont-component {
+    width: 20px;
     position: relative;
     height: 100vh;
-  }
-  
-  .cont-principal {
+}
+
+.cont-principal {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -11,23 +16,28 @@
     width: 90%;
     max-width: 600px;
     padding: 20px;
-  }
-  
-  .form-group {
+}
+
+.form-group {
     margin-bottom: 20px;
-  }
-  
-  .card {
+}
+
+.card {
     width: 100%;
-  }
-  
-  .btn-block {
+}
+
+.btn {
+    justify-content: end;
+}
+
+.btn-block {
     width: 100%;
-  }
-  
-  @media (max-width: 768px) {
+    display: flex;
+    justify-content: end;
+}
+
+@media (max-width: 768px) {
     .cont-principal {
-      max-width: 100%;
+        max-width: 100%;
     }
-  }
-  
+}

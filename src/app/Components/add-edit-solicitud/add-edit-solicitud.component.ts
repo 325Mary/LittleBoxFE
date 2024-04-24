@@ -1,4 +1,5 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ViewChild, ElementRef,OnInit } from '@angular/core';
 import { Solicitud } from '../../interfaces/solicitud';
 import { Categoria } from '../../interfaces/categoria';
 import { Tercero } from '../../interfaces/tercero';
@@ -63,6 +64,7 @@ export class AddEditSolicitudComponent {
     estado: { _id: '65d6a34bc04706dd1cdafd6c', nombre: 'pendiente' }, // Valor por defecto para el estado
     facturaUrl: '',
   };
+  
 
   constructor(
     private solicitudesService: SolicitudesService,

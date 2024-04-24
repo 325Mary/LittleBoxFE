@@ -1,57 +1,63 @@
-// @import '../../../../node_modules/primeng/resources/themes/saga-blue/theme.css';
-// .additional-background {
-//     background-color: #0fbad8;
-//     padding: 20px;
-//     width: 100%;
-//     margin: 0 auto;
-// }
 // .container {
-//     background-color: #ff5e0100;
+//     background-color: #f2f2f2;
 //     padding: 20px;
 //     width: 70%;
 //     margin: 50px auto;
-//     border-radius: 10px;
 // }
 // .filters {
-//     background-color: rgba(211, 5, 238, 0.8);
+//     background-color: rgba(233, 227, 227, 0.8);
 //     padding: 20px;
 //     margin-bottom: 20px;
 //     border: 1px solid #c6bdbd;
 //     border-radius: 10px;
 //     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
-// }
-// .form-group {
-//     background-color: #003cff;
-//     border-radius: 10px;
+//     /* Agrega sombra al contenedor */
 // }
 // .filters label,
 // .filters input,
 // .filters select,
 // .filters button {
 //     margin-right: 10px;
+//     margin-bottom: 10px;
+// }
+// .egresos-list table {
+//     width: 100%;
+//     border-collapse: collapse;
+//     border-radius: 10px;
+// }
+// .egresos-list th,
+// .egresos-list td {
+//     padding: 10px;
+//     border: 1px solid #ddd;
+// }
+// .no-egresos {
+//     background-color: rgba(255, 255, 255, 0.8);
+//     padding: 20px;
+// }
+// .additional-background {
+//     background-color: #ddd;
+//     padding: 20px;
+//     width: 100%;
+//     margin: 0 auto;
 // }
 // .movimiento-list table {
 //     width: 100%;
 //     border-collapse: collapse;
-//     border-radius: 10px;
-//     border: 1px solid #ddd;
 // }
+// .movimiento-list th,
 // .movimiento-list td {
 //     padding: 12px;
 //     border: 1px solid #ddd;
-//     border-radius: 10px;
 // }
 // .movimiento-list th {
-//     background-color: #003cff;
+//     background-color: #f2f2f2;
 //     text-align: left;
-//     border: 1px solid #ddd;
 // }
 // .movimiento-list tbody tr:nth-child(even) {
-//     background-color: #003cff;
-//     border-radius: 10px;
+//     background-color: #f2f2f2;
 // }
 // .no-informes {
-//     background-color: #003cff;
+//     background-color: #fff;
 //     padding: 20px;
 //     border-radius: 10px;
 //     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -60,145 +66,135 @@
 // .pagination-controls {
 //     ul {
 //         list-style-type: none;
-//         padding: 10px 5px;
+//         padding: 0;
 //         display: flex;
 //         flex-direction: row;
-//         background-color: #fbf8ff00;
-//         border: 1px solid #ccc;
 //     }
 //     li {
-//         border-radius: 10px;
 //         margin-right: 5px;
+//         /* Espacio entre cada número de página */
 //     }
 //     a {
 //         text-decoration: none;
 //         padding: 5px 10px;
 //         border: 1px solid #ccc;
 //         border-radius: 3px;
-//         background-color: #968989;
-//         color: #333;
+//         background-color: #217be2;
+//         color: white;
 //     }
 //     a:hover {
-//         padding: 5px;
-//         background-color: #e9e9e9;
+//         background-color: #0863db;
 //     }
 // }
-// button {
-//     padding: 0px;
-// }
-
-/* Import PrimeNG styles */
-
-// Importa la paleta de colores desde un archivo global (recomendado)
-// PrimeNG styles
-@import '../../../../node_modules/primeng/resources/themes/saga-blue/theme.css';
-
-/* Background styles */
-
-$primary-color: #79cbe7;
-$secondary-color: #a29b9b;
-$border-color: #ddd;
-$light-gray: #ddd;
-body {
-    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
-    color: #333; // Ajusta el color del texto según la paleta
-}
-
-.additional-background {
-    background-image: linear-gradient(to bottom, $primary-color, $secondary-color);
-    padding: 20px;
-    width: 100%;
-    margin: 0 auto;
-}
-
 .container {
-    padding: 20px;
-    width: 70%;
-    margin: 50px auto;
-    border-radius: 10px;
+    padding-top: 50px;
+    margin-top: 50px;
 }
 
+.cont-component {
+    margin-top: 50px;
+    position: relative;
+    height: 100vh;
+}
 
-/* Filters styles */
-
-.filters {
-    background-color: rgba(233, 227, 227, 0.8);
+.cont-principal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
     padding: 20px;
+}
+
+.form-group {
     margin-bottom: 20px;
-    border: 1px solid #c6bdbd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
-    /* Agrega sombra al contenedor */
 }
 
-.filters label,
-.filters input,
-.filters select,
-.filters button {
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-
-
-/* Tables styles */
-
-.movimiento-list table {
+.card {
     width: 100%;
-    border-collapse: collapse;
-    border-radius: 10px;
 }
 
-.movimiento-list th,
-.movimiento-list td {
-    padding: 12px;
-    border: 1px solid $light-gray;
-}
-
-.movimiento-list th {
-    background-color: $primary-color;
-    text-align: left;
-}
-
-.movimiento-list tbody tr:nth-child(even) {
-    background-color: $secondary-color; // Usa el color secundario
-}
-
-
-/* Empty message styles */
-
-.no-informes {
-    background-color: $primary-color;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
-
-
-/* Pagination styles */
-
-.pagination-controls ul {
-    list-style-type: none;
-    padding: 10px 5px;
+.btn-block {
+    // width: 100%;
     display: flex;
-    flex-direction: row;
-    border: 1px solid $border-color;
+    justify-content: right;
+    margin: 10px;
+    float: right;
 }
 
-.pagination-controls li {
-    border-radius: 10px;
-    margin-right: 5px;
+@media (max-width: 768px) {
+    .cont-principal {
+        max-width: 100%;
+    }
 }
 
-.pagination-controls a {
-    text-decoration: none;
-    padding: 5px 10px;
-    border: 1px solid $border-color;
-    border-radius: 3px;
-    background-color: #217be2;
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.custom-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+    background-image: linear-gradient(to bottom, #79cbe7, #a29b9b);
+    /* Desde azul claro hasta blanco */
+}
+
+.form {
+    width: 30%;
+    margin: 90px auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // background-image: linear-gradient(to bottom, #79cbe7, #a29b9b);
+    /* Desde azul claro hasta blanco */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    /* Sombra suave */
+}
+
+button {
+    // background-color: #007bff;
     color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    // cursor: pointer;
+    float: right;
+    /* Ajustar el ancho del botón al 100% del contenedor */
 }
 
-a:hover {
-    background-color: #0863db;
+button:hover {
+    background-color: #0056b3;
+    margin: 10px;
+    padding: 5px;
+}
+
+
+/* Estilos adicionales para los input */
+
+input[type="text"],
+input[type="email"] {
+    width: calc(100% - 24px);
+    /* Ajustar el ancho de los input al 100% del contenedor menos el padding */
+    padding: 10px;
+    margin-bottom: 10px;
+    /* Espaciado entre inputs */
+    border: 1px solid #ccc;
+    /* Borde gris */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    outline: none;
+    /* Eliminar el contorno de enfoque */
+    border-color: #007bff;
+    /* Cambiar el color del borde al enfocar */
 }

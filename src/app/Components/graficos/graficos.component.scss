@@ -1,157 +1,98 @@
-// .additional-background {
-//     background-color: #0fbad8;
-//     padding: 20px;
-//     width: 100%;
-//     margin: 0 auto;
-// }
-// .background-color {
-//     background-color: #0fbad8;
-//     padding: 20px;
-//     width: 100%;
-//     margin: 0 auto;
-// }
-// .container {
-//     border-radius: 10px;
-//     background-color: #003cff;
-//     padding: 20px;
-//     width: 70%;
-//     margin: 50px auto;
-// }
-// .filters {
-//     background-color: #003cff;
-//     padding: 20px;
-//     margin-bottom: 20px;
-//     border: 1px solid #c6bdbd;
-//     border-radius: 10px;
-//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
-//     /* Agrega sombra al contenedor */
-// }
-// .filters label,
-// .filters input,
-// .filters select,
-// .filters button {
-//     margin-right: 10px;
-// }
-// .egresos-list table {
-//     width: 100%;
-//     border-collapse: collapse;
-//     border-radius: 10px;
-// }
-// .egresos-list th,
-// .egresos-list td {
-//     padding: 10px;
-//     border: 1px solid #ddd;
-// }
-// .no-egresos {
-//     background-color: rgba(255, 255, 255, 0.8);
-//     padding: 20px;
-// }
-// // .additional-background {
-// //     background-color: #ddd;
-// //     padding: 20px;
-// //     width: 100%;
-// //     margin: 0 auto;
-// // }
-// .movimiento-list table {
-//     width: 100%;
-//     border-collapse: collapse;
-// }
-// .movimiento-list th,
-// .movimiento-list td {
-//     padding: 12px;
-//     border: 1px solid #ddd;
-// }
-// .movimiento-list th {
-//     background-color: #f2f2f2;
-//     text-align: left;
-// }
-// .movimiento-list tbody tr:nth-child(even) {
-//     background-color: #f2f2f2;
-// }
-// .no-informes {
-//     background-color: #fff;
-//     padding: 20px;
-//     border-radius: 10px;
-//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//     margin-top: 20px;
-// }
-// .charts-container {
-//     color-scheme: #003cff;
-//     color: #003cff solid;
-//     display: flex;
-// }
-// .chart-container {
-//     width: 50%;
-//     /* Cada gráfico ocupa la mitad del ancho de la página */
-//     padding: 20px;
-//     /* Espaciado entre los gráficos */
-// }
+.checkbox-container {
+    display: flex;
+    justify-content: center;
+    /* Centrar horizontalmente */
+    align-items: center;
+    /* Centrar verticalmente */
+    height: 100%;
+    /* Ajustar la altura para centrar verticalmente */
+}
 
-/* Base colors */
+.container {
+    margin-top: 50px;
+    padding: 2rem 0;
+}
 
-$primary-color: #003cff;
-$secondary-color: #0fbad8;
-$light-gray: #ddd;
-$border-color: #c6bdbd;
+.table th,
+.table td,
+.table label,
+.table input[type="date"],
+.table button {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #555;
+}
 
-/* Background styles */
+.table {
+    font-size: 16px;
+    margin-bottom: 0;
+}
 
-.additional-background,
-.background-color {
-    background-color: $secondary-color;
-    /* Use a variable for background color */
-    padding: 20px;
-    width: 100%;
-    margin: 0 auto;
+.cont-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cont-search button {
+    margin-right: 10px;
+}
+
+.table-actions {
+    white-space: nowrap;
+    /* Evita que los elementos se envuelvan en varias líneas */
 }
 
 
-/* Container styles */
+/* Estilo para los botones dentro de la celda de la tabla */
+
+.table-actions button {
+    margin-right: 5px;
+    /* Espacio entre los botones */
+}
+
+.fecha-input {
+    height: 3rem;
+}
+
+.contenedor-header {
+    margin: 3rem 0;
+}
 
 .container {
-    border-radius: 10px;
-    background-color: $primary-color;
+    margin-top: auto;
+    background-color: #f2f2f2;
     padding: 20px;
     width: 70%;
     margin: 50px auto;
 }
 
-
-/* Filters styles */
-
 .filters {
-    background-color: $primary-color;
+    background-color: rgba(213, 206, 206, 0.8);
     padding: 20px;
     margin-bottom: 20px;
-    border: 1px solid $border-color;
+    border: 1px solid #c6bdbd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+    /* Agrega sombra al contenedor */
 }
 
-.filters label,
-.filters input,
-.filters select,
-.filters button {
-    margin-right: 10px;
+.additional-background {
+    background-color: #ddd;
+    padding: 20px;
+    width: 100%;
+    margin: 0 auto;
 }
 
-
-/* Tables styles */
-
-.egresos-list,
-.movimiento-list {
+.movimiento-list table {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 10px;
 }
 
-.egresos-list th,
-.egresos-list td,
 .movimiento-list th,
 .movimiento-list td {
-    padding: 10px;
-    /* Consistent padding for all tables */
-    border: 1px solid $light-gray;
+    padding: 12px;
+    border: 1px solid #ddd;
 }
 
 .movimiento-list th {
@@ -163,40 +104,29 @@ $border-color: #c6bdbd;
     background-color: #f2f2f2;
 }
 
-
-/* Empty message styles */
-
-.no-egresos,
-.no-informes {
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.no-egresos {
-    background-color: rgba(255, 255, 255, 0.8);
-    /* Semi-transparent background */
-}
-
 .no-informes {
     background-color: #fff;
-    /* White background */
+    padding: 20px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
 }
 
-
-/* Charts container styles */
-
 .charts-container {
-    color: $primary-color;
-    /* Use primary color for charts */
     display: flex;
 }
 
 .chart-container {
     width: 50%;
+    /* Cada gráfico ocupa la mitad del ancho de la página */
     padding: 20px;
+    /* Espaciado entre los gráficos */
 }
 
-
-/* Removed commented-out styles for .additional-background */
+.button {
+    margin-left: 10px;
+    display: flex;
+    justify-content: right;
+    margin: 10px;
+    float: right;
+}

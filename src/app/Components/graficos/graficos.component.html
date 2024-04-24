@@ -1,32 +1,38 @@
-<div class="background-color">
-    <div class="additional-background">
-        <div class="container">
-            <h2>Generar Gráfico de Gastos</h2>
-            <form (ngSubmit)="obtenerMovimientoDeC()">
+<br>
+<div class="container filters">
+    <h2 class="text-center">Generar Gráfico de Gastos</h2>
+    <form (ngSubmit)="obtenerMovimientoDeC()" style="width: 60rem;">
+        <div class="row">
+            <div class="col-md-3">
                 <label for="fechaInicio">Fecha de inicio:</label>
-                <input type="date" id="fechaInicio" name="fechaInicio" [(ngModel)]="fechaInicio">
+                <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" [(ngModel)]="fechaInicio">
+            </div>
+            <div class="col-md-3">
                 <label for="fechaFin">Fecha de fin:</label>
-                <input type="date" id="fechaFin" name="fechaFin" [(ngModel)]="fechaFin">
-
+                <input type="date" id="fechaFin" name="fechaFin" class="form-control" [(ngModel)]="fechaFin">
+            </div>
+            <div class="col-md-3">
                 <label for="categoria">Categoría:</label>
                 <input type="radio" id="categoria" name="filtro" value="categoria" [(ngModel)]="filtro">
+
                 <label for="tercero">Tercero:</label>
                 <input type="radio" id="tercero" name="filtro" value="tercero" [(ngModel)]="filtro">
 
-                <button type="submit">Generar Gráfico</button>
-            </form>
-        </div>
-
-        <div class="charts-container">
-            <!-- Gráfico de barras -->
-            <div class="chart-container">
-                <canvas id="myChart" width="400" height="400"></canvas>
             </div>
 
-            <!-- Gráfico de torta -->
-            <div class="chart-container">
-                <canvas id="myChartTorta" width="400" height="400"></canvas>
-            </div>
         </div>
+        <button type="submit" class="btn btn-primary mt-3">Generar Gráfico</button>
+    </form>
+</div>
+
+<div class="charts-container">
+    <!-- Gráfico de barras -->
+    <div class="chart-container">
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+
+    <!-- Gráfico de torta -->
+    <div class="chart-container">
+        <canvas id="myChartTorta" width="400" height="400"></canvas>
     </div>
 </div>

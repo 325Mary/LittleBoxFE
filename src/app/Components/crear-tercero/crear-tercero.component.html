@@ -1,91 +1,4 @@
-<!-- <div class="custom-container">
-    <div class="form">
-        <form (ngSubmit)="guardarTercero()">
-            <h1>Registrar un nuevo Tercero</h1>
-
-            <div class="mb-3">
-                <label class="form-label">Nombre del tercero:</label>
-                <input type="text" [(ngModel)]="tercero.nombreTercero" name="nombreTercero" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Número de documento:</label>
-                <input type="text" [(ngModel)]="tercero.documentoTercero" name="documentoTercero" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Dirección:</label>
-                <input type="text" [(ngModel)]="tercero.direccionTercero" name="direccionTercero" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Teléfono:</label>
-                <input type="text" [(ngModel)]="tercero.telefonoTercero" name="telefonoTercero" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Email:</label>
-                <input type="email" [(ngModel)]="tercero.emailTercero" name="emailTercero" class="form-control">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Guardar Tercero</button>
-        </form>
-    </div>
-</div> -->
-
-
-<!-- 
-
-<div class="custom-container">
-    <div class="form">
-        <form (ngSubmit)="guardarTercero()" #formulario="ngForm">
-            <h1>Registrar un nuevo Tercero</h1>
-
-            <div class="mb-3">
-                <label class="form-label">Nombre del tercero:</label>
-                <input type="text" [(ngModel)]="tercero.nombreTercero" name="nombreTercero" class="form-control" required>
-                <div *ngIf="formulario.submitted && formulario.controls['nombreTercero'].invalid" class="invalid-feedback">
-                    El nombre del tercero es obligatorio.
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Número de documento:</label>
-                <input type="text" [(ngModel)]="tercero.documentoTercero" name="documentoTercero" class="form-control" required>
-                <div *ngIf="formulario.submitted && formulario.controls['documentoTercero'].invalid" class="invalid-feedback">
-                    El número de documento es obligatorio.
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Dirección:</label>
-                <input type="text" [(ngModel)]="tercero.direccionTercero" name="direccionTercero" class="form-control" required>
-                <div *ngIf="formulario.submitted && formulario.controls['direccionTercero'].invalid" class="invalid-feedback">
-                    La dirección es obligatoria.
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Teléfono:</label>
-                <input type="text" [(ngModel)]="tercero.telefonoTercero" name="telefonoTercero" class="form-control" required>
-                <div *ngIf="formulario.submitted && formulario.controls['telefonoTercero'].invalid" class="invalid-feedback">
-                    El teléfono es obligatorio.
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Email:</label>
-                <input type="email" [(ngModel)]="tercero.emailTercero" name="emailTercero" class="form-control" required>
-                <div *ngIf="formulario.submitted && formulario.controls['emailTercero'].invalid" class="invalid-feedback">
-                    El email es obligatorio y debe tener un formato válido.
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Guardar Tercero</button>
-        </form>
-    </div>
-</div> -->
-
+<br>
 <div class="container d-flex justify-content-center needs-validation mt-5 mb-2" novalidate>
     <div class="card" style="width: 40rem;">
         <div class="card-header">
@@ -135,8 +48,12 @@
                 <div *ngIf="tercero.emailTercero.control.touched && tercero.emailTercero.control.invalid" class="text-danger">
                     El campo Email es requerido
                 </div>
+                <div class="col-sm-4 d-flex end">
+                    <button type="button" class="btn btn-secondary mr-2" style="text-decoration: none; color: white;" routerLink="/home">Volver</button>
 
-                <button type="submit" class="col-md-2 btn btn-primary mx-auto justify-content-center ">Guardar Tercero</button>
+
+                    <button type="submit" class="col-sm-4 btn btn-primary  end ">Guardar Tercero</button>
+                </div>
             </form>
 
         </div>

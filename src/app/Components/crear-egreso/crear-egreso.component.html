@@ -1,136 +1,35 @@
-<!-- <div class="additional-background">
-    <div class="form-container">
-        <div class="form">
-
-            <h1 class="text-center">Crear Egreso</h1>
-            <form (ngSubmit)="guardarEgresos()" class="p-6 rounded shadow-sm">
-
-
-                <div class="form-group">
-                    <div class="form-group grid grid-cols-2 gap-4 flex flex-col justify-items-center mb-3">
-                        <label for="tercero" class="form-label">Tercero</label>
-                        <select [(ngModel)]="selectedTercero" name="tercero" class="form-select">
-                      <option *ngFor="let tercero of tercero" [value]="tercero._id">{{ tercero.nombreTercero}}</option>
-                        </select>
-
-
-                        <label class="form-label">Fecha:</label>
-                        <input type="date" [(ngModel)]="egreso.fecha" name="fecha" class="form-control">
-
-                        <label class="form-label">Detalle:</label>
-                        <textarea [(ngModel)]="egreso.detalle" name="detalle" class="form-control"></textarea>
-
-                        <label class="form-label">Valor:</label>
-                        <input type="number" [(ngModel)]="egreso.valor" name="valor" class="form-control">
-
-
-                        <label for="categoria" class="form-label">Categoría</label>
-                        <select [(ngModel)]="selectedCategoria " name="categoria" class="form-select">
-                          <option *ngFor="let categoria of categoria" [value]="categoria._id">{{ categoria.nombre }}</option>
-                        </select>
-
-                    </div>
-                </div>
-
-
-
-
-                <div class="mb-3">
-                    <label class="form-label">Factura:</label>
-                    <input type="file" (change)="onFileSelected($event)" name="factura" class="form-control">
-                </div>
-
-                <button type="submit">Guardar Egreso</button>
-            </form>
-        </div>
-    </div>
-</div> -->
-
-<!-- 
-
-<div class="additional-background">
-    <div class="form-container">
-        <div class="form">
-
-            <h1 class="text-center">Crear Egreso</h1>
-            <form (ngSubmit)="guardarEgresos()" class="p-6 rounded shadow-sm">
-
-
-                <div class="form-group">
-                    <div class="form-group grid grid-cols-2 gap-4 flex flex-col justify-items-center mb-3">
-                        <label for="tercero" class="form-label">Tercero</label>
-                        <select [(ngModel)]="selectedTercero" name="tercero" class="form-select">
-                <option *ngFor="let tercero of tercero" [value]="tercero._id">{{ tercero.nombreTercero }}</option>
-              </select>
-                        <div class="invalid-feedback" *ngIf="egresoForm.submitted && egresoForm.controls['tercero'].errors?.['required']">
-                            Selecciona un tercero.
-                        </div>
-
-                        <label class="form-label">Fecha:</label>
-                        <input type="date" [(ngModel)]="egreso.fecha" name="fecha" class="form-control">
-                        <div class="invalid-feedback" *ngIf="egresoForm.submitted && egresoForm.controls['fecha'].errors?.['required']">
-                            Ingresa una fecha.
-                        </div>
-
-                        <label class="form-label">Detalle:</label>
-                        <textarea [(ngModel)]="egreso.detalle" name="detalle" class="form-control"></textarea>
-
-                        <div class="invalid-feedback" *ngIf="egresoForm.submitted && egresoForm.controls['detalle'].errors?.['required']">
-                            Ingresa un detalle.
-                        </div>
-
-                        <label class="form-label">Valor:</label>
-                        <input type="number" [(ngModel)]="egreso.valor" name="valor" class="form-control">
-
-                        <div class="invalid-feedback" *ngIf="egresoForm.submitted && egresoForm.controls['valor'].errors?.['required']">
-                            Ingresa un valor.
-                        </div>
-
-                        <label for="categoria" class="form-label">Categoría</label>
-                        <select [(ngModel)]="selectedCategoria " name="categoria" class="form-select">
-                <option *ngFor="let categoria of categoria" [value]="categoria._id">{{ categoria.nombre }}</option>
-
-              </select>
-
-                        <div class="invalid-feedback" *ngIf="egresoForm.submitted && egresoForm.controls['categoria'].errors?.['required']">
-                            Selecciona una categoría.
-                        </div>
-
-                    </div>
-                </div>
-
-
-                <div class="mb-3">
-                    <label class="form-label">Factura:</label>
-                    <input type="file" (change)="onFileSelected($event)" name="factura" class="form-control">
-                </div>
-
-                <button type="submit">Guardar Egreso</button>
-            </form>
-        </div>
-    </div>
-</div> -->
-<div class="container d-flex justify-content-center needs-validation mt-5 mb-2" novalidate>
+<br>
+<div class="container d-flex justify-content-center mt-5 mb-2">
     <div class="card" style="width: 40rem;">
-
-
-        <!-- <div class="form-container"> -->
         <div class="card-header">
-
-            <h1 class=" text-center">Crear Egreso</h1>
+            <h1 class="text-center">Crear Egreso</h1>
         </div>
         <div class="card-body">
-
-            <form (ngSubmit)="guardarEgresos()" class="row g-3 p-4 ">
+            <form (ngSubmit)="guardarEgreso()" class="row g-3 p-4">
                 <div class="col-md-6 mb-3">
-                    <label for="tercero" class="form-label">Proveedor</label>
-                    <select [(ngModel)]="selectedTercero" name="tercero" class="form-select">
-                      <option *ngFor="let tercero of tercero" [value]="tercero._id">{{ tercero.nombreTercero}}</option>
+                    <label class="form-label" for="fecha">Fecha de Solicitud</label>
+                    <input [(ngModel)]="fecha" name="fecha" class="form-control" type="date" id="fecha" required #fechaModel="ngModel" />
+                    <div *ngIf="fechaModel.touched && fechaModel.invalid" class="text-danger">
+                        Debe seleccionar una fecha.
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="valor">Valor solicitado</label>
+                    <input [(ngModel)]="valor" name="valor" class="form-control" type="number" id="valor" required #valorModel="ngModel" />
+                    <div *ngIf="valorModel.touched && valorModel.invalid" class="text-danger">
+                        Debe ingresar un valor numérico.
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="form-label" for="tercero">Seleccione el proveedor</label>
+                    <select [(ngModel)]="selectedTercero" name="tercero" class="form-select" id="tercero" required #terceroModel="ngModel">
+                        <option value="" disabled selected>Seleccione el proveedor</option>
+                        <option *ngFor="let terceroItem of tercero" [value]="terceroItem._id">{{ terceroItem.nombreTercero }}</option>
                     </select>
-
-
-                    <div *ngIf="selectedTercero.control.touched && selectedTercero.control.invalid" class="text-danger">
-                        El campo proveedor es requerido
+                    <div *ngIf="terceroModel.touched && terceroModel.invalid" class="text-danger">
+                        Debe seleccionar un proveedor.
                     </div>
 
 
@@ -139,61 +38,35 @@
                     </p>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Fecha:</label>
-                    <input type="date" [(ngModel)]="egreso.fecha" name="fecha" class="form-control">
-                    <div *ngIf="egreso.fecha.touched && egreso.fecha.invalid" class="text-danger">
-                        El campo fecha es requerido
+                <div class="col-md-12">
+                    <label class="form-label" for="categoria">Seleccione categoría de solicitud</label>
+                    <select [(ngModel)]="selectedCategoria" name="categoria" class="form-select" id="categoria" required #categoriaModel="ngModel">
+                        <option value="" disabled selected>Seleccione categoría de solicitud</option>
+                        <option *ngFor="let categoriaItem of categoria" [value]="categoriaItem._id">{{ categoriaItem.nombre }}</option>
+                    </select>
+                    <div *ngIf="categoriaModel.touched && categoriaModel.invalid" class="text-danger">
+                        Debe seleccionar una categoría.
                     </div>
-
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Detalle:</label>
-                    <textarea [(ngModel)]="egreso.detalle" name="detalle" class="form-control"></textarea>
-                    <div *ngIf="egreso.detalle.touched && egreso.detalle.invalid" class="text-danger">
-                        El campo detalle del egreso es requerido
+                <div class="col-md-12">
+                    <label class="form-label" for="detalle">Ingresa el detalle del egreso</label>
+                    <textarea [(ngModel)]="detalle" name="detalle" class="form-control" id="detalle" rows="2" style="resize: none;" required #detalleModel="ngModel"></textarea>
+                    <div *ngIf="detalleModel.touched && detalleModel.invalid" class="text-danger">
+                        Ingresa el detalle del egreso.
                     </div>
-
-                </div>
-
-                <div class="col-md-6 mb-3">
-
-                    <label for="categoria" class="form-label">Categoría</label>
-                    <select [(ngModel)]="selectedCategoria " name="categoria" class="form-select">
-                        <option *ngFor="let categoria of categoria" [value]="categoria._id">{{ categoria.nombre }}</option>
-        
-         
-                     <div *ngIf="selectedCategoria.touched && selectedCategoria.invalid" class="text-danger">
-                       El campo categoria es requerido
-                     </div>
-        
-                     </select>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Valor:</label>
-                    <input type="number" [(ngModel)]="egreso.valor" name="valor" class="form-control">
-                    <div *ngIf="egreso.valor.touched && egreso.valor.invalid" class="text-danger">
-                        El campo valor es requerido
-                    </div>
-                    <div *ngIf="egreso.touched && egreso.invalid" class="text-danger">
-                        El campo valor es requerido
-                    </div>
-
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Factura:</label>
                     <input type="file" (change)="onFileSelected($event)" name="factura" class="form-control">
                 </div>
-                <div class="col-12 d-flex justify-content-center">
-                    <button type="submit" class="btn btn-secondary mx-auto"><a style="text-decoration: none; color: white;" routerLink="/home" >Volver</a></button>
-                    <button type="submit" class="btn btn-primary mx-auto">Guardar Egreso</button>
-                </div>
 
+                <div class="col-sm-4 d-flex end">
+                    <button type="button" class="btn btn-secondary mr-2" style="text-decoration: none; color: white;" routerLink="/home">Volver</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
             </form>
         </div>
-        <!-- </div> -->
     </div>
 </div>
