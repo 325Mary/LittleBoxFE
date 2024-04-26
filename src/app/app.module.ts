@@ -87,9 +87,10 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
-import { ModalLegalComponent } from './Components/modal-legal/modal-legal.component'
+import { ModalLegalComponent } from './Components/modal-legal/modal-legal.component';
+import { VideosComponent } from './Components/tutorial/videos/videos.component';
 
-
+import {YouTubePlayer} from '@angular/youtube-player';
 
 @NgModule({
   declarations: [
@@ -140,8 +141,10 @@ import { ModalLegalComponent } from './Components/modal-legal/modal-legal.compon
     DashboardComponent,
     CrearSuperUsuarioComponent,
     ModalLegalComponent,
+    VideosComponent,
   ],
   imports: [
+    YouTubePlayer,
     BrowserModule,
     AppRoutingModule,
     NgbCarouselModule,

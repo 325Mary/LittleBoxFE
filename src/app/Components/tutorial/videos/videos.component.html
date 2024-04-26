@@ -1,0 +1,39 @@
+<div class="carousel" style="position: relative;">
+    <img src="../../../../assets/grisoso.jpg" style="width: 100%; height: auto; position: relative;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%;">
+        <div class="container mt-5">
+            <div class="card">
+                <h1><strong class="mt-4">¡Bienvenidos!</strong></h1>
+                <div class="container mt-2">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-right mb-1">
+                                <button (click)="toggleMoreVideos(0)" class="btn btn-primary btn-block">Acceso y registro (Empresa): </button>
+                            </div>
+                            <div *ngIf="showMoreVideos[0]">
+                                <div *ngFor="let v of additionalVideos1">
+                                    <button class="btn btn-secondary btn-block mb-1" (click)="playVideo(v)">{{ v.titulo }}</button>
+                                </div>
+                            </div>
+                            <div class="text-right mb-1">
+                                <button (click)="toggleMoreVideos(1)" class="btn btn-primary btn-block">Herramientas como gerente (Empresa)</button>
+                            </div>
+                            <div *ngIf="showMoreVideos[1]">
+                                <div *ngFor="let v of additionalVideos2">
+                                    <button class="btn btn-secondary btn-block mb-1" (click)="playVideo(v)">{{ v.titulo }}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="row mt-3 align-items-center">
+                                <div class="col-md-12 text-right">
+                                    <youtube-player [videoId]="currentVideo" [height]="315" [width]="560"></youtube-player>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>

@@ -4,7 +4,7 @@
      <div class="d-flex align-items-center">
       <!-- Botón del sidebar -->
       <div *ngIf="!isLoggedIn" [ngClass]="{'bg-primary': scrolled, 'bg-transparent': !scrolled}" class="d-flex align-items-center" style="margin-left: 10px">
-        <img class="logo img-fluid" src="../../assets/logo_little_box.png" alt="Logo">
+        <img class="logo img-fluid" src="../../assets/logo_little_box.png" style="cursor: pointer;" routerLink="/" alt="Logo">
       </div>
       
       <!-- Contenedor para los botones -->
@@ -147,6 +147,14 @@
    
    
    <div class="d-flex flex-row align-items-center">
+    <div class="d-flex flex-row align-items-center">
+      <button *ngIf="!isLoggedIn" type="button" [routerLink]="['/videoTutorial']"
+        class="btn btn-secondary btn-rounded btn-sm mx-3">
+        <img src="assets/video-lesson (2).png" alt="Imagen" width="16" height="16">
+        Mostrar tutorial
+      </button>
+    </div>
+
     <button *ngIf="!isLoggedIn" type="button" (click)="openModal()"
     class="btn btn-primary btn-rounded btn-sm mx-3">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
