@@ -13,6 +13,10 @@ export class IntroduccionComponent {
     "Autenticación y inicio de sesión (usuario empresa)",
   ];
 
+  videos: string[] = [ 
+    "../../../../assets/Registro de empresa Clipchamp.mp4",
+  ]
+
   ngAfterViewInit() {
     const modalElement = this.elementRef.nativeElement.querySelector('.modal');
 
