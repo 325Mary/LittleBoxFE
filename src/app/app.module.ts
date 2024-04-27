@@ -91,6 +91,7 @@ import { ModalLegalComponent } from './Components/modal-legal/modal-legal.compon
 import { VideosComponent } from './Components/tutorial/videos/videos.component';
 
 import {YouTubePlayer} from '@angular/youtube-player';
+import { IntroduccionComponent } from './Components/tutorial/introduccion/introduccion.component';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import {YouTubePlayer} from '@angular/youtube-player';
     CrearSuperUsuarioComponent,
     ModalLegalComponent,
     VideosComponent,
+    IntroduccionComponent,
   ],
   imports: [
     YouTubePlayer,
