@@ -1,109 +1,50 @@
-<div class="mr-5 mb-5 mt-5 d-flex justify-content-center">
-    <div style="max-width: 1000px;">
-        <div>
-            <h2 class="title-tutorial text-center">¡Bienvenido a los videos tutoriales de Little Box!</h2>
-        </div>
+<div class="container mb-5">
+    <div class="card">
+      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center ">
+        <button class="btn btn-outline-dark btn-light" routerLink="/">Volver</button>
+        <h2 class="title-tutorial text-center">¡Bienvenido a los videos tutoriales de Little Box!</h2>
+        <div></div>
+      </div>
+      <div class="card-body">
         <div class="accordion" id="accordionPanelsStayOpenExample">
-            <div class="accordion-item mb-3">
-                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
-                        {{titulos[0]}}
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
-                    <div class="accordion-body">
-                        <div class="mb-3 text-center">
-                            <strong >El video contiene la desmostración para registrarte como empresa en nuestra aplicación:</strong>
-                        </div>
-                        
-                        <ul>
-                            <div class="mb-1">
-                                <li>Durante el video, te proporcionaré una explicación detallada de cada paso del proceso de registro como empresa, junto con definiciones claras para asegurarnos de que comprendas completamente cada etapa.</li>
-                            </div>
-                            <div>
-
-                                <li>En este video, detallaré la importancia de cada campo en nuestros formularios de registro. Esta explicación te proporcionará una comprensión clara de los requisitos necesarios para completar el registro de manera exitosa. Al finalizar el proceso de registro, recibirás una breve explicación para guiarte hacia el siguiente paso de manera fluida.</li>
-                            </div>
-                                
-                        </ul>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoModal">Ver video</button> 
-                    </div>
+          <div *ngFor="let titulo of titulos; let i = index" class="accordion-item mb-3">
+            <h2 class="accordion-header" [id]="'panelsStayOpen-heading' + i">
+              <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#panelsStayOpen-collapse' + i" aria-expanded="false" [attr.aria-controls]="'panelsStayOpen-collapse' + i">
+                {{ titulo }}
+              </button>
+            </h2>
+            <div [id]="'panelsStayOpen-collapse' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'panelsStayOpen-heading' + i">
+              <div class="accordion-body">
+                <div class="mb-3 text-center">
+                  <strong>{{ subtitulos[i] }}</strong>
                 </div>
+                <ul>
+                  <li *ngFor="let descripcion of descripciones[i]">{{ descripcion }}</li>
+                </ul>
+                <button class="btn btn-primary" data-bs-toggle="modal" [attr.data-bs-target]="'#videoModal' + i">Ver video</button>
+              </div>
             </div>
-            <div class="accordion-item mb-3">
-                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                        {{titulos[1]}}
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                    <div class="mb-3 text-center">
-                        <strong >El video contiene la desmostración para registrarte como empresa en nuestra aplicación:</strong>
-                    </div>
-                    
-                    <ul>
-                        <div class="mb-1">
-                            <li>Durante el video, te proporcionaré una explicación detallada de cada paso del proceso de registro como empresa, junto con definiciones claras para asegurarnos de que comprendas completamente cada etapa.</li>
-                        </div>
-                        <div>
-
-                            <li>En este video, detallaré la importancia de cada campo en nuestros formularios de registro. Esta explicación te proporcionará una comprensión clara de los requisitos necesarios para completar el registro de manera exitosa. Al finalizar el proceso de registro, recibirás una breve explicación para guiarte hacia el siguiente paso de manera fluida.</li>
-                        </div>
-                            
-                    </ul>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoModal1">Ver video</button> 
-                </div>
-            </div>
-            <div class="accordion-item mb-3">
-                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                        Accordion Item #3
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                    <div class="accordion-body">
-                        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="videoModal1" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true" style="background-color: transparent;">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title titleModal" id="videoModalLabel">{{titulos[1]}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <video controls style="width: 100%;">
-                    <source src="{{videos[1]}}" type="video/mp4">
-                    Tu navegador no admite el elemento de video.
-                </video>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true" style="background-color: transparent;">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title titleModal" id="videoModalLabel">{{titulos[0]}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <video controls style="width: 100%;">
-                    <source src="{{videos[0]}}" type="video/mp4">
-                    Tu navegador no admite el elemento de video.
-                </video>
-            </div>
-        </div>
-    </div>
-</div>
-
+  </div>
   
+  <!-- Modals -->
+  <div *ngFor="let titulo of titulos; let i = index" class="modal fade" [id]="'videoModal' + i" tabindex="-1" [attr.aria-labelledby]="'videoModalLabel' + i" aria-hidden="true" style="background-color: transparent;">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title titleModal" [id]="'videoModalLabel' + i">{{ titulo }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <video controls style="width: 100%;">
+            <source [src]="videos[i]" type="video/mp4">
+            Tu navegador no admite el elemento de video.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
   
-
