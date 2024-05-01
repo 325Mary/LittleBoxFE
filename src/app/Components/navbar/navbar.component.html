@@ -147,13 +147,6 @@
    
    
    <div class="d-flex flex-row align-items-center">
-    <div class="d-flex flex-row align-items-center">
-      <button *ngIf="!isLoggedIn" type="button" [routerLink]="['/introduccionV']"
-        class="btn btn-secondary btn-rounded btn-sm mx-3">
-        <img src="assets/video-lesson (2).png" alt="Imagen" width="16" height="16">
-        Mostrar tutorial
-      </button>
-    </div>
 
     <button *ngIf="!isLoggedIn" type="button" (click)="openModal()"
     class="btn btn-primary btn-rounded btn-sm mx-3">
