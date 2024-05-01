@@ -7,6 +7,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./introduccion.component.scss'],
 })
 export class IntroduccionComponent {
+  
   constructor(
     private elementRef: ElementRef,
     private sanitizer: DomSanitizer
@@ -123,6 +124,7 @@ export class IntroduccionComponent {
 
     modalElements.forEach((modalElement: HTMLElement) => {
       modalElement.addEventListener('hidden.bs.modal', () => {
+        console.log('Modal cerrado');
         const videoElement = modalElement.querySelector('video');
         if (videoElement && !videoElement.paused) {
           videoElement.pause();
