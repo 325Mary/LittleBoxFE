@@ -107,8 +107,8 @@ export class IntroduccionComponent {
     'Aw9BV8HJ-04',
     'ubW3cIhhDOM',
     'UsTR-yCWa6g',
-    '../../../../assets/Cambio de estados de solicitudes y utilización de egresos Clipchamp.mp4',
-    '../../../../assets/Gráficos y informes explicación Clipchamp.mp4',
+    'RHA0W7Md8O0',
+    'PPtzfQGmwQE',
   ];
 
   getYouTubeEmbedUrl(videoId: string): SafeResourceUrl {
