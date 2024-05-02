@@ -60,7 +60,7 @@ const routes: Routes = [
   { path: 'edit/:id', component: AddEditSolicitudComponent,canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'Administrador','Colaborador'] } },
   // { path: '**', redirectTo: '', pathMatch: 'full' },
   { path: 'sidebar', component: SidebarComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },
-  { path: 'introduccionV', component: IntroduccionComponent},
+  { path: 'tutobox', component: IntroduccionComponent},
   { path: 'videoTutorial', component: VideosComponent},
   { path: 'SignIn/Up', component: PreRegistroComponent },
   // { path: 'SignIn/Up', component: ListEdictSolicitudComponent, canActivate: [RoleGuard], data: { allowedRoles: ['Gerente', 'SuperUsuario'] } },

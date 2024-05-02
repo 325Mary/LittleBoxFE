@@ -1,8 +1,10 @@
 <div class="container mb-5">
+  <div>
+
     <div class="card">
       <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center ">
         <button class="btn btn-outline-dark btn-light" routerLink="/">Volver</button>
-        <h2 class="title-tutorial text-center">¡Bienvenido a los videos tutoriales de Little Box!</h2>
+        <h2 class="title-tutorial text-center">¡Bienvenido a los tutoriales de Little Box!</h2>
         <div></div>
       </div>
       <div class="card-body">
@@ -29,6 +31,7 @@
       </div>
     </div>
   </div>
+</div>
   
   <!-- Modals -->
   <div *ngFor="let titulo of titulos; let i = index" class="modal fade" [id]="'videoModal' + i" tabindex="-1" [attr.aria-labelledby]="'videoModalLabel' + i" aria-hidden="true" style="background-color: transparent;">
